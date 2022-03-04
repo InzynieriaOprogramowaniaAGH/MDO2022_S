@@ -1,0 +1,3 @@
+1. Komputer, na którym pracuję, aktualnie posiada zainstalowanego i skonfigurowanego klienta GITa.
+2. Do pobrania repozytorium użyłem polecenia `git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S`
+3. Utworzyłem plik `sprawozdzanie.txt` poleceniem `New-Item -Path . -Name "sprawozdzanie.txt" -ItemType "file"`. Aby wykonać commita użyłem poleceń `git add .` oraz `git commit -m "dodanie sprawozdania"`
