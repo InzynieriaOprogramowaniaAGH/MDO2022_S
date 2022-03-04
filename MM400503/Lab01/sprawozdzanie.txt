@@ -1,3 +1,5 @@
 1. Komputer, na którym pracuję, aktualnie posiada zainstalowanego i skonfigurowanego klienta GITa.
 2. Do pobrania repozytorium użyłem polecenia `git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S`
-3. Utworzyłem plik `sprawozdzanie.txt` poleceniem `New-Item -Path . -Name "sprawozdzanie.txt" -ItemType "file"`. Aby wykonać commita użyłem poleceń `git add .` oraz `git commit -m "dodanie sprawozdania"`
+3. Utworzyłem plik `sprawozdzanie.txt` poleceniem `New-Item -Path . -Name "sprawozdzanie.txt" -ItemType "file"`. Aby wykonać commita użyłem poleceń `git add .` oraz `git commit -m "dodanie sprawozdania"`.
+4. Przełączyłem się na nowego brancha utworzonego poleceniem `git checkout -b 'MM400503'`. Utworzyłem foldery polecenim `mkdir`, następnie przeniosłem plik poleceniem `mv`. Ponownie utworzyłem commita poleceniami `git add` oraz `git commit`.
+5. Spushowałem brancha poleceniem `git push -u origin MM400503`.
