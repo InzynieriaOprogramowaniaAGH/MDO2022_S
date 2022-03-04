@@ -1,6 +1,8 @@
 Kacper Bielak GL01
-Numer zadania 	Komenda			Opis
-2		git clone		Sklonowanie repozytorium - pobranie do repozytorium lokalnego
-4		git branch nazwa 	Utworzenie nowej gałęzi
-4		git checkout nazwa	Przełączenie na podanego brancha
-			
+Numer zadania 	Komenda						Opis
+2		git clone					Sklonowanie repozytorium - pobranie do repozytorium lokalnego
+4		git branch nazwa 				Utworzenie nowej gałęzi
+4		git checkout nazwa				Przełączenie na podanego brancha
+4		git add plik					Dodanie pliku do repozytorium	
+4		git commit -m komentarz				Wykonanie commita do remota. Odnośnik -m umożliwia dodanie komentarza	
+5		git push --set-upstream origin KB400143		Wysłanie zmian na remota. Stworzona zostanie nowa gałąź.
