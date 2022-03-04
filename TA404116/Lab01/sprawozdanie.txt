@@ -6,3 +6,6 @@ git checkout -b TA404116
 
 git add -A
 ^ - dodanie wszystkich zmodyfikowanych plików w repo do commita
+
+commit -m "TA404116 - lab1"
+^ - dodaj commita z wiadomoscia o podanej tresci
