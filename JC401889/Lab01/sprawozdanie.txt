@@ -2,5 +2,5 @@ git clone <URL> - komenda klonuje repozytorium pod podanym linkiem [zrzut 1]
 git checkout <nazwa branch'a> - zmienia obecnego brancha na podanego. Za pomocą flagi -b możemy w ten sposób stworzyć branch'a i przejść na niego. [zrzut 2]
 git add <nazwa pliku> - dodatnie pliku do repozytorium. Jeśli jako argument podamy . doda on wszystkie niedodane pliki lub zmodyfikowane pliki. [zrzut 3]
 git commit - wykonuje commita. Flaga -m pozwala dodać wiadomość/opis commita. [zrzut 3]
-git push <remote> <branch> - zrobienie pusha do repozytorium zdalnego. Jeżeli nie podamy brancha domyślnie push pójdzie na maina.
+git push <remote> <branch> - zrobienie pusha do repozytorium zdalnego. Jeżeli nie podamy brancha domyślnie push pójdzie na maina. [zrzut 4]
 
