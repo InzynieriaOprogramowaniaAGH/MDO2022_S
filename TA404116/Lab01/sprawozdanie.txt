@@ -1,0 +1,8 @@
+git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S .
+^ - skopiowanie zdalnego repozytorium pod podanym adresem do aktualnej lokalizacji w terminalu 
+
+git checkout -b TA404116
+^ - przeniesienie się na nowego brancha o podanej nazwie
+
+git add -A
+^ - dodanie wszystkich zmodyfikowanych plików w repo do commita
