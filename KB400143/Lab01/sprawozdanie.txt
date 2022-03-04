@@ -1,0 +1,6 @@
+Kacper Bielak GL01
+Numer zadania 	Komenda			Opis
+2		git clone		Sklonowanie repozytorium - pobranie do repozytorium lokalnego
+4		git branch nazwa 	Utworzenie nowej gałęzi
+4		git checkout nazwa	Przełączenie na podanego brancha
+			
