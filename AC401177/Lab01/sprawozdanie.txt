@@ -1,0 +1,4 @@
+Lab 1
+
+git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git
+	Pobiera repozytorium z serwera na komputer
