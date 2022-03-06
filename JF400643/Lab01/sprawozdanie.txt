@@ -1,2 +1,5 @@
 git clone - sklonowanie repozytorium
 git checkout -b nazwaBrancha - stworzenie nowego brancha
+git add nazwaPliku - dodanie zmian w pliku do repozytorium
+git commit -m "trescWiadomosci" - zrobienie commita (parametr -m odpowiada za wiadomosc)
+git push - wyslanie zmian do globalnego repozytorium (do ustalonego ORIGINa, w tym wypadku jest to serwer)
