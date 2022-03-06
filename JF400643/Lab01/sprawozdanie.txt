@@ -1,0 +1,2 @@
+git clone - sklonowanie repozytorium
+git checkout -b nazwaBrancha - stworzenie nowego brancha
