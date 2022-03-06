@@ -1,0 +1,5 @@
+Sprawozdanie lab01
+
+1.Sklonowanie repozytorium: git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S
+
+2.Otwarcie i zapoznanie się z dokumentem: nano Lab01_Git.txt
