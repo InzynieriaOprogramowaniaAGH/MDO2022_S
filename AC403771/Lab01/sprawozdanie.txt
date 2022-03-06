@@ -7,4 +7,5 @@
 	-Umieszczenie w nim pliku sprawozdanie.txt,
 	-dodanie pliku do repo: git add . 
 	-zrobienie commita: git commit -m "pierwszy commit" 
+5. wypchnięcie commitów na remote na branch o nazwie AC403771: git push --set-upstream origin AC403771 
 
