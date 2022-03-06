@@ -1,0 +1,5 @@
+1. Instalacja terminala git
+2. uruchomienie terminala i operacja git clone pobierająca repo o podanym adresie
+3. Utworzenie pliku sprawozdanie.txt
+4. Utworzenie brancha i przeniesienie się na niego: git checkout -b AC403771, stworzenie folderu o tej samej nazwie poleceniem mkdir, a następnie w nim utworzenie folderu o nazwie Lab01. Umieszczenie w nim pliku sprawozdanie.txt. Następnie dodanie pliku do repo poleceniem git add . i zrobienie commita: git commit -m "pierwszy commit" 
+
