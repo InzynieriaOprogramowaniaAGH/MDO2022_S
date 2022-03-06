@@ -3,3 +3,12 @@ Sprawozdanie lab01
 1.Sklonowanie repozytorium: git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S
 
 2.Otwarcie i zapoznanie się z dokumentem: nano Lab01_Git.txt
+
+3.Stworzenie nowego brancha: git branch WD400843,
+  Przełączenie się na stworzonego brancha: git checkout WD400843,
+  Stworzenie folderu: mkdir WD400843,
+  Stworzenie kolejnego folderu: mkdir Lab01,
+  Śledzenie plików przez git-a: git add . 
+  Utworzenie commita z komentarzem: git commit -m "Pierwszy commit, dodanie sprawozdanie.txt + ss"
+
+
