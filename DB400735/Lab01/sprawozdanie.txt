@@ -1,0 +1,11 @@
+Dominik Budzowski
+
+Sprawozdanie LAB01
+
+1. Zainstalowanie gita poleceniem:
+	sudo apt install git
+   Posiadam juz zainstalowanego gita dlatego nie zrobilem zrzutu ekranu z tego podpunktu.
+2. Sklonowanie repozytorium poleceniem:
+	git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S
+3. Stworzenie pliku sprawozdanie txt i opisywanie w nim poszczegolnych punktow.
+
