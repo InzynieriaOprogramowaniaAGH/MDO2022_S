@@ -2,6 +2,11 @@ Marcin Dadura
 Sprawozdanie lab01
 ###################
 
-1. Sklonowano repozytorium do wykonania laboratorium za pomocą komendy
-git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.
+1. Sklonowano repozytorium do wykonania laboratorium za pomocą komendy git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.
 (Pobranie repozytorium z serwera na komputer)
+
+2. Stworzono i przeniosiono się na brancha za pomocą komendy git checkout -b "MD404241".
+Następnie stworzono folder o tej samej nazwie co branch, następnie stworzono folder o nazwie Lab01, przeniesiono tam plik sprawozdanie.txt.
+Na koniec dodano plik do repozytorium i wykonano commita.
+
+3. 
