@@ -1,0 +1,7 @@
+Marcin Dadura
+Sprawozdanie lab01
+###################
+
+1. Sklonowano repozytorium do wykonania laboratorium za pomocą komendy
+git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.
+(Pobranie repozytorium z serwera na komputer)
