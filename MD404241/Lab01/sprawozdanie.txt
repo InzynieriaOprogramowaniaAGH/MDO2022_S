@@ -9,4 +9,4 @@ Sprawozdanie lab01
 Następnie stworzono folder o tej samej nazwie co branch, następnie stworzono folder o nazwie Lab01, przeniesiono tam plik sprawozdanie.txt.
 Na koniec dodano plik do repozytorium i wykonano commita.
 
-3. 
+3. Przesłano pliki na serwer za pomocą polecenia git push, komendą git status sprawdzono status plików. Komendę git add wykorzystano do dodania plików do commita. 
