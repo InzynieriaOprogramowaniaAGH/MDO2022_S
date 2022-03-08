@@ -1,5 +1,0 @@
-1. Pierwszym krokiem było sklonowanie globalnego repozytorium przy użyciu komendy "git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git" (screen1)
-
-2. Następnie utworzyłem brancha poleceniem "git branch -b KM403263" oraz sprawdziłem listę lokalnych branchy poleceniem "git branch" (screen2)
-
-3. 
