@@ -1,0 +1,2 @@
+git clone - klonuje istniejące repozytorium w nowym katalogu i lokalizacji
+git checkout -b nazwa_brancha - tworzy nowy branch i zmienia obecny branch na podany
