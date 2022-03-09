@@ -4,4 +4,4 @@
 
 3. Przy pomocy polecenia "git status" sprawdziłem stan plików w repozytorium. Poleceniem "git add *.txt" dodałem wszystkie pliki o rozszerzeniu .txt dostępne w repozytorium. Następnie ponownie użyłem polecenia "git status", aby sprawdzić stan plików. tym razem plik sprawozdanie.txt był śledzony. (screen3) Następnie w ten sam sposób dodałem wszystkie screeny o rozszerzeniu .png. (screen4)
 
-4.
+4. Następnie wysłałem zmiany na githuba poleceniem "git push origin KM403263" (screen5)
