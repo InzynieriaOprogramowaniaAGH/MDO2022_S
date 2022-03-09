@@ -29,7 +29,7 @@ https://docs.github.com/en/github-ae@latest/github/authenticating-to-github/addi
 
 2. Nadaj "Tag" na aktualnego commita o nazwie: "twoje inicjały + nr indexu + nr zadania" wraz z komentarzem.
 Np.: git tag -a KM123456_Lab01 -m "Kazimierz Michalik, Lab 01 wszystko działa, 10/10 proszę"
-2.1 Wrzuć tą zmianę na swojego brancha na origin, a następnie remote/origin używając np.: git push --follow-tags
+2.1 Wrzuć tą zmianę na swojego brancha na lokalne repo, a następnie remote/origin używając np.: git push --follow-tags
 
 3. Uporządkowanie branch'y i folderów: pogrupowanie w grupy laboratoryjne.
 Aktualnie pracujemy w konfiguracji, która prezentuje się następująco:
