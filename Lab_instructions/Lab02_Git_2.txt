@@ -4,7 +4,7 @@ Klucze SSH i połączenie SSH. Łączenie i usuwanie zmian w kodzie. Manipulowan
 Uwagi wstępne:
 - korzystamy z tego samego repo co w zeszłym tygodniu.
 - po wykonaniu każdego numerowanego polecenia, wykonaj zrzut ekranu z efektem twojej pracy - będzie to potrzebne później.
-- w czasie wykonanywania zadania pisz plik "sprawozdanie.txt", zawierający treść instrukcji którymi się posłużyłeś do wykonania zadania.
+- w czasie wykonywania zadania pisz plik "sprawozdanie.txt", zawierający treść instrukcji którymi się posłużyłeś do wykonania zadania.
 - Zwróć uwagę by w komentarzu do commita zawrzeć czytelną informację w ramach którego ćwiczenia laboratoryjnego i którego zdania to robisz.
 - Upewnij się że jesteś na swoim branchu stworzonym na poprzednich zajęciach. (Jeżeli go usnąłeś, to stwórz go jeszcze raz i przełącz się na niego).
 - Na mastera wrzucamy zmiany tylko przez pull requesta! 
@@ -31,7 +31,7 @@ https://docs.github.com/en/github-ae@latest/github/authenticating-to-github/addi
 Np.: git tag -a KM123456_Lab01 -m "Kazimierz Michalik, Lab 01 wszystko działa, 10/10 proszę"
 2.1 Wrzuć tą zmianę na swojego brancha na origin, a następnie remote/origin używając np.: git push --follow-tags
 
-3. Uporządkowanie branch'y i folderów: pogrupowanie w grupy laboroatoryjne.
+3. Uporządkowanie branch'y i folderów: pogrupowanie w grupy laboratoryjne.
 Aktualnie pracujemy w konfiguracji, która prezentuje się następująco:
 "<repo>/inicjały+indeks/Lab##", np.: "<repo>/KM123456/Lab01".
 Dotychczas ta konfiguracja była bardzo podobna dla folderów i dla branchy, lecz teraz to zmienimy.
@@ -40,7 +40,7 @@ Dotychczas ta konfiguracja była bardzo podobna dla folderów i dla branchy, lec
 "<repo>/Grupy/Grupa##/inicjały+indeks/Lab##", np.: "<repo>/Grupy/Grupa08/KM123456/Lab02".
 Przenieś w repozytorium swój folder (np.:KM123456), tak by był dostępny pod nową ścieżką i nie był dostępny pod starą ścieżką.
 
-3.2 Chcemy teraz stworzyć konfigurację branchy (!), która będzie wyglądała tak (pamiętaj podminieć swoje inicjały+nr idndeksu w miejsce "KM123456" i stworzyć folder dla właściwej sobie grupy laboratoryjnej!):
+3.2 Chcemy teraz stworzyć konfigurację branchy (!), która będzie wyglądała tak (pamiętaj podmienić swoje inicjały+nr idndeksu w miejsce "KM123456" i stworzyć folder dla właściwej sobie grupy laboratoryjnej!):
 * master (już istnieje; branch długożyjący; tutaj już nie robimy więcej push'a; dołączamy tylko "branche grupowe" przez pull requesta)
 * Grupa01 (już istnieje; branch długożyjący; to jest branch grupowy; do tego brancha będziesz push'ował zmiany ze swojego brancha)
 * Grupa01-KM123456_Lab02 (takiego brancha musisz zrobić oddzielając go od swojego grupowego brancha; to jest branch krótko żyjący; usuniesz go kiedy wykonasz swoje ćwiczenie i zrobisz merga do brancha grupowego; takiego brancha będziesz tworzył dla każdego laboratorium osobno)
