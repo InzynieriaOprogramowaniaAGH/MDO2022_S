@@ -5,7 +5,7 @@ Sprawozdanie 01
 
 2. Uruchomienie terminala i sklonowanie repozytorium: git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S 
 
-2. Utowrzenie pliku "sprawozdanie.txt"
+3. Utowrzenie pliku "sprawozdanie.txt"
 
 4. Stworzenie nowego brancha w repozytorium lokalnym, nazwa w postaci - "inicjały+nr indexu": git branch KB401483 
 
