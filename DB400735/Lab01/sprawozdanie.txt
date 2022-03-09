@@ -18,3 +18,6 @@ Sprawozdanie LAB01
    	git add .
    Ostatecznie wykonalem commita z jasnym jego opisem, dzieki poleceniu:
    	git commit -m "Lab01 pkt4 pierwszy commit"
+5. Wyslanie zmian na remota i utworzenie nowej galezi poleceniem
+	git push --set-upstream origin DB400735
+   Nastepnie zrobienie pull requesta
