@@ -21,5 +21,4 @@ Sprawozdanie 01
 
    Wykonanie commita z komentarzem: git commit -m komentarz
 
-   
-5.
+5. Wysłanie do zdalnego repozytorium nowej galęzi "inicjały+nr indexu" z commitami : git push --set-upstream origin KB401483
