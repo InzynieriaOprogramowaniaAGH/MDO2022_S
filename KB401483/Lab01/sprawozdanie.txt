@@ -1,0 +1,25 @@
+Sprawozdanie 01 
+
+
+1. Instalacja git'a.
+
+2. Uruchomienie terminala i sklonowanie repozytorium: git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S 
+
+2. Utowrzenie pliku "sprawozdanie.txt"
+
+4. Stworzenie nowego brancha w repozytorium lokalnym, nazwa w postaci - "inicjały+nr indexu": git branch KB401483 
+
+   Przełączenie się na stworzonego brancha: git checkout KB401483 
+
+   Na branchu stworzenie folderu "inicjały+nr indexu": mkdir KB401483 
+   
+   W powyższym folderze stworzenie folderu "Lab01": mkdir Lab01 
+
+   W folderze "Lab01" umieszczenie pliku "sprawozdanie.txt"
+
+   Dodanie pliku do repozytorium git'a: git add .
+
+   Wykonanie commita z komentarzem: git commit -m komentarz
+
+   
+5.
