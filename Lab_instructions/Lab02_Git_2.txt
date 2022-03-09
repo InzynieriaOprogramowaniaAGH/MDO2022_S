@@ -1,12 +1,13 @@
 Temat:
 Klucze SSH i połączenie SSH. Łączenie i usuwanie zmian w kodzie. Manipulowanie organizacją repozytorium GIT.
 
-Uwaga: korzystamy z tego samego repo co w zeszłym tygodniu, czyli git@github.com:InzynieriaOprogramowaniaAGH/MIFT2021.git
-Uwaga: po wykonaniu każdego numerowanego polecenia, wykonaj zrzut ekranu z efektem twojej pracy - będzie to potrzebne później.
-Uwaga: w czasie wykonanywania zadania pisz plik "sprawozdanie.txt", zawierający treść instrukcji którymi się posłużyłeś do wykonania zadania.
-Uwaga: Zwróć uwagę by w komentarzu do commita zawrzeć czytelną informację w ramach którego ćwiczenia laboratoryjnego i którego zdania to robisz.
-Uwaga: Upewnij się że jesteś na swoim branchu stworzonym na poprzednich zajęciach. (Jeżeli go usnąłeś, to stwórz go jeszcze raz i przełącz się na niego).
-Uwaga: Na mastera wrzucamy zmiany tylko przez pull requesta! https://github.com/InzynieriaOprogramowaniaAGH/MIFT2021/pulls
+Uwagi wstępne:
+- korzystamy z tego samego repo co w zeszłym tygodniu.
+- po wykonaniu każdego numerowanego polecenia, wykonaj zrzut ekranu z efektem twojej pracy - będzie to potrzebne później.
+- w czasie wykonanywania zadania pisz plik "sprawozdanie.txt", zawierający treść instrukcji którymi się posłużyłeś do wykonania zadania.
+- Zwróć uwagę by w komentarzu do commita zawrzeć czytelną informację w ramach którego ćwiczenia laboratoryjnego i którego zdania to robisz.
+- Upewnij się że jesteś na swoim branchu stworzonym na poprzednich zajęciach. (Jeżeli go usnąłeś, to stwórz go jeszcze raz i przełącz się na niego).
+- Na mastera wrzucamy zmiany tylko przez pull requesta! 
 
 1. Klucz SSH i połączenie SSH zamiast HTTPS.
 Zmień sposób logowania do repozytorium z HTTPS na bezpieczniejszy przy użyciu klucza SSH. Będziesz potrzebować:
@@ -22,7 +23,7 @@ https://docs.github.com/en/github-ae@latest/github/authenticating-to-github/gene
 https://docs.github.com/en/github-ae@latest/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account
 1.5 Trzeba poinformować Git'a o zmianie sposobu logowania.
 1.5.1 "git remote -v" powinien wyświetlić połącznie po https.
-1.5.2."git remote set-url origin git@github.com:InzynieriaOprogramowaniaAGH/MIFT2021.git" zmienia połącznie na SSH.
+1.5.2."git remote set-url origin git@github.com:InzynieriaOprogramowaniaAGH/MDO2022_S.git" zmienia połącznie na SSH.
 1.5.3 "git remote -v" powinien wyświetlić połącznie po ssh (protokół git@).
 
 
@@ -32,11 +33,11 @@ Np.: git tag -a KM123456_Lab01 -m "Kazimierz Michalik, Lab 01 wszystko działa, 
 
 3. Uporządkowanie branch'y i folderów: pogrupowanie w grupy laboroatoryjne.
 Aktualnie pracujemy w konfiguracji, która prezentuje się następująco:
-"repo/inicjały+indeks/Lab##", np.: "MIFT2021/KM123456/Lab01".
+"<repo>/inicjały+indeks/Lab##", np.: "<repo>/KM123456/Lab01".
 Dotychczas ta konfiguracja była bardzo podobna dla folderów i dla branchy, lecz teraz to zmienimy.
 
 3.1 Chcemy teraz stworzyć konfigurację folderów (!), która będzie wyglądała tak:
-"repo/Grupy/Grupa##/inicjały+indeks/Lab##", np.: "MIFT2021/Grupy/Grupa08/KM123456/Lab02".
+"<repo>/Grupy/Grupa##/inicjały+indeks/Lab##", np.: "<repo>/Grupy/Grupa08/KM123456/Lab02".
 Przenieś w repozytorium swój folder (np.:KM123456), tak by był dostępny pod nową ścieżką i nie był dostępny pod starą ścieżką.
 
 3.2 Chcemy teraz stworzyć konfigurację branchy (!), która będzie wyglądała tak (pamiętaj podminieć swoje inicjały+nr idndeksu w miejsce "KM123456" i stworzyć folder dla właściwej sobie grupy laboratoryjnej!):
@@ -53,6 +54,6 @@ Koniecznie umieść treść githooka w sprawozdaniu.
 
 5. Dołącz swoje zmiany. 
 5.1 Zrób merga ze swojego brancha osobistego do brancha grupowego. Następnie zamknij branch osobisty.
-5.2 Stwórz nowy "Pull request" ze swojego brancha grupowego do mastera: https://github.com/InzynieriaOprogramowaniaAGH/MIFT2021/pulls
+5.2 Stwórz nowy "Pull request" ze swojego brancha grupowego do mastera
 
 Uwaga: zgłoś zadanie na MS Teams!
