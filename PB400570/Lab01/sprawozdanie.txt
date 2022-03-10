@@ -1,2 +1,17 @@
 git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git
+- skopiowanie repozytorium na urzadzenie lokalne
 
+git checkout -b 'PB400570'
+- przelaczenie sie na nowo stworzonego brancha
+
+git add .
+- dodanie plikow do sledzenia, kropka oznacza dodanie wszystkich plikow
+
+git commit -m 'first commit'
+- stworzenie nowego punktu zapisu
+
+git push --set-upstream origin PB400570
+- wyslanie nowego brancha na repozytorium 
+
+git commit -m 'added screenshots'
+- stworzenie nowego punktu zapisu z dodanymi screenshotami
