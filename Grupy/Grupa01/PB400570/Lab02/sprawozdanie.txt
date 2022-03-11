@@ -33,3 +33,12 @@ if ! grep -qE "PB400570" "$MSG";then
     echo "Your commit message must contain the word 'PB400570'"
     exit 1
 fi
+
+git checkout Grupa1
+- przelaczenie sie na brancha Grupa1
+
+git merge Grupa01-PB400570_Lab02
+- scalenie podanego brancha
+
+git checkout -d Grupa01-PB400570_Lab02
+- usuniecie podanego brancha z repozytorium
