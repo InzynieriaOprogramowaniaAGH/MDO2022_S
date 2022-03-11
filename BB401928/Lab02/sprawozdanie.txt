@@ -5,3 +5,8 @@ wyświetla sposób połączenia do repozytorium
 
 2. git tag -a "BB401928LAB02" -m "Bartosz Błyszcz początek lab02 - skończony lab01"
 Otagowanie commita
+
+3. git push --follow-tags
+Jest to push z zaznaczeniem, że wysyłamy również tagi dodane
+
+
