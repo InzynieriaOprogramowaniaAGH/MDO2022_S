@@ -9,4 +9,9 @@ Otagowanie commita
 3. git push --follow-tags
 Jest to push z zaznaczeniem, że wysyłamy również tagi dodane
 
+4. mkdir Grupy/Grupa01
+Utworzono strukturę katalogów do zadania
+
+5. mv BB401928 Grupy/Grupa01
+przeniesiono katalog BB401928 do nowej struktury
 
