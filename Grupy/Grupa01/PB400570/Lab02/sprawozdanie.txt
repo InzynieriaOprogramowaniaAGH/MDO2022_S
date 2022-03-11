@@ -1,0 +1,35 @@
+ssh-keygen -t rsa -b 4096 -C "patrykowski098@wp.pl"
+- generuje klucz ssh 
+
+eval "$(ssh-agent -s)"
+- uruchamia agenta ssh
+
+ssh-add ~/.ssh/id_rsa
+- dodaje wczesniej wygenerowany klucz ssh do agenta ssh
+
+cat ~/.ssh/id_rsa/pub
+- wyswietla wygenerowany wczesniej klucz ssh
+
+git remote -v
+- wyswietla obecne polaczenia z repozytorium
+
+git remote set-url origin git@github.com:InzynieriaOprogramowaniaAGH/MDO2022_S.git
+- dodaje nowe polaczenie ssh z repozytorium
+
+git tag -a PB400570_Zad2 -m "jest git git"
+- tworzy nowy tag na repozytorium
+
+git push --follow-tags
+- wysyla zmiany na repozytorium globalne uwzgledniajac tagi
+
+Skrytpt bashowy sprawdzajacy czy commit zawiera dany ciag znakow:
+
+#!/bin/bash
+
+MSG="$1"
+
+if ! grep -qE "PB400570" "$MSG";then
+    cat "$MSG"
+    echo "Your commit message must contain the word 'PB400570'"
+    exit 1
+fi

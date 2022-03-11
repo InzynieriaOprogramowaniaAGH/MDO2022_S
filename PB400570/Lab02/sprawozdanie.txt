@@ -1,9 +1,0 @@
-ssh-keygen -t rsa -b 4096 -C "patrykowski098@wp.pl"
-
-eval "$(ssh-agent -s)"
-
-ssh-add ~/.ssh/id_rsa
-
-git remote -v
-
-git remote set-url origin git@github.com:InzynieriaOprogramowaniaAGH/MDO2022_S.git
