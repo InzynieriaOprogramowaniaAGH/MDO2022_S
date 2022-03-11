@@ -6,3 +6,5 @@
 
 1.5 następnie ustawiamy nowy url w naszym origin'ie żeby przejść z protokołu HTTPS na SSH. (zmiana-na-ssh)
 
+2 git tag -a Nazwa_Taga -m "Jakaś wiadomość" - tworzy nowego taga. -a sprawia że tworzony jest nowy niepodpisany tag o danej nazwie. -m dodaje do niego wiadomość. (git-tag-cmd, git-tag-github)
+
