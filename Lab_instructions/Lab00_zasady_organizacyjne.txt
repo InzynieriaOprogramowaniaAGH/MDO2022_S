@@ -1,7 +1,0 @@
-Zasady zaliczania ćwiczeń laboratoryjnych:
-1. Dozwolone są 2 nieobecności w semestrze.
-2. Wszystkie ćwiczenia laboratoryjne muszą zostać zaliczone na przynajmniej 50% w celu uzyskania zaliczenia (dot. również nieobecności).
-3. Warunkiem zaliczenia ćwiecznia laboratoryjnego jest jego samodzielne wykonanie oraz dostarcznie sprawozdanie we wskazanej formie pisemnej na platformie e-lerningowej (MS-Teams).
-4. Komunikacja i zajęcia odbywają się na MS Teams - kod zespołu:  p405pgr
-5. Poprawki - po zakończeniu semestru będą zadania poprawkowe obejmujące zaległe tematy.
-6. Opóźnienia - zadania oddane do dnia następnych zajęć są oddane w terminie. Za każdy tydzień opóźnienia, ocena jest obniżana o 1 stopień, bo jest więcej czasu, żeby dostać lepsza ocenę.
