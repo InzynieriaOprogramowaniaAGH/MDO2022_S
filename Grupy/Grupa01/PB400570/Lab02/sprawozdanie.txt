@@ -40,5 +40,5 @@ git checkout Grupa1
 git merge Grupa01-PB400570_Lab02
 - scalenie podanego brancha
 
-git checkout -d Grupa01-PB400570_Lab02
+git branch -d Grupa01-PB400570_Lab02
 - usuniecie podanego brancha z repozytorium
