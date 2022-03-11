@@ -15,3 +15,14 @@ Utworzono strukturę katalogów do zadania
 5. mv BB401928 Grupy/Grupa01
 przeniesiono katalog BB401928 do nowej struktury
 
+6. git checkout -b Grupa1-BB401928_Lab02 Grupy1
+jest to przejście na brancha wychodzącego z gałęzi Grupa1
+
+7. git merge BB401928
+mergowanie swojego poprzedniego brancha do aktualnego Grupa1-BB401928_Lab02
+
+8. git branch -d BB40192
+usunięcie starego brancha
+
+9. ln -s /home/suvres/Dokumenty/AGH/MDO2022_S/Grupy/Grupa01/BB401928/Lab02/.commit-message ../../../../.git/hooks/commit-msg 
+Dołączenie hooka do repo
