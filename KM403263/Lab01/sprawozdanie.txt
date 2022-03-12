@@ -1,0 +1,7 @@
+1. Pierwszym krokiem było sklonowanie globalnego repozytorium przy użyciu komendy "git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git" (screen1)
+
+2. Następnie utworzyłem brancha poleceniem "git branch -b KM403263" oraz sprawdziłem listę lokalnych branchy poleceniem "git branch" (screen2)
+
+3. Przy pomocy polecenia "git status" sprawdziłem stan plików w repozytorium. Poleceniem "git add *.txt" dodałem wszystkie pliki o rozszerzeniu .txt dostępne w repozytorium. Następnie ponownie użyłem polecenia "git status", aby sprawdzić stan plików. tym razem plik sprawozdanie.txt był śledzony. (screen3) Następnie w ten sam sposób dodałem wszystkie screeny o rozszerzeniu .png. (screen4)
+
+4. Następnie wysłałem zmiany na githuba poleceniem "git push origin KM403263" (screen5)

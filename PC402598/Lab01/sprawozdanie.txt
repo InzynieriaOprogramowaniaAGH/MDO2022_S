@@ -1,0 +1,9 @@
+git clone - kolonuje repozytorium do nowo utworzonego katalogu
+
+git checkout -b 'nazwa brancha' - tworzy brancha i się na niego przełącza
+
+git add 'nazwa pliku' - dodaje plik/zawartość pliku do indeksu
+
+git commit -m 'wiadomość' - tworzy commit, zapisując zmiany dokonane zmiany, -m pozwala dodać opis do stworzonego commita
+
+git push "nazwa rezpoytorium" "nazwa brancha" - dodaje aktualne lokalne repo na podanego brancha do podanego rezpozytorium

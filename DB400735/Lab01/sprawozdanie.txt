@@ -1,0 +1,23 @@
+Dominik Budzowski
+
+Sprawozdanie LAB01
+
+1. Zainstalowanie gita poleceniem:
+	sudo apt install git
+   Posiadam juz zainstalowanego gita dlatego nie zrobilem zrzutu ekranu z tego podpunktu.
+2. Sklonowanie repozytorium poleceniem:
+	git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S
+3. Stworzenie pliku sprawozdanie txt i opisywanie w nim poszczegolnych punktow.
+4. Utworzenie nowego brancha w repozytorium lokalnym majacego postac "inicjaly+nr indeksu", czyli w moim wypadku "DB400735" poleceniem:
+	 git checkout -b DB400735
+   Polecenie to takze odrazu przelacza nas na utworzonego brancha.
+   Na branchu utworzylem folder DB400735 a w nim folder Lab01, w ktorym umiescilem plik sprawozdanie.txt
+   Sprawdzilem status aby byc pewnym ze jestem na odpowiednim branchu oraz czy dodane zostaly pliki do przyszlego commita poleceniem:
+   	git status
+   Nastepnie dodalem wszystkie pliki znajdujace sie w aktualnym katalogu do commita poleceniem
+   	git add .
+   Ostatecznie wykonalem commita z jasnym jego opisem, dzieki poleceniu:
+   	git commit -m "Lab01 pkt4 pierwszy commit"
+5. Wyslanie zmian na remota i utworzenie nowej galezi poleceniem
+	git push --set-upstream origin DB400735
+   Nastepnie zrobienie pull requesta
