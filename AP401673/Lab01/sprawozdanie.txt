@@ -1,0 +1,16 @@
+Sprawozdanie lab01
+
+1.
+git clone [adres]  - polecenie za pomocą którego sklonowano repozytorium 
+
+
+2.
+git checkout -b AP401673 - za pomocą tego polecenia stworzono nową gałąź i się na nią przełączono wcześniej będąc na odpowiedniej gałęzi grupy.
+
+3.
+mkdir - za pomocą tego polecenia twrzono zadane katalogi
+
+4.
+git add . dodaje wszystkie elementy do repozytorium
+git commit -m 'notatka' dodaje nowego commita flaga -m pozwala no dodanie notatki
+git push --set-upstream origin AP401673 pushuje zmiany na repozytorium flaga --set-upstream pozwala na spushowanie na brancha który nie istnieje
