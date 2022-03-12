@@ -25,3 +25,23 @@ dodać wiadomość do taga
 - git pull - Pobranie zmian z repozytorium zdalnego będąc na głównym branchu
 - git checkout Grupa1 - Przejście na branch odpowiadającego grupie
 - git checkout -b [nazwa brancha] - Utworzenie nowego brancha odpowiadającego danemu zadaniu
+
+4. Utworzenie git hooka do sprawdzania czy w treści commita zawarte zostały
+inicjały i numer indeksu
+
+Treść hooka: 
+
+#!/bin/bash
+
+MSG="$1"
+
+if ! grep -qE "PA402099" "$MSG";then
+    cat "$MSG"
+    echo "Your commit message must contain 'PA402099'"
+    exit 1
+fi
+
+
+
+
+
