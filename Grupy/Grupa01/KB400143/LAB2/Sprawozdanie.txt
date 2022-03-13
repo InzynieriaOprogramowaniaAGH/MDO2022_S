@@ -33,9 +33,10 @@ Po tym przełączono się na branch Grupa1 w celu sprawdzenia czy ona istnieje.
 Nastęnie utworzono nową branch o nazwie zgodnej z instrukcją i sie na nią przełączono.
 
 4.Następnie należało napisać Git hook'a, który sprawdzał commity czy zaczyna się od KB400143. 
-W tym celu wykorzystano plik pre-commit, usunięto mu rozszerzenie sample. Skrypt ma postać:
-#!/bin/sh
-if ! grep "KB400143*" "$1"; then
+W tym celu wykorzystano plik commit-msg, usunięto mu rozszerzenie sample. Skrypt ma postać:
+#!/bin/bash
+name="KB400143"
+if [[ $(cat $1) =~ $name ]] ;then
 	echo "ERROR! Ran out KB400143"
 	exit 1
 fi
