@@ -1,0 +1,42 @@
+1.Klucz SSH i połączenie SSH zamiast HTTPS
+
+W celu wykonania tego punktu musiałem stworzyć klucz SSH za pomocą komendy:
+ssh-keygen -t rsa -b 4096 -C "email".
+ 
+Podczas tej części podano również hasło do klucza oraz ścieżke gdzie miał się on znajdować.
+
+Następnie dodano działającego agenta SSH do obsługi klucza SSH: 
+eval "$(ssh-agent -s)" - uruchomienie agenta, 
+ssh-add ~sciezka - dodanie klucza do agenta.
+
+Zrzuty ekranu z tej części nie zostały dodane ze względu na bezpieczeństwo.
+ 
+Również na koncie GitHuba należało dodać klucz SSH zgodnie z instrukcją(skopiowano go za pomocą komendy clip < ~sciezka.pub).
+
+Następnie należało poinformować Git'a o zmianie sposobu logowania:
+git remote -v - pokazuje sposób połączenia,
+git remote set-url origin git@github.com:InzynieriaOprogramowaniaAGH/MDO2022_S.git - zmiana połączenia na SSH.
+
+2. Użyłem komendy "git add ." aby dodać nowe pliki. 
+
+Następnie nadano "Taga" na aktualnego commita o podanej nazwie za pomocą komendy:
+- git tag -a nazwa -m "komentarz" - opcja 'a' utworzy niepodpisany obiekt tagu, 'm' użyje podanego komunikatu.
+
+Po tym wrzucono zmianę na swojego brancha na origin za pomocą komendy:
+git push --follow-tags - zachowuje tagi
+
+3.Po tym zaaktualizowano ścieżkę plików zgodnie z instrukcją.
+
+Następnie należało wykonać git pulla, aby ściągnąć zmiany z gita. Po tym dokonano pulla: git pull --all.
+Po tym przełączono się na branch Grupa1 w celu sprawdzenia czy ona istnieje. 
+
+Nastęnie utworzono nową branch o nazwie zgodnej z instrukcją i sie na nią przełączono.
+
+4.Następnie należało napisać Git hook'a, który sprawdzał commity czy zaczyna się od KB400143. 
+W tym celu wykorzystano plik pre-commit, usunięto mu rozszerzenie sample. Skrypt ma postać:
+#!/bin/sh
+if ! grep "KB400143*" "$1"; then
+	echo "ERROR! Ran out KB400143"
+	exit 1
+fi
+echo "Commit is correct!"
