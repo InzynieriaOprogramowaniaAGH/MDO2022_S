@@ -42,8 +42,11 @@ git checkout -b JL400647 ITE-GCL05
 <img src="2.png"  
 alt="Tworzenie folderu i sprawozdania">
 ## Przesłanie zmian
+
+Git commit:
 <img src="3.png"  
 alt="git commit">
 
+Git push:
 <img src="5.png"  
 alt="git push">
