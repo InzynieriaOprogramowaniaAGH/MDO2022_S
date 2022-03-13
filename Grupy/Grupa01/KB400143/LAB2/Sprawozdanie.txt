@@ -36,7 +36,7 @@ Nastęnie utworzono nową branch o nazwie zgodnej z instrukcją i sie na nią pr
 W tym celu wykorzystano plik commit-msg, usunięto mu rozszerzenie sample. Skrypt ma postać:
 #!/bin/bash
 name="KB400143"
-if [[ $(cat $1) =~ $name ]] ;then
+if ! [[ $(cat $1) =~ $name ]] ;then
 	echo "ERROR! Ran out KB400143"
 	exit 1
 fi
