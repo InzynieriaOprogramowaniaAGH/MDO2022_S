@@ -1,0 +1,23 @@
+Szymon Rewilak gr lab07
+
+Sprawozdanie LAB01
+
+1. Sklonowano repozytorium z użyciem klucza SSH:
+
+git clone git@github.com:InzynieriaOprogramowaniaAGH/MDO2022_S.git
+
+2. Utworzono nowego brancha:
+git checkout -b SR401145
+
+3. Utworzono nowy katalog Lab01 oraz plik sprawozdanie.txt
+
+4. Dodano do folderu zrzuty ekranu
+
+5. Dodano zmiany do commita: 
+git add .
+
+6. Utworzono commita z notatka: 
+git commit -m
+
+7. Pushowanie commita do brancha SR401145.
+git push --set-upstream origin SR401145
