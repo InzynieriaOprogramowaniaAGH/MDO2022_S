@@ -1,0 +1,12 @@
+1. Sklonowanie repozytorium z użyciem SSH:
+git clone git@github.com:InzynieriaOprogramowaniaAGH/MDO2022_S.git
+
+2. Utworzenie nowego brancha: 
+git checkout -b SR401145
+
+3. Dodanie wszystkich nowych zmian do commita:
+git add .
+
+4. Utworzenie commita z notatka: 
+git commit -m "Dodano sprawozdanie"
+
