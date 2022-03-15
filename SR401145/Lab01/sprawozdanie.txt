@@ -10,3 +10,6 @@ git add .
 4. Utworzenie commita z notatka: 
 git commit -m "Dodano sprawozdanie"
 
+5. Pushowanie na nowego brancha SR401145: 
+git push --set-upstream origin SR401145
+
