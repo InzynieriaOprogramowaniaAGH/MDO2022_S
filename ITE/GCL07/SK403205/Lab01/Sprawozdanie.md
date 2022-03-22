@@ -50,10 +50,20 @@ $ git checkout -b SK403205 origin/ITE-GCL07
 ```
 ![](./branch.png)
 
-
 W katalogu grupy utworzono nowy katalog, także o nazwie SK403205
 W nim także utworzono katalog: Lab01
-W nowym katalogu dodano pliki ze sprawozdaniem
+![](./directory.png)
+
+
+W nowym katalogu dodano pliki ze sprawozdaniem za pomocą `git add .`
+![](./git_add.png)
+
+Stworzono komit z komentarzem
+![](./commit.png)
+
+Zmieniono URL z HTTPS na SSH
+Wysłano zmiany do zdalnego repozytorium za pomocą `git push`.
+![](./push.png)
 
 
 
