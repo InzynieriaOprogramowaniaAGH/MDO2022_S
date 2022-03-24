@@ -59,3 +59,15 @@ Zawartość pliku do testowania jest uogólniona na wszystkie testy npm - stąd 
 Po wykonaniu powyższych kroków możliwe jest uruchomienie kontenera przez
   sudo docker start cont_first
 ![działa świetnie](verigut.png)
+
+# Docker compose
+Pożądany efekt uruchomienia
+Nieco inaczej, niż poprzednio, wyświetlony jest pozytywny exit code testów uruchomionych w kontenerze.
+  docker-compose up
+![compose](compose.png)
+
+# Dyskusja kontenera
+Takie wdrożenie obrazu wymagałoby odchudzenia go z całości pakietu npm, ponieważ odpowiada on za ponad 700MB obrazu. Takie wdrożenie miałoby sens, gdyby istniała minimalna instalacja npm pozwalająca na uruchomienie testów i pobranie pakietów o rozmiarze porównywalnym do gita (ok 30MB)
+![obrazy i ich rozmiary](images.png)
+Obraz raczej wymaga oczyszczenia z plików lockfile, jeżeli interakcja z apliakcją w kontenerze będzie warunkowała operacje na nowszych wersjach programów.
+Skoro środowisko + skompilowany output = artefakt, dystrybucja tego obrazu ma sens bez dołączania doinstalowanych pakietów. Wykorzystany projekt jest utrzymywany w sensownym systemie kontroli wersji, a starsze release **npm** i **gita** będzie powszechnie dostępne. Nie przewiduję tutaj tak krytycznych  zależności, które warunkowałyby tworzenie gigabajtowego artefaktu.
