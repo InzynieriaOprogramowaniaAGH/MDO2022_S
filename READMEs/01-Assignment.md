@@ -22,6 +22,7 @@
 5. Utwórz gałąź o nazwie "inicjały & nr indeksu" np. ```KD232144```. Miej na uwadze, że odgałęziasz się od brancha grupy!
 6. Rozpocznij pracę na nowej gałęzi
    - W katalogu właściwym dla grupy utwórz nowy katalog, także o nazwie "inicjały & nr indeksu" np. ```KD232144```
+   - W nim także utwórz katalog: Lab01
    - W nowym katalogu dodaj plik ze sprawozdaniem
    - Dodaj zrzuty ekranu (jako inline)
    - Wyślij zmiany do zdalnego źródła
