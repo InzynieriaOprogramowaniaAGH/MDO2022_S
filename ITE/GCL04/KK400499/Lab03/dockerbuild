@@ -1,0 +1,4 @@
+FROM node
+RUN git clone https://github.com/stemmlerjs/simple-typescript-starter.git
+WORKDIR /simple-typescript-starter/
+RUN npm install && npm run build
