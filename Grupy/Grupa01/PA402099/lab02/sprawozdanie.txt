@@ -1,0 +1,49 @@
+1.1 Wygenerowanie klucza SSH: ssh-keygen -t rsa -b 4096 -C "email"
+
+1.3 Wystartowanie agenta ssh: 
+- eval "$(ssh-agent -s)" - Uruchomienie agenta  
+- ssh-add ~./ssh/id_rsa - Zapisanie hasła do klucza dla agenta 
+
+Dzięki temu agentowi nie trzeba za każdym razem podczas łaczenia się z repozytorium zdalnym
+podawać hasła do klucza SSH
+
+1.5 Zaktualizowanie sposobu łączenia się z repozytorium zdalnym:
+- git remote -v - Wyświetla obecne adresy do łączenia się z repozytorium zdalnym 
+- git remote set-url origin [nowy adres] - Aktualizuje adres do łączenia się z repozytorium 
+zdalnym. 
+
+2. Dodanie taga:
+- git tag -a [nazwa] -m "wiadomość" - Komenda ta z opcją "a" dodaje taga, którym będą mogły
+być oznaczane commmity i będzie je możńa wyszukiwać po tym tagu. Opcja "m" pozwala
+dodać wiadomość do taga
+
+2.1 Skomitowanie i wysłanie zmian na repozytorium zdalne:
+ - git push --follow-tags - Wysyła zmiany na repozytorium zdalne uwzględniając użyte tagi
+
+3.2 Zmiany struktury folderów i branchy:
+- git checkout master - przejście na główny branch
+- git pull - Pobranie zmian z repozytorium zdalnego będąc na głównym branchu
+- git checkout Grupa1 - Przejście na branch odpowiadającego grupie
+- git checkout -b [nazwa brancha] - Utworzenie nowego brancha odpowiadającego danemu zadaniu
+
+4. Utworzenie git hooka do sprawdzania czy w treści commita zawarte zostały
+inicjały i numer indeksu
+
+Treść hooka: 
+
+#!/bin/bash
+
+MSG="$1"
+
+if ! grep -qE "PA402099" "$MSG";then
+    cat "$MSG"
+    echo "Your commit message must contain 'PA402099'"
+    exit 1
+fi
+
+
+
+
+
+
+

@@ -1,0 +1,30 @@
+Polecenia git:
+
+git remote -v
+        Wyświetla skonfigurowane serwery git'a
+git remote set-url NAZWA ADRES
+        Konfiguruje serwer git'a
+
+git tag -a NAZWA -m KOMENTARZ
+        Tworzy nowy tag
+git push --follow-tags
+        Wysyła zmiany na zdalny serwer git razem z tagami
+
+git mv FROM TO
+        Przenosi pliki
+
+git merge NAZWA_BRANCHA
+        Scala gałęzie
+
+Kod git hooka:
+
+#!/bin/bash
+
+MSG="$(cat $1)"
+
+if [[ "$MSG" =~ ^AC401177 ]];then
+        exit 0
+fi
+echo "Commit message must starts with AC401177!"
+exit -1
+

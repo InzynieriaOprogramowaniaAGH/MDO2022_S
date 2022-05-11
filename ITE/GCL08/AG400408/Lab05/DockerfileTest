@@ -1,0 +1,6 @@
+FROM irssibld
+# FROM ubuntu
+
+# WORKDIR build
+
+# RUN meson test

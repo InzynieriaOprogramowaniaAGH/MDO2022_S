@@ -1,0 +1,18 @@
+#!/usr/bin/python3
+
+import sys
+
+pathToFile = sys.argv[1]
+opened = open(pathToFile, 'r') # 
+content = opened.read()
+
+title = content.split('\n')[0]
+msg = content.split('\n')[2]
+
+if ("MS400200" != title):
+	print("Wrong commit title!")
+	exit(1)
+
+if ("2" not in msg):
+	print("Wrong commit message!")
+	exit(1)

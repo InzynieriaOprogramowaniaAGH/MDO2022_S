@@ -1,0 +1,63 @@
+Sprawozdanie LAB02 Adrian Dąbrowski 401894 
+
+(Podpunkt 1)
+
+ssh-keygen -t rsa -b 4096 -C "twoj-mail".
+    generowanie klucza, kolejno dodano klucz publiczny do konta github
+
+git remote set-url origin git@github.com:InzynieriaOprogramowaniaAGH/MDO2022_S.git"
+    zmienia połącznie na SSH.
+
+git remote -v
+    Sposób połączenia do repozytorium (wyświetlenie sposobu)
+
+
+(Podpunkt 2)
+
+
+git tag -a AD401894_Lab02 -m "Adrian Dąbrowski, Lab 01 wszystko działa, 10/10 proszę"
+    Takowanie commita - (git tag) możemy w wydajny sposób oznaczyć i później pobrać praktycznie dowolny punkt w historii naszych zmian.
+
+git push --follow-tags
+    Wypychanie odpowiednich tagów z adnotacjami
+
+(Podpunkt 3)
+
+git checkout -b Grupa02-AD401894_Lab02 
+    Tworzenie nowego brancha od brancha Grupa2
+
+
+mkdir Grupy/Grupa02
+    Tworzenie grupy katalogów
+
+git mv AD401894 Grupy/Grupa02
+    przeniesiono katalog AD401894 do nowo utworzonych folderów (za pomocą git mv, dzięki temu w historii nie będzie wzmianki o usunięciu i utowrzeniu plików na nowo)
+
+(Podpunkt 4)
+
+touch ./git/hooks/commit-msg 
+    Utowrznie pliku githooka  (skrypt weryfikujący, że każdy Twój commit message zaczyna się od "twoje inicjały + nr indexu")
+
+
+GitHook kod (treść)
+
+```
+#!/bin/bash
+
+ID="AD401894"
+
+if ! [[ $(cat $1) == $ID* ]] ;then
+    echo "Nazwa commitu musi zawierać $ID"
+    exit 1
+fi
+
+```
+
+chmod +x commit-msg 
+    Nadano uprawnienia do wykonywania
+
+(Podpunkt 5)
+
+Zrobione merge do  Grupa2
+
+

@@ -1,0 +1,55 @@
+Dominik Budzowski
+
+Sprawozdanie LAB02
+
+1. Zmienilem sposob logowania do repozytorium z HTTPS na bezpiecznijszy przy uyciu klucza SSH.
+   Potrzebowalem klucza SSH ktorego w git bashu wygenerowalem poleceniem:
+   	ssh-keygen -t rsa -b 4096 -C "dodomax7979@gmail.com"
+   Nastepnie dodalem agenta SSH do obslugi klucza SSH poleceniem:
+   	eval "$(ssh-agent -s)"
+   Dodalem moj SSH prywatny klucz do agenta poleceniem:
+   	ssh-add ~/.ssh/id_rsa
+   Nastepnie dodalem publiczny klucz SSH do mojego konta na GitHub.
+   Poinformowalem Git'a o zmianie sposobu logowania poleceniem:
+   	git remote set-url origin git@github.com:InzynieriaOprogramowaniaAGH/MDO2022_S.git
+   Na koniec wyswietlilem czy zmiana sie powioddla (teraz zaczyna sie od git@) poleceniem:
+   	git remote -v
+2. Nadalem "Tag" na aktualnego commita poleceniem:
+  	git tag -a DB400735_Lab02 -m "Dominik Budzowski, Lab 02"
+3. W celu utworzenia nowej konfiguracji folderow najpierw przelaczylem sie na mastera poleceniem:
+	git checkout master
+   Nastepnie zaktualizowalem repozytorium poleceniem:
+   	git pull
+   Nastepnie przelaczylem sie na branch Grupa1 poleceniem:
+   	git checkout Grupa1
+   Utworzylem nowa branch poleceniem:
+   	git checkout -b Grupa01-DB400735_Lab02
+   Umiescilem pliki w folderze Lab02
+4. Stworzylem git hooka ktory weryfikuje czy commit zaczyna sie od DB400735 w tym celu:
+   utworzylem plik commit-msg w katalogu .git/hooks/,
+   nadalem mu odpowiednie uprawnienia poleceniem:
+   	chmod +x commit-msg
+   kod githooka:
+   
+#!/bin/bash
+name='DB400735*'
+msg="Incorrect commit message!!"
+if ! grep -iqE "$name" "$1"; then
+	echo "$msg"
+	exit 1
+fi
+echo "Correct commit message."
+
+5. W celu dolaczenia swoich zmian
+   Przelaczylem sie na branch'a grupy poleceniem:
+   	git checkout Grupa1
+   z margowalem brancha grupy z moim branchem poleceniem:
+   	git merge Grupa01-DB400735_Lab02
+   Usunolem swojego brancha poleceniem:
+   	git branch -d Grupa01-DB400735_Lab02
+   Zaktualizowalem i zacommitowalem branch grupowy poleceniami:
+   	git pull
+   	git commit -m "DB400735 LAB02 pkt5 git pull after changes"
+   Wykonalem polecenie:
+   	git push --set-upstream origin Grupa1
+   Wykonalem pull requesta.

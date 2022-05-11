@@ -1,0 +1,60 @@
+pipeline {
+	parameters { 
+		string(name: 'VERSION', defaultValue: '1.0.0', description: '') 
+		booleanParam(name: 'PROMOTE', defaultValue: true, description: '')
+	}
+			
+	agent any
+
+	stages {
+		stage('Clone repo into vol') {
+			steps {
+				sh 'docker volume create vol-in'
+				sh 'docker rm helper || true'
+				sh 'docker run -v vol-in:/data --name helper busybox true'
+				sh 'cd ~/ && ls bashtop || git clone --recurse-submodules https://github.com/aristocratos/bashtop.git'
+				sh 'docker cp ~/bashtop helper:/data'
+				sh 'docker rm helper'
+			}
+	}
+  	stage('Build') {
+	    steps {
+			echo 'Installing bashtop'
+			dir("./ITE/GCL08/PW401793") {
+				sh 'docker build -t bashtop-build .'
+				sh 'docker run --mount type=volume,src="vol-in",dst=/app --mount type=volume,src="vol-out",dst=/app/build bashtop-build bash -c "cd /app/bashtop && make install; rm -r /app/build/* && cp -R /usr/local/bin/bashtop /app/build"'
+         	}
+		}
+	}
+    stage('Test') {
+    	steps {
+        	echo 'Testing bashtop'
+            dir("./ITE/GCL08/PW401793") {
+                sh 'docker build . -t bashtop-test -f Dockerfile-test'
+                sh 'docker run -t --mount type=volume,src="vol-in",dst=/app/build bashtop-test bash -c "cd /app/build/bashtop && sh test.sh"'
+            }
+        }
+	}
+	stage('Deploy') {
+		steps {
+			echo 'Deploying bashtop'
+			sh 'docker rm -f deploy || true'
+			sh 'docker run -d --name deploy --mount type=volume,src="vol-out",dst=/usr/local/bin ubuntu /usr/local/bin/bashtop'
+			sh 'sleep 5; exit $(docker inspect deploy --format="{{.State.ExitCode}}")'
+			sh 'docker rm -f deploy'
+		}
+	}
+	stage ('Publish') {
+        when { expression { return params.PROMOTE } }
+		steps {
+        	echo "Publishing bashtop"
+			sh 'rm -rf /var/jenkins_home/workspace/artifacts && mkdir /var/jenkins_home/workspace/artifacts'
+			sh 'docker container rm publish || true'
+			sh 'docker run -d --name publish --mount type=volume,src="vol-out",dst=/usr/local/app --mount type=bind,source=/var/jenkins_home/workspace/artifacts,target=/usr/local/copy ubuntu  bash -c "chmod -R 777 /usr/local/app && cp -R /usr/local/app/. /usr/local/copy"'
+			sh "tar -zcvf bashtop-${params.VERSION}.tar.gz -C /var/jenkins_home/workspace/artifacts ."
+			archiveArtifacts artifacts: "bashtop-${params.VERSION}.tar.gz"
+		}
+    }
+	}
+}
+

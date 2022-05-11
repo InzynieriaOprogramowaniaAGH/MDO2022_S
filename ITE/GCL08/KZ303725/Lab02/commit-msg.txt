@@ -1,0 +1,17 @@
+#!/bin/bash
+
+title=`head -n1 $1`
+title_pattern="KZ303725"
+
+message=`tail -n1 $1`
+message_pattern="(02)"
+
+if ! [[ "$title" = $title_pattern ]]; then
+    echo "Bad commit title"
+    exit 1
+fi
+
+if ! [[ "$message" =~ $message_pattern ]]; then
+    echo "Bad commmit message"
+    exit 1
+fi

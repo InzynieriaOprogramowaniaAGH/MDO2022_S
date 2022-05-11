@@ -1,0 +1,44 @@
+Sprawozdanie 02
+
+
+1.Klucz SSH i połączenie SSH zamiast HTTPS
+
+  1.1 ssh-keygen -t rsa -b 4096 -C "email": generowanie klucza SSH dla podanego maila
+
+  1.2 eval "$(ssh-agent -s)": uruchomienie agenta 
+
+  1.3 ssh-add ~.ssh/id_rsa: dodanie klucza do agenta 
+
+  1.4 git remote -v: pokazuje sposób połączenia po SSH
+      git remote set-url origin git@github.com:InzynieriaOprogramowaniaAGH/MDO2022_S.git: zmiana połączenia na SSH
+
+
+2.  git tag -a nazwa -m "komentarz": tworzenie taga, -a utworzy niepodpisany obiekt tagu, -m pozwoli dodać do taga wiadomość
+
+  2.1 git push --follow-tags: wypychanie odpowiednich tagów z adnotacjami podczas wypychania gałęzi
+
+
+3. Uporządkowanie branch'y i folderów: pogrupowanie w grupy laboratoryjne
+
+  3.1 git mv KB401483 Grupy/Grupa01: przeniesienie folderu KB401483 do folderów nowo utworzonych 
+  
+  3.2 git checkout -b Grupa01-KB401483_Lab02: tworzenie nowego brancha oddzielając go od swojego grupowego brancha
+ 
+
+4. GitHook skrypt weryfikujący, że każdy commit message zaczyna się od "inicjały + nr indexu".
+
+#!/bin/bash
+
+commit_mesage="KB401483"
+
+
+if ! grep -qE "$commit_mesage" "$1" ;then
+
+     echo "commit jest błędny, ponieważ nie zawiera KB401483"
+     exit 1
+fi
+     echo "commit jest poprawny"
+
+
+
+

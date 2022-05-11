@@ -1,0 +1,24 @@
+#!/bin/zsh
+
+MESSAGE=$1
+CONVERTED_MESSAGE=`head -n1 $MESSAGE`
+CONVERTED_CONTENT=`tail -n +2 $MESSAGE`
+ID="MW401139"
+LAB="Lab02"
+
+echo "CHECKING YOUR COMMIT..."
+
+if [[ "$CONVERTED_MESSAGE" == "$ID" ]]
+then
+  if [[ "$CONVERTED_CONTENT" =~ .*"$LAB".* ]]
+   then
+      exit 0
+   else
+      echo "Your commit content should contains: $LAB"
+      exit 1
+   fi
+else
+  echo "Your commit title should be: $ID"
+  exit 1
+fi
+

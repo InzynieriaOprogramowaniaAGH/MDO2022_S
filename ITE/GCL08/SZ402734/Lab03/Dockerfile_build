@@ -1,0 +1,6 @@
+FROM node
+RUN apt-get update
+Run git clone https://github.com/microsoft/TypeScript.git
+WORKDIR /TypeScript/
+RUN npm install -g typescript
+RUN npm install -g gulp && npm ci

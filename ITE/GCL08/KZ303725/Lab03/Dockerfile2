@@ -1,0 +1,3 @@
+FROM oi:latest
+WORKDIR "/calculator"
+RUN npm test

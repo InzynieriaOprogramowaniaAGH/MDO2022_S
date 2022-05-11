@@ -1,0 +1,3 @@
+FROM build-restic:latest
+WORKDIR /restic/
+RUN make test

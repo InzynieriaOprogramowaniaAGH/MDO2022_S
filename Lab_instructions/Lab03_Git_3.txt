@@ -1,0 +1,28 @@
+Temat:
+Integracja narzędzi walidacji i weryfikacja kodu z repozytorium. 
+Łączenie, dzielenie repozytoriów, sub-repozytoria.
+
+Uwagi wstępne: 
+- korzystamy z tego samego repo co w zeszłym tygodniu.
+- po wykonaniu każdego numerowanego polecenia, wykonaj zrzut ekranu z efektem twojej pracy - będzie to potrzebne później.
+- w czasie wykonanywania zadania pisz plik "sprawozdanie.txt", zawierający treść instrukcji którymi się posłużyłeś do wykonania zadania.
+- Zwróć uwagę by w komentarzu do commita zawrzeć czytelną informację w ramach którego ćwiczenia laboratoryjnego i którego zdania to robisz.
+- Upewnij się że jesteś na swoim branchu stworzonym na poprzednich zajęciach. (Jeżeli go usnąłeś, to stwórz go jeszcze raz i przełącz się na niego).
+- Na mastera wrzucamy zmiany tylko przez pull requesta! 
+
+Fast-forward na branchach osobistych.
+1. Stwórz brancha osobistego na te zajęcia wg. schematu z poprzedniego tygodnia (np.: Grupa01-KM123456_Lab03). Pamiętaj stworzyć go od swojego brancha grupowego!
+
+2. Dodaj git hooka którego napisałes na poprzednich zajęciach do swojego folderu (np.: "MIFT2021/Grupy/Grupa1/KM123456/Lab02/hooks/pre-commit".
+
+3. Zainstaluj Docker'a (https://www.docker.com/) na swoim środowisku pracy.
+
+4. Zarejestruj sobie konto w Docker HUB (https://hub.docker.com/).
+
+5. Stwórz plik Dockerfile, który będzie bazował na najnowszym ubuntu (ubuntu:latest). Dodaj go do swojego brncha. 
+5.1 Upewnij się będzie miał doinstalowanego git'a, jeżeli jeszcze go nie ma (w Dockerfile).
+
+6. Uruchom kontener, ściągnij na niego nasze repozytorium. Upewnij się że jest tam twój branch.
+
+
+Uwaga: zgłoś zadanie na MS Teams!
