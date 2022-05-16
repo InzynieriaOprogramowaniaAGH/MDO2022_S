@@ -1,0 +1,88 @@
+Grzegorz Surdziel
+pipeline {
+
+  agent any
+
+  parameters {
+    string(name: 'Version', defaultValue: '1.0.0', description: 'Version')
+    booleanParam(name: 'Promote', defaultValue: true, description: 'Promote statement')
+    string(name: 'Dockerfiles', defaultValue: './ITE/GCL07/GS404349/Lab05', description: 'Dockerfiles path')
+  }
+
+  stages {
+
+    stage('Clone') {
+      steps {
+        echo 'Cloning boil'
+        sh 'docker volume create input-volume'
+        sh 'docker rm tmpContainer || true'
+        sh 'docker run --rm --name tmpContainer --mount "type=volume,src=input-volume,dst=/boilik" node bash -c "cd ~/ && ls boil || git clone https://github.com/TwixerR/nodzik;cp -R boil /boilik; ls /boilik"'
+      }
+    }
+
+    stage('Build') {
+      steps {
+        echo 'Buildig boil with npm'
+        dir("${params.Dockerfiles}") {
+          sh 'docker build . -t boil_alpine -f Dockerfile'
+          sh 'docker volume create output-volume'
+          sh 'docker rm boil-build || true'
+          sh 'docker run --rm --name boil-build --mount "type=volume,src=input-volume,dst=/boilik" --mount "type=volume,src=output-volume,dst=/boilik_build" boil_alpine bash -c "cd /boilik/boil && npm install; cp -R /boilik/boil /boilik_build"'
+        }
+      }
+    }
+
+    stage('Test') {
+      steps {
+        echo 'Testing boil with npm'
+        dir("${params.Dockerfiles}") {
+          sh 'docker rm boil-test || true'
+          sh 'docker run --rm --name boil-test --mount "type=volume,src=input-volume,dst=/boilik_test" boil_alpine bash -c "cd /boilik_test/boil && npm test"'
+        }
+      }
+    }
+
+    stage('Deploy') {
+      steps {
+        echo 'Deploying boil'
+        sh 'docker rm -f boil-deploy || true'
+        sh 'docker run --name boil-deploy --mount "type=volume,src=output-volume,dst=/usr/local/boilik" boil_alpine bash -c "cd /usr/local/boilik/boil && npm run"'
+        sh 'sleep 5; exit $(docker inspect boil-deploy --format="{{.State.ExitCode}}")'
+        sh 'docker rm -f boil-deploy'
+      }
+    }
+
+    stage('Prepare publish') {
+      when {
+        expression {
+          return params.Promote
+        }
+      }
+      steps {
+        echo 'Preparing publish'
+        sh 'ls /var/jenkins_home/workspace/artifacts || mkdir /var/jenkins_home/workspace/artifacts'
+      }
+    }
+	stage('Publish') {
+      when {
+        expression {
+          return params.Promote
+        }
+      }
+      agent {
+        docker {
+          image 'node:alpine'
+          args '--rm --mount "type=volume,src=output-volume,dst=/usr/local/boilik" --mount "type=bind,source=/var/jenkins_home/workspace/artifacts,dst=/usr/local/copy" -u root:root'
+        }
+      }
+      steps {
+        sh 'rm -rf /usr/local/copy/* || true'
+        sh "cd /usr/local/boilik/boil && npm version --allow-same-version ${params.Version} && npm pack"
+        sh "mv /usr/local/boilik/boil/boil-${params.Version}.tgz /usr/local/copy"
+        dir('/var/jenkins_home/workspace/artifacts') {
+          archiveArtifacts artifacts: "boil-${params.Version}.tgz"
+        }
+      }
+    }
+  }
+}
