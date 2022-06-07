@@ -1,4 +1,4 @@
-# Sprawozdanie z laboratorium 1
+# Sprawozdanie z laboratorium 2
 #Piotr Kulis GCL04
 
 ![ssh](SSH.png "ssh")
