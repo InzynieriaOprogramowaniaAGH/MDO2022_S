@@ -69,8 +69,10 @@ CMD [ "exit", "1" ]
 
 ![img](pods_0_t.PNG)
 
-9. Wyswietlenie repliki z wdrozenia z obrazem konczacym sie bledem poleceniem `kubectl describe pods kn-nginx-deployment-7db67c9dd9-9dzcg
+9. Wyswietlenie repliki z dzialajacym nginx i z obrazem konczacym sie bledem poleceniem `kubectl describe pods kn-nginx-deployment-7db67c9dd9-9dzcg
 `
+![img](good_nginx.PNG)
+
 
 ![img](error_pods.PNG)
 
