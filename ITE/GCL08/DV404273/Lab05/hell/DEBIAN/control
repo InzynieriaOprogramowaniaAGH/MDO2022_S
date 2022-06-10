@@ -1,5 +1,5 @@
 Package: hell
 Version: 0.2
 Maintainer: King Foo
-Architecture: all
+Architecture: amd64
 Description: hellhellhell
