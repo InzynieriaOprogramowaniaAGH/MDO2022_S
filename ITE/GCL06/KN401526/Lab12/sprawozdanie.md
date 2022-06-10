@@ -33,6 +33,10 @@ spec:
 
 ![img](apply.PNG)
 
+![img](pods_4_t.PNG)
+
+![img](pods_4.PNG)
+
 3. Zbadanie nowego stanu poleceniem `kubectl rollout status -f deploy.yaml`
 
 ![img](rollout.PNG)
@@ -49,9 +53,9 @@ CMD [ "exit", "1" ]
 
 6. Zwiekszenie liczby replik z `4` na `7`
 
-![img](pods_4_t.PNG)
+![img](pods_7_t.PNG)
 
-![img](pods_4.PNG)
+![img](pods_7.PNG)
 
 7. Zmniejszenie ilosci replik z `7` na `1` 
 
@@ -83,6 +87,8 @@ CMD [ "exit", "1" ]
 ![img](undo.PNG)
 
 ![img](undo_2.PNG)
+
+
 
 
 
