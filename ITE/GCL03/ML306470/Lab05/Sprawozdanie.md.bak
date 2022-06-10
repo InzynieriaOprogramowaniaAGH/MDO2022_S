@@ -52,12 +52,10 @@
  
  4. Następnie należy ponownie uruchomić pipeline tym razem wybierająć opcję "Uruchom z parametrami" (powinna zastąpić opcję "Uruchom" - należy jednak odświeżyć stronę).
  
- Tym razem przed uruchomieniem pipeline będzie konieczne wprowadzenie parametrów opisanych w kroku 3, należy je ustawić wedle woli, a następnie kliknąć przycisk "Buduj".
+ Tym razem przed uruchomieniem pipelina będzie konieczne wprowadzenie parametrów opisanych w kroku 3, należy je ustawić wedle woli, a następnie kliknąć przycisk "Buduj".
+ 
  
  ![](ScreenShots/RunWithParameters.png?raw=true)
- 
- 
- Po zakończeniu działania pipeline w przypadku zaznaczenia parapetru publikuj na stronie pojawi się artefakt projektu (po odświeżeniu strony). W przypadku tej aplikacji będzie to plik jar zawierający kod wykonawczy wraz z wszystkimi jego zależnościami. Można go po prostu uruchomić na komputerach z zainstalowaną virtualną maszyną Javy.
  
  ![](ScreenShots/PipelineCompleted.png?raw=true)
  
