@@ -87,9 +87,7 @@
 # Instalacja nienadzorowana
 
 - Zmieniono zawartość wcześniej pobranego pliku anaconda-ks.cfg
-    ```
-    ANACONDAAA
-    ```
+
 
 - plik umieszczono w reozytorium na gitHub
 
