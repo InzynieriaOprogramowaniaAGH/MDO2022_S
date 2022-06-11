@@ -1,12 +1,12 @@
 # Lab11 - Krystian Zapart
 
-###Zainstalowany kubectl
-![vers](./screenshots/vers.jpg)
-###node 
-![nodes](./screenshots/nodes.jpg)
-###Dashboard minikube'a
-![dash](./screenshots/dash.jpg)
-###Dockerfile aplikacji Calculator
+### Zainstalowany kubectl
+![vers](./screenshots/vers.png)
+### Nody minikuba 
+![nodes](./screenshots/nodes.png)
+### Dashboard minikube'a
+![dash](./screenshots/dash.png)
+### Dockerfile aplikacji Calculator
 
 ```
 FROM node:10
@@ -22,10 +22,10 @@ EXPOSE 3000
 CMD [ "npm", "start" ]
 ```
 
-###Uruchamianie aplikacji w kontenerze 
-![image](./screenshots/image.jpg)
+### Uruchamianie aplikacji w kontenerze 
+![image](./screenshots/image.png)
 
-###Utworzenie Poda
+### Utworzenie Poda
 
 ```
 apiVersion: v1
@@ -43,8 +43,8 @@ spec:
 
 ```
 
-![pod](./screenshots/pod.jpg)
+![pod](./screenshots/pod.png)
 
-###Uruchomiona aplikacja
-![kubernetes](./screenshots/kubernetes.jpg)
-![calc](./screenshots/calc.jpg)
+### Uruchomiona aplikacja
+![kubernetes](./screenshots/kubernetes.png)
+![calc](./screenshots/calc.png)
