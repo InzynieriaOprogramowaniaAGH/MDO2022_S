@@ -1,0 +1,58 @@
+pipeline {
+    agent any
+   
+	parameters {
+		string(name: 'version', defaultValue: '', description: 'app version')
+	}
+
+    stages {
+  
+        stage("build") {
+            steps {
+                echo "building.." 
+				   sh 'docker build . -f build.dockerfile -t builder'
+            }
+        }
+        stage('test') {
+            steps {
+			  sh 'docker build . -f test.dockerfile -t tester'
+			  sh' docker run tester'
+            }
+        }
+         stage('deploy') {
+            steps {
+               echo 'deploying..'
+                 sh  'docker build . -f deploy.dockerfile -t deploy'
+				 sh 'docker stop $(docker ps -a -q)'
+				 sh 'docker run  -d -p 3000:80 deploy '               
+            }
+        }
+        stage('publish') {
+		environment{
+			version = "${params.version}"
+		}
+            steps {
+               echo "publishing.."
+			    sh 'docker build . -f publish.dockerfile -t publish'
+				sh "docker run --volume /var/jenkins_home/workspace/volumes:/final publish mv nodejs.tar.xz /final"
+				echo "NODEJS.ORG VERSION ${params.version} HAS BEEN PUBLISHED" 	
+            }
+        }
+    }
+	
+	post {
+		failure {
+			 //mail to: 'w.mlynarczyk20@gmail.com',
+             //subject: "Failed Pipeline",
+             //body: "Something is wrong with"
+			 echo 'Something went wrong!'
+		}
+		always {
+            echo 'The end'
+           // deleteDir() /* clean up our workspace */
+        }
+        success {
+            echo 'Pipeline has been executed successfully.'
+        }
+    }
+}
