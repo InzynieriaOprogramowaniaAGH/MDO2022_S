@@ -58,7 +58,7 @@ Następną częścią będzie ustawienie serwera fedory na maszynie wirtualnej. 
 Gdy pobierzemy artefakt z Jenkinsa należy do umieścić na serwerze fedory. W celu transferu plików wykorzystałem ponownie Filezillę.
 ![artifacttransfer](./screeny/artifact_transfer.png)
 
-Po przeniesieniu artefaktu na serwer upewniłem się, że plik istnieje. W tym celu pobrałem lokalizację pliku za pomocą `find -name nazwa_artefaktu`
+Po przeniesieniu artefaktu na serwer upewniłem się, że plik istnieje. W tym celu pobrałem lokalizację pliku za pomocą `find -name nazwa_artefaktu`  
 ![](./screeny/transfer_complete.png)
 
 ---
@@ -109,11 +109,11 @@ Aby rozwiązać ten problem należy dodać obslugę portu 80/tcp do firewalla.
 Pod spodem ponowne uruchomienie komendy `wget`, jednak tym razem udane.
 ![wgetsuccess](./screeny/wget_artifact_success.png)
 
-Następnie należy pobrać wszystkie zależności do obecnego projektu. W tym celu instalujemy pakiet **npm** za pomocą komendy `dnf install npm -y`:
+Następnie należy pobrać wszystkie zależności do obecnego projektu. W tym celu instalujemy pakiet **npm** za pomocą komendy `dnf install npm -y`:  
 ![npminstall1](./screeny/npm_install_pt1.png)
 ![npminstall2](./screeny/npm_install_pt2.png)
 
-Po instalacji zależności możemy zainstalować nasz program za pomocą artefaktu. Instalacja odbywa się poprzez użycie komendy `npm install code-oss-dev-1.0.0.tgz`.
+Po instalacji zależności możemy zainstalować nasz program za pomocą artefaktu. Instalacja odbywa się poprzez użycie komendy `npm install code-oss-dev-1.0.0.tgz`.  
 ![artifactfail](./screeny/pckg_fail.png)
 
 Po uruchomieniu instalacji programu otrzymujemy powiadomienie o błędzie, iż nie znaleziono pakietu **yarn**. Można go zainstalować za pomocą komendy `npm install --global yarn`. Po zainstalowaniu pakietu, dodatkowo sprawdzam jego wersję.
@@ -192,7 +192,7 @@ Tworzymy katalog `/media/iso/` po czym montujemy w nim obraz z napędu naszej wi
 Tworzymy katalog roboczy `fedora_iso` i kopiujemy do niego obraz z katalogu `/media/iso/`.
 ![cpiso](./screeny/cp_fedora_iso.png)
 
-Kopiujemy plik `anaconda-ks.cfg` do naszego obrazu:
+Kopiujemy plik `anaconda-ks.cfg` do naszego obrazu:  
 ![cpcfg](./screeny/cp_ks_cfg.png)
 
 
