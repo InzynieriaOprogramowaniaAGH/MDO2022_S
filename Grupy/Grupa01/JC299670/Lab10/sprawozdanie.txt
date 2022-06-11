@@ -1,0 +1,10 @@
+
+1. Do wykonania tego ćwiczeniaużyłam uruchominego klasteru Kubernetes (kubectl+Minikube) tak jak na poprzednim ćwiczeniu.
+
+2. Uruchomiłam Minikube Dashboard poleceniem :
+    minikube dashboard
+
+3. Zapoznałam się z dokumentacją tworzenia manifestów dla obiektów "Deployment", która znajduje sie na stronie:
+     https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+
+
