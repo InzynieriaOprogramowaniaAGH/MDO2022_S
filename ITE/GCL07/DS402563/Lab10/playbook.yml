@@ -1,0 +1,14 @@
+---
+- name: Perform some actions on all hosts
+  hosts: all
+  become: yes
+  become_user: root
+  tasks:
+  - name: Ping
+    ansible.builtin.ping:
+  - name: Add RPM Fusion repository
+    ansible.builtin.shell: dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+  - name: Install ncdu
+    ansible.builtin.package:
+      name: ncdu
+      state: present

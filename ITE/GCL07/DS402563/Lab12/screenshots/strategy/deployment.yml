@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+  labels:
+    app: rest-api
+spec:
+  strategy: 
+    type: Recreate
+  replicas: 3
+  selector:  
+    matchLabels:
+      app: rest-api
+  template:
+    metadata:
+      name: api-pod
+      labels:   
+        app: rest-api
+    spec: 
+      containers:
+      - name: api
+        image: dawrr756hj23/spring-boot-api:1.0.1

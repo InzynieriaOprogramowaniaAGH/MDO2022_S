@@ -1,0 +1,69 @@
+pipeline {
+    agent any
+    parameters {
+        booleanParam(name: 'PUBLISH', defaultValue: true, description: 'Push built image to Docker Hub repository.')
+        string(name: 'REPOSITORY', description: 'Docker Hub repository.')
+        string(name: 'VERSION', description: 'Image repository tag (version).')
+        string(name: 'BRANCH', defaultValue: 'dev', description: 'Branch to build.')
+    }
+
+    stages {
+        stage('clone') {
+            steps {
+                sh "docker rm -f clone"
+                sh "docker volume create clone"
+                sh "docker run --mount source=clone,target=/app --name clone ubuntu"
+                sh "rm -rf Java-Algorithms"
+                sh "git clone -b ${BRANCH} https://github.com/Dawr82/Java-Algorithms.git"
+                sh "docker cp ./Java-Algorithms clone:/app"
+                sh "docker rm -f clone"
+            }
+        }
+        stage('build') {
+            steps {
+                sh "docker rm -f builder"
+                sh "docker volume create build"
+                sh "docker build -t builder ITE/GCL07/DS402563/Lab05/builder"
+                sh "docker run --rm --mount source=clone,target=/app --mount source=build,target=/app/Java-Algorithms/build --name builder builder"
+            }
+        }
+        stage('test') {
+            steps {
+                sh "docker rm -f tester"
+                sh "docker build -t tester ITE/GCL07/DS402563/Lab05/tester"
+                sh "docker run --rm --mount source=clone,target=/app --name tester tester"
+            }
+        }
+        stage('deploy') {
+            steps {
+                sh "docker rm -f deployer"
+                sh "docker build -t deployer ITE/GCL07/DS402563/Lab05/deployer"
+                sh "docker run --mount source=build,target=/app --name deployer deployer"
+                sh "docker cp deployer:/app /var/jenkins_home/workspace/${env.JOB_BASE_NAME}/ITE/GCL07/DS402563/Lab05/publish"
+                sh "docker rm -f deployer"
+            }
+        }
+        stage('publish') {
+            when {
+                expression {
+                    return params.PUBLISH
+                }
+            }
+            steps {
+                sh "pwd"
+                sh "docker build -t ${REPOSITORY}:${VERSION} ITE/GCL07/DS402563/Lab05/publish"
+                sh "docker push ${REPOSITORY}:${VERSION}"
+            }
+        }
+        stage('cleanup'){
+            steps {
+                sh "docker rmi builder"
+                sh "docker rmi tester"
+                sh "docker rmi deployer"
+                sh "docker rmi ${REPOSITORY}:${VERSION}"
+                sh "docker volume rm clone"
+                sh "docker volume rm build"
+            }
+        }
+    }
+}
