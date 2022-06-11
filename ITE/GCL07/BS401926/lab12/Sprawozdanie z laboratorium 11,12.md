@@ -32,7 +32,7 @@ a) klonowanie
 
 b) aplikacja zawierała Dockerfile
 
-![x](../lab11/6-dockefile.png)
+![x](../lab11/6-dockerfile.png)
 
 c) docker build
 
@@ -74,7 +74,7 @@ e) przekierowanie portów
 
 a) pod i dashboard
 
-![x](../lab11/11-pod2.png)
+![x](../lab11/pod2.png)
 
 ![x](../lab11/14-dashboard-2.png)
 
