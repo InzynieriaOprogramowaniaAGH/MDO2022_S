@@ -14,13 +14,13 @@ W celu uruchomienia klastra konieczne jest nadanie użytkwonikowi uprawnień i s
 
 ![4](https://user-images.githubusercontent.com/76969470/173193492-e77107c9-8734-41c5-a119-2af74f9ce918.PNG)
 
-Komendą docker pull nginx:latest stowrzono w kontenerze wybrany obraz i uruchomiono nginx ( w komendzie tylko --image=nginx musi się zgadzać z nazwą obrazu, pozostałe dwa wystąpienia można zastąpić inną nazwą
-
-![4,5](https://user-images.githubusercontent.com/76969470/173194425-8231b444-eb32-4fef-90a5-fd08a32d2e71.PNG)
-
 Działanie
 
 ![5Dashboard](https://user-images.githubusercontent.com/76969470/173193493-2cec860f-50aa-492c-a782-0a0ad4c18dd7.PNG)
+
+Komendą docker pull nginx:latest stowrzono w kontenerze wybrany obraz i uruchomiono nginx ( w komendzie tylko --image=nginx musi się zgadzać z nazwą obrazu, pozostałe dwa wystąpienia można zastąpić inną nazwą
+
+![4,5](https://user-images.githubusercontent.com/76969470/173194425-8231b444-eb32-4fef-90a5-fd08a32d2e71.PNG)
 
 Komendą docker pull nginx:latest stowrzono w kontenerze wybrany obraz i uruchomiono nginx ( w komendzie tylko --image=nginx musi się zgadzać z nazwą obrazu, pozostałe dwa wystąpienia można zastąpić inną nazwą
 
