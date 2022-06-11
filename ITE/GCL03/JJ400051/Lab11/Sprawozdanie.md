@@ -33,6 +33,7 @@ Działanie można też sprawdzić za pomocą przekierowywania portów (argumenta
 
 
 Na podstawie dokumentacji powstał pliku wdrożenia dep.yaml, następnie komenda apply
+
 ![8](https://user-images.githubusercontent.com/76969470/173193496-1163cb7b-9882-4e2b-98e8-868cf21502b7.PNG)
 
 ![9](https://user-images.githubusercontent.com/76969470/173193497-44c83b9c-d0a6-42b1-8fac-1a6f80925599.PNG)
