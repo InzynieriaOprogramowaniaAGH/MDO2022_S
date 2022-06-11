@@ -1,0 +1,7 @@
+version: "3"
+
+services:
+  httpd:
+    image: httpd-2137:latest
+    ports:
+      - "8080:80"

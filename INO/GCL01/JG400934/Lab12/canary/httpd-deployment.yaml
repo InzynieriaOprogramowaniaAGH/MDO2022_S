@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose-httpd.yml
+    kompose.version: 1.26.1 (a9d05d509)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: httpd
+  name: httpd-2
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      io.kompose.service: httpd
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose-httpd.yml
+        kompose.version: 1.26.1 (a9d05d509)
+      creationTimestamp: null
+      labels:
+        version: "2.0"
+        io.kompose.service: httpd
+    spec:
+      containers:
+        - image: httpd:latest
+          name: httpd
+          ports:
+            - containerPort: 80
+          resources: {}
+      restartPolicy: Always
+status: {}

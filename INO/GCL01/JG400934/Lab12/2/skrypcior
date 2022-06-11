@@ -1,0 +1,16 @@
+#!/bin/bash
+
+kubectl apply -f httpd-deployment.yaml
+
+sleep 60
+
+check=$(kubectl rollout status  deployment/httpd)
+succ="successfully"
+
+if [[ $check == *"$succ"* ]];
+then
+	echo "jest essa"
+else
+	echo "nie ma essy"
+	kubectl rollout undo deployment httpd
+fi
