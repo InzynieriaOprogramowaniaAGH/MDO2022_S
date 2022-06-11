@@ -41,7 +41,7 @@ Na podstawie dokumentacji powstał pliku wdrożenia dep.yaml, następnie komenda
 
 Prezentacja działania podów
 
-![10](https://user-images.githubusercontent.com/76969470/173193498-dffb46fb-89de-4f58-bfd5-defa7ee63109.PNG)
+![10](https://user-images.githubusercontent.com/76969470/173194985-e2b9a986-82d7-434e-8487-b6f7f9252ac4.PNG)
 
 
 
