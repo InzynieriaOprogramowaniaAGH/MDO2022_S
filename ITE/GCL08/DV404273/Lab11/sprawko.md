@@ -87,7 +87,7 @@ spec:
         - containerPort: 3306
           name: mysql
 ```
-    ![spheal](./screeny/18.png)
+![spheal](./screeny/18.png)
 
 - wdrożono poda za pomocą komendy `kubectl apply -f deploy.yml`
     ![spheal](./screeny/19.png)
