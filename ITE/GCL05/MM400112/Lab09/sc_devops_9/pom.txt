@@ -1,0 +1,1 @@
+scp root@192.168.0.34:/var/www/html/petclinic/spring-petclinic-2.6.0-SNAPSHOT.jar ./petclinic

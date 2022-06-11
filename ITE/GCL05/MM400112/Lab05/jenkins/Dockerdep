@@ -1,0 +1,5 @@
+FROM openjdk:16-jdk-alpine
+
+COPY app app
+
+RUN cd app && ./mvnw dependency:go-offline
