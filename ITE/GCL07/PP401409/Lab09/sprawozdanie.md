@@ -7,11 +7,8 @@
 ### 1. Przygotowanie systemu pod uruchomienie - instalacja pierwszej Fedory
 Pierwszym punktem zajęć była instalacja systemu Fedora Server 36 w VM.  Instalacja polegała na pobraniu obrazu oraz przeprowadzeniu instalacji.
 
-**
-
 ##### 1.1 Instalacja obrazu w VM została przeprowadzona zgodnie z poradnikiem: https://itsfoss.com/install-fedora-in-virtualbox/
 
-**
 ##### 1.2 Uruchomienie systemu a następnie instalacji:
 - Uruchomienie instalacji
 
@@ -155,6 +152,7 @@ Nie klikamy żadnej opcji tylko **wciskamy przycisk TAB** i do komendy która na
 ![](instalacjaPrzebieg.png)
 
 w	 momencie pojawienia się okna instalacji wyłączyłam maszynę i usunęłam dysk optyczny z wirtualnego napędu. Sprawdziłam czy instalacja przebiegła pomyślnie i czy pakiet został pobrany.
+
 ![](pomyslnePrzejscieInstalacjiNienadzorowanej.png)
 
 ## Infrastructure as code
@@ -163,6 +161,7 @@ Kolejny punkt laboratorium rozpoczęłam od utworzenia katalogu media/iso oraz z
 ![](infrastructureAsCode1.png)
 
 Skopiowałam plik anaconda do obrazu
+
 ![](infrastructureAsCode2.png)
 
 Dodałam do pliku **isolinux.cfg** ``` inst.ks=cdrom:/isolinux/ks.cfg```
@@ -175,8 +174,10 @@ Zainstalowałam pakiet genisoimage - ``` dnf install genisoimage ```
 ![](infrastructureAsCode4.png)
 
 A następnie utworzyłam iso:
+
 ![](infrastructureAsCode5.png)
 ![](infrastructureAsCode6.png)
 
-Rezultat:
+Rezultat
+
 ![](infrastructureAsCode6.png)
