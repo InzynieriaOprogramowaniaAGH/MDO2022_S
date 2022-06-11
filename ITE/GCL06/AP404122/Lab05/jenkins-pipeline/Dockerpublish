@@ -1,0 +1,4 @@
+FROM openjdk:11
+RUN apk add --no-cache --upgrade bash
+COPY shared_volume/petclinic.jar /petclinic.jar
+ENTRYPOINT[ "java", "-jar", "app.jar"]
