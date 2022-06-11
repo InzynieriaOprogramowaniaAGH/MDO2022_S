@@ -1,28 +1,56 @@
 pipeline {
     agent any
+	parameters {
+        booleanParam(name: "promote", defaultValue: false)
+        string(name: "version", defaultValue: "", description: "Version...?:")
+    }
     stages {
         stage('build') {
             steps {
 		echo 'Building'
-            }
+                sh 'docker build -t builder . -f ITE/GCL03/JJ400051/Project/DockerfileBuild'
+		sh 'docker run --name dock -di --rm builder'
+		sh 'docker cp dock:irssi/build/src/fe-text/irssi .'
+		sh 'docker kill dock'
+	    }
         }
         stage('test') {
             steps {
                 echo 'Testing'
+		sh 'docker build -t tester . -f ITE/GCL03/JJ400051/Project/DockerfileTest'
+		sh 'docker run tester'
+
             }
         }
 	stage('deploy') {
-		steps{
+	    steps {
+		echo 'deploying'
+		    		    sh 'docker container rm deployer'
 
-		echo 'Deploying'
-		}
+		    sh 'docker run --name deployer -di debian'
+		    sh 'docker cp irssi deployer:.'
+		    sh 'docker container exec deployer sh -c "apt-get update -y"'
+		    sh 'docker container exec deployer sh -c "apt-get install -y libssl-dev glib-2.0 libutf8proc-dev"'
+		    sh "docker container exec deployer sh -c './irssi -v'"
+		    sh 'docker kill deployer'		    
+	    }
 	}
 	stage('publish') {
-		
-}
-		steps {
-			echo 'Publishing'
+	    steps { 
+		script{
+		   if(params.promote) {
+			echo 'publishing'
+			sh 'rm -r publisher'
+			sh 'mkdir publisher'
+			sh 'cp irssi publisher'
+			sh "tar -zcf version${params.version}.tar.gz publisher"
+			archiveArtifacts artifacts: "version${params.version}.tar.gz"	
+		   }
+			else{
+				echo "Success"
+			}
 		}
+	    }
 	}
     }
 }
