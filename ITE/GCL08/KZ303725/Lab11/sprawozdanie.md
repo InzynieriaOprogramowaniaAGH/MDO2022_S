@@ -44,7 +44,8 @@ spec:
 ```
 
 ![pod](./screenshots/pod.png)
-
+### Port-forward pod'a
+![port](./screenshots/port.png)
 ### Uruchomiona aplikacja
 ![kubernetes](./screenshots/kubernetes.png)
 ![calc](./screenshots/calc.png)
