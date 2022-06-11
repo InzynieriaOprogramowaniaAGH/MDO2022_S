@@ -14,10 +14,11 @@ Instalacja minikube:
 - zainstalowano curl
 - zainstalowano minikube według poleceń dostępnych na stronie `https://minikube.sigs.k8s.io/docs/start/`
 
-	sudo snap install curl
+	`sudo snap install curl`
 
-	curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-	sudo install minikube-linux-amd64 /usr/local/bin/minikube
+	`curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64`
+	
+	`sudo install minikube-linux-amd64 /usr/local/bin/minikube`
 
 A następnie uruchomiono klaster komendą `minikube start`
 
