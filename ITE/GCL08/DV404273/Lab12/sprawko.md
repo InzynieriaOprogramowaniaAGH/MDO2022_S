@@ -41,21 +41,21 @@ CMD ["exit", "1"]
 spec:
     replicas: 7
 ```
-    ![spheal](./screeny/7.png)
+   ![spheal](./screeny/7.png)
 
 - Zmniejszono ilość replik do 1
 ```
 spec:
     replicas: 1
 ```
-    ![spheal](./screeny/8.png)
+   ![spheal](./screeny/8.png)
 
 - Zmniejszono ilosć replik do 0
 ```
 spec:
     replicas: 0
 ```
-    ![spheal](./screeny/9.png)
+   ![spheal](./screeny/9.png)
 
 - Zastosowano nową wersję obrazu
     ![spheal](./screeny/12.png)
