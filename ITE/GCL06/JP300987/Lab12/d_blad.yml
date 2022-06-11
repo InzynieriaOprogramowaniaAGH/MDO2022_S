@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: jp-blad-nginx
+        image: jp_blad_nginx
         imagePullPolicy: Never
         ports:
         - containerPort: 2222
