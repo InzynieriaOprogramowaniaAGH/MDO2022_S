@@ -32,7 +32,7 @@ i zbadano stan pliku za pomocą komendy
 
 Znaleziono nową wersję obrazu nginx, którym była wersja nginx:1.14.2
 
-![](./img/5.png)
+![](./img/5.PNG)
 
 
 ## Zmiany w deploymencie
@@ -40,45 +40,45 @@ Znaleziono nową wersję obrazu nginx, którym była wersja nginx:1.14.2
 Najpierw wykonywano zmiany na nowej wersji obrazu (nginx:latest) 
 - zmniejszenie liczby replik do 1
 
-![](./img/6.png)
+![](./img/6.PNG)
 
 
 - wdrożenie pliku i wykazanie działania 
 
-![](./img/7.png)
+![](./img/7.PNG)
 
 - zmniejszenie liczby replik do 0
 
-![](./img/8.png)
+![](./img/8.PNG)
 
 
 - wdrożenie pliku i wykazanie działania 
 
-![](./img/9.png)
+![](./img/9.PNG)
 
 Po dokonaniu zmian, zmieniono jeszcze wersję obrazu na nginx:1.14.2 
 
 
-![](./img/10.png)
+![](./img/10.PNG)
 
 i sprawdzono działanie:
 
-![](./img/11.png)
+![](./img/11.PNG)
 
 Następnie sprawdzono historie wdrożeń za pomocą komendy 
 ``kubectl rollout history deployment/nginx-deployment``
 
-![](./img/13.png)
+![](./img/13.PNG)
 
 I przywrócono wersję obrazu nginx:latest za pomocą komendy 
 
 ``kubectl rollout undo deployment/nginx-deployment``
 
-![](./img/14.png)
+![](./img/14.PNG)
 
-![](./img/15.png)
+![](./img/15.PNG)
 
-![](./img/16.png)
+![](./img/16.PNG)
 
 
 ## Kontrola wdrożenia
@@ -87,11 +87,11 @@ Aby napisać skrypt sprawdzający, czy wdrożenie zdążyło si wdrożyć w czas
 W skrypcie wykorzystujemy prostego if'a, który sprawdza czy właśnie po wywołaniu komendy ``rollout status`` po upływie 60s wypluwa sie słowo ``successfully``. Jeśli się wypluwa to znaczy, że wdrożenie się zdążyło zrobić a jeśli nie wypluwa to znaczy że się nie zdążyło zrobić lub powstał jakiś inny błąd. 
 
 
-![](./img/17.png)
+![](./img/17.PNG)
 
 Nasz komunikat świadczący o tym, że wdrożenie się zrobiło to "zycie jest prawie piekne" i możemy zaobserwować właśnie pomyślne działanie skryptu na screenie poniższym: 
 
-![](./img/18.png)
+![](./img/18.PNG)
 
 
 ## Strategie wdrożenia
@@ -100,41 +100,41 @@ Nasz komunikat świadczący o tym, że wdrożenie się zrobiło to "zycie jest p
 
 Do zmiany typu strategii na Recreate użyliśmy podanego pliku: 
 
-![](./img/20.png)
+![](./img/20.PNG)
 
 Sprawdziliśmy komendą ``kubctl describe deployment nginx-deployment`` czy pomyślnie się strategia zmieniła: 
 
-![](./img/21.png)
+![](./img/21.PNG)
 
 I jeszcze się upewniliśmy w dashboardzie: 
 
-![](./img/22.png)
+![](./img/22.PNG)
 
 
 2. **RollingUpdate** 
 
 Na początku w pliku mieliśmy strategię RollingUpdate, gdzie maxSruge i maxUnavailable było podane procentowo: 
 
-![](./img/19.png)
+![](./img/19.PNG)
 
 Zmieniliśmy sobie jeszcze dodatkowo te opcje jako podanie max  ilości podów  do dodania i ilości podów nieaktywnych liczbowo a nie procentowo: 
 
-![](./img/23-rol.png)
+![](./img/23-rol.PNG)
 
-![](./img/24-rol.png)
+![](./img/24-rol.PNG)
 
-![](./img/25-rol.png)
+![](./img/25-rol.PNG)
 
 
 3. **Canary deployment workload** 
 
 W tym przypadku podano nowa nazwe i wersję:
 
-![](./img/29.png)
+![](./img/29.PNG)
 
 I możemy zaobserwować działanie nowego deploymentu
 
-![](./img/30.png)
+![](./img/30.PNG)
 
 
 ### Obserwacje i różnice
