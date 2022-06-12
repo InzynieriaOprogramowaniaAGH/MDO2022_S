@@ -1,0 +1,4 @@
+if (self.CavalryLogger) { CavalryLogger.start_js_script(document.currentScript); }/*FB_PKG_DELIM*/
+
+__d("LSUpdateDeliveryReceipt",[],(function(a,b,c,d,e,f){function a(){var a=arguments,b=a[a.length-1];b.n;var c=[];return b.seq([function(c){return b.fe(b.ftr(b.db.table(14).fetch([[[a[1],{lt:a[0]},a[2]]],"threadKeyDeliveredWatermarkTimestampMs"]),function(c){return b.i64.eq(c.threadKey,a[1])&&b.i64.eq([0,0],[0,0])&&b.i64.eq(c.contactId,a[2])&&b.i64.gt(a[0],c.deliveredWatermarkTimestampMs)}),function(b){var c=b.update;b.item;return c({deliveredWatermarkTimestampMs:a[0]})})},function(a){return b.resolve(c)}])}e.exports=a}),null);
+__d("CometPageSupportersTabFeedContainerQuery_facebookRelayOperation",[],(function(a,b,c,d,e,f){e.exports="4938093796319584"}),null);
