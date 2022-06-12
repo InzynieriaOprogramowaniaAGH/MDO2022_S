@@ -2,23 +2,71 @@ pipeline {
     agent any
 
     stages {
-        stage('build-dotnet-deps-image') {
+	stage('Pre-Build') {
             steps {
+		sh 'docker volume create build_artifacts'
 		git 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git'
 		sh 'git checkout DK403865'
+		sh 'git pull origin'
+		sh 'cd ITE/GCL03/DK403865/Lab06/Build ; docker build -t build_base:latest .'
+	}
+	}
+	stage('Build') {
+            agent {
+                docker {
+                    image 'build_base:latest'
+                    args '--mount source=build_artifacts,target=/build_artifacts -u root:root'
+                }
+            }
+            steps {
+		sh 'ls -l'
+		sh 'cd /build_artifacts && rm -r NumberGuesserOOP && git clone https://github.com/Klatix/NumberGuesserOOP.git && cd NumberGuesserOOP/BasicNumberGuesser && dotnet build --output ../../artifacts/'         
+	}
+        }
+	stage('Test') {
+            agent {
+                docker {
+                    image 'build_base:latest'
+                    args '--mount source=build_artifacts,target=/build_artifacts -u root:root'
+                }
+            }
+
+            steps {
+                sh 'cd /build_artifacts/NumberGuesserOOP/BasicNumberGuesser && dotnet test' 
+            }
+        }
+
+        stage('build-dotnet-deps-image') {
+            steps {
 		sh 'git pull origin'
 		sh 'cd ITE/GCL03/DK403865/Lab06/DotnetDeps ; docker build -t dotnet_deps:latest .'            
 	}
         }
-	stage('deploy') {
+	stage('Deploy') {
+		agent{
+			docker{
+				image 'dotnet_deps:latest'
+				args '--mount source=build_artifacts,target=/build_artifacts -u root:root'
+			}
+		}
             steps {
-		sh 'docker volume create predeploy_data'
-		sh 'cd ITE/GCL03/DK403865/Lab06/PullRepoToVolume ; docker build --rm .'
-		sh 'docker rm dotnet_deploy'
-                sh 'docker run --name dotnet_deploy --mount source=predeploy_data,target=/predeploy_data dotnet_deps:latest'
-		sh 'pwd'
+		sh 'cd /build_artifacts/artifacts'
+                    sh 'cd /build_artifacts/artifacts && ./BasicNumberGuesser'
             }
         }
-
+	stage('Publish') {
+		agent{
+			docker{
+				image 'mcr.microsoft.com/dotnet/sdk:3.1'
+				args '--mount source=build_artifacts,target=/build_artifacts -u root:root'
+			}
+		}
+            steps {
+		sh 'cd /build_artifacts/artifacts'
+                    sh 'cd /build_artifacts/NumberGuesserOOP/BasicNumberGuesser && dotnet publish -c Release -r win-x64 -p:UseAppHost=true --output ../../publish/'
+		   sh "cp -R /build_artifacts/artifacts ${WORKSPACE}/publish"
+  			 archiveArtifacts 'publish/*'
+            }
+        }
     }
 }

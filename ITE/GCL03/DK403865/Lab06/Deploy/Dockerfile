@@ -1,6 +1,7 @@
-FROM mcr.microsoft.com/dotnet/runtime:3.1
-
+FROM dotnet_deps:latest
+VOLUME /build_artifacts
 RUN echo 'Dockerfile running 🍉'
-
+WORKDIR /build_artifacts
 RUN pwd
-RUN ls -a
+ENTRYPOINT ["dotnet", "BasicNumberGuesser.dll"]
+RUN ls ; dotnet run
