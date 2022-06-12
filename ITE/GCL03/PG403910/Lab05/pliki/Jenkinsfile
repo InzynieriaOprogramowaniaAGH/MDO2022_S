@@ -64,9 +64,11 @@ pipeline {
         }
 	    stage('Test') {
                 steps {
-                    echo 'Starting Testing'
-                    sh 'docker build -t docker_test:latest . -f ./ITE/GCL03/PG403910/Lab05/pliki/docker_test | tee test.log'
-                    sh 'docker run --name  docker_test docker_test:latest'
+                    dir('./ITE/GCL03/PG403910/Lab05/pliki'){
+                        echo 'Starting Testing'
+                        sh 'docker build -t docker_test:latest . -f docker_test'
+                        sh 'docker run --name  docker_test docker_test:latest'
+                    }
                 }
             post{
                 success{
@@ -80,10 +82,10 @@ pipeline {
         }
         stage('Cleanup') {
             steps {
-                sh ' docker rm docker_build'
+                sh 'docker rm docker_build'
                 sh 'docker rm docker_test'
-                archiveArtifacts artifacts: "build.log"
-                archiveArtifacts artifacts: "test.log"
+                // archiveArtifacts artifacts: "build.log"
+                // archiveArtifacts artifacts: "test.log"
             }
         }
 
