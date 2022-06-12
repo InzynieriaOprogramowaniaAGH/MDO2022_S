@@ -1,0 +1,51 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Init') {
+            steps {
+                echo 'Init'
+                sh "docker build -t d1:latest . -f /var/jenkins_home/d1"
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Build'
+                sh "docker rm irssi3"
+                sh "docker build -t d2:latest . -f /var/jenkins_home/d2"
+                sh "docker run -t -d --name irssi3 -v volumeout:/volumeout d2:latest"
+                sh "docker cp irssi3:/irssi/build ./build-irssi3"
+                sh "docker cp ./build-irssi3 irssi3:/volumeout/build"
+                sh "docker stop irssi3"
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Test'
+                sh "docker build -t d3:latest . -f /var/jenkins_home/d3"
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploy'
+                sh "docker rm -f irssi3Deploy"
+                sh "docker build -t d5:latest . -f /var/jenkins_home/d5"
+                sh "docker run -t -d -e TERM=xterm --name irssi3Deploy -v volumeout:/volumeout d5:latest"
+                sh "docker exec irssi3Deploy irssi"
+                sh "docker stop irssi3Deploy"
+                sh "docker container rm irssi3Deploy"
+            }
+        }
+        stage("Publish"){
+            steps{
+                echo "Publish"
+                sh "docker rm -f irssi3Publish"
+                sh "docker build -t d4:latest . -f /var/jenkins_home/d4"
+                sh "docker run -t -d --name irssi3Publish -v volumeout:/volumeout d4:latest"
+                sh "docker exec irssi3Publish tar -czvf irssi.tgz ./build"
+                sh "docker stop irssi3Publish"
+                sh "docker container rm irssi3Publish"
+            }
+        }
+    }
+}

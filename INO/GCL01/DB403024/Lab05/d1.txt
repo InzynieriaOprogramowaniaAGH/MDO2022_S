@@ -1,0 +1,4 @@
+FROM fedora:34
+
+RUN yum -y install git gcc gcc-c++ make automake wget meson ca-c* libgcrypt* glib2* utf8proc* openssl-devel ncurses* libgcrypt* glib2-devel utf8proc* openssl-devel ncurses* --skip-broken
+
