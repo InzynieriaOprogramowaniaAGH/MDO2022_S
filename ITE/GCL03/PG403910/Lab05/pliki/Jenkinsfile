@@ -29,6 +29,14 @@ pipeline {
                 }
             }
         }
+        stage('Cleanup') {
+            steps {
+                sh 'docker rm docker_build'
+                sh 'docker rm docker_test'
+                // archiveArtifacts artifacts: "build.log"
+                // archiveArtifacts artifacts: "test.log"
+            }
+        }
         stage('PreBuild') {
             steps {
                 dir('./ITE/GCL03/PG403910/Lab05/pliki'){
@@ -109,14 +117,6 @@ pipeline {
                 unsuccessful{
                     echo "Failed to publish"
                 }
-            }
-        }
-        stage('Cleanup') {
-            steps {
-                sh 'docker rm docker_build'
-                sh 'docker rm docker_test'
-                // archiveArtifacts artifacts: "build.log"
-                // archiveArtifacts artifacts: "test.log"
             }
         }
     }
