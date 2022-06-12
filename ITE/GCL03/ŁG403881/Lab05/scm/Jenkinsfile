@@ -1,0 +1,173 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'Version', defaultValue: '1.0.0', description: 'Project Version')
+        string(name: 'AppBranch', defaultValue: 'master', description: 'Branch of a project to build')
+        string(name: 'FileName', defaultValue: 'GithubAppLab03', description: 'Naming files artifacts')
+        booleanParam(name: 'Promote', defaultValue: false, description: 'Promoting and publishing')
+    }
+
+    stages {
+        stage('Repo to volume'){
+            steps{
+                sh 'docker volume rm in || true'
+                sh 'docker volume rm out || true'
+                sh 'docker volume create in'
+                sh 'docker volume create out'
+
+                sh 'rm -rf app || true'
+                sh 'mkdir -p app'
+
+                dir('app'){                  
+                    git branch: "${params.AppBranch}", url: 'https://github.com/Niemans/DevOpsLab05.git'
+                    sh 'docker container create --name rtv_agd -v in:/in busybox'
+                    sh 'docker cp ./. rtv_agd:/in'
+                    sh 'docker rm rtv_agd'
+                }
+            }
+            post{
+                success{
+                    echo 'Volumes made successfully \nRepository cloned and transferred to the volume successfully'
+                }
+                unsuccessful{
+                    echo 'Failed to make volumes or clone/transfer git repository'
+                }
+            }
+        }
+
+        stage('Prebuild'){
+            steps{
+                dir('./ITE/GCL03/ŁG403881/Lab05/dockerfiles/build'){
+                    echo 'build image'
+                    sh 'docker build -t dev_build:latest . -f Dockerfile'
+                }
+            }
+        }
+        stage('Build') {
+            agent {
+                docker {
+                    image 'dev_build:latest'
+                    args '--mount source=in,target=/in --mount source=out,target=/out -u root:root'
+                }
+            }
+            steps {
+                echo 'Starting Building'
+                sh 'cd /in/GithubAppLab03 && dotnet build --output /out'               
+            }
+            post{
+                success{
+                    echo 'Built successfully'
+                }
+                unsuccessful{
+                    echo 'Failed to build'
+                }
+            }
+        }
+
+        stage('Pretest'){
+            steps{
+                dir('./ITE/GCL03/ŁG403881/Lab05/dockerfiles/test'){
+                    echo 'test image'
+                    sh 'docker build -t dev_test:latest . -f Dockerfile'      
+                }
+            }
+        }
+	    stage('Test') {
+            agent{
+                docker{
+                    image 'dev_test:latest'
+                    args '--mount source=in,target=/in -u root:root'
+                }
+            }
+            steps {
+                echo 'Starting Testing'
+                sh 'cd /in/GithubAppLab03 && dotnet test'  
+            }
+            post{
+                success{
+                    echo 'Tested successfully'
+                }
+                unsuccessful{
+                    echo 'Failed to make tests'
+                }
+            }
+
+        }
+
+        stage('Deploy'){
+            agent{
+                docker{
+                    image 'dev_test:latest'
+                    args '--mount source=out,target=/out'
+                }
+            }
+            steps {
+                echo 'Starting Deploying'
+                sh '/out/GithubAppLab03'
+                script{
+                    if(sh (script: 'echo $?',returnStdout: true).trim() != "0"){
+                        currentBuild.result = 'ABORTED' 
+                    }
+                }
+            }
+            post{
+                success{
+                    echo "Deployment success"
+                }
+                unsuccessful{
+                    echo "Failed to deploy"
+                    error('Doployment failue')
+                }
+            }
+        }
+
+        stage('Publish'){
+            when{
+                expression{
+                    return params.Promote == true; 
+                }
+            }
+            agent{
+                docker{
+                    image 'mcr.microsoft.com/dotnet/sdk:3.1'
+                    args '--mount source=in,target=/in --mount source=out,target=/out -u root:root'
+                }
+            }
+            steps{
+                echo 'Starting Publishing'
+                sh 'rm -rf /out/publish || true'
+                sh 'mkdir /out/publish'
+
+                sh 'cd /in/GithubAppLab03 && \
+                   dotnet publish GithubAppLab03.csproj -c Release \
+                   -r linux-x64 -p:PublishSingleFile=true -p:UseAppHost=true \
+                   --self-contained true --output /out/publish'
+                sh 'rm -rf /out/publish/*.pdb'
+                sh "cd /out/publish/ && tar -czvf ${params.FileName}-${params.Version}.tar.xz /out/publish/*"
+
+                sh 'cd /in/GithubAppLab03 && \
+                   dotnet publish GithubAppLab03.csproj -c Release \
+                   -r win-x64 -p:PublishSingleFile=true -p:UseAppHost=true \
+                   --self-contained true --output /out/publish'
+                sh "mv /out/publish/GithubAppLab03.exe /out/publish/${params.FileName}-${params.Version}.exe"
+
+                sh "rm ${WORKSPACE}/publish/${params.FileName}* || true"
+                sh "rm ${WORKSPACE}/publish/publish/${params.FileName}* || true"
+
+                sh "cp -R /out/publish/*.xz ${WORKSPACE}/publish/"
+                sh "cp -R /out/publish/*.exe ${WORKSPACE}/publish/"
+
+                archiveArtifacts 'publish/*'
+            }
+            post{
+                success{
+                    echo "Publishment success"
+                }
+                unsuccessful{
+                    echo "Failed to publish"
+                }
+            }
+        }
+    }
+}
