@@ -79,7 +79,7 @@ pipeline {
         sh "cd /usr/local/app/nodzik && npm version --allow-same-version ${params.Version} && npm pack"
         sh "mv /usr/local/app/nodzik/boil-${params.Version}.tgz /usr/local/copy"
         dir('/var/jenkins_home/workspace/artifacts') {
-          archiveArtifacts artifacts: "nodzik-${params.Version}.tgz"
+          archiveArtifacts artifacts: "boil-${params.Version}.tgz"
         }
       }
     }
