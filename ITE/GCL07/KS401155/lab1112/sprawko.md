@@ -5,7 +5,7 @@
 # **Część 1: Instalacja klastra Kubernetes**
 - instalacja i uruchomienie minikube.
 
-![x](./pics/instalacja1.png)
+![x](./pics/Instalacja1.png)
 
 - urochomienie dashboardu w przeglądarce i pokazanie łączności.
 
@@ -98,7 +98,7 @@ spec:
   replicas: 10
 ```
 
-![x](./pics/zwiekszeniedo1.png)
+![x](./pics/zwiekszenieDo1.png)
 
 - zmniejszenie liczbę replik do 1.
 ```
