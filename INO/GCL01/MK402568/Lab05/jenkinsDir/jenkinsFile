@@ -1,0 +1,52 @@
+pipeline {
+    agent any
+	parameters {
+    string(name: 'version')
+    string(name: 'programName')
+}
+    stages {
+        stage("build") {
+            steps {
+                echo "build stage" 
+		 sh 'docker build . -f dockerfileBuild.dockerfile -t builder'
+            }
+        }
+        stage('test') {
+            steps {
+           echo "test stage"
+		 sh 'docker build . -f dockerfileTest.dockerfile -t tester'
+		 sh' docker run tester'
+            }
+        }
+         stage('deploy') {
+            steps {
+               echo 'deploy stage'
+                 sh  'docker build . -f dockerfileDeploy.dockerfile -t deploy'
+		 sh 'docker stop $(docker ps -a -q)'
+                 sh 'docker run  -d -p 3000:80 deploy '
+            }
+        }
+        stage('publish') {
+            steps {
+               echo "publish stage"
+		 sh 'docker build . -f dockerfilePublish.dockerfile -t publish'
+		sh "docker run --volume /var/jenkins_home/workspace/volumes:/final publish mv nodejsorg.tar.xz /final"
+		echo "Nodejs version: ${params.version} published"
+                echo "Program name ${params.programName}" 	
+
+            }
+        }
+    }
+        post{
+            success{
+                echo "Pipeline success!!!"
+            }
+            always{
+                echo "Pipeline end"
+            }
+            failure{
+                echo "ERROR, check your pipeline!!!"
+            }
+        }
+    
+}
