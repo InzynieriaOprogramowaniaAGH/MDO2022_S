@@ -1,0 +1,128 @@
+pipeline{
+
+    agent any
+
+    parameters {
+        string(name: 'Dockerfiles', defaultValue: './ITE/GCL08/SZ402734/Lab05', description: 'Path of Dockerfile in git: ')
+        string(name: 'Version', defaultValue: '0.0.1', description: 'Version of the pip: ')
+        booleanParam(name: 'Promote', defaultValue: true, description: 'Statement: ')
+    }
+
+    stages
+    {
+            stage('Clone and build') 
+            {
+                steps 
+                {
+                    echo 'Create input volume'
+                    sh 'docker volume create input-volume'
+                    sh 'docker rm tmp-c || true'
+
+                    echo 'Docker run, node clone '
+                    sh 'docker run --rm --name tmp-c --mount "type=volume,src=input-volume,dst=/App" node bash -c "cd ~/ && ls  TypeScript || git clone https://github.com/microsoft/TypeScript-Website;cp -R  TypeScript-Website /App; ls /App"'
+                    echo 'Docker run done '
+
+
+                    echo 'TypeScript build by using npm'
+                    dir("${params.Dockerfiles}") {
+                        sh 'docker build . -t typescript_node -f Dockerfile'
+                        sh 'docker volume create TMP_OUT_V'
+                        sh 'docker rm TypeScriptBuild || true'
+                        sh 'docker run --rm --name TypeScriptBuild --mount "type=volume,src=input-volume,dst=/App" --mount "type=volume,src=TMP_OUT_V,dst=/App_Build" typescript_node bash -c "cd /App/TypeScript && npm install -g gulp && npm ci && gulp local; cp -R /App/TypeScript /App_Build"'
+                        }
+
+                }
+            }
+
+            stage('Test')
+            {
+                steps
+                {
+                    echo 'Gulp tests TypeScript'
+                    dir("${params.Dockerfiles}"){
+                        sh 'docker rm typescript-tests || true'
+                        sh 'docker run --rm --name typescript-tests --mount "type=volume,src=input-volume,dst=/app_tests" typescript_node bash -c "cd /app_tests/TypeScript && gulp runtests-parallel --runner="project" "'
+                    }
+                    echo 'Gulp tests Done'
+
+                }
+
+            }
+
+            stage('Deploy Stage') 
+            {
+                steps 
+                {
+                    echo 'Deploy Stage TypeScript'
+                    sh 'docker rm -f typescript-deploy || true'
+                    sh 'docker run --name typescript-deploy --mount "type=volume,src=TMP_OUT_V,dst=/usr/local/App" typescript_node bash -c "cd /usr/local/App/TypeScript && gulp local && node built/local/tsc.js tests/projects/sample1/ui/index.ts"'
+                    sh 'sleep 5; exit $(docker inspect typescript-deploy --format="{{.State.ExitCode}}")'
+                    sh 'docker rm -f typescript-deploy'
+                    echo 'Deploy Stage TypeScript Done'
+
+                }
+		    }
+
+            stage('Prepare publish')
+            {
+                when 
+                {
+                    expression {return params.Promote}
+                }
+                steps 
+                {
+                    echo 'Publish'
+                    sh 'ls /var/jenkins_home/workspace/artifacts || mkdir /var/jenkins_home/workspace/artifacts'
+                }
+
+                
+            }
+
+            stage('Publish')
+            {
+                when 
+                {
+                    expression {return params.Promote}
+                }
+
+
+
+                agent 
+                {
+                    docker 
+                    {
+                        image 'node:alpine'
+                        args '--rm --mount "type=volume,src=TMP_OUT_V,dst=/usr/local/App" --mount "type=bind,source=/var/jenkins_home/workspace/artifacts,dst=/usr/local/copy" -u root:root'
+                    }
+                }
+
+
+                steps 
+                {
+                    sh 'rm -rf /usr/local/copy/* || true'
+                    sh "cd /usr/local/App/TypeScript && npm version ${params.Version} && npm pack"
+                    sh "mv /usr/local/App/TypeScript/typescript-${params.Version}.tgz /usr/local/copy"
+                    dir('/var/jenkins_home/workspace/artifacts'){
+                        archiveArtifacts artifacts: "typescript-${params.Version}.tgz"
+                    }
+                    echo 'Publish Done'
+
+                }
+            }
+            
+
+
+
+   
+
+
+
+
+    }
+
+
+
+
+
+
+}

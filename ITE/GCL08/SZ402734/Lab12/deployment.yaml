@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment
+  labels:
+    app: devops-chat
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: devops-chat
+  template:
+    metadata:
+      labels:
+        app: devops-chat
+    spec:
+      containers:
+        - name: devops-chat
+          image: zychdev/chat
+          ports:
+            - containerPort: 3000
