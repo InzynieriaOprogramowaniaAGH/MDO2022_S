@@ -17,8 +17,6 @@ pipeline {
         stage('Init'){
             steps {
                 git url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git', branch: 'PG403910'
-                // sh 'rm build.log'
-                // sh 'rm test.log'
                 sh 'touch build.log'
                 sh 'touch test.log'
             }
