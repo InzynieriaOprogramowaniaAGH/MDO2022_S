@@ -1,0 +1,56 @@
+pipeline {  
+    agent any
+    parameters {
+        booleanParam(name: 'PROMOTE')
+        string(name: 'VERSION')
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'BUILD'
+                dir('INO/GCL02/GS403353/JenkinsProject') {
+                    sh 'docker build . -f Build.dockerfile -t builder'
+                }
+                echo 'BUILD COMPLETED'
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                echo 'TEST'
+                dir('INO/GCL02/GS403353/JenkinsProject') {
+                    sh 'docker build . -f Test.dockerfile -t tester'
+                }
+                echo 'TESTS COMPLETED'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'DEPLOY'
+                sh 'docker run --volume /var/jenkins_home/workspace/2048_pipeline/INO/GCL02/GS403353/JenkinsProject:/build builder mv -n /2048.c/2048 /build'
+                dir('INO/GCL02/GS403353/JenkinsProject') {
+                    sh 'docker build . -f Deploy.dockerfile -t deploy'
+                }
+                echo 'DEPLOY COMPLETED'
+            }
+        }
+
+        stage('Publish') {
+            when {
+                expression {
+                    params.PROMOTE == true
+                }
+            }
+                steps {
+                    echo 'PUBLISH'
+                    dir('INO/GCL02/GS403353/JenkinsProject') {
+                        sh 'docker build . -f Publish.dockerfile -t publisher'
+                        sh 'docker run -e VERSION --volume /var/jenkins_home/workspace/2048_pipeline/INO/GCL02/GS403353/JenkinsProject:/archive publisher'
+                    }
+                    echo 'PUBLISH COMPLETED'
+                }
+        }
+    }
+}
