@@ -1,0 +1,70 @@
+pipeline {
+    agent any
+    parameters {
+        string(name: 'VERSION', defaultValue: '1.0.0', description: 'Version number')
+        booleanParam(name: 'PROMOTE', defaultValue: false, description: 'Determines if artifact should be published')
+    }
+
+    stages {
+        stage('prebuild') {
+            steps {
+                dir('INO/GCL02/PP401460/Lab05') {
+                    sh '''
+                        echo 'Creating \'out volume\' and \'in volume\'...'
+                        docker volume create vol_in
+                        docker volume create vol_out 
+                        echo 'Prebuilding ...'
+                        docker build -t prebuilder -f ./Prebuild.dockerfile .
+                        docker run --rm --mount source=vol_in,destination=/mle_src prebuilder 
+                    '''
+                }
+            }
+        }
+        stage('build') {
+            steps {
+                dir('INO/GCL02/PP401460/Lab05') {
+                    sh '''
+                        echo 'Building ...'
+                        docker build -t builder -f ./Build.dockerfile .
+                        docker run --mount source=vol_out,destination=/build --mount source=vol_in,destination=/mle_src --name tmp builder
+                        docker commit tmp builder
+                        docker rm tmp
+                    '''
+                }
+            }
+        }
+        stage('test') {
+            steps {
+                dir('INO/GCL02/PP401460/Lab05') {
+                    sh '''
+                        echo 'Testing ...'
+                        docker build -t tester -f ./Test.dockerfile .
+                    '''
+                }
+            }
+        }
+        stage('deploy') {
+            steps {
+                dir('INO/GCL02/PP401460/Lab05') {
+                    sh '''
+                        echo 'Deploying ...'
+                        docker build -t deployer -f ./Deploy.dockerfile .
+                        docker run --rm -v vol_out:/build deployer 
+                    '''
+                }
+            }
+        }
+        stage('publish') {
+            when {expression {return params.PROMOTE}}
+            steps {
+                dir('INO/GCL02/PP401460/Lab05') {
+                    sh '''
+                        echo 'Publishing ...'
+                        docker build -t publisher -f ./Publish.dockerfile .
+                        docker run -e VERSION --rm --mount source=vol_out,destination=/publish publisher 
+                    '''
+                }
+            }
+        }
+    }
+}
