@@ -62,7 +62,7 @@ spec:
     ) w którym umieszczam dodatkowo polecenie ``CMD ["exit","1"]``, dzięki czemu uruchomienie kontenera kończy się błędem. Dockerfile:
     ```
     FROM openjdk:17-jdk-alpine
-    RUN EXIT 1
+    CMD ["exit","1"]
     ```
     Proces budowania obrazu i sprawdzenia, czy uruchomienie kontenera kończy się błędem:
     ![ivalidError](./ss/invalidError.png)
