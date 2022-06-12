@@ -1,0 +1,184 @@
+Started by user szymon
+Obtained ITE/GCL08/ST402272/Jenkinsfile from git https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/test
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+The recommended git tool is: git
+using credential Github
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/test/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S # timeout=10
+Fetching upstream changes from https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S
+ > git --version # timeout=10
+ > git --version # 'git version 2.30.2'
+using GIT_ASKPASS to set credentials GitHub credentials
+ > git fetch --tags --force --progress -- https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse origin/ST402272^{commit} # timeout=10
+Checking out Revision 244d2c17fbbc65f1f0f535dd2e12b96d2be215d1 (origin/ST402272)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 244d2c17fbbc65f1f0f535dd2e12b96d2be215d1 # timeout=10
+Commit message: "Add jenkinsfile"
+ > git rev-list --no-walk d5aceba532bd630d7871674f158fc2d94247e30d # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Clone repo into vol)
+[Pipeline] echo
+Creating vol-in
+[Pipeline] sh
++ docker volume create vol-in
+vol-in
+[Pipeline] sh
++ docker rm helper
+Error: No such container: helper
++ true
+[Pipeline] sh
++ docker run -v vol-in:/data --name helper busybox true
+[Pipeline] sh
++ cd /var/jenkins_home/
++ ls vim
+CONTRIBUTING.md
+Filelist
+LICENSE
+Makefile
+README.md
+README.txt
+README_VIM9.md
+READMEdir
+ci
+configure
+nsis
+pixmaps
+runtime
+src
+tools
+uninstall.txt
+vimtutor.bat
+vimtutor.com
+[Pipeline] sh
++ docker cp /var/jenkins_home/vim helper:/data
+[Pipeline] sh
++ docker rm helper
+helper
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] echo
+Installing vim
+[Pipeline] dir
+Running in /var/jenkins_home/workspace/test/ITE/GCL08/ST402272
+[Pipeline] {
+[Pipeline] sh
++ docker build -t vim-build .
+Sending build context to Docker daemon  2.944MB
+
+Step 1/4 : FROM ubuntu
+ ---> 3f4714ee068a
+Step 2/4 : RUN apt-get upgrade
+ ---> Using cache
+ ---> 597666ad73bf
+Step 3/4 : RUN apt-get update
+ ---> Using cache
+ ---> 72c71db2d652
+Step 4/4 : RUN apt install -y git make libncurses-dev
+ ---> Using cache
+ ---> 6d4eb81a9975
+Successfully built 6d4eb81a9975
+Successfully tagged vim-build:latest
+[Pipeline] sh
++ docker run --mount type=volume,src=vol-in,dst=/app --mount type=volume,src=vol-out,dst=/app/build vim-build bash -c cd /app/vim && make; (rm -r /app/build/* || true) && cp /app/vim/src/vim /app/build/
+Starting make in the src directory.
+If there are problems, cd to the src directory and run make there
+cd src && make first
+make[1]: Entering directory '/app/vim/src'
+make[1]: Leaving directory '/app/vim/src'
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] echo
+Testing vim
+[Pipeline] dir
+Running in /var/jenkins_home/workspace/test/ITE/GCL08/ST402272
+[Pipeline] {
+[Pipeline] sh
++ docker build . -t vim-test -f DockerRunTests
+Sending build context to Docker daemon  2.944MB
+
+Step 1/3 : FROM ubuntu
+ ---> 3f4714ee068a
+Step 2/3 : RUN apt-get update
+ ---> Using cache
+ ---> 281a907aa29f
+Step 3/3 : RUN apt install -y git libtool-bin make libncurses-dev
+ ---> Using cache
+ ---> 403e8bb2fd28
+Successfully built 403e8bb2fd28
+Successfully tagged vim-test:latest
+[Pipeline] sh
++ docker run -t --mount type=volume,src=vol-in,dst=/app/build vim-test bash -c cd /app/build/vim
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy)
+[Pipeline] echo
+Deploying vim
+[Pipeline] sh
++ docker rm -f vim-deploy
+vim-deploy
+[Pipeline] sh
++ docker run -d --name vim-deploy --mount type=volume,src=vol-in,dst=/app/build ubuntu /app/build/vim/src/vim
+7eac590a206b92e2952cbc73f2c3556e892d43860b0a40f8eca7d0df111453f5
+[Pipeline] sh
++ sleep 5
++ docker inspect vim-deploy --format={{.State.ExitCode}}
++ exit 0
+[Pipeline] sh
++ docker rm -f vim-deploy
+vim-deploy
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Publish)
+[Pipeline] echo
+Publishing vim
+[Pipeline] sh
++ rm -rf /var/jenkins_home/workspace/artifacts
++ mkdir /var/jenkins_home/workspace/artifacts
+[Pipeline] sh
++ docker run -d --name publish --mount type=volume,src=vol-out,dst=/usr/local/app --mount type=bind,source=/var/jenkins_home/workspace/artifacts,target=/usr/local/copy ubuntu bash -c chmod -R 777 /usr/local/app && cp -R /usr/local/app/. /usr/local/copy
+28b9ea1d2e4d92015cb8aecb9f53d913d81ec4392a4e8b0fcd6abc43aaa6c706
+[Pipeline] sh
++ tar -czvf vim-1.0.0.tar.gz -C /var/jenkins_home/workspace/artifacts .
+./
+./vim
+[Pipeline] archiveArtifacts
+Archiving artifacts
+[Pipeline] sh
++ docker rm -f publish
+publish
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] echo
+Pipeline succsess
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

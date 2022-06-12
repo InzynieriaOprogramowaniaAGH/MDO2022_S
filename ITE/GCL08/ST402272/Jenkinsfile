@@ -1,0 +1,68 @@
+pipeline {
+    parameters {
+        string(name: 'VERSION', defaultValue: '1.0.0', description: 'Program version')
+        booleanParam(name: 'Promote', defaultValue: true, description: 'Publish tar.gz to artifacts')
+    }
+
+    agent any
+
+    stages {
+        stage('Clone repo into vol') {
+            steps {
+                echo 'Creating vol-in'
+                sh 'docker volume create vol-in'
+                sh 'docker rm helper || true'
+                sh 'docker run -v vol-in:/data --name helper busybox true'
+                sh 'cd ~/ && ls vim || git clone https://github.com/vim/vim.git'
+                sh 'docker cp ~/vim helper:/data'
+                sh 'docker rm helper'
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Installing vim'
+                dir("./ITE/GCL08/ST402272") {
+                    sh 'docker build -t vim-build .'
+                    sh 'docker run --mount type=volume,src="vol-in",dst=/app --mount type=volume,src="vol-out",dst=/app/build vim-build bash -c "cd /app/vim && make; (rm -r /app/build/* || true) && cp /app/vim/src/vim /app/build/"'
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing vim'
+                dir("./ITE/GCL08/ST402272") {
+                    sh 'docker build . -t vim-test -f DockerRunTests'
+                    sh 'docker run -t --mount type=volume,src="vol-in",dst=/app/build vim-test bash -c "cd /app/build/vim"'
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying vim'
+                sh 'docker rm -f vim-deploy'
+                sh 'docker run -d --name vim-deploy --mount type=volume,src="vol-in",dst=/app/build ubuntu /app/build/vim/src/vim'
+                sh 'sleep 5; exit $(docker inspect vim-deploy --format="{{.State.ExitCode}}")'
+                sh 'docker rm -f vim-deploy'
+            }
+        }
+        stage ('Publish') {
+            when { expression { return params.Promote } }
+            steps {
+                echo 'Publishing vim'
+                sh 'rm -rf /var/jenkins_home/workspace/artifacts && mkdir /var/jenkins_home/workspace/artifacts'
+                sh 'docker run -d --name publish --mount type=volume,src="vol-out",dst=/usr/local/app --mount type=bind,source=/var/jenkins_home/workspace/artifacts,target=/usr/local/copy ubuntu  bash -c "chmod -R 777 /usr/local/app && cp -R /usr/local/app/. /usr/local/copy"'
+                sh "tar -czvf vim-${params.VERSION}.tar.gz -C /var/jenkins_home/workspace/artifacts ."
+                archiveArtifacts artifacts: "vim-${params.VERSION}.tar.gz"
+                sh 'docker rm -f publish'
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Pipeline succsess'
+        }
+        failure {
+            echo 'Pipeline fail'
+        }
+    }
+}

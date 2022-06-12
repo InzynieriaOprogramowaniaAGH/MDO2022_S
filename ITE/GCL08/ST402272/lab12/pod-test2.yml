@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express
+  labels:
+    app: example
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: example
+  template:
+    metadata:
+      labels:
+        app: example
+    spec:
+      containers:
+        - name: express
+          image: nodejs_app
+          imagePullPolicy: Never
+          ports:
+          - containerPort: 3200
