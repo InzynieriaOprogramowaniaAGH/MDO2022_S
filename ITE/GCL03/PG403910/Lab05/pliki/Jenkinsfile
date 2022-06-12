@@ -67,7 +67,6 @@ pipeline {
                     dir('./ITE/GCL03/PG403910/Lab05/pliki'){
                         echo 'Starting Testing'
                         sh 'docker build -t docker_test:latest . -f docker_test'
-                        sh 'docker run --name  docker_test docker_test:latest'
                     }
                 }
             post{
