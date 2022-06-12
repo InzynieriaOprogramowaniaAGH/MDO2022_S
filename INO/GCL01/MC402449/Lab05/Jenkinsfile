@@ -1,0 +1,77 @@
+pipeline {
+    agent any
+    
+     parameters {
+        booleanParam(name: 'PROMOTE', defaultValue: true, description: '')
+    }
+    
+   
+    stages {
+        stage('Repo prepare') {
+            steps {
+                sh 'docker volume create repoOut'
+                sh '''
+                docker run  --mount source=repoOut,destination=/repoOut rust:latest sh -c 'cd "repoOut/" && git clone "https://github.com/solana-labs/example-helloworld.git" && ls'
+                '''
+            }
+        }
+        
+        stage('Build smart contract') {
+            steps {
+                sh 'docker volume create buildedSmartContract'
+                sh 'docker volume create smartContract'
+                sh '''
+                docker run  --mount source=smartContract,destination=/smartContract --mount source=repoOut,destination=/repoIn --mount source=buildedSmartContract,destination=/buildedSmartContract rust:latest  sh -c 'cp -r "repoIn/example-helloworld/src/program-rust"  "/buildedSmartContract"  && cd "/buildedSmartContract/program-rust" && cargo build  && ls && cp -r "/buildedSmartContract/program-rust/target/debug/libhelloworld.so" "/smartContract"'
+                '''
+            }
+        }
+        
+         stage('Test smart contract') {
+            steps {
+                sh '''
+                docker run --mount source=buildedSmartContract,destination=/buildedSmartContract rust:latest sh -c ' cd "/buildedSmartContract/program-rust" && cargo test'
+                '''
+            }
+        }
+        
+        
+        stage('Deploy') {
+            steps{
+                 sh '''
+                 echo "Deploy :("
+                '''
+            }
+         /*   steps {
+                sh '''
+                docker run --name solanaCon -d --mount source=smartContract,destination=/smartContract  node:latest  sh -c 'sh -c "$(curl -sSfL https://release.solana.com/stable/install)" && export PATH="/root/.local/share/solana/install/active_release/bin:$PATH"  && echo "solana dziala" && solana --version  && echo "solana dziala" && solana config set --url "localhost" && solana-keygen "new" && solana-test-validator'
+                sleep 90
+                docker logs solanaCon
+                docker exec solanaCon sh -c 'cd smartContract  && solana program deploy "libhelloworld.so"'
+                '''                                  
+            }*/
+          
+        }
+       
+        stage('Publish'){
+            when{
+                expression { params.PROMOTE ==~ /(?i)(Y|YES|T|TRUE|ON|RUN)/ }
+              
+            }
+            steps{
+                sh'''
+                docker volume create  finalVersion
+                docker run --mount source=smartContract,destination=/smartContract --mount source=finalVersion,destination=/finalVersion --mount source=repoOut,destination=/repoOut rust:latest sh -c 'cp -r "/smartContract/libhelloworld.so" "/finalVersion"  && cp -r "repoOut/example-helloworld/src/client/" "/finalVersion" && cd "finalVersion" && touch "instructions.txt" && echo "For deploying program to Solana network follow the instuctions https://github.com/solana-labs/example-helloworld/blob/master/README.md" >> "instructions.txt" && tar -zcvf sol.tar.gz "/finalVersion"'
+                '''
+            }
+        }
+        
+    }  
+    
+     post{
+        always{
+              sh '''docker rm -f $(docker ps -a -q)'''
+              sh '''docker volume rm $(docker volume ls -q)'''
+        }
+    }
+}
+
