@@ -94,3 +94,33 @@ Kolejnym krokiem było przekireowanie się na port 7080 i wysłanie requsta do l
 ![](./img/14.png)
 
 
+## Przekucie wdrożenia manualnego w plik wdrożenia (wprowadzenie)
+
+
+Zapisano wdrożenie jako plik YML i dodano repliki: 
+
+![](./img/new1.png)
+
+Stworzono deployment bazujący na pliku YAML: 
+
+   ``kubectl apply -f https://k8s.io/examples/application/deployment.yaml``
+     
+
+![](./img/new12.png)
+
+
+Wyświetlono informacje o deploymencie: 
+
+``kubectl describe deployment nginx-deployment``
+
+![](./img/17.png)
+
+
+Wyświetlono jezcze jakie podsy zostały stworzone: 
+
+  ``kubectl get pods -l app=nginx``
+
+![](./img/18.png)
+
+![](./img/19.png)
+
