@@ -1,6 +1,6 @@
 FROM node:latest
 
-RUN git clone https://github.com/mongo-express/mongo-express.git
+RUN git clone https://github.com/knosarzewski/mongo-express.git
 
 WORKDIR mongo-express
 

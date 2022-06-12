@@ -1,24 +1,124 @@
+
 pipeline 
 {
+    parameters
+    {
+        string(name: 'VERSION', defaultValue: '1.0.0', description: '')
+        booleanParam(name: 'PROMOTE', defaultValue: true, description: '')
+    }
+
     agent any
+    
     stages
      {
+     	stage('Preparing and Build Cleaning')
+     	{
+     	  steps
+     	  {
+     	    sh 'docker volume create kacper_in'
+            sh 'docker volume create kacper_out'
+            sh 'docker rm -f kacper_build || true'
+            sh 'docker volume prune -f'
+     	  }
+     	}
+     	
         stage('Build') 
         {
             steps 
             {
-               sh 'docker build . -f ./ITE/GCL06/KN401526/Lab05/Dockerfile1 -t kacper_build'
-               
+              
+              sh 'docker build . -f ./ITE/GCL06/KN401526/Lab05/Dockerfile1 -t kacper_build'
+  	      sh 'docker run --mount type=volume,src="kacper_build",dst=/kacper_in kacper_build:latest bash -c "cd .. && cp -r /mongo-express /kacper_in && cp -r /kacper_in /kacper_out && ls ./kacper_in && ls ./kacper_out"'
+            
             }
+        }
+        
+        stage('Test Cleaning')
+        {
+        steps
+         {
+          sh 'docker rm -f kacper_test || true'
+         }
         }
 
          stage('Test') 
         {
             steps 
             {
-               
+              
               sh 'docker build . -f ./ITE/GCL06/KN401526/Lab05/Dockerfile2 -t kacper_test'
+              sh "docker run --name kn_test --rm --mount source=kacper_test,target=/kacper_in kacper_test:latest"
+              
             }
         }
+        stage('Deploy Cleaning')
+        {
+        steps
+         {
+          sh 'docker rm -f kacper_deploy || true'
+         }
+        }
+
+         stage('Deploy')
+        {
+            steps
+            {
+                
+                sh 'docker run -dit --name kacper_deploy --mount type=volume,src="kacper_out",dst=/kn_proj node'
+                sh 'exit $(docker inspect kacper_deploy --format="{{.State.ExitCode}}")'
+            }
+        }
+        
+        stage('Publish Cleaning')
+        {
+         steps
+         {
+          sh 'rm -rf /var/jenkins_home/workspace/kacper_artifacts'
+          sh 'docker rm -f kacper_publish || true'
+         }
+        }
+        
+        stage ('Publish')
+        {
+            when
+            {
+                expression {return params.PROMOTE}
+            }
+            steps
+            {
+                
+                sh 'mkdir /var/jenkins_home/workspace/kacper_artifacts'
+                sh 'docker run -d --name kacper_publish --mount type=volume,src="kacper_out",dst=/usr/local/kn_proj --mount type=bind,source=/var/jenkins_home/workspace/kacper_artifacts,target=/usr/local/kn_copy node bash -c "chmod -R 777 /usr/local/kn_proj && cp -R /usr/local/kn_proj/. /usr/local/kn_copy"'
+                sh "tar -zcvf mongo-express_${params.VERSION}.tar.xz -C /var/jenkins_home/workspace/kacper_artifacts ."
+                archiveArtifacts artifacts: "mongo-express_${params.VERSION}.tar.xz"
+                
+            }
+        } 
+        
+        stage ('Clearing Memory')
+        {
+        	steps
+        	{
+        	sh 'docker rm -f kacper_build || true'
+                sh 'docker rm -f kacper_test || true'
+                sh 'docker rm -f kacper_deploy || true'
+                sh 'docker rm -f kacper_publish || true'
+                }
+        }
+        
       }
-}
+      
+   post
+   {
+   	success{
+   		echo 'You successfully ended Pipline'
+   	}
+   	failure
+   	{
+   		echo 'ERROR'
+   	}
+   } 
+   
+   }
+   
+   
