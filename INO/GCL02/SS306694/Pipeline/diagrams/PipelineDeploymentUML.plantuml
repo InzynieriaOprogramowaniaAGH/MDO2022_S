@@ -1,0 +1,22 @@
+@startuml
+node dependecies_container
+node app_compiler
+node tests_compiler
+node lint_compiler
+node tester
+node lint_checker
+node deployer
+node publisher
+artifact retrofit_jar
+
+dependecies_container -- app_compiler
+app_compiler -- tests_compiler
+app_compiler -- lint_compiler
+
+tests_compiler -- tester
+lint_compiler -- lint_checker
+
+app_compiler -- deployer
+app_compiler - publisher
+publisher -> retrofit_jar
+@enduml

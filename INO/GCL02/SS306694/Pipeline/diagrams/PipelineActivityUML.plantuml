@@ -1,0 +1,24 @@
+@startuml
+(*) --> "Prepare dependencies"
+-->"Compiling app"
+
+--> ===B1===
+-->"Compiling unit tests"
+--> ===B2===
+
+===B1=== -->"Compiling lint check"
+--> ===B2===
+
+===B2=== --> "Running unit tests"
+--> ===B3===
+
+===B2=== --> "Running lint checker"
+--> ===B3===
+
+===B3=== -> "Deploying"
+if "ENVIRONMENT is RELEASE" then
+    -> "Publishing" 
+    -> (*)
+else 
+    --> (*)
+@enduml
