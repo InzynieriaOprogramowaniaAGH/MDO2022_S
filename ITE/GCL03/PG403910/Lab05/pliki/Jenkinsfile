@@ -105,7 +105,7 @@ pipeline {
                 sh "docker tag docker_test:latest malokreatywny22222/quick-example-of-testing-in-nodejs:${params.Version}"
                 sh "docker push malokreatywny22222/quick-example-of-testing-in-nodejs:${params.Version}"
                 
-                sh 'docker rm jenkinstest'
+                sh 'docker rm docker_test'
                 sh "tar -czvf quick-example-of-testing-in-nodejs-${params.Version}.tar.gz ${params.Version}/"
                 echo "Creating Artifact"
                 archiveArtifacts artifacts: "quick-example-of-testing-in-nodejs-${params.Version}.tar.gz"
