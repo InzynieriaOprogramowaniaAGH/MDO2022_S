@@ -49,3 +49,33 @@ spec:
 ### Uruchomiona aplikacja
 ![kubernetes](./screenshots/kubernetes.png)
 ![calc](./screenshots/calc.png)
+
+### Plik wdrożenia
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kolkulaor
+  labels:
+    app: kolkulaor
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: example
+  template:
+    metadata:
+      labels:
+        app: example
+    spec:
+      containers:
+      - name: calc
+        image: calc
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3000
+```
+![deployment](./screenshots/deployment.png)
+
+
