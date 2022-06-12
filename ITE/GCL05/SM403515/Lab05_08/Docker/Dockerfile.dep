@@ -1,0 +1,11 @@
+FROM golang:1.17-alpine
+
+RUN apk add git make gcc libc-dev
+
+RUN git clone https://github.com/StanMarek/devops-golang-microservice.git /source
+
+WORKDIR /source
+
+RUN go mod tidy
+
+CMD ["cp", "-r", "/source", "/volumein/"]

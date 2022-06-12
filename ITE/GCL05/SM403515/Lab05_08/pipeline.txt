@@ -1,0 +1,466 @@
+ 
+Started by user Stanisław Marek
+Obtained Jenkins/Jenkinsfile from git https://github.com/StanMarek/devops-golang-microservice
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/devops-golang-microservice
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+using credential dockerhub
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/devops-golang-microservice/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/StanMarek/devops-golang-microservice # timeout=10
+Fetching upstream changes from https://github.com/StanMarek/devops-golang-microservice
+ > git --version # timeout=10
+ > git --version # 'git version 2.30.2'
+using GIT_ASKPASS to set credentials use to login and push image
+ > git fetch --tags --force --progress -- https://github.com/StanMarek/devops-golang-microservice +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+Checking out Revision 44eb7e683fce4973d89fbe2efdb28c8e627b9083 (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 44eb7e683fce4973d89fbe2efdb28c8e627b9083 # timeout=10
+Commit message: "Finish complete"
+ > git rev-list --no-walk ab1d56215d7cb0188ba1b6a604b24d1bf1623895 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Fetch dependencies)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ echo Downolading dependencies
+Downolading dependencies
+[Pipeline] sh
++ mkdir -p shared_volume
+[Pipeline] sh
++ mkdir -p shared_volume_out
+[Pipeline] sh
++ docker build -t project-dep:latest -f Dockerfile.dep --no-cache .
+Sending build context to Docker daemon  122.2MB
+
+Step 1/6 : FROM golang:1.17-alpine
+ ---> a15b7f2336ee
+Step 2/6 : RUN apk add git make gcc libc-dev
+ ---> Running in 588b1f13962d
+fetch https://dl-cdn.alpinelinux.org/alpine/v3.15/main/x86_64/APKINDEX.tar.gz
+fetch https://dl-cdn.alpinelinux.org/alpine/v3.15/community/x86_64/APKINDEX.tar.gz
+(1/20) Installing libgcc (10.3.1_git20211027-r0)
+(2/20) Installing libstdc++ (10.3.1_git20211027-r0)
+(3/20) Installing binutils (2.37-r3)
+(4/20) Installing libgomp (10.3.1_git20211027-r0)
+(5/20) Installing libatomic (10.3.1_git20211027-r0)
+(6/20) Installing libgphobos (10.3.1_git20211027-r0)
+(7/20) Installing gmp (6.2.1-r1)
+(8/20) Installing isl22 (0.22-r0)
+(9/20) Installing mpfr4 (4.1.0-r0)
+(10/20) Installing mpc1 (1.2.1-r0)
+(11/20) Installing gcc (10.3.1_git20211027-r0)
+(12/20) Installing brotli-libs (1.0.9-r5)
+(13/20) Installing nghttp2-libs (1.46.0-r0)
+(14/20) Installing libcurl (7.80.0-r1)
+(15/20) Installing expat (2.4.7-r0)
+(16/20) Installing pcre2 (10.39-r0)
+(17/20) Installing git (2.34.2-r0)
+(18/20) Installing musl-dev (1.2.2-r7)
+(19/20) Installing libc-dev (0.7.2-r3)
+(20/20) Installing make (4.3-r0)
+Executing busybox-1.34.1-r5.trigger
+OK: 140 MiB in 35 packages
+Removing intermediate container 588b1f13962d
+ ---> ba90ca5290a8
+Step 3/6 : RUN git clone https://github.com/StanMarek/devops-golang-microservice.git /source
+ ---> Running in 41daea411464
+[91mCloning into '/source'...
+[0mRemoving intermediate container 41daea411464
+ ---> dba725cbe57d
+Step 4/6 : WORKDIR /source
+ ---> Running in 14778a15b3a3
+Removing intermediate container 14778a15b3a3
+ ---> f1f0c9a2c541
+Step 5/6 : RUN go mod tidy
+ ---> Running in 6e0cad2775d4
+[91mgo: downloading go.uber.org/zap v1.19.1
+[0m[91mgo: downloading github.com/go-redis/redis/v8 v8.11.4
+[0m[91mgo: downloading github.com/jasonlvhit/gocron v0.0.1
+[0m[91mgo: downloading github.com/go-redis/redis v6.15.5+incompatible
+[0m[91mgo: downloading github.com/jarcoal/httpmock v1.1.0
+[0m[91mgo: downloading gopkg.in/yaml.v2 v2.4.0
+[0m[91mgo: downloading github.com/jinzhu/gorm v1.9.16
+[0m[91mgo: downloading github.com/prometheus/client_golang v1.11.0
+[0m[91mgo: downloading github.com/gorilla/handlers v1.5.1
+[0m[91mgo: downloading github.com/gorilla/mux v1.8.0
+[0m[91mgo: downloading github.com/joho/godotenv v1.4.0
+[0m[91mgo: downloading github.com/go-sql-driver/mysql v1.5.0
+[0m[91mgo: downloading github.com/jinzhu/inflection v1.0.0
+[0m[91mgo: downloading github.com/stretchr/testify v1.7.0
+go: downloading gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15
+go: downloading github.com/onsi/ginkgo v1.16.4
+[0m[91mgo: downloading github.com/onsi/gomega v1.16.0
+[0m[91mgo: downloading github.com/erikstmartin/go-testdb v0.0.0-20160219214506-8d10e4a1bae5
+[0m[91mgo: downloading github.com/jinzhu/now v1.0.1
+[0m[91mgo: downloading github.com/cespare/xxhash/v2 v2.1.2
+go: downloading github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f
+[0m[91mgo: downloading go.uber.org/atomic v1.7.0
+[0m[91mgo: downloading go.uber.org/multierr v1.6.0
+[0m[91mgo: downloading github.com/pkg/errors v0.9.1
+[0m[91mgo: downloading go.uber.org/goleak v1.1.11-0.20210813005559-691160354723
+[0m[91mgo: downloading github.com/felixge/httpsnoop v1.0.2
+[0m[91mgo: downloading github.com/prometheus/client_model v0.2.0
+[0m[91mgo: downloading github.com/prometheus/common v0.26.0
+[0m[91mgo: downloading github.com/beorn7/perks v1.0.1
+[0m[91mgo: downloading github.com/golang/protobuf v1.5.2
+[0m[91mgo: downloading github.com/prometheus/procfs v0.6.0
+[0m[91mgo: downloading golang.org/x/sys v0.0.0-20210603081109-ebe580a85c40
+[0m[91mgo: downloading github.com/denisenkom/go-mssqldb v0.0.0-20191124224453-732737034ffd
+[0m[91mgo: downloading github.com/lib/pq v1.1.1
+[0m[91mgo: downloading github.com/mattn/go-sqlite3 v1.14.0
+[0m[91mgo: downloading github.com/kr/pretty v0.1.0
+[0m[91mgo: downloading github.com/benbjohnson/clock v1.1.0
+[0m[91mgo: downloading github.com/davecgh/go-spew v1.1.1
+[0m[91mgo: downloading github.com/pmezard/go-difflib v1.0.0
+[0m[91mgo: downloading gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
+[0m[91mgo: downloading github.com/matttproud/golang_protobuf_extensions v1.0.1
+[0m[91mgo: downloading google.golang.org/protobuf v1.26.0
+[0m[91mgo: downloading github.com/google/go-cmp v0.5.6
+[0m[91mgo: downloading github.com/kr/text v0.1.0
+[0m[91mgo: downloading golang.org/x/net v0.0.0-20210428140749-89ef3d95e781
+[0m[91mgo: downloading github.com/nxadm/tail v1.4.8
+[0m[91mgo: downloading github.com/golang-sql/civil v0.0.0-20190719163853-cb61b32ac6fe
+[0m[91mgo: downloading golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
+[0m[91mgo: downloading gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7
+[0m[91mgo: downloading github.com/fsnotify/fsnotify v1.4.9
+[0m[91mgo: downloading golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1
+[0m[91mgo: downloading golang.org/x/text v0.3.6
+[0mRemoving intermediate container 6e0cad2775d4
+ ---> 02305bac47ff
+Step 6/6 : CMD ["cp", "-r", "/source", "/volumein/"]
+ ---> Running in ad7e0e7ad2a7
+Removing intermediate container ad7e0e7ad2a7
+ ---> adee0aad9578
+Successfully built adee0aad9578
+Successfully tagged project-dep:latest
+[Pipeline] sh
++ pwd
++ docker run -v /var/jenkins_home/workspace/devops-golang-microservice/shared_volume:/volumein project-dep:latest
+[Pipeline] sh
++ ls ./shared_volume -la
+total 12
+drwxr-xr-x  3 jenkins jenkins 4096 May 15 19:40 .
+drwxr-xr-x 14 jenkins jenkins 4096 May 15 20:51 ..
+drwxr-xr-x 14 root    root    4096 May 15 20:57 source
+[Pipeline] sh
++ ls shared_volume/source -la
+total 17080
+drwxr-xr-x 14 root    root        4096 May 15 20:57 .
+drwxr-xr-x  3 jenkins jenkins     4096 May 15 19:40 ..
+-rw-r--r--  1 root    root        6148 May 15 20:57 .DS_Store
+-rw-r--r--  1 root    root         116 May 15 20:57 .env
+drwxr-xr-x  8 root    root        4096 May 15 20:57 .git
+-rw-r--r--  1 root    root         324 May 15 20:57 .gitignore
+-rw-r--r--  1 root    root        3234 May 15 20:57 CONTRIBUTING.md
+-rw-r--r--  1 root    root          91 May 15 20:57 Dockerfile.build
+-rw-r--r--  1 root    root         218 May 15 20:57 Dockerfile.dep
+-rw-r--r--  1 root    root          71 May 15 20:57 Dockerfile.deploy
+-rw-r--r--  1 root    root         576 May 15 20:57 Dockerfile.jenkins
+-rw-r--r--  1 root    root         117 May 15 20:57 Dockerfile.test
+drwxr-xr-x  2 root    root        4096 May 15 20:57 Jenkins
+-rw-r--r--  1 root    root        3443 May 15 20:15 Jenkinsfile
+-rw-r--r--  1 root    root        1070 May 15 20:57 LICENSE.md
+-rw-r--r--  1 root    root         159 May 15 20:57 Makefile
+-rw-r--r--  1 root    root        2226 May 15 20:57 README.md
+drwxr-xr-x  5 root    root        4096 May 15 20:57 authservice
+drwxr-xr-x  4 root    root        4096 May 15 20:57 clientclaims
+drwxr-xr-x  5 root    root        4096 May 15 20:57 couponservice
+drwxr-xr-x  2 root    root        4096 May 15 20:57 functional_tests
+-rw-r--r--  1 root    root        1255 May 15 20:57 go.mod
+-rw-r--r--  1 root    root       26444 May 15 20:57 go.sum
+-rw-r--r--  1 root    root        4633 May 15 20:57 main.go
+-rwxr-xr-x  1 root    root    17332058 May 15 20:57 micro-product-go
+drwxr-xr-x  2 root    root        4096 May 15 20:57 monitormodule
+drwxr-xr-x  5 root    root        4096 May 15 20:57 ordertransformerservice
+drwxr-xr-x  3 root    root        4096 May 15 20:57 productservice
+drwxr-xr-x  2 root    root        4096 May 15 20:05 shared
+drwxr-xr-x  3 root    root        4096 May 15 20:05 shared_volume
+drwxr-xr-x  2 root    root        4096 May 15 20:05 shared_volume_out
+[Pipeline] }
+[Pipeline] // script
+Post stage
+[Pipeline] sh
++ echo Dependencies downloaded
+Dependencies downloaded
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ echo Building
+Building
+[Pipeline] sh
++ docker build -t project-build:latest -f Dockerfile.build .
+Sending build context to Docker daemon  134.4MB
+
+Step 1/3 : FROM project-dep:latest
+ ---> adee0aad9578
+Step 2/3 : RUN make build
+ ---> Running in 8ff120b54e18
+go build -o devops-golang-project
+Removing intermediate container 8ff120b54e18
+ ---> 7842b3a6409c
+Step 3/3 : CMD ["cp", "devops-golang-project", "/volumeout/"]
+ ---> Running in ff9460777812
+Removing intermediate container ff9460777812
+ ---> 49cdbb717562
+Successfully built 49cdbb717562
+Successfully tagged project-build:latest
+[Pipeline] sh
++ pwd
++ pwd
++ docker run -v /var/jenkins_home/workspace/devops-golang-microservice/shared_volume:/volumein -v /var/jenkins_home/workspace/devops-golang-microservice/shared_volume_out:/volumeout project-build:latest
+[Pipeline] sh
++ ls shared_volume_out/ -la
+total 16776
+drwxr-xr-x  2 jenkins jenkins     4096 May 15 20:57 .
+drwxr-xr-x 14 jenkins jenkins     4096 May 15 20:51 ..
+-rwxr-xr-x  1 root    root    17169815 May 15 20:57 devops-golang-project
+[Pipeline] }
+[Pipeline] // script
+Post stage
+[Pipeline] sh
++ echo Build finished
+Build finished
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ echo Testing
+Testing
+[Pipeline] sh
++ docker build -t project-test -f Dockerfile.test .
+Sending build context to Docker daemon  134.4MB
+
+Step 1/4 : FROM project-dep:latest
+ ---> adee0aad9578
+Step 2/4 : RUN make unit-tests
+ ---> Running in 6185c3d36ed6
+go test ./...
+?   	github.com/shadowshot-x/micro-product-go	[no test files]
+?   	github.com/shadowshot-x/micro-product-go/authservice	[no test files]
+?   	github.com/shadowshot-x/micro-product-go/authservice/data	[no test files]
+?   	github.com/shadowshot-x/micro-product-go/authservice/jwt	[no test files]
+?   	github.com/shadowshot-x/micro-product-go/authservice/middleware	[no test files]
+?   	github.com/shadowshot-x/micro-product-go/clientclaims	[no test files]
+?   	github.com/shadowshot-x/micro-product-go/couponservice	[no test files]
+?   	github.com/shadowshot-x/micro-product-go/couponservice/couponregionclient	[no test files]
+?   	github.com/shadowshot-x/micro-product-go/couponservice/store	[no test files]
+?   	github.com/shadowshot-x/micro-product-go/monitormodule	[no test files]
+ok  	github.com/shadowshot-x/micro-product-go/ordertransformerservice	0.002s
+?   	github.com/shadowshot-x/micro-product-go/ordertransformerservice/store	[no test files]
+?   	github.com/shadowshot-x/micro-product-go/productservice	[no test files]
+?   	github.com/shadowshot-x/micro-product-go/productservice/store	[no test files]
+Removing intermediate container 6185c3d36ed6
+ ---> e0e50002bfe1
+Step 3/4 : RUN make functional-tests
+ ---> Running in 783e3e63d24b
+go test ./functional_tests/transformer_test.go
+ok  	command-line-arguments	0.002s
+Removing intermediate container 783e3e63d24b
+ ---> 7b6e7a21f4ea
+Step 4/4 : ENTRYPOINT [ "echo", "tested in container" ]
+ ---> Running in 445aeb2a6eb6
+Removing intermediate container 445aeb2a6eb6
+ ---> 2405ac3b50e7
+Successfully built 2405ac3b50e7
+Successfully tagged project-test:latest
+[Pipeline] sh
++ pwd
++ docker run -v /var/jenkins_home/workspace/devops-golang-microservice/shared_volume:/volumein project-test:latest
+tested in container
+[Pipeline] sh
++ ls ./shared_volume -la
+total 12
+drwxr-xr-x  3 jenkins jenkins 4096 May 15 19:40 .
+drwxr-xr-x 14 jenkins jenkins 4096 May 15 20:51 ..
+drwxr-xr-x 14 root    root    4096 May 15 20:57 source
+[Pipeline] sh
++ ls shared_volume/source -la
+total 17080
+drwxr-xr-x 14 root    root        4096 May 15 20:57 .
+drwxr-xr-x  3 jenkins jenkins     4096 May 15 19:40 ..
+-rw-r--r--  1 root    root        6148 May 15 20:57 .DS_Store
+-rw-r--r--  1 root    root         116 May 15 20:57 .env
+drwxr-xr-x  8 root    root        4096 May 15 20:57 .git
+-rw-r--r--  1 root    root         324 May 15 20:57 .gitignore
+-rw-r--r--  1 root    root        3234 May 15 20:57 CONTRIBUTING.md
+-rw-r--r--  1 root    root          91 May 15 20:57 Dockerfile.build
+-rw-r--r--  1 root    root         218 May 15 20:57 Dockerfile.dep
+-rw-r--r--  1 root    root          71 May 15 20:57 Dockerfile.deploy
+-rw-r--r--  1 root    root         576 May 15 20:57 Dockerfile.jenkins
+-rw-r--r--  1 root    root         117 May 15 20:57 Dockerfile.test
+drwxr-xr-x  2 root    root        4096 May 15 20:57 Jenkins
+-rw-r--r--  1 root    root        3443 May 15 20:15 Jenkinsfile
+-rw-r--r--  1 root    root        1070 May 15 20:57 LICENSE.md
+-rw-r--r--  1 root    root         159 May 15 20:57 Makefile
+-rw-r--r--  1 root    root        2226 May 15 20:57 README.md
+drwxr-xr-x  5 root    root        4096 May 15 20:57 authservice
+drwxr-xr-x  4 root    root        4096 May 15 20:57 clientclaims
+drwxr-xr-x  5 root    root        4096 May 15 20:57 couponservice
+drwxr-xr-x  2 root    root        4096 May 15 20:57 functional_tests
+-rw-r--r--  1 root    root        1255 May 15 20:57 go.mod
+-rw-r--r--  1 root    root       26444 May 15 20:57 go.sum
+-rw-r--r--  1 root    root        4633 May 15 20:57 main.go
+-rwxr-xr-x  1 root    root    17332058 May 15 20:57 micro-product-go
+drwxr-xr-x  2 root    root        4096 May 15 20:57 monitormodule
+drwxr-xr-x  5 root    root        4096 May 15 20:57 ordertransformerservice
+drwxr-xr-x  3 root    root        4096 May 15 20:57 productservice
+drwxr-xr-x  2 root    root        4096 May 15 20:05 shared
+drwxr-xr-x  3 root    root        4096 May 15 20:05 shared_volume
+drwxr-xr-x  2 root    root        4096 May 15 20:05 shared_volume_out
+[Pipeline] }
+[Pipeline] // script
+Post stage
+[Pipeline] sh
++ echo Tests finished
+Tests finished
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ echo Deploying
+Deploying
+[Pipeline] sh
++ docker build -t stanmarek/devops-golang-project:44eb7e683fce4973d89fbe2efdb28c8e627b9083 -f Dockerfile.deploy .
+Sending build context to Docker daemon  134.4MB
+
+Step 1/3 : FROM project-build:latest
+ ---> 49cdbb717562
+Step 2/3 : EXPOSE 9090
+ ---> Running in 7657c5ae4e2e
+Removing intermediate container 7657c5ae4e2e
+ ---> 2f9235759aa4
+Step 3/3 : CMD ["./devops-golang-project"]
+ ---> Running in 23840cfc715d
+Removing intermediate container 23840cfc715d
+ ---> bb1d617a5a29
+Successfully built bb1d617a5a29
+Successfully tagged stanmarek/devops-golang-project:44eb7e683fce4973d89fbe2efdb28c8e627b9083
+[Pipeline] sh
++ pwd
++ docker run --rm -d --name deploy-test -v /var/jenkins_home/workspace/devops-golang-microservice/shared_volume_out:/volumeout stanmarek/devops-golang-project:44eb7e683fce4973d89fbe2efdb28c8e627b9083
+4cf7e8d371cbd3a265e53d8cddbe7bcffd11d37a7a00c7036162ff42ac5242cc
+[Pipeline] sh
++ docker logs deploy-test
+{"level":"info","ts":1652648311.8364813,"caller":"source/main.go:48","msg":"Starting..."}
+{"level":"info","ts":1652648311.8368282,"caller":"monitormodule/monitor.go:142","msg":"Contents","Any":{"Metadataregion":"APAC","Metadatapipelineid":2022,"Signin":"signin_total,signin_success,signin_fail,signin_error","Signup":"signup_total,signup_success,signup_fail"}}
+{"level":"error","ts":1652648311.9067178,"caller":"couponservice/couponstream.go:71","msg":"Redis connection failed","error":"dial tcp 127.0.0.1:6379: connect: connection refused","stacktrace":"github.com/shadowshot-x/micro-product-go/couponservice.RedisInstanceGenerator\n\t/source/couponservice/couponstream.go:71\nmain.main\n\t/source/main.go:72\nruntime.main\n\t/usr/local/go/src/runtime/proc.go:255"}
+[Pipeline] sh
++ sleep 10
+[Pipeline] sh
++ docker stop deploy-test
+deploy-test
+[Pipeline] }
+[Pipeline] // script
+Post stage
+[Pipeline] sh
++ echo Deploy finished
+Deploy finished
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Publish)
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/devops-golang-microservice@2
+[Pipeline] {
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+using credential dockerhub
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/devops-golang-microservice@2/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/StanMarek/devops-golang-microservice # timeout=10
+Fetching upstream changes from https://github.com/StanMarek/devops-golang-microservice
+ > git --version # timeout=10
+ > git --version # 'git version 2.30.2'
+using GIT_ASKPASS to set credentials use to login and push image
+ > git fetch --tags --force --progress -- https://github.com/StanMarek/devops-golang-microservice +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+Checking out Revision 44eb7e683fce4973d89fbe2efdb28c8e627b9083 (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 44eb7e683fce4973d89fbe2efdb28c8e627b9083 # timeout=10
+Commit message: "Finish complete"
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withCredentials
+Masking supported pattern matches of $dockerhubPassword
+[Pipeline] {
+[Pipeline] sh
+Warning: A secret was passed to "sh" using Groovy String interpolation, which is insecure.
+		 Affected argument(s) used the following variable(s): [dockerhubPassword]
+		 See https://jenkins.io/redirect/groovy-string-interpolation for details.
++ docker login -u stanmarek -p ****
+WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+WARNING! Your password will be stored unencrypted in /var/jenkins_home/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+[Pipeline] sh
++ docker push stanmarek/devops-golang-project:44eb7e683fce4973d89fbe2efdb28c8e627b9083
+The push refers to repository [docker.io/stanmarek/devops-golang-project]
+ffd1713a960d: Preparing
+1daf280d3568: Preparing
+ba8f1704ad96: Preparing
+b6f19581d744: Preparing
+e047119c9fda: Preparing
+ad8b951eb5e4: Preparing
+4e797c290268: Preparing
+09e3373b9d9a: Preparing
+4fc242d58285: Preparing
+ad8b951eb5e4: Waiting
+09e3373b9d9a: Waiting
+4fc242d58285: Waiting
+4e797c290268: Waiting
+e047119c9fda: Layer already exists
+ad8b951eb5e4: Layer already exists
+4e797c290268: Layer already exists
+09e3373b9d9a: Layer already exists
+4fc242d58285: Layer already exists
+ffd1713a960d: Pushed
+1daf280d3568: Pushed
+ba8f1704ad96: Pushed
+b6f19581d744: Pushed
+44eb7e683fce4973d89fbe2efdb28c8e627b9083: digest: sha256:d4b52b712abcaebd20f5d57ccfe156e643ca4832143de50f20d95964daf1f4a8 size: 2213
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] archiveArtifacts
+Archiving artifacts
+Recording fingerprints
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

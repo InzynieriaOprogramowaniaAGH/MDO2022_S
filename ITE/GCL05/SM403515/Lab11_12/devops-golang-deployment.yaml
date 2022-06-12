@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-golang-microservice-deployment
+  labels:
+    app: devops-golang-microservice
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: devops-golang-microservice
+  template:
+    metadata:
+      labels:
+        app: devops-golang-microservice
+    spec:
+      containers:
+        - name: devops-golang-microservice
+          image: stanmarek/devops-golang-project:910f2699b43392e699442711c15c92c2ed31abe7
+          ports:
+            - containerPort: 9090

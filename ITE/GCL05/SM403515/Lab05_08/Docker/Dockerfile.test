@@ -1,0 +1,7 @@
+FROM project-dep:latest
+
+RUN make unit-tests
+
+RUN make functional-tests
+
+ENTRYPOINT [ "echo", "tested in container" ]

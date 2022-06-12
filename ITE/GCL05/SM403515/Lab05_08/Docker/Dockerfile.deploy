@@ -1,0 +1,5 @@
+FROM project-build:latest
+
+EXPOSE 9090
+
+CMD ["./devops-golang-project"]

@@ -1,0 +1,5 @@
+FROM project-dep:latest
+
+RUN make build
+
+CMD ["cp", "devops-golang-project", "/volumeout/"]
