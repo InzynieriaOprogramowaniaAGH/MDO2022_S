@@ -1,0 +1,11 @@
+1. Kontener dockerowy z komunikatorem jest dostępny na moim dockerhub
+
+2. Zalogowałem się na swoje konto studenckie na platoformie Azure jednak moje zasoby już wygasły ponieważ konto
+zakładałem już jakiś czas temu. 
+
+3. Zapoznanie się z cennikiem dla Azure Container Instances
+
+4. Zapoznanie się z usługą Azure Cloud Shell. Spróbowałem uruchomić konsolę bash jednak dostałem
+informacje, że na moim koncie nie ma odpowiedniej subskrypcji
+
+5. Zapoznanie się z instrukcjami uruchamiania kontenerów na platformie Azure
