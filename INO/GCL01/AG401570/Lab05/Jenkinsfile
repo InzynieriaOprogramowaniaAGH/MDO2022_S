@@ -1,0 +1,52 @@
+pipeline{
+    agent any
+
+    parameters {
+        string(name: 'Name')
+        string(name: 'Version')
+    }
+
+    stages{
+        stage('Build') {
+            steps {
+                echo 'BUILD'
+                dir('INO/GCL01/AG401570/Lab05') {
+                    sh 'docker build . -f dockerFile1 -t builder'
+                }
+            }
+        }
+        stage('Tests') {
+            steps {
+                echo 'TESTS'
+                dir('INO/GCL01/AG401570/Lab05') {
+                    sh 'docker build . -f dockerFile2 -t tester'
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'docker run --volume /var/jenkins_home/workspace/Rurociag/INO/GCL01/AG401570/Lab05:/v builder mv pcalc /v'
+                dir('INO/GCL01/AG401570/Lab05') {
+                    sh 'docker build . -f dockerFile3 -t deploy'
+                }
+                sh '''
+                docker run -t --name deployPcalc --volume /var/jenkins_home/workspace/Rurociag/INO/GCL01/AG401570/Lab05:/v deploy v/pcalc&
+                '''
+                sh 'docker exec deployPcalc ps aux' 
+                sh 'docker stop deployPcalc'
+                sh 'docker container rm deployPcalc'
+                
+            }
+        }
+        stage('Publish') {
+            steps {
+                echo 'PUBLISH'
+                dir('INO/GCL01/AG401570/Lab05') {
+                    sh 'docker build . -f dockerFile4 -t publisher'
+                }
+                sh "docker run --volume /var/jenkins_home/workspace/Rurociag/INO/GCL01/AG401570/Lab05:/v publisher mv pcalc.tar /v"
+            }
+        }
+    }
+    
+}

@@ -1,0 +1,2 @@
+FROM builder:latest
+RUN tar rvf pcalc.tar pcalc
