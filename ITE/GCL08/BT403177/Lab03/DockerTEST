@@ -1,0 +1,3 @@
+FROM bigchad:latest
+WORKDIR "./text-to-speech-nodejs"
+RUN npm test

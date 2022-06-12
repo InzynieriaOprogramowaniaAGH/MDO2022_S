@@ -1,0 +1,9 @@
+FROM ubuntu:latest
+RUN apt-get update -y
+RUN apt-get install git -y
+ENV Z=Europe/Warsaw
+RUN ln -snf /usr/share/zoneinfo/$Z /etc/localtime && echo $Z > /etc/timezone
+RUN apt-get install npm -y
+RUN git clone https://github.com/watson-developer-cloud/text-to-speech-nodejs
+WORKDIR "./text-to-speech-nodejs"
+RUN npm install
