@@ -1,6 +1,5 @@
-FROM node:latest
-RUN git clone https://github.com/typicode/json-server.git
-WORKDIR json-server
-RUN npm update
+FROM node:lts-bullseye
+RUN git clone https://github.com/RafalOlech00/cytoscape.js.git
+WORKDIR cytoscape.js
 RUN npm install
 RUN npm run build
