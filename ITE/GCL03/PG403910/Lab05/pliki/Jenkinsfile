@@ -17,8 +17,6 @@ pipeline {
         stage('Init'){
             steps {
                 git url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git', branch: 'PG403910'
-                sh 'touch build.log'
-                sh 'touch test.log'
             }
             post{
                 success{
@@ -117,6 +115,12 @@ pipeline {
                 unsuccessful{
                     echo "Failed to publish"
                 }
+            }
+        }
+        stage('Cleanup') {
+            steps {
+                sh 'docker rm docker_build'
+                sh 'docker rm docker_test'
             }
         }
     }
