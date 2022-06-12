@@ -1,0 +1,86 @@
+pipeline {
+			
+	agent any
+
+    parameters {
+        string(name: 'projectVersion', defaultValue: '1.0.0', description: 'projectVersion')
+        booleanParam(name: 'Promote', defaultValue: true, description: 'Promote statement')
+        string(name: 'dockerfilesPath', defaultValue: './ITE/GCL07/PS401904/Lab5', description: 'Path to dockerfile')
+    }
+    
+	stages {
+		stage('Clone') {
+			steps {
+				echo 'Cloning repo'
+				sh 'docker volume create input-volume'
+				sh 'docker rm tempContainer || true'
+				sh 'docker run --rm --name tempContainer --mount "type=volume,src=input-volume,dst=/myapp" node bash -c "cd ~/ && ls express \
+				 || git clone https://github.com/expressjs/express.git;cp -R express /myapp; ls /myapp"'
+			}
+		}
+	
+	    stage('Build') {
+			steps {
+				echo 'Building project'
+				dir("${params.dockerfilesPath}") {
+					sh 'docker build . -t express_alpine -f Dockerfile'
+					sh 'docker volume create output-volume'
+					sh 'docker rm express-build || true'
+					sh 'docker run --rm --name express-build --mount "type=volume,src=input-volume,dst=/myapp" \
+					--mount "type=volume,src=output-volume,dst=/myapp_build" express_alpine bash -c "cd /myapp/express && npm install; cp -R /myapp/express /myapp_build"'
+				}
+			}
+		}
+
+	    stage('Test') {
+			steps {
+				echo 'Testing project'
+				dir("${params.dockerfilesPath}") {
+					sh 'docker rm express-test || true'
+					sh 'docker run --rm --name express-test --mount "type=volume,src=input-volume,dst=/myapp_test" express_alpine bash -c "cd /myapp_test/express && npm test"'
+				}
+			}
+		}
+        
+		stage('Deploy') {
+			steps {
+				echo 'Deploying project'
+				sh 'docker rm -f express-deploy || true'
+				sh 'docker run --name express-deploy --mount "type=volume,src=output-volume,dst=/usr/local/myapp" express_alpine bash -c "cd /usr/local/myapp/express && npm run"'
+				sh 'sleep 5; exit $(docker inspect express-deploy --format="{{.State.ExitCode}}")'
+				sh 'docker rm -f express-deploy'
+			}
+		}
+
+        stage('Prepare publish'){
+            when {
+                expression {return params.Promote}
+		    }
+            steps {
+                echo 'Preparing for publishing project'
+                sh 'ls /var/jenkins_home/workspace/artifacts || mkdir /var/jenkins_home/workspace/artifacts'
+            }
+        }
+        
+		stage('Publish') {
+		    when {
+                expression {return params.Promote}
+		    }
+		    agent {
+                docker {
+                    image 'node:alpine'
+                    args '--rm --mount "type=volume,src=output-volume,dst=/usr/local/myapp" --mount \
+					"type=bind,source=/var/jenkins_home/workspace/artifacts,dst=/usr/local/copy" -u root:root'
+                }
+            }
+			steps {
+			    sh 'rm -rf /usr/local/copy/* || true'
+			    sh "cd /usr/local/myapp/express && npm version ${params.projectVersion} && npm pack"
+			    sh "mv /usr/local/myapp/express/express-${params.projectVersion}.tgz /usr/local/copy"
+			    dir('/var/jenkins_home/workspace/artifacts'){
+			        archiveArtifacts artifacts: "express-${params.projectVersion}.tgz"
+			    }
+			}
+		}
+	}
+}
