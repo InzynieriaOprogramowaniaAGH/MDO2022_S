@@ -41,7 +41,7 @@
 
 	* sklonuj repozytorium
 
-	![git clone in container](Pictures/lab3/buildGitCLone8.png?raw=true)
+	![git clone in container](Pictures/lab3/buildGitClone8.png?raw=true)
 
 	* uruchom build
 
