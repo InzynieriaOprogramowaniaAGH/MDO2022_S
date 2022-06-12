@@ -8,7 +8,7 @@ pipeline {
         string(name: "version",
             defaultValue: "1.0.0",
             description: "Podaj numer wersji")
-        string(name: "hasło",
+        string(name: "password",
             defaultValue: "123",
             description: "Podaj hasło")
     }
@@ -102,7 +102,7 @@ pipeline {
                 sh "docker cp docker_test:/quick-example-of-testing-in-nodejs ./${params.version}"
                 echo "Pushing Image to DockerHub"
                 withCredentials([string(credentialsId: 'malokreatywny22222', variable: 'password')]) {
-                    sh 'docker login -u malokreatywny22222 -p ${password}'
+                    sh 'docker login -u malokreatywny22222 -p '${params.password}''
                 }
                 sh "docker tag docker_test:latest malokreatywny22222/quick-example-of-testing-in-nodejs:${params.version}"
                 sh "docker push malokreatywny22222/quick-example-of-testing-in-nodejs:${params.version}"
