@@ -1,0 +1,15 @@
+FROM fedora:latest
+
+WORKDIR ~
+RUN yum module enable -y nodejs:14
+RUN yum install -y git @nodejs:14/common &> /dev/null
+
+RUN git clone https://github.com/pause1/atari &> /dev/null
+WORKDIR atari
+RUN npm install -g @angular/cli &> /dev/null
+RUN npm install &> /dev/null
+
+RUN yum install -y dnf-plugins-core &> /dev/null
+RUN dnf install -y fedora-workstation-repositories &> /dev/null
+RUN dnf config-manager --set-enabled google-chrome &> /dev/null
+RUN dnf install -y google-chrome-stable &> /dev/null

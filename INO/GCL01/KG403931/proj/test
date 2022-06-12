@@ -1,0 +1,8 @@
+FROM deps:temp
+
+RUN groupadd testers &> /dev/null
+RUN useradd -r -g testers tester &> /dev/null
+RUN mkdir /home/tester &> /dev/null
+RUN chown -R tester:testers /home/tester &> /dev/null
+USER tester
+RUN npm test; exit 0;

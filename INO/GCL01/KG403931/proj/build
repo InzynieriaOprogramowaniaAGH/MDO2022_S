@@ -1,0 +1,4 @@
+FROM deps:temp
+
+USER root
+RUN npm run build

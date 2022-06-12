@@ -1,0 +1,6 @@
+FROM httpd:2.4
+
+COPY /vol_build/build /usr/local/apache2/htdocs/
+
+WORKDIR /usr/local/apache2/htdocs/
+RUN npm run serve

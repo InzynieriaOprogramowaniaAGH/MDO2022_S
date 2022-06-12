@@ -1,0 +1,19 @@
+---
+
+- name: Network Getting Started First Playbook
+  connection: ansible.netcommon.network_cli
+  gather_facts: true
+  hosts: all
+  tasks:
+
+    - name: enable rpm because why would it be simple right
+      dnf:
+        name: "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ansible_distribution_major_version}}.noarch.rpm"
+        disable_gpg_check: True
+        state: present
+#    - name: install rpmfusion
+#      dnf: name='rpmfusion' state=latest
+
+    - name: install train
+      package: name='sl' state=latest
+
