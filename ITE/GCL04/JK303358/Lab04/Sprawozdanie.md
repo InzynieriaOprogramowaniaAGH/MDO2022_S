@@ -8,14 +8,17 @@
 * Przygotuj woluminy wejściowy i wyjściowy, o dowolnych nazwach, i podłącz je do kontenera bazowego, z którego rozpoczynano poprzednio pracę
 
 Aby utworzyć woluminy użyto polecenia `docker volume create`. Zostały nazwane vol-in i vol-out.
+
 ![volume create](Pictures/1.png?raw=true)
 
 * Uruchom kontener, zainstaluj niezbędne wymagania wstępne (jeżeli istnieją), ale *bez gita*
 
 Kontener uruchomiono w trybie interaktywnym nadając mu nazwe `L4` z zamontowaniem woluminów - użyto komendy `sudo docker run -it --name L4 --mount source=vol-in,destination=/input-volume --mount source=vol-out,destination=/output-volume ubuntu`
+
 ![docker run](Pictures/2.png?raw=true)
 
 Zainstalowano niezbędne narzędzia - maven i java. Wykonano polecenia:
+
 ```
 apt-get update
 apt-get -y install maven
@@ -23,6 +26,7 @@ apt-get -y install openjdk-11-jdk
 ```
 
 ![maven install](Pictures/3.png?raw=true)
+
 ![java install](Pictures/4.png?raw=true)
 
 * Sklonuj repozytorium na wolumin wejściowy
@@ -34,12 +38,15 @@ Z zewnątrz kontenera sklonowano repozytorium projektu na wolumin wejściowy do 
 * Uruchom build w kontenerze
 
 Przechodząc w kontenerze do katalogu repo uruchomiono build poleceniem `mvn install`
+
 ![mvn install](Pictures/6.png?raw=true)
+
 ![mvn install](Pictures/7.png?raw=true)
 
 * Zapisz powstałe/zbudowane pliki na woluminie wyjściowym
 
 Wynikowy folder `target` został skopiowany na wolumin wyjściowy (katalog output-volume). Komenda `cp -R target ../../output-volume/`
+
 ![copy target](Pictures/8.png?raw=true)
 
 
@@ -48,6 +55,7 @@ Wynikowy folder `target` został skopiowany na wolumin wyjściowy (katalog outpu
 
 Uruchomiono kontener `L4_1` wiążąc jego port 5201 z portem 5201 hosta (parametr --publish). Polecenie `sudo docker run -it --name L4_1 --publish 5201:5201 ubuntu`
 Zainstalowano w nim i uruchomiono serwer iperf3 -s. Polecenia:
+
 ```
 apt-get update
 apt install iperf3
@@ -55,6 +63,7 @@ iperf3 -s
 ```
 
 ![docker run](Pictures/9.png?raw=true)
+
 ![iperf3 start](Pictures/10.png?raw=true)
 
 * Połącz się z nim z drugiego kontenera, zbadaj ruch
@@ -98,6 +107,7 @@ Przeprowadzono instalację zgodnie z instrukcją.
 * Zainicjalizuj instację, wykaż działające kontenery, pokaż ekran logowania
 
 Uruchomiono kontener - polecenie:
+
 ```
  docker run --name jenkins-blueocean --rm --detach \
 --network jenkins --env DOCKER_HOST=tcp://docker:2376 \
