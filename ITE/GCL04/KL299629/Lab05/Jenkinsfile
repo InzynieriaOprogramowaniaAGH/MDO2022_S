@@ -1,0 +1,65 @@
+pipeline {
+
+	agent any
+	
+	environment {
+		DOCKERHUB_CREDENTIALS=credentials('kalch1')
+	}
+	
+	stages {
+		stage('Build') {
+			steps {
+				sh 'docker build -t app . -f ITE/GCL04/KL299629/Lab05/dockerfile-build'
+			}
+			post {
+				success {
+					mail to: 'kalach@student.agh.edu.pl', subject: "Success of building", body: "Success of building: ${BUILD_URL}"
+				}
+
+				failure {
+					mail to: 'kalach@student.agh.edu.pl', subject: "Failure of building", body: "Failure of building: ${BUILD_URL}"
+				}
+			}
+		}
+		stage('Test') {
+			steps {
+				sh 'docker build -t test . -f ITE/GCL04/KL299629/Lab05/dockerfile-test'     
+			}
+         		post {
+				success {
+					mail to: 'kalach@student.agh.edu.pl', subject: "Success of test", body: "Success of test: ${BUILD_URL}"
+				}
+				failure {
+					mail to: 'kalach@student.agh.edu.pl', subject: "Failure of test", body: "Failure of test: ${BUILD_URL}"
+				}
+			}
+         	}
+         	stage('Login') {
+			steps {
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
+		stage('Publish') {
+			steps {
+				sh '''
+				docker tag app:latest kalch1/kl299629:1.0
+				docker push kalch1/kl299629:1.0
+				'''
+			}
+			post {
+				success {
+					mail to: 'kalach@student.agh.edu.pl', subject: "Success of publish", body: "Success of publish: ${BUILD_URL}"
+				}
+				failure {
+					mail to: 'kalach@student.agh.edu.pl', subject: "Failure of publish", body: "Failure of publish: ${BUILD_URL}"
+				}
+			}
+
+		}
+	}
+	post {
+		always {
+			sh 'docker logout'
+		}
+	}
+}
