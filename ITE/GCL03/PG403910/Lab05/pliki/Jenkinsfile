@@ -31,9 +31,11 @@ pipeline {
         }
         stage('Build') {
             steps {
-                echo "Building"
-                sh 'docker build -t build:latest . -f ./ITE/GCL03/PG403910/Lab05/pliki/docker_build | tee build.log'
-                sh 'docker run --name  build build:latest'
+                dir('./ITE/GCL03/PG403910/Lab05/pliki'){
+                    echo 'Building'
+                    sh 'docker build -t docker_build:latest . -f docker_build'
+                    sh 'docker run --name  docker_build docker_build:latest'
+                }
             }
             post{
                 success{
