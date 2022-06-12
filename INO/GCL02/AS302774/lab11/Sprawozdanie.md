@@ -103,24 +103,19 @@ Zapisano wdrożenie jako plik YML i dodano repliki:
 
 Stworzono deployment bazujący na pliku YAML: 
 
-   ``kubectl apply -f https://k8s.io/examples/application/deployment.yaml``
+   ``kubectl apply -f file1.yaml``
      
 
-![](./img/new12.png)
+![](./img/new2.png)
 
 
 Wyświetlono informacje o deploymencie: 
 
 ``kubectl describe deployment nginx-deployment``
 
-![](./img/17.png)
+I udowodniono dzialanie
+
+![](./img/new3.png)
 
 
-Wyświetlono jezcze jakie podsy zostały stworzone: 
-
-  ``kubectl get pods -l app=nginx``
-
-![](./img/18.png)
-
-![](./img/19.png)
 
