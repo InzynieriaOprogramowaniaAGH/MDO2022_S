@@ -45,7 +45,7 @@ docker run \
 2. Utworzenie pipeline
 W panelu Jenkinsa należało kliknąć New Item => Pipeline, a następnie nadać mu nazwę.  
 Następnie można było wpisać opis pipelina:  
-![](zdjecia/zdjecia/Screenshot_1.png)    
+![](zdjecia/Screenshot_1.png)    
 I wybrać by nasz pipeline był zbudowany przez SCM:   
 ![](zdjecia/Screenshot_2.png)    
 Zdefiniowanie gałęzi na której pracujemy oraz ścieżki do Jenkinsfile:    
@@ -235,8 +235,8 @@ Wybranie czy promujemy artefakt, numeru wersji i wpisanie hasła do dockerhuba:\
 
 # Diagramy
 
-1. Diagram aktywności: \ 
+1. Diagram aktywności:   
 ![](zdjecia/Screenshot_8.png)  
-2. Diagram wdrożenia: \ 
+2. Diagram wdrożenia:  
 ![](zdjecia/Screenshot_9.png)  
 
