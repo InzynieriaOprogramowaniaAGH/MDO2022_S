@@ -9,7 +9,7 @@
 ![](./screenshots/3_localhost.png)
 ![](./screenshots/4_port.png)
 
-2. Plik ```docker-compose-httpd.yml``` wykorzystałem do konwersji do pliku *yaml* kubernetesa, zapomocą wcześniej zainstalowanego narzędzia *kompose*.
+2. Plik ```docker-compose-httpd.yml``` wykorzystałem do konwersji do pliku *yaml* kubernetesa, zapomocą wcześniej zainstalowanego narzędzia *kompose*.\
 ![](./screenshots/5_2_kompose.png)
 ![](./screenshots/5_kompose.png)
 
