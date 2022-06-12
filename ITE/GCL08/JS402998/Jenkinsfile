@@ -1,0 +1,62 @@
+pipeline {
+	    parameters { 
+		        string(name: 'VERSION', defaultValue: '1.0.0', description: '') 
+		        booleanParam(name: 'PROMOTE', defaultValue: true, description: '')
+	}	
+	agent any
+
+	stages {
+		stage('Clone git repo') {
+			steps {
+				echo 'Creating volme to input'
+				sh 'docker volume create entry_volume'
+				sh 'docker rm help_container || true'
+				sh 'docker run -v entry_volume:/data --name help_container node'
+				sh 'cd ~/ && ls nexe || git clone --recurse-submodules https://github.com/nexe/nexe.git'
+				sh 'docker cp ~/nexe help_container:/data'
+				sh 'docker rm help_container'
+			}
+		}
+	
+	stage('Build') {
+			steps {
+				echo 'Buildig nexe with npm'
+				dir("./ITE/GCL08/JS402998") {
+				    sh 'pwd'
+				    sh 'ls'
+					sh 'docker build . -t build_image -f build_dockerfile'
+					sh 'docker volume create exit_volume'
+					sh 'docker run --mount type=volume,src="entry_volume",dst=/nexe_app --mount type=volume,src="exit_volume",dst=/nexe_app_build build_image bash -c "cd /nexe_app/nexe && npm i -g; cd ..; ls; cp -r nexe /nexe_app_build"'
+				}
+			}
+		}
+	stage('Test') {
+			steps {
+				echo 'Testing nexe with npm'
+				dir("./ITE/GCL08/JS402998") {
+					sh 'docker build . -t test_image -f build_dockerfile'
+					sh 'docker run --mount type=volume,src="exit_volume",dst=/nexe_app_build test_image bash -c "cd /nexe_app_build/nexe && npm test"'
+				}
+			}
+		}
+	stage('Deploy') {
+			steps {
+				echo 'Deploying nexe with npm'
+				dir("./ITE/GCL08/JS402998") {
+                    sh 'docker build . -t deploy_image -f build_dockerfile'
+					sh 'docker run --rm --name deploy_nexeee --mount type=volume,src="exit_volume",dst=/nexe_app deploy_image bash -c "cd /nexe_app/nexe && npm run"'
+				}
+			}
+		}
+		stage('Publish') {
+		    when { expression { return params.PROMOTE } }
+			steps {
+				echo 'Publishing nexe with npm'
+				sh 'mkdir /var/jenkins_home/workspace/artifacts || find /var/jenkins_home/workspace -name "artifacts"'
+				sh 'docker run --rm --name nexe_publish --mount type=volume,src="exit_volume",dst=/usr/local/nexe_app --mount type=bind,source=/var/jenkins_home/workspace/artifacts,target=/usr/local/copy node  bash -c "chmod -R 777 /usr/local/nexe_app && cp -R /usr/local/nexe_app/. /usr/local/copy"'
+				sh "tar -zcvf nexe-${params.VERSION}.tar.gz -C /var/jenkins_home/workspace/artifacts ."
+				archiveArtifacts artifacts: "nexe-${params.VERSION}.tar.gz"
+			}
+		}
+	}
+}
