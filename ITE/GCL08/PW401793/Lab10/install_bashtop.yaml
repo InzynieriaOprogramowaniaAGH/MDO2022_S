@@ -1,0 +1,33 @@
+---
+- name: Bashtop installation
+  hosts: all
+
+  tasks:
+  - name: Install python3
+    ansible.builtin.yum:
+      name: python3
+      state: latest
+  - name: Install git
+    yum:
+      name: git
+      state: latest
+  - name: Install make
+    ansible.builtin.yum:
+      name:
+      - make
+      - gcc
+      state: latest
+  - name: Install python3-pip
+    ansible.builtin.yum:
+      name: python3-pip
+      state: latest
+  - name: Install psutil
+    pip:
+      name: psutil>=5.7.0
+  - name: Download bashtop
+    ansible.builtin.git:
+      repo: 'https://github.com/aristocratos/bashtop.git'
+      dest: /var/lib/bashtop
+  - name: Install bashtop
+    make:
+      chdir: /var/lib/bashtop
