@@ -5,17 +5,17 @@
 # **Część 1: Instalacja klastra Kubernetes**
 - instalacja i uruchomienie minikube.
 
-![x](./DevOps/instalacja1.png)
+![x](./pics/instalacja1.png)
 
 - urochomienie dashboardu w przeglądarce i pokazanie łączności.
 
-![x](./DevOps/dashboard1.png)
+![x](./pics/dashboard1.png)
 
-![x](./DevOps/dashboard2.png)
+![x](./pics/dashboard2.png)
 
 - wymagania sprzętowe
 
-![x](./DevOps/wymagania.png)
+![x](./pics/wymagania.png)
 
 - Można zauważyć, że wymagania sprzętowe nie są duże - do uruchomienia klastra może posłużyć nawet Raspberry Pi 
 
@@ -25,27 +25,27 @@ Do wykonania tego punktu byłem zmuszony zmienić aplikację - poprzednia nie ek
 
 - pull obrazu
 
-![x](./DevOps/pull.png)
+![x](./pics/pull.png)
 
 # **Część 3: Uruchamianie oprogramowania**
 
 - Uruchomienie kontenera, który automatycznie został ubrany w pod.
 
-  ![x](./DevOps/pod.png)
+  ![x](./pics/pod.png)
 
 - Przedstawienie działania
 
-  ![x](./DevOps/dziala2.png)
+  ![x](./pics/dziala2.png)
 
-  ![x](./DevOps/dziala1.png)
+  ![x](./pics/dziala1.png)
 
 - Wyprowadzenie portu
 
-  ![x](./DevOps/portforward.png)
+  ![x](./pics/portforward.png)
 
 - Przedstawienie komunikacji z eksponowaną funkcjonalnością
 
-  ![x](./DevOps/dzialajacagrafana.png)
+  ![x](./pics/dzialajacagrafana.png)
 
 # **Część 4: Przekucie wdrożenia manualnego w plik wdrożenia**
 
@@ -77,7 +77,7 @@ spec:
 
 Wykazanie działania na dashboardzie:
 
-![x](./DevOps/deployments.png)
+![x](./pics/deployments.png)
 
 # **LAB12**
 
@@ -98,7 +98,7 @@ spec:
   replicas: 10
 ```
 
-![x](./DevOps/zwiekszeniedo1.png)
+![x](./pics/zwiekszeniedo1.png)
 
 - zmniejszenie liczbę replik do 1.
 ```
@@ -106,16 +106,16 @@ spec:
   replicas: 1
 ```
 
-![x](./DevOps/zmniejszczenieDo1.png)
+![x](./pics/zmniejszczenieDo1.png)
 
 - zmniejszenie liczbę replik do 0.
 ```
 spec:
   replicas: 0
 ```
-![x](./DevOps/do0.png)
+![x](./pics/do0.png)
 
-![x](./DevOps/do0dash.png)
+![x](./pics/do0dash.png)
 
 - zastosowanie starszej wersji z ustawioną liczbą replik równą 1.
 ```
@@ -125,23 +125,23 @@ spec:
         image: grafana/grafana:4.2.0
 ```
 
-![x](./DevOps/grafanaOld.png)
+![x](./pics/grafanaOld.png)
 
-![x](./DevOps/oldDash.png)
+![x](./pics/oldDash.png)
 
 Przywracanie poprzedniej wersji.  `kubectl rollout history` umożliwia wyświetlenie historii wersji. Za pomocą `kubectl rollout undo` mamy możliwość powrotu do poprzedniej wersji. Powrót do wybranej wersji umożliwia dopisanie w poleceniu  `--to-revision=2`.
 
 Powrót do nowszej wersji przy pomocy  kubectl rollout undo
 
-![x](./DevOps/undo.png)
+![x](./pics/undo.png)
 
-![x](./DevOps/undoDash.png)
+![x](./pics/undoDash.png)
 
 Powrót przy użyciu --to-revision=2
 
-![x](./DevOps/rev2.png)
+![x](./pics/rev2.png)
 
-![x](./DevOps/rev2Dash.png)
+![x](./pics/rev2Dash.png)
 
 # **Część 8: Kontrola wdrożenia**
 
@@ -158,9 +158,9 @@ spec:
 ```
 Strategia ta polega na tym, że wszystkie aktualnie działające instancje są ubijane i następnie wdrażana jest nowa wersja.
 
-![x](./DevOps/recreate.png)
+![x](./pics/recreate.png)
 
-![x](./DevOps/recreateDash.png)
+![x](./pics/recreateDash.png)
 
 - druga strategia `RollingUpdate` polega na stopniowym wdrażaniu replik. Tworzony są nowe repliki, z nową wersją, a starszę są ubijane.  `maxSurge` określa ilość podów możliwą do dodania w określonym czasie, a `maxUnavailable` ilość podów niedostępnych w trakcie wdrożenia.
 
@@ -174,9 +174,9 @@ spec:
       maxUnavailable: 0 
 ```
 
-![x](./DevOps/rolling2.png)
+![x](./pics/rolling2.png)
 
-![x](./DevOps/rolling.png)
+![x](./pics/rolling.png)
 
 - trzecia strategia `Canary` wykonywane jest przy użyciu dwóch wdrożen ze wspólnymi etykietami. Jedna replika nowej wersji jest wypuszczana obok starej i po pewnym czasie jeśli nie zostanie wykryty żaden błąd usuwane jest stare wdrożenie. 
 
@@ -184,9 +184,9 @@ spec:
  app: grafana
 ```
 
-![x](./DevOps/ostatni.png)
+![x](./pics/ostatni.png)
 
-![x](./DevOps/ostatniDash.png)
+![x](./pics/ostatniDash.png)
 
 **Podsumowując:**
 
