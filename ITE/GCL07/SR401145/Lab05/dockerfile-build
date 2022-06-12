@@ -1,9 +1,8 @@
 FROM ubuntu:latest
 
 RUN apt-get update
-RUN apt-get -y install git
-RUN git clone https://github.com/rui314/chibicc.git
 RUN apt-get -y install make
 RUN apt-get -y install build-essential
-WORKDIR /chibicc
-RUN make
+WORKDIR chibicc
+RUN mkdir build_dir
+CMD sh -c "make prefix= DESTDIR=/build_dir && touch chibicc.tar.gz && tar -czf chibicc.tar.gz /chibicc && cp chibicc.tar.gz /build_dir && cp chibicc.tar.gz /build"

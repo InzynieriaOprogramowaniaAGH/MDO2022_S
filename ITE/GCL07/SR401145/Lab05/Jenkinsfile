@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+    parameters {
+        string(name: 'VERSION', defaultValue: '1.0.0', description: '')
+        }
+    stages {
+        stage('Git'){       
+            steps{
+                sh 'docker container prune -f'
+                sh 'docker volume prune -f' // usuwanie starych woluminow i kontenerow
+                git branch: 'SR401145', url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git'
+                sh 'docker volume create --name volume-build'
+                sh 'docker volume create --name volume-test'
+                sh 'docker volume create --name volume-repo'
+                sh 'docker build -t chibiccclone . -f "ITE/GCL07/SR401145/Lab05/dockerfile-clone"'
+                sh 'docker run -v volume-repo:/chibicc chibiccclone'
+            }
+        }
+        
+        stage('Build'){
+            steps{
+                sh 'docker build -t build . -f ITE/GCL07/SR401145/Lab05/dockerfile-build'
+                sh 'docker run -v volume-repo:/chibicc -v volume-build:/build build'
+            }
+        }
+        
+        stage('Test'){
+            steps{
+                sh 'docker build -t test . -f ITE/GCL07/SR401145/Lab05/dockerfile-test'
+                sh 'docker run -v volume-repo:/chibicc -v volume-test:/test test'
+            }
+        }
+        
+        stage('Deploy'){
+            steps{
+                sh 'docker build -t deploy . -f ITE/GCL07/SR401145/Lab05/dockerfile-deploy'
+                sh 'docker run -v volume-build:/build deploy'
+            }
+        }
+        
+        stage('Publish'){
+            steps{
+                // sh 'mv chibicc.tar.gz chibicc_${VERSION}.tar.gz'-> ERROR - TODO
+                archiveArtifacts 'chibicc.tar.gz'
+            }
+        }
+    }
+}
