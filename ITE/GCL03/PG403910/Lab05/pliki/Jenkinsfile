@@ -2,13 +2,13 @@ pipeline {
     agent any
 
     parameters {
-        booleanParam(name: "promote",
+        booleanParam(name: "Promote",
             defaultValue: false,
             description: "Czy chcesz wypromować artefakt? (Tylko gdy wszystkie etapy wykonają się poprawnie)")
-        string(name: "version",
+        string(name: "Version",
             defaultValue: "1.0.0",
             description: "Podaj numer wersji")
-        string(name: "password",
+        string(name: "Password",
             defaultValue: "123",
             description: "Podaj hasło")
     }
@@ -89,19 +89,19 @@ pipeline {
             }
             steps{
                 echo 'Starting Publishing'
-                sh "mkdir ${params.version}"
+                sh "mkdir ${params.Version}"
                 sh 'docker run --name docker_test docker_test:latest'
-                sh "docker cp docker_test:/quick-example-of-testing-in-nodejs ./${params.version}"
+                sh "docker cp docker_test:/quick-example-of-testing-in-nodejs ./${params.Version}"
                 echo "Pushing Image to DockerHub"
 
-                sh "docker login -u malokreatywny22222 -p ${params.password}"
-                sh "docker tag docker_test:latest malokreatywny22222/quick-example-of-testing-in-nodejs:${params.version}"
-                sh "docker push malokreatywny22222/quick-example-of-testing-in-nodejs:${params.version}"
+                sh "docker login -u malokreatywny22222 -p ${params.Password}"
+                sh "docker tag docker_test:latest malokreatywny22222/quick-example-of-testing-in-nodejs:${params.Version}"
+                sh "docker push malokreatywny22222/quick-example-of-testing-in-nodejs:${params.Version}"
                 
                 sh 'docker rm jenkinstest'
-                sh "tar -czvf quick-example-of-testing-in-nodejs-${params.version}.tar.gz ${params.version}/"
+                sh "tar -czvf quick-example-of-testing-in-nodejs-${params.Version}.tar.gz ${params.Version}/"
                 echo "Creating Artifact"
-                archiveArtifacts artifacts: "quick-example-of-testing-in-nodejs-${params.version}.tar.gz"
+                archiveArtifacts artifacts: "quick-example-of-testing-in-nodejs-${params.Version}.tar.gz"
             }
             post{
                 success{
