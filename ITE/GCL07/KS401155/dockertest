@@ -1,0 +1,3 @@
+FROM fintoc-python-build:latest
+
+RUN make test

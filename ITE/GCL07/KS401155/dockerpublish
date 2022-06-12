@@ -1,0 +1,5 @@
+FROM fintoc-python-build:latest
+
+RUN poetry run poetry build
+RUN cd .. && tar cfJ archive.tar.xz fintoc-python
+RUN cd .. && mv archive.tar.xz fintoc-python

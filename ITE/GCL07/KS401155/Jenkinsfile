@@ -1,0 +1,67 @@
+pipeline {
+    agent any
+
+     parameters {
+        booleanParam(name: 'Test', defaultValue: true, description: 'Test statement')
+        string(name: 'Build_files', defaultValue: './ITE/GCL07/KS401155', description: 'build it here')
+        string(name: 'Version', defaultValue: '1.0.0', description: 'Version')
+    }
+
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('login1')
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'building fintoc-python'
+				dir("${params.Build_files}") {
+                    sh 'docker build . -f dockerbuild -t fintoc-python-build'
+				}
+                
+            }
+        }
+        
+        stage('Tests') {
+            steps {
+                echo 'testing fintoc-python'
+				dir("${params.Build_files}") {
+                    sh 'docker build . -f dockertest -t fintoc-python-test'
+				}
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'deploying fintoc-python'
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh 'docker tag fintoc-python-build:latest ksochacki0/fintoc-python-deploy'
+                sh 'docker push ksochacki0/fintoc-python-deploy'
+            }
+        }
+
+        stage('Publish') {
+            steps {
+                echo 'publsihing fintoc-python'
+				dir("${params.Build_files}") {
+                    sh 'docker build . -f dockerpublish -t fintoc-python-publish'
+				}
+                sh "docker run --volume /var/jenkins_home/workspace/fintoc-python-publish:/finalArchive fintoc-python-publish mv archive.tar.xz /finalArchive"
+                 dir('/var/jenkins_home/workspace/fintoc-python-publish'){
+                    sh "ls -a"
+                    sh "mv archive.tar.xz archive-${params.Version}.tar.xz"
+			        archiveArtifacts artifacts: "archive-${params.Version}.tar.xz"
+			    }
+            }
+        }
+        }
+        
+	post {
+        success {
+            echo 'Pipeline succsess'
+        }
+        failure {
+            echo 'Pipeline fail'
+        }
+    }
+}
