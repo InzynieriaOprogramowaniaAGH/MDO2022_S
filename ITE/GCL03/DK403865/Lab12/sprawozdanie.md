@@ -90,7 +90,9 @@ A następnie wdrożono zmiany komendą `kubectl apply -f pod_todo.yaml`. Zmiany 
 ![](images/dashboard_with_bad_image.png)
 
 Aby naprawić sytuacje z niedziałajacymi podami, skorzystano z komend:
+
 `kubectl rollout history deployment todo-deployment` - która pokaże nam historię zmian
+
 `kubectl rollout undo deployment todo-deployment` - która cofnie zmiany na podach do poprzedniej, działającej wersji
 
 ![](images/rollout_history_and_undo.png)
@@ -123,7 +125,9 @@ Działanie skryptu:
 Strategie wdrożeń:
 
 `Rolling deployment`— Jest to strategia wdrożeniowa, która zamienia wszystkie pody działające na starej wersji aplikacji z nową wersją. Zamiana wykonywana jest jeden po drugim, przez co klaster nie ma żadnego downtime'u.
+
 `Recreate`— Strategia wdrożeniowa, która niszczy wszystkie pody i zastępuje je nową wersją. 
+
 `Canary deployment`— Jest to strategia która ma podejście progresywnego dostarczania, gdzie jedna z wersji aplikacji jest udostępniana większości użytkowników, a nowsza wersja jest serwowana mniejszej bazie test userów, jeśli testowy deployment działa prawidłowo, jest on udostępniany większej ilości użytkowników.
 
 W powyższym projekcie zastosowano strategię rolling deployment, jest ona defaultową strategią używaną przez kubernetesa.
