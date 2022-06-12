@@ -53,7 +53,7 @@ Zdefiniowanie gałęzi na której pracujemy oraz ścieżki do Jenkinsfile:
 
 #  
 #  Jenkinsfile
-1. Na początku chcemy zdefiniować zmienne, według których nasz pipeline będzie budowany: \
+1. Na początku chcemy zdefiniować zmienne, według których nasz pipeline będzie budowany:  
 Potrzebujemy wiedzieć, czy chcemy publikować artefakt, jaka będzie wersja naszego projektu i hasło do naszego konta dockerhub (nie chcemy go podawać w pliku):
 ```
     parameters {
@@ -68,7 +68,7 @@ Potrzebujemy wiedzieć, czy chcemy publikować artefakt, jaka będzie wersja nas
             description: "Podaj hasło") 
     }
 ```  
-2. Pierwszy etap (Init):
+2. Pierwszy etap (Init):  
 W pierwszym etapie musimy zdefiniować jakiego repozytorium będziemy używać do pobierania plików Dockerfile:
   
 ```
@@ -87,8 +87,8 @@ W pierwszym etapie musimy zdefiniować jakiego repozytorium będziemy używać d
     }
 ```
   
-3. Drugi etap (PreBuild):\
-W tym etapie budujemy kontener dockera z podanego pliku: \
+3. Drugi etap (PreBuild):  
+W tym etapie budujemy kontener dockera z podanego pliku:  
   
 ```
     stage('PreBuild') {
