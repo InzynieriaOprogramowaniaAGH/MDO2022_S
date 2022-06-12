@@ -1,0 +1,7 @@
+FROM openjdk:17-jdk-alpine
+
+RUN apk add --no-cache --upgrade bash
+
+COPY output_volume/final_app.jar /final_app.jar
+
+ENTRYPOINT [ "java", "-jar", "final_app.jar"]

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-petclinic-deployment
+  labels:
+    app: app-petclinic
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: app-petclinic
+  template:
+    metadata:
+      labels:
+        app: app-petclinic
+        version: "1.0"
+    spec:
+      containers:
+        - name: app-petclinic
+          image: michalpieczonka4/devops_repository:deploy_app_image
+          ports:
+            - containerPort: 8080

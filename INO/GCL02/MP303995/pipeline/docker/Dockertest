@@ -1,0 +1,3 @@
+FROM builder:latest
+
+RUN mvn surefire:test
