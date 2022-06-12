@@ -5,25 +5,27 @@
 
 Na poprzednich zajęciach udało się stworzyć plik YAML i udało się go nie zgubić pomiędzy zaj 11 a 12 i na dole dowód, że taki plik dalej mam:
 
-![](./img/1.png)
+
+![](./img/1.PNG)
+
 
 Na samym początku wzbogacono obraz o 4 repliki:
 
-![](./img/2.png)
+![](./img/2.PNG)
 
 
 i wdrożono plik za pomocą komendy
 `` kubectl apply -f file1.yaml ``
 
-![](./img/7.png)
+![](./img/7.PNG)
 
 i zbadano stan pliku za pomocą komendy 
 
 ``kubectl rollout status deploymnt nginx-deployment``
 
-![](./img/3.png)
+![](./img/3.PNG)
 
-![](./img/4.png)
+![](./img/4.PNG)
 
 
 ## Przygotowanie nowego obrazu
