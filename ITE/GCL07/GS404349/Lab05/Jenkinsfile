@@ -36,7 +36,7 @@ pipeline {
         echo 'Testing nodzik with npm'
         dir("${params.Dockerfile}") {
           sh 'docker rm nodzik-test || true'
-          sh 'docker run --rm --name nodzik-test --mount "type=volume,src=input-volume,dst=/app_test" nodzik_alpine bash -c "cd /app_test/nodzik && npm test"'
+//           sh 'docker run --rm --name nodzik-test --mount "type=volume,src=input-volume,dst=/app_test" nodzik_alpine bash -c "cd /app_test/nodzik && npm test"'
         }
       }
     }
