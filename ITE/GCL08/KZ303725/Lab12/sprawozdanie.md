@@ -69,43 +69,43 @@ CMD [ "npm", "1" ]
 
 utworzone obrazy 
 
-![plot](./screenshots/oi.png)
+![plot](./screenshots/images.png)
 
 ### Zmiany w deploy 
 
-ilość replik: 8
+#### ilość replik: 8
 ![plot](./screenshots/8.png)
 
-status 
+#### status 
 ![plot](./screenshots/8stat.png)
 
-ilość replik: 1
+#### ilość replik: 1
 ![plot](./screenshots/1.png)
 
-status 
+#### status 
 ![plot](./screenshots/1stat.png)
 
-ilość replik: 0 
+#### ilość replik: 0 
 ![plot](./screenshots/0.png)
 
-status 
+#### status 
 ![plot](./screenshots/0stat.png)
 
-Nowy obraz:
+#### Nowy obraz:
 ![plot](./screenshots/work.png)
 
 ![plot](./screenshots/workstat.png)
 
 ![plot](./screenshots/workplot.png)
 
-Obraz wersja Exit 
+#### Obraz wersja Exit 
 ![plot](./screenshots/exit.png)
 
 ![plot](./screenshots/exitstat.png)
 
 ![plot](./screenshots/exitplot.png)
 
-Przywracanie wersji 
+#### Przywracanie wersji 
 ![plot](./screenshots/rollout.png)
 
 ### Kontrola wdrożenia
