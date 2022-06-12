@@ -1,0 +1,7 @@
+FROM debian:10
+
+RUN apt update
+RUN apt install -y gcc make
+WORKDIR lz4
+RUN mkdir lz4build
+CMD sh -c "make prefix= DESTDIR=/lz4build install &&  tar -czf lz4.tar.gz /lz4build && cp lz4.tar.gz /public && cp lz4.tar.gz /build"

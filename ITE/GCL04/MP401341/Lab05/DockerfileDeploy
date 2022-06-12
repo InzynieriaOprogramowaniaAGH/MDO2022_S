@@ -1,0 +1,4 @@
+FROM debian:10
+RUN echo "Testing if compression is working properly" > original
+CMD sh -c "tar -xzf build/lz4.tar.gz && ./lz4build/bin/lz4 original compressed && ./lz4build/bin/lz4 -d compressed decompressed &&  diff original decompressed && echo Compression and decompression succesful"
+
