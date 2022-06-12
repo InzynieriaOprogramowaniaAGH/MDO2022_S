@@ -40,7 +40,8 @@ docker run \
   --volume jenkins-data:/var/jenkins_home \
   --volume jenkins-docker-certs:/certs/client:ro \
   jenkins \
-``` \   
+```
+ 
 2. Utworzenie pipeline
 W panelu Jenkinsa należało kliknąć New Item => Pipeline, a następnie nadać mu nazwę. \
 Następnie można było wpisać opis pipelina: \
