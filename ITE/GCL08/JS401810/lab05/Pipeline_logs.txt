@@ -1,0 +1,1309 @@
+Started by user Jakub
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/Devops_2022
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Cloning repo with node.js app from github)
+[Pipeline] echo
+Cloning repo to volume input
+[Pipeline] sh
++ docker volume create input
+input
+[Pipeline] sh
++ docker volume create output
+output
+[Pipeline] sh
++ docker volume ls
+DRIVER    VOLUME NAME
+local     input
+local     output
+[Pipeline] sh
++ docker rm tmp
+Error: No such container: tmp
++ true
+[Pipeline] sh
++ docker run --mount type=volume,src=input,dst=/app --name tmp node bash -c cd ~/ && ls cytoscape.js || git clone --recurse-submodules https://github.com/cytoscape/cytoscape.js.git;cp -R cytoscape.js /app; ls /app
+ls: cannot access 'cytoscape.js': No such file or directory
+Cloning into 'cytoscape.js'...
+app_build
+cytoscape.js
+[Pipeline] sh
++ docker rm tmp
+tmp
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] echo
+Building app with npm
+[Pipeline] dir
+Running in /var/jenkins_home/workspace/Devops_2022/ITE/GCL08/JS401810
+[Pipeline] {
+[Pipeline] sh
++ docker build . -t cytoscape_build -f Dockerfile-build
+Sending build context to Docker daemon  4.296MB
+
+Step 1/4 : FROM node:alpine
+ ---> d94913fe64df
+Step 2/4 : WORKDIR app
+ ---> Using cache
+ ---> ee6880e4ac5c
+Step 3/4 : WORKDIR app_build
+ ---> Using cache
+ ---> ec8548a82610
+Step 4/4 : RUN apk update && apk add git && apk add bash
+ ---> Using cache
+ ---> 53cf8c1acf06
+Successfully built 53cf8c1acf06
+Successfully tagged cytoscape_build:latest
+[Pipeline] sh
++ docker run --mount type=volume,src=input,dst=/app --mount type=volume,src=output,dst=/app_build cytoscape_build bash -c cd /app/cytoscape.js && npm i;cd ..;cp -R cytoscape.js /app_build
+npm WARN old lockfile 
+npm WARN old lockfile The package-lock.json file was created with an old version of npm,
+npm WARN old lockfile so supplemental metadata must be fetched from the registry.
+npm WARN old lockfile 
+npm WARN old lockfile This is a one-time fix-up, please be patient...
+npm WARN old lockfile 
+
+up to date, audited 1054 packages in 1m
+
+30 packages are looking for funding
+  run `npm fund` for details
+
+21 vulnerabilities (2 moderate, 19 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+npm notice 
+npm notice New minor version of npm available! 8.8.0 -> 8.10.0
+npm notice Changelog: <https://github.com/npm/cli/releases/tag/v8.10.0>
+npm notice Run `npm install -g npm@8.10.0` to update!
+npm notice 
+[Pipeline] }
+[Pipeline] // dir
+Post stage
+[Pipeline] echo
+SUCCESS =) - your build is complete
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] echo
+Testing app with its tests
+[Pipeline] dir
+Running in /var/jenkins_home/workspace/Devops_2022/ITE/GCL08/JS401810
+[Pipeline] {
+[Pipeline] sh
++ docker build . -t cytoscape_test -f Dockerfile-test
+Sending build context to Docker daemon  4.296MB
+
+Step 1/3 : FROM node:alpine
+ ---> d94913fe64df
+Step 2/3 : WORKDIR app_test
+ ---> Using cache
+ ---> ca4214ac0983
+Step 3/3 : RUN apk update && apk add bash
+ ---> Using cache
+ ---> 957721f32845
+Successfully built 957721f32845
+Successfully tagged cytoscape_test:latest
+[Pipeline] sh
++ docker run --mount type=volume,src=output,dst=/app_test cytoscape_test bash -c cd /app_test/cytoscape.js && npm test
+
+> cytoscape@3.22.0-unstable test
+> run-s test:js test:modules lint
+
+
+> cytoscape@3.22.0-unstable test:js
+> mocha -r esm --recursive
+
+
+
+  Algorithms
+    eles.affinityPropagation()
+      ✓ clusters should be returned in an array
+      ✓ all nodes should be assigned to a cluster
+      ✓ nodes cannot be assigned to more than one cluster
+      ✓ should always return the same clusters (198ms)
+      ✓ should return the numerically correct results (expected results)
+
+  Algorithms
+    ✓ eles.bfs() undirected from `a`
+    ✓ eles.bfs() directed from `a`
+    ✓ eles.dfs() undirected from `a`
+    ✓ eles.dfs() directed from `a`
+    ✓ eles.dijkstra() undirected
+    ✓ eles.dijkstra() disconnected infinity
+    ✓ eles.dijkstra() directed
+    ✓ eles.kruskal()
+    ✓ eles.aStar(): undirected, null heuristic, unweighted
+    ✓ eles.aStar(): undirected, null heuristic, unweighted (2)
+    ✓ eles.aStar(): directed, null heuristic, unweighted
+    ✓ eles.aStar(): directed, null heuristic, unweighted (2)
+    ✓ eles.aStar(): undirected, null heuristic, weighted
+    ✓ eles.aStar(): directed, null heuristic, weighted
+    ✓ eles.aStar(): directed, null heuristic, weighted, not found
+    ✓ eles.floydWarshall(): directed, weighted
+    ✓ eles.floydWarshall(): undirected, weighted
+    ✓ eles.floydWarshall(): directed, unweighted
+    ✓ eles.floydWarshall(): undirected, unweighted
+    ✓ eles.bellmanFord(): undirected, weighted
+Graph contains a negative weight cycle for Bellman-Ford
+    ✓ eles.bellmanFord(): detection of negative weight cycle
+Graph contains a negative weight cycle for Bellman-Ford
+    ✓ eles.bellmanFord(): find negative weight cycles (67ms)
+    ✓ eles.bellmanFord(): directed, weighted
+    ✓ eles.bellmanFord(): undirected, unweighted
+    ✓ eles.kargerStein() (minimum Cut)
+    ✓ eles.pageRank(): 1
+    ✓ eles.degreeCentrality() unweighted undirected alpha = 0
+    ✓ eles.degreeCentrality() unweighted undirected alpha = 1
+    ✓ eles.degreeCentrality() weighted undirected alpha = 0
+    ✓ eles.degreeCentrality() weighted undirected alpha = 1
+    ✓ eles.degreeCentrality() unweighted directed alpha = 0
+    ✓ eles.degreeCentrality() unweighted directed alpha = 1
+    ✓ eles.degreeCentrality() weighted directed alpha = 0
+    ✓ eles.degreeCentrality() weighted directed alpha = 1
+    ✓ eles.closenessCentrality() unweighted undirected
+    ✓ eles.closenessCentrality() unweighted directed
+    ✓ eles.closenessCentrality() weighted undirected
+    ✓ eles.closenessCentrality() weighted directed
+    ✓ eles.betweennessCentrality() unweighted undirected
+    ✓ eles.betweennessCentrality() unweighted directed
+    ✓ eles.betweennessCentrality() weighted undirected
+    ✓ eles.betweennessCentrality() weighted directed
+    ✓ eles.betweennessCentrality() unweighted directed: multiple shortest paths
+
+  Algorithms
+    eles.aStar()
+      issue #2830
+        ✓ eles.aStar(): path.edges() must contain the correct edges in the correct order
+        ✓ eles.aStar(): edges must form a continuous path
+        ✓ eles.aStar(): the set of nodes touched by path.edges must equal the set of path.nodes
+
+  Algorithms
+    eles.aStar()
+      ✓ eles.aStar(): directed, null heuristic, unweighted
+      ✓ eles.aStar(): directed, heuristic, unweighted
+      ✓ eles.aStar(): undirected, heuristic vs null heuristic (performance), 
+      ✓ eles.aStar(): edges must form a continuous path
+      ✓ eles.aStar(): the set of nodes touched by path.edges must equal the set of path.nodes
+      ✓ eles.aStar(): directed, null heuristic, unweighted: same as dijkstra
+      ✓ eles.aStar(): undirected, null heuristic, unweighted: same as dijkstra
+
+  Collection building and filtering
+    ✓ eles.add()
+    ✓ eles.not()
+    ✓ eles.intersect()
+    ✓ eles.intersect() empty case
+    ✓ eles.filter() etc
+    ✓ eles.stdFilter()
+    ✓ eles.sort()
+    ✓ eles.map()
+    ✓ eles.max()
+    ✓ eles.min()
+    ✓ eles.merge()
+    ✓ eles.unmerge()
+    ✓ eles.unmerge() last ele
+    ✓ eles.xor()
+    ✓ eles.diff()
+
+  Collection comparison
+    ✓ eles.same()
+    ✓ eles.anySame()
+    ✓ eles.allAreNeighbors()
+    ✓ eles.is()
+    ✓ eles.allAre()
+    ✓ eles.some()
+    ✓ eles.every()
+    ✓ eles.contains()
+
+  Collection compound nodes
+    ✓ node.isParent()
+    ✓ node.isChildless()
+    ✓ node.isChild()
+    ✓ node.isOrphan()
+    ✓ nodes.parent()
+    ✓ nodes.parents()
+    ✓ nodes.children()
+    ✓ nodes.descendants()
+    ✓ nodes.siblings()
+    ✓ nodes.commonAncestors()
+    ✓ nodes.orphans()
+    ✓ nodes.nonorphans()
+    ✓ child.position() moves parent
+    ✓ child.position() moves ancestor
+    ✓ child.position() moves parent boundingbox
+    ✓ child.position() moves ancestor boundingbox
+    ✓ node.position() moves self boundingbox
+    ✓ display:none child does reduce parent boundingbox
+    ✓ visibility:hidden child does not reduce parent boundingbox
+    ✓ opacity:0 child does not reduce parent boundingbox
+
+  Collection data
+    eles.data()
+      ✓ eles.data() gets all data
+      ✓ eles.data(name) gets an individual field
+      ✓ eles.data(name, value) sets an individual field
+      ✓ eles.data(obj) sets data via an object
+    eles.removeData()
+      ✓ eles.removeData() removes all data
+      ✓ eles.removeData(names) removes specified names
+      ✓ leave immutable data intact
+    eles.id()
+      ✓ gets the ID
+    eles.json()
+      ✓ has all fields defined
+      ✓ sets data
+      ✓ sets classes
+      ✓ sets position
+      ✓ sets selected
+      ✓ sets unselected
+      ✓ sets locked
+      ✓ sets unlocked
+      ✓ sets grabbable
+      ✓ sets ungrabbable
+      ✓ sets pannable
+      ✓ sets unpannable
+      ✓ moves edge source
+      ✓ moves edge target
+      ✓ moves edge source and target
+      ✓ moves edge source and target and selected state
+      ✓ moves node parent
+      ✓ moves node parent and position
+    eles.group()
+      ✓ returns "nodes" for a node
+      ✓ returns "edges" for a edge
+    eles.isNode()
+      ✓ returns true for a node
+      ✓ returns false for a edge
+    eles.isEdge()
+      ✓ returns false for a node
+      ✓ returns true for a edge
+    eles.isLoop()
+      ✓ returns false for normal edge
+      ✓ returns true for loop edge
+
+  Algorithms
+    eles.fuzzyCMeans()
+      ✓ clusters should be returned in an array
+      ✓ all nodes should be assigned to a cluster
+      ✓ nodes cannot be assigned to more than one cluster
+      ✓ should always return the same clusters if we run the algorithm multiple times (2504ms)
+      ✓ should return the numerically correct clusters (expected results)
+
+  Collection graph manipulation
+    eles.remove()
+      ✓ should remove a single element
+      ✓ should remove several elements
+      ✓ should remove edges connected to removed node
+      ✓ should not emit the remove event on an already removed element
+      ✓ should only emit the remove event once
+    ele.removed()
+      ✓ should be true for removed node
+      ✓ should be false for inside node
+    ele.inside()
+      ✓ should be false for removed node
+      ✓ should be true for inside node
+    ele.restore()
+      ✓ should put back a node in the graph
+    eles.move()
+      ✓ should move edge source
+      ✓ should move edge target
+      ✓ should move edge source and target
+      ✓ should move node parent
+      ✓ should move to no parent
+      ✓ should move descendants and connected edges
+      ✓ should move descendants and connected edges 2x
+      ✓ should maintain primitive scratch data (for edge)
+      ✓ should maintain object scratch data (for edge)
+      ✓ should maintain primitive scratch data (for node)
+      ✓ should maintain object scratch data (for node)
+
+  Algorithms
+    eles.hierarchicalClustering()
+      ✓ clusters should be returned in an array
+      ✓ all nodes should be assigned to a cluster
+      ✓ nodes cannot be assigned to more than one cluster
+      ✓ should return the same clusters if we run the algorithm multiple times
+      ✓ Check level 0 of dendrogram: should return the numerically correct clusters (expected results)
+      ✓ Check level 1 of dendrogram: should return the numerically correct clusters (expected results)
+      ✓ Check level 2 of dendrogram: should return the numerically correct clusters (expected results)
+      ✓ Check level 3 of dendrogram: should return the numerically correct clusters (expected results)
+      ✓ Check level 4 of dendrogram: should have 1 node per cluster (expected results)
+      ✓ Check level 5+ of dendrogram: should have 1 node per cluster (fail safely)
+      ✓ allows a custom 2-arg distance function
+
+  Algorithms
+    eles.hierholzer()
+      ✓ eles.hierholzer(): directed
+      ✓ eles.hierholzer(): undirected
+
+  Algorithms
+    eles.hopcroftTarjanBiconnected()
+      ✓ eles.htbc(): no cut vertices, one biconnected component
+      ✓ eles.htbc(): multiple biconnected components
+
+  Collection iteration
+    ✓ eles.size()
+    ✓ eles.empty() etc
+    ✓ eles.forEach()
+    ✓ eles.reduce()
+    ✓ eles.eq()
+    ✓ eles.slice()
+    ✓ eles [Symbol.iterator]
+
+  Algorithms
+    ele.kMeans()
+      ✓ clusters should be returned in an array
+      ✓ the number of clusters returned should match the value the user specified
+      ✓ all nodes should be assigned to a cluster
+      ✓ nodes cannot be assigned to more than one cluster
+      ✓ should always return the same clusters if we hard-code centroid values (analogous to setting seed)
+      ✓ should return the numerically correct clusters (expected results)
+
+  Algorithms
+    eles.kMediods()
+      ✓ clusters should be returned in an array
+      ✓ the number of clusters returned should match the value the user specified
+      ✓ all nodes should be assigned to a cluster
+      ✓ nodes cannot be assigned to more than one cluster
+      ✓ should always return the same clusters if we hard-code medoid values (analogous to setting seed)
+      ✓ should return the numerically correct clusters (expected results)
+      ✓ allows a custom 2-arg distance function
+
+  eles.markovClustering()
+    ✓ clusters should be returned in an array
+    ✓ all nodes should be assigned to a cluster
+    ✓ nodes cannot be assigned to more than one cluster
+    ✓ should always return the same clusters (analogous to setting seed)
+    ✓ should return the numerically correct clusters (expected results)
+
+  Collection metadata
+    ✓ node.degree()
+    ✓ node.indegree()
+    ✓ node.outdegree()
+    ✓ nodes.totalDegree()
+    ✓ nodes.minDegree()
+    ✓ nodes.maxDegree()
+    ✓ nodes.minIndegree()
+    ✓ nodes.maxIndegree()
+    ✓ nodes.minOutdegree()
+    ✓ nodes.maxOutdegree()
+    ✓ node.degree() for loop
+
+  Collection position & dimensions
+    eles.position()
+      ✓ ele.position() gets initial position
+      ✓ eles.posiiton("x") sets and gets correctly
+      ✓ eles.position({}) sets one dimension
+      ✓ eles.position({}) sets both dimensions
+      ✓ eles.position({}) sets all elements in collection
+    eles.positions()
+      ✓ sets correctly
+      ✓ fires the `position` event
+    eles.shift()
+      ✓ shifts only one dimension in passed object
+      ✓ shifts only one dimension with multiple args
+      ✓ shifts both dimensions in passed object
+      ✓ shifts both dimensions with multiple args
+    eles.lock() etc
+      ✓ should prevent position changes
+      ✓ should fire the `lock` event
+    Dimensions are nonzero
+      ✓ width
+      ✓ height
+      ✓ position
+      ✓ boundingbox
+
+  Collection selection
+    eles.select()
+      ✓ makes a node selected
+      ✓ keeps a node selected if already selected
+      ✓ fires the `select` event
+    eles.unselect()
+      ✓ makes a node not selected
+      ✓ keeps a node not selected if already not selected
+      ✓ fires the `unselect` event
+    eles.selectify() etc
+      ✓ eles.unselectify() makes selection state immutable
+      ✓ eles.selectify() makes selection state mutable
+
+  Collection style
+    eles.style() etc
+      ✓ eles.style() gets a name-value pair object
+      ✓ eles.style(name, val) gets and sets the specified property
+      ✓ eles.style({}) sets the specified properties
+      ✓ eles.removeStyle() clears bypassed style
+      ✓ eles.show() sets `display: element`
+      ✓ eles.hide() sets `display: none`
+      ✓ ele.effectiveOpacity() is correct for child
+      ✓ eles.style() gets correct value when using function prop value (n1)
+      ✓ eles.style() gets correct value when using function prop value (n2)
+      ✓ ele.style(propName) works for string array property value
+      ✓ ele.style(propName) works for pixel property value
+      ✓ ele.style(propName) works for unitless property value
+      ✓ ele.numericStyle() returns size as a number
+      ✓ ele.numericStyle() returns colour as [r, g, b]
+      ✓ ele.numericStyle() returns red as [255, 0, 0]
+      ✓ ele.numericStyle() returns opacity as number
+      ✓ ele.numericStyle() returns pixel value for padding
+      ✓ ele.numericStyle() returns percent value for padding
+      ✓ ele.renderedStyle() returns single val with zoom
+      ✓ ele.renderedStyle() returns multiple vals with zoom
+      ✓ ele.visible() true by default
+      ✓ ele.visible() false for `display: none`
+      ✓ ele.visible() false for `width: 0`
+      ✓ ele.visible() false for `height: 0`
+      ✓ ele.visible() false for edge with `display: none` source
+      ✓ ele.visible() false for edge with `width: 0` source
+      ✓ ele.visible() false for edge with `height: 0` source
+      ✓ ele.visible() false for edge with `display: none` target
+      ✓ ele.visible() false for edge with `width: 0` target
+      ✓ ele.visible() false for edge with `height: 0` target
+      ✓ ele.visible() false for `visibility: hidden`
+      ✓ ele.visible() false for `opacity: 0`
+      ✓ ele.visible() false for parent `opacity: 0`
+      ✓ ele.visible() false for parent `display: none`
+      ✓ ele.visible() false for parent `visibility: hidden`
+      ✓ ele.takesUpSpace() true by default
+      ✓ ele.takesUpSpace() true for `visibility: hidden`
+      ✓ ele.takesUpSpace() false for `display: none`
+      ✓ ele.takesUpSpace() false for `width: 0`
+      ✓ ele.takesUpSpace() false for `height: 0`
+      ✓ ele.takesUpSpace() false for edge with source `display: none`
+      ✓ ele.takesUpSpace() false for edge with source `width: 0`
+      ✓ ele.takesUpSpace() false for edge with source `height: 0`
+      ✓ ele.takesUpSpace() true for edge with source `visibility: hidden`
+      ✓ ele.takesUpSpace() true for edge with source `opacity: 0`
+      ✓ ele.takesUpSpace() false for edge with target `display: none`
+      ✓ ele.takesUpSpace() false for edge with target `width: 0`
+      ✓ ele.takesUpSpace() false for edge with target `height: 0`
+      ✓ ele.takesUpSpace() true for edge with target `visibility: hidden`
+      ✓ ele.takesUpSpace() true for edge with target `opacity: 0`
+      ✓ ele.interactive() true by default
+      ✓ ele.interactive() false for `events: no`
+      ✓ ele.interactive() false for `visibility: hidden`
+      ✓ ele.interactive() false for `display: none`
+      ✓ ele.interactive() false for `width: 0`
+      ✓ ele.interactive() false for `height: 0`
+      ✓ ele.interactive() false for edge with source `display: none`
+      ✓ ele.interactive() false for edge with source `width: 0`
+      ✓ ele.interactive() false for edge with source `height: 0`
+      ✓ ele.interactive() true for edge with source `visibility: hidden`
+      ✓ ele.interactive() true for edge with source `opacity: 0`
+      ✓ ele.interactive() true for edge with source `events: no`
+      ✓ ele.interactive() false for edge with target `display: none`
+      ✓ ele.interactive() false for edge with target `width: 0`
+      ✓ ele.interactive() false for edge with target `height: 0`
+      ✓ ele.interactive() true for edge with target `visibility: hidden`
+      ✓ ele.interactive() true for edge with target `opacity: 0`
+      ✓ ele.interactive() true for edge with target `events: no`
+      ✓ ele.interactive() true for parent `events: no`
+      ✓ ele.interactive() true for parent `events: no`
+      ✓ ele.isBundledBezier() true for `curve-style: bezier`
+      ✓ ele.isBundledBezier() false for style disabled
+      ✓ ele.style() reads OK for mapped override prop
+    eles.addClass() etc
+      ✓ eles.addClass() adds class
+      ✓ eles.addClass() adds classes
+      ✓ eles.addClass() adds classes with an array
+      ✓ eles.removeClass() removes class
+      ✓ eles.removeClass() removes classes
+      ✓ eles.removeClass() removes classes with an array
+      ✓ eles.toggleClass() toggles class
+      ✓ eles.toggleClass() toggles classes
+      ✓ eles.toggleClass() toggles with an array of classes
+      ✓ eles.toggleClass() forces class
+      ✓ eles.toggleClass() forces classes
+      ✓ eles.classes() replaces classes (subset)
+      ✓ eles.classes() replaces with an array of classes (subset)
+      ✓ eles.classes() replaces classes (all different)
+      ✓ eles.classes() replaces with an array of classes (all different)
+      ✓ eles.classes() gets list of classes
+      ✓ eles.addClass() adds class to json
+      ✓ eles.removeClass() removes class from json
+      ✓ initializes classes with a string
+      ✓ initializes classes with an array
+    eles.animate() etc
+      ✓ ele.animate() results in end style (117ms)
+      ✓ ele.animate() calls step function (124ms)
+      ✓ eles.animate() results in end style (118ms)
+      ✓ ele.animation() results in end style (117ms)
+      ✓ ani.playing() (117ms)
+      ✓ ani.pause() (205ms)
+      ✓ ani.pause() then ani.play() (313ms)
+      ✓ ele.animation() x2 results in end style (118ms)
+      ✓ ani progresses from 0 to 1 (127ms)
+      ✓ ani.rewind() works (122ms)
+      ✓ ani.rewind() plays again from start (233ms)
+      ✓ ani.reverse() (268ms)
+      ✓ ani.reverse() does not affect second animation (266ms)
+      ✓ ani.apply()
+      ✓ ani.stop() (115ms)
+      ✓ ani.play() not stopped by stylesheet transition (335ms)
+      ✓ animation does not move locked node (326ms)
+      ✓ spring animation does not ease beyond 100% (331ms)
+      ✓ fit to bounding box has no error (329ms)
+      ✓ transition applied by class (102ms)
+      ✓ 2-prop transition applied by class (103ms)
+    eles.boundingBox()
+      ✓ is a nonzero box for node
+      ✓ is a nonzero box for node without labels
+      ✓ is a nonzero box for node without labels using cache
+      ✓ bezier edge gets a bounding box
+      ✓ haystack edge gets a bounding box
+      ✓ updates bounding box properly with animated position (45ms)
+      ✓ updates bounding box properly with animated layout
+      ✓ gets bounding box of parent with hidden child
+
+  Algorithms
+    eles.tarjanStronglyConnected()
+      ✓ eles.tsc(): weakly connected collection
+      ✓ eles.tsc(): disconnected subcollection
+
+  Collection traversing
+    ✓ eles.neighborhood() etc
+    ✓ eles.edgesWith()
+    ✓ eles.edgesWith() same eles
+    ✓ eles.edgesWith() intersecting eles
+    ✓ eles.edgesTo()
+    ✓ eles.edgesTo() same eles
+    ✓ eles.edgesTo() intersecting eles
+    ✓ eles.connectedNodes()
+    ✓ nodes.connectedEdges()
+    ✓ eles.source(), eles.target()
+    ✓ eles.sources(), eles.targets()
+    ✓ edges.parallelEdges()
+    ✓ edges.codirectedEdges()
+    ✓ nodes.roots()
+    ✓ nodes.leaves()
+    ✓ nodes.incomers()
+    ✓ nodes.outgoers()
+    ✓ nodes.predecessors()
+    ✓ nodes.successors()
+    ✓ eles.components() 1 component
+    ✓ eles.components() 2 components
+    ✓ eles.components() 3 components
+    ✓ eles.components() 2 components and eles check
+    ✓ eles.components() of subgraph
+    ✓ eles.components() of connected subgraph
+    ✓ eles.components() of empty graph
+    ✓ ele.components() with graph of 2 components
+
+  Core export
+    ✓ has all properties defined
+    ✓ exports `#foo` selector in style
+    ✓ exports `.foo` selector in style
+    ✓ exports `[foo]` selector in style
+    ✓ exports `[^foo]` selector in style
+    ✓ exports `[?foo]` selector in style
+    ✓ exports `[!foo]` selector in style
+    ✓ exports `[foo = 1]` selector in style
+    ✓ exports `[foo = 1.23]` selector in style
+    ✓ exports `[foo != 1]` selector in style
+    ✓ exports `[foo > 1]` selector in style
+    ✓ exports `[foo >= 1]` selector in style
+    ✓ exports `[foo < 1]` selector in style
+    ✓ exports `[foo <= 1]` selector in style
+    ✓ exports `[foo = "bar"]` selector in style
+    ✓ exports `[foo != "bar"]` selector in style
+    ✓ exports `[foo *= "bar"]` selector in style
+    ✓ exports `[foo ^= "bar"]` selector in style
+    ✓ exports `[foo $= "bar"]` selector in style
+    ✓ exports `[foo @= "bar"]` selector in style
+    ✓ exports `[foo @!= "bar"]` selector in style
+    ✓ exports `[foo @*= "bar"]` selector in style
+    ✓ exports `[foo @^= "bar"]` selector in style
+    ✓ exports `[foo @$= "bar"]` selector in style
+    ✓ exports `[[degree > 2]]` selector in style
+    ✓ exports `[[degree < 2]]` selector in style
+    ✓ exports `[[degree = 2]]` selector in style
+    ✓ exports `[[degree != 2]]` selector in style
+    ✓ exports `node > node` selector in style
+    ✓ exports `node node` selector in style
+    ✓ exports `$node > node` selector in style
+    ✓ exports `node > $node` selector in style
+    ✓ exports `node > node` selector in style
+    ✓ exports `:selected` selector in style
+    ✓ exports `$node:selected > node[?foo][bar > 2][baz *= "bat"][[degree > 1]]:locked` selector in style
+    ✓ png export fails on headless instance
+    ✓ jpg export fails on headless instance
+
+  Core graph manipulation
+    cy.add()
+      ✓ adds via single object
+      ✓ adds via single object (inferred node)
+      ✓ adds via single object (inferred node) with int id
+      ✓ adds via single object (inferred edge) with int id
+      ✓ adds via single object (inferred edge)
+      ✓ adds via array of objects
+      ✓ adds via collection
+Setting a `style` bypass at element creation should be done only when absolutely necessary.  Try to use the stylesheet instead.
+      ✓ adds with a bypass that alters bounds
+    eles.restore()
+      ✓ restores a node
+    cy.remove()
+      ✓ removes a single node
+      ✓ correctly removes an edge repeatedly
+      ✓ removes a parallel edge headlessly
+      ✓ removes via selector
+    cy.collection()
+      ✓ gets an empty collection
+    cy.$() et al
+      ✓ cy.$()
+      ✓ cy.elements()
+      ✓ cy.nodes()
+      ✓ cy.edges()
+      ✓ cy.filter() with selector
+      ✓ cy.filter() with function
+      ✓ cy.$() returns immutible collection
+      ✓ cy.getElementById() gets element for string id
+      ✓ cy.getElementById() gets element for int id
+      ✓ cy.getElementById() gets empty collection for non-matching string id
+      ✓ cy.getElementById() gets empty collection for non-matching int id
+      ✓ cy.hasElementWithId() returns true for string id
+      ✓ cy.hasElementWithId() returns true for int id
+      ✓ cy.hasElementWithId() returns false for non-matching string id
+      ✓ cy.hasElementWithId() returns true for non-matching int id
+    cy.json()
+      ✓ cy.json() adds element
+      ✓ cy.json() adds element via alt syntax
+      ✓ cy.json() moves edge
+      ✓ cy.json() moves node to new parent
+      ✓ cy.json() adds elements with preceding edge
+      ✓ cy.json() removes element
+      ✓ cy.json() removes element via alt syntax
+      ✓ cy.json() can remove all elements
+      ✓ cy.json() removes all but last element
+      ✓ cy.json() removes parent
+      ✓ cy.json() removes parent and children
+      ✓ cy.json() removes parent and children with depth 2
+      ✓ cy.json() removes middle parent of depth 2
+      ✓ cy.json() orphans children via null
+      ✓ cy.json() orphans children via undefined
+      ✓ cy.json() sets existing node as parent
+      ✓ cy.json() sets a newly added node as parent
+      ✓ cy.json() removes parent and uses new parent
+      ✓ cy.json() updates style
+      ✓ cy.json() sets zoom
+      ✓ cy.json() sets pan
+      ✓ cy.json() sets one dim of pan
+      ✓ cy.json() sets userPanningEnabled
+      ✓ cy.json() gets data
+      ✓ cy.json() sets data
+    cy.data()
+      ✓ sets and gets data
+    cy.style()
+      cy.style.json()
+        ✓ property with multiple values is serialised including units
+    cy.zoom()
+      cy.zoom(number)
+        ✓ should not return a negative value
+      cy.zoom({level: number})
+        ✓ should not return a negative value
+
+  Core initialisation
+    ✓ does not add a node with the same ID as an earlier one
+    ✓ loads ok with empty graph
+    ✓ does not create an edge with bad source and target
+    ✓ does not create an edge with bad target
+    ✓ creates an edge that specifies good source and target
+    ✓ adds node with self as parent but as parentless node
+    ✓ breaks a parent cycle between two nodes
+    ✓ loads graph-level data
+    ✓ loads style via promise
+    ✓ loads elements via promise
+    ✓ loads elements and style via promises
+    ✓ loads elements and style via promises with style off
+    ✓ loads only style via promise
+    ✓ loads empty graph
+    ✓ loads empty elements object
+    ✓ sets maxZoom
+    ✓ sets minZoom
+Setting a `style` bypass at element creation should be done only when absolutely necessary.  Try to use the stylesheet instead.
+    ✓ does not throw when setting a bypass at init (headless)
+
+  Events
+    Collection events triggered by functions
+      ✓ `add` for new element
+      ✓ `add` for restored element
+      ✓ `remove`
+      ✓ `select`
+      ✓ `unselect`
+      ✓ `lock`
+      ✓ `unlock`
+      ✓ `position`
+      ✓ `data`
+    Graph events triggered by functions
+      ✓ `layoutstart`, `layoutready`, & `layoutstop`
+      ✓ `load` & `done` (102ms)
+      ✓ `pan`
+      ✓ `zoom`
+      ✓ `destroy`
+    Event bubbling
+      ✓ should bubble from child to parent node
+      ✓ should bubble from parent node to the core
+      ✓ should bubble from lone node to core
+      ✓ should pass extra args to core when bubbled
+      ✓ should pass extra args to parent node when bubbled
+      ✓ should get the element context when bubbled with a delegate selector on the core
+      ✓ should get the element context when bubbled with a delegate selector on a collection
+    cy.on()
+      ✓ binds to one event
+      ✓ binds to multiple events
+      ✓ binds with a selector
+      ✓ has event object structure
+      ✓ allows dash in event name
+      ✓ allows dash in event namespace
+      ✓ allows underscore in event name
+      ✓ allows underscore in event namespace
+    cy.one()
+      ✓ only triggers once
+      ✓ triggers once with selector
+    cy.off()
+      ✓ removes a handler from .on()
+      ✓ removes a handler from .one()
+      ✓ removes a handler via just event type
+      ✓ removes a handler with a selector
+      ✓ removes a handler with a selector and handler unspecified
+      ✓ removes multiple handlers of same event type
+      ✓ removes multiple handlers of same event type and selector
+      ✓ removes a delegated handler when a non-delegated handler also exists
+      ✓ does not remove * namespace for event foo
+      ✓ does not remove * namespace for all events
+      ✓ removes all event types
+    cy.trigger()
+      ✓ triggers the handler
+      ✓ passes extra params correctly
+    eles.on()
+      ✓ should get triggered with matching event
+      ✓ should get triggered with matching event and namespace
+      ✓ should get triggered with matching event and delegate selector
+      ✓ should not trigger handler added handler
+      ✓ allows dash in event name
+      ✓ allows dash in event namespace
+      ✓ allows underscore in event name
+      ✓ allows underscore in event namespace
+    eles.one()
+      ✓ triggers only one time
+      ✓ triggers once per element
+      ✓ triggers only one time with delegate
+      ✓ removed one event stays removed (52ms)
+    eles.once()
+      ✓ triggers only one time
+      ✓ triggers only one time for all elements
+      ✓ triggers only one time with delegate
+    eles.off()
+      ✓ should remove all handlers for same event type
+      ✓ should remove all handlers for matching event and delegate selector
+      ✓ should remove all matching handlers
+      ✓ should not affect other listeners
+      ✓ should not trigger extra on re-add
+      ✓ should not trigger extra on re-add x3
+      ✓ does not remove * namespace for event foo
+      ✓ does not remove * namespace for all events
+      ✓ removes all event types
+    eles.trigger()
+      ✓ should trigger for one element
+      ✓ should trigger for multiple elements
+      ✓ should trigger with extra parameters
+    eles.promiseOn()
+      ✓ should run a then() callback
+      ✓ should receive event obj
+      ✓ should run callback only once (52ms)
+      ✓ removed event promise does not prevent next handler (50ms)
+
+  Extensions
+    ✓ core extension works
+    ✓ collection extension works
+    ✓ layout extension works
+
+  Emitter
+    ✓ calls handler on emit
+    ✓ calls listener on namespaced emit
+    ✓ does not call listener on no namespace match
+    ✓ calls non-namespaced listeners on namespaced emit
+    ✓ removes listener
+    ✓ removes all listeners of same type
+    ✓ removes only specified callback
+    ✓ namespace * not removed for general event
+    ✓ does not remove namespace * events when removing all listeners
+    ✓ emits only one time for one
+    ✓ emits with extra params
+    ✓ bubbles
+
+  Math
+    Bounding box
+      ✓ expandBoundingBoxSides([number])
+      ✓ expandBoundingBoxSides([number, number])
+      ✓ expandBoundingBoxSides([number, number, number, number])
+
+  util
+    hash
+      ✓ gives same result with seed for one-char strings
+      ✓ gives same result with seed for multi-char strings
+      ✓ gives different results for strings of opposite order
+      ✓ gives same result by hashing individual ints
+      ✓ hash is unique per ascii char
+      ✓ hash is different for negative numbers
+      ✓ hash is unique for common values
+      ✓ hash is unique for simulated style
+      ✓ "000Q" versus "0010"
+      ✓ hash is unique for random id strings
+      ✓ Long string with shared suffix
+      ✓ Long string with shared prefix
+
+  Selectors
+    ✓ node
+    ✓ edge
+    ✓ #n1
+    ✓ #n1, #n2
+    ✓ .cls1
+    ✓ .cls1.cls2
+    ✓ #n3.item
+    ✓ [weight]
+    ✓ [?foo]
+    ✓ [?foo]
+    ✓ [!foo]
+    ✓ [^foo]
+    ✓ [foo = "one"]
+    ✓ [foo != "one"]
+    ✓ [foo > "one"]
+    ✓ [foo < "two"]
+    ✓ [foo <= "two"]
+    ✓ [foo > "one"]
+    ✓ [foo >= "one"]
+    ✓ [foo *= "ne"]
+    ✓ [foo ^= "o"]
+    ✓ [foo $= "e"]
+    ✓ [foo @= "ONE"]
+    ✓ [weight = 2]
+    ✓ [weight != 2]
+    ✓ [weight > 2]
+    ✓ [weight >= 2]
+    ✓ [weight < 2]
+    ✓ [weight <= 2]
+    ✓ [weight !< 2]
+    ✓ [emptystr = ""]
+    ✓ [emptystr != ""]
+    ✓ [arrayval.0 = "index0"]
+    ✓ [arrayval.1 = "index1"]
+    ✓ [bar.baz = "baz"]
+    ✓ [[degree = 1]]
+    ✓ [[indegree = 1]]
+    ✓ [[outdegree = 1]]
+    ✓ :selected
+    ✓ :unselected
+    ✓ :selectable
+    ✓ :unselectable
+    ✓ :locked
+    ✓ :unlocked
+    ✓ :visible
+    ✓ :hidden
+    ✓ :transparent
+    ✓ :parent
+    ✓ :childless
+    ✓ :child
+    ✓ :nonorphan
+    ✓ :orphan
+    ✓ #nparent > node
+    ✓ #nparent node
+    ✓ $node > node
+    ✓ $node node
+    ✓ node > $node > node
+    ✓ node $node node
+    ✓ $node > node > node
+    ✓ $node node node
+    ✓ node > node > $node
+    ✓ node node $node
+    ✓ node > node > node
+    ✓ node node node
+    ✓ :loop
+    ✓ :simple
+    ✓ node -> node
+The selector `node -> node` is deprecated.  Edge selectors do not take effect on changes to source and target nodes after an edge is added, for performance reasons.  Use a class or data selector on edges instead, updating the class or data of an edge when your app detects a change in source or target nodes.
+The selector `#n1 -> node` is deprecated.  Edge selectors do not take effect on changes to source and target nodes after an edge is added, for performance reasons.  Use a class or data selector on edges instead, updating the class or data of an edge when your app detects a change in source or target nodes.
+    ✓ #n1 -> node
+The selector `[foo = "one"] -> node` is deprecated.  Edge selectors do not take effect on changes to source and target nodes after an edge is added, for performance reasons.  Use a class or data selector on edges instead, updating the class or data of an edge when your app detects a change in source or target nodes.
+    ✓ [foo = "one"] -> node
+The selector `[weight = 1] -> node` is deprecated.  Edge selectors do not take effect on changes to source and target nodes after an edge is added, for performance reasons.  Use a class or data selector on edges instead, updating the class or data of an edge when your app detects a change in source or target nodes.
+    ✓ [weight = 1] -> node
+The selector `node <-> node` is deprecated.  Edge selectors do not take effect on changes to source and target nodes after an edge is added, for performance reasons.  Use a class or data selector on edges instead, updating the class or data of an edge when your app detects a change in source or target nodes.
+    ✓ node <-> node
+The selector `node <-> #n1` is deprecated.  Edge selectors do not take effect on changes to source and target nodes after an edge is added, for performance reasons.  Use a class or data selector on edges instead, updating the class or data of an edge when your app detects a change in source or target nodes.
+    ✓ node <-> #n1
+The selector `node <-> [foo = "one"]` is deprecated.  Edge selectors do not take effect on changes to source and target nodes after an edge is added, for performance reasons.  Use a class or data selector on edges instead, updating the class or data of an edge when your app detects a change in source or target nodes.
+    ✓ node <-> [foo = "one"]
+    ✓ node <-> [weight = 1]
+The selector `node <-> [weight = 1]` is deprecated.  Edge selectors do not take effect on changes to source and target nodes after an edge is added, for performance reasons.  Use a class or data selector on edges instead, updating the class or data of an edge when your app detects a change in source or target nodes.
+The selector `#n2 <-> $node` is deprecated.  Edge selectors do not take effect on changes to source and target nodes after an edge is added, for performance reasons.  Use a class or data selector on edges instead, updating the class or data of an edge when your app detects a change in source or target nodes.
+    ✓ #n2 <-> $node
+    ✓ $node <-> #n1
+The selector `$node -> #n2` is deprecated.  Edge selectors do not take effect on changes to source and target nodes after an edge is added, for performance reasons.  Use a class or data selector on edges instead, updating the class or data of an edge when your app detects a change in source or target nodes.
+    ✓ $node -> #n2
+The selector `#n1 -> $node` is deprecated.  Edge selectors do not take effect on changes to source and target nodes after an edge is added, for performance reasons.  Use a class or data selector on edges instead, updating the class or data of an edge when your app detects a change in source or target nodes.
+    ✓ #n1 -> $node
+    ✓ [weird\.name = 1]
+    ✓ [weird\.name2 = "weird.val"]
+    ✓ [weird\.name2 *= "d.v"]
+    ✓ [weird\.name2 ^= "weird."]
+    ✓ [weird\.name2 $= ".val"]
+    ✓ [weird\.name3 *= "<blah>"]
+    ✓ [weird\.name3 ^= '"blah"^blah']
+    ✓ [weird\.name3 $= "^blah<blah>#blah"]
+    ✓ [weird\.0 = "weird.index"]
+    ✓ [weird\.0 *= "d.i"]
+    ✓ [weird\.0 ^= "weird."]
+    ✓ [weird\.0 $= ".index"]
+    ✓ [weird\.1 *= "<blah>"]
+    ✓ [weird\.1 ^= '"blah"^blah']
+    ✓ [weird\.1 $= "^blah<blah>#blah"]
+
+
+  699 passing (13s)
+
+
+> cytoscape@3.22.0-unstable test:modules
+> mocha -r esm test/modules
+
+
+
+  Emitter
+    ✓ calls handler on emit
+    ✓ calls listener on namespaced emit
+    ✓ does not call listener on no namespace match
+    ✓ calls non-namespaced listeners on namespaced emit
+    ✓ removes listener
+    ✓ removes all listeners of same type
+    ✓ removes only specified callback
+    ✓ namespace * not removed for general event
+    ✓ does not remove namespace * events when removing all listeners
+    ✓ emits only one time for one
+    ✓ emits with extra params
+    ✓ bubbles
+
+  Math
+    Bounding box
+      ✓ expandBoundingBoxSides([number])
+      ✓ expandBoundingBoxSides([number, number])
+      ✓ expandBoundingBoxSides([number, number, number, number])
+
+  util
+    hash
+      ✓ gives same result with seed for one-char strings
+      ✓ gives same result with seed for multi-char strings
+      ✓ gives different results for strings of opposite order
+      ✓ gives same result by hashing individual ints
+      ✓ hash is unique per ascii char
+      ✓ hash is different for negative numbers
+      ✓ hash is unique for common values
+      ✓ hash is unique for simulated style
+      ✓ "000Q" versus "0010"
+      ✓ hash is unique for random id strings
+      ✓ Long string with shared suffix
+      ✓ Long string with shared prefix
+
+
+  27 passing (89ms)
+
+
+> cytoscape@3.22.0-unstable lint
+> eslint src benchmark
+
+npm notice 
+npm notice New minor version of npm available! 8.8.0 -> 8.10.0
+npm notice Changelog: <https://github.com/npm/cli/releases/tag/v8.10.0>
+npm notice Run `npm install -g npm@8.10.0` to update!
+npm notice 
+[Pipeline] }
+[Pipeline] // dir
+Post stage
+[Pipeline] echo
+SUCCESS =) - all test have passed
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy)
+[Pipeline] echo
+Deploying app and checking exit code status
+[Pipeline] sh
++ docker rm -f cytoscape_deploy
+Error: No such container: cytoscape_deploy
+[Pipeline] sh
++ docker run -d --name cytoscape_deploy --mount type=volume,src=output,dst=/app node bash -c cd /app/cytoscape.js && npm run test
+9db74b8e9c4062e148d5a5999350ec9bbb0e45420fd6b9e2dfa4adeb4d364b4e
+[Pipeline] sh
++ sleep 30
++ docker inspect cytoscape_deploy --format={{.State.ExitCode}}
++ exit 0
+[Pipeline] sh
++ docker rm -f cytoscape_deploy
+cytoscape_deploy
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Prepare publish)
+[Pipeline] echo
+Preparing folder for publishing .tgz file
+[Pipeline] sh
++ mkdir /var/jenkins_home/workspace/artifacts
+mkdir: cannot create directory ‘/var/jenkins_home/workspace/artifacts’: File exists
++ find /var/jenkins_home/workspace -name artifacts
+/var/jenkins_home/workspace/artifacts
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Publish)
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/Devops_2022@2
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker inspect -f . node:alpine
+.
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] withDockerContainer
+Jenkins seems to be running inside container 08d4bf37f0ecf05399ac337f66dcefbb78a119304241b36a31778d7a232333b8
+but /var/jenkins_home/workspace/Devops_2022@2 could not be found among []
+but /var/jenkins_home/workspace/Devops_2022@2@tmp could not be found among []
+$ docker run -t -d -u 1000:1000 --rm --mount type=volume,src=output,dst=/usr/local/app --mount type=bind,src=/var/jenkins_home/workspace/artifacts,dst=/usr/local/copy -u root:root -w /var/jenkins_home/workspace/Devops_2022@2 -v /var/jenkins_home/workspace/Devops_2022@2:/var/jenkins_home/workspace/Devops_2022@2:rw,z -v /var/jenkins_home/workspace/Devops_2022@2@tmp:/var/jenkins_home/workspace/Devops_2022@2@tmp:rw,z -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** node:alpine cat
+$ docker top c3dcd000b0f9ebd5ce5a2827a2fb688506b2bcbc4caf34df72fa99555e7ea51e -eo pid,comm
+[Pipeline] {
+[Pipeline] echo
+Creating and publishing artifact
+[Pipeline] sh
++ rm -f /usr/local/copy/cytoscape-1.0.0.tgz
+[Pipeline] sh
++ cd /usr/local/app/cytoscape.js
++ npm version 1.0.0
+npm WARN version This is a Git checkout, but the git command was not found. npm could not create a Git tag for this release!
+v1.0.0
++ npm pack
+npm notice 
+npm notice package: cytoscape@1.0.0
+npm notice === Tarball Contents === 
+npm notice 85B     .browserslist                                                     
+npm notice 445B    .eslintrc.json                                                    
+npm notice 453B    .github/ISSUE_TEMPLATE/backport.md                                
+npm notice 1.4kB   .github/ISSUE_TEMPLATE/bug_report.md                              
+npm notice 1.1kB   .github/ISSUE_TEMPLATE/feature_request.md                         
+npm notice 1.5kB   .github/PULL_REQUEST_TEMPLATE.md                                  
+npm notice 304B    .github/SECURITY.md                                               
+npm notice 795B    .github/stale.yml                                                 
+npm notice 313B    .github/workflows/tests.yml                                       
+npm notice 1.5kB   .size-snapshot.json                                               
+npm notice 80B     .travis.yml                                                       
+npm notice 1.1kB   LICENSE                                                           
+npm notice 11.0kB  README.md                                                         
+npm notice 871.2kB dist/cytoscape.cjs.js                                             
+npm notice 871.0kB dist/cytoscape.esm.js                                             
+npm notice 364.8kB dist/cytoscape.esm.min.js                                         
+npm notice 366.2kB dist/cytoscape.min.js                                             
+npm notice 1.0MB   dist/cytoscape.umd.js                                             
+npm notice 1.3kB   license-update.js                                                 
+npm notice 4.1kB   package.json                                                      
+npm notice 3.2kB   rollup.config.js                                                  
+npm notice 4.7kB   src/animation.js                                                  
+npm notice 215B    src/cjs.js                                                        
+npm notice 3.9kB   src/collection/algorithms/a-star.js                               
+npm notice 8.7kB   src/collection/algorithms/affinity-propagation.js                 
+npm notice 5.3kB   src/collection/algorithms/bellman-ford.js                         
+npm notice 3.9kB   src/collection/algorithms/betweenness-centrality.js               
+npm notice 3.2kB   src/collection/algorithms/bfs-dfs.js                              
+npm notice 2.4kB   src/collection/algorithms/closeness-centrality.js                 
+npm notice 1.9kB   src/collection/algorithms/clustering-distances.js                 
+npm notice 4.2kB   src/collection/algorithms/degree-centrality.js                    
+npm notice 3.0kB   src/collection/algorithms/dijkstra.js                             
+npm notice 3.2kB   src/collection/algorithms/floyd-warshall.js                       
+npm notice 8.9kB   src/collection/algorithms/hierarchical-clustering.js              
+npm notice 3.7kB   src/collection/algorithms/hierholzer.js                           
+npm notice 3.3kB   src/collection/algorithms/hopcroft-tarjan-biconnected.js          
+npm notice 1.3kB   src/collection/algorithms/index.js                                
+npm notice 13.5kB  src/collection/algorithms/k-clustering.js                         
+npm notice 5.9kB   src/collection/algorithms/karger-stein.js                         
+npm notice 1.3kB   src/collection/algorithms/kruskal.js                              
+npm notice 6.0kB   src/collection/algorithms/markov-clustering.js                    
+npm notice 3.7kB   src/collection/algorithms/page-rank.js                            
+npm notice 1.9kB   src/collection/algorithms/tarjan-strongly-connected.js            
+npm notice 295B    src/collection/animation.js                                       
+npm notice 903B    src/collection/cache-traversal-call.js                            
+npm notice 3.3kB   src/collection/class.js                                           
+npm notice 2.2kB   src/collection/comparators.js                                     
+npm notice 4.6kB   src/collection/compounds.js                                       
+npm notice 1.6kB   src/collection/data.js                                            
+npm notice 2.6kB   src/collection/degree.js                                          
+npm notice 27.2kB  src/collection/dimensions/bounds.js                               
+npm notice 1.6kB   src/collection/dimensions/edge-points.js                          
+npm notice 262B    src/collection/dimensions/index.js                                
+npm notice 7.0kB   src/collection/dimensions/position.js                             
+npm notice 2.5kB   src/collection/dimensions/width-height.js                         
+npm notice 4.8kB   src/collection/element.js                                         
+npm notice 3.4kB   src/collection/events.js                                          
+npm notice 8.4kB   src/collection/filter.js                                          
+npm notice 470B    src/collection/group.js                                           
+npm notice 20.8kB  src/collection/index.js                                           
+npm notice 3.1kB   src/collection/iteration.js                                       
+npm notice 5.1kB   src/collection/layout.js                                          
+npm notice 10.9kB  src/collection/style.js                                           
+npm notice 3.6kB   src/collection/switch-functions.js                                
+npm notice 10.7kB  src/collection/traversing.js                                      
+npm notice 2.0kB   src/collection/zsort.js                                           
+npm notice 1.9kB   src/core/add-remove.js                                            
+npm notice 3.8kB   src/core/animation/cubic-bezier.js                                
+npm notice 1.6kB   src/core/animation/ease.js                                        
+npm notice 2.4kB   src/core/animation/easings.js                                     
+npm notice 1.6kB   src/core/animation/index.js                                       
+npm notice 3.2kB   src/core/animation/spring.js                                      
+npm notice 197B    src/core/animation/start.js                                       
+npm notice 2.5kB   src/core/animation/step-all.js                                    
+npm notice 3.8kB   src/core/animation/step.js                                        
+npm notice 979B    src/core/data.js                                                  
+npm notice 2.2kB   src/core/events.js                                                
+npm notice 397B    src/core/export.js                                                
+npm notice 13.3kB  src/core/index.js                                                 
+npm notice 988B    src/core/layout.js                                                
+npm notice 2.5kB   src/core/notification.js                                          
+npm notice 2.3kB   src/core/renderer.js                                              
+npm notice 1.4kB   src/core/search.js                                                
+npm notice 802B    src/core/style.js                                                 
+npm notice 13.3kB  src/core/viewport.js                                              
+npm notice 6.4kB   src/define/animation.js                                           
+npm notice 6.0kB   src/define/data.js                                                
+npm notice 786B    src/define/events.js                                              
+npm notice 458B    src/define/index.js                                               
+npm notice 6.6kB   src/emitter.js                                                    
+npm notice 2.9kB   src/event.js                                                      
+npm notice 6.7kB   src/extension.js                                                  
+npm notice 195B    src/extensions/index.js                                           
+npm notice 10.3kB  src/extensions/layout/breadthfirst.js                             
+npm notice 3.9kB   src/extensions/layout/circle.js                                   
+npm notice 6.4kB   src/extensions/layout/concentric.js                               
+npm notice 37.4kB  src/extensions/layout/cose.js                                     
+npm notice 7.2kB   src/extensions/layout/grid.js                                     
+npm notice 667B    src/extensions/layout/index.js                                    
+npm notice 1.4kB   src/extensions/layout/null.js                                     
+npm notice 2.0kB   src/extensions/layout/preset.js                                   
+npm notice 1.6kB   src/extensions/layout/random.js                                   
+npm notice 9.0kB   src/extensions/renderer/base/arrow-shapes.js                      
+npm notice 11.2kB  src/extensions/renderer/base/coord-ele-math/coords.js             
+npm notice 4.5kB   src/extensions/renderer/base/coord-ele-math/edge-arrows.js        
+npm notice 27.7kB  src/extensions/renderer/base/coord-ele-math/edge-control-points.js
+npm notice 9.2kB   src/extensions/renderer/base/coord-ele-math/edge-endpoints.js     
+npm notice 1.6kB   src/extensions/renderer/base/coord-ele-math/edge-projection.js    
+npm notice 636B    src/extensions/renderer/base/coord-ele-math/index.js              
+npm notice 14.9kB  src/extensions/renderer/base/coord-ele-math/labels.js             
+npm notice 1.0kB   src/extensions/renderer/base/coord-ele-math/nodes.js              
+npm notice 4.0kB   src/extensions/renderer/base/coord-ele-math/rendered-style.js     
+npm notice 1.3kB   src/extensions/renderer/base/coord-ele-math/z-ordering.js         
+npm notice 983B    src/extensions/renderer/base/images.js                            
+npm notice 5.7kB   src/extensions/renderer/base/index.js                             
+npm notice 59.6kB  src/extensions/renderer/base/load-listeners.js                    
+npm notice 18.8kB  src/extensions/renderer/base/node-shapes.js                       
+npm notice 2.6kB   src/extensions/renderer/base/redraw.js                            
+npm notice 1.9kB   src/extensions/renderer/canvas/arrow-shapes.js                    
+npm notice 10.6kB  src/extensions/renderer/canvas/drawing-edges.js                   
+npm notice 5.8kB   src/extensions/renderer/canvas/drawing-elements.js                
+npm notice 5.4kB   src/extensions/renderer/canvas/drawing-images.js                  
+npm notice 11.6kB  src/extensions/renderer/canvas/drawing-label-text.js              
+npm notice 11.1kB  src/extensions/renderer/canvas/drawing-nodes.js                   
+npm notice 21.4kB  src/extensions/renderer/canvas/drawing-redraw.js                  
+npm notice 6.3kB   src/extensions/renderer/canvas/drawing-shapes.js                  
+npm notice 3.7kB   src/extensions/renderer/canvas/ele-texture-cache-lookup.js        
+npm notice 14.9kB  src/extensions/renderer/canvas/ele-texture-cache.js               
+npm notice 4.4kB   src/extensions/renderer/canvas/export-image.js                    
+npm notice 11.1kB  src/extensions/renderer/canvas/index.js                           
+npm notice 17.1kB  src/extensions/renderer/canvas/layered-texture-cache.js           
+npm notice 1.0kB   src/extensions/renderer/canvas/node-shapes.js                     
+npm notice 2.6kB   src/extensions/renderer/canvas/texture-cache-defs.js              
+npm notice 253B    src/extensions/renderer/index.js                                  
+npm notice 464B    src/extensions/renderer/null/index.js                             
+npm notice 32B     src/heap.js                                                       
+npm notice 1.1kB   src/index.js                                                      
+npm notice 4.0kB   src/is.js                                                         
+npm notice 431B    src/map.js                                                        
+npm notice 36.6kB  src/math.js                                                       
+npm notice 7.6kB   src/promise.js                                                    
+npm notice 2.2kB   src/selector/data.js                                              
+npm notice 12.7kB  src/selector/expressions.js                                       
+npm notice 1.4kB   src/selector/index.js                                             
+npm notice 1.1kB   src/selector/matching.js                                          
+npm notice 253B    src/selector/new-query.js                                         
+npm notice 6.4kB   src/selector/parse.js                                             
+npm notice 3.3kB   src/selector/query-type-match.js                                  
+npm notice 3.4kB   src/selector/state.js                                             
+npm notice 2.1kB   src/selector/tokens.js                                            
+npm notice 1.1kB   src/selector/type.js                                              
+npm notice 1.1kB   src/set.js                                                        
+npm notice 25.7kB  src/style/apply.js                                                
+npm notice 4.8kB   src/style/bypass.js                                               
+npm notice 626B    src/style/container.js                                            
+npm notice 4.2kB   src/style/get-for-ele.js                                          
+npm notice 4.4kB   src/style/index.js                                                
+npm notice 1.2kB   src/style/json.js                                                 
+npm notice 12.2kB  src/style/parse.js                                                
+npm notice 30.5kB  src/style/properties.js                                           
+npm notice 3.6kB   src/style/string-sheet.js                                         
+npm notice 2.1kB   src/stylesheet.js                                                 
+npm notice 498B    src/test.js                                                       
+npm notice 8.1kB   src/util/colors.js                                                
+npm notice 382B    src/util/extend.js                                                
+npm notice 2.1kB   src/util/hash.js                                                  
+npm notice 3.8kB   src/util/index.js                                                 
+npm notice 2.4kB   src/util/maps.js                                                  
+npm notice 713B    src/util/memoize.js                                               
+npm notice 766B    src/util/regex.js                                                 
+npm notice 214B    src/util/sort.js                                                  
+npm notice 647B    src/util/strings.js                                               
+npm notice 1.0kB   src/util/timing.js                                                
+npm notice 36B     src/version.js                                                    
+npm notice 98B     src/window.js                                                     
+npm notice === Tarball Details === 
+npm notice name:          cytoscape                               
+npm notice version:       1.0.0                                   
+npm notice filename:      cytoscape-1.0.0.tgz                     
+npm notice package size:  1.1 MB                                  
+npm notice unpacked size: 4.4 MB                                  
+npm notice shasum:        80e8e22e57f7ffe3727fc14421121008f1258ea3
+npm notice integrity:     sha512-M8IXPx19I87HI[...]zTokwp/QnKlLw==
+npm notice total files:   175                                     
+npm notice 
+cytoscape-1.0.0.tgz
+[Pipeline] sh
++ mv /usr/local/app/cytoscape.js/cytoscape-1.0.0.tgz /usr/local/copy
+[Pipeline] dir
+Running in /var/jenkins_home/workspace/artifacts
+[Pipeline] {
+[Pipeline] archiveArtifacts
+Archiving artifacts
+[Pipeline] }
+[Pipeline] // dir
+Post stage
+[Pipeline] echo
+Cleaning workspace
+[Pipeline] cleanWs
+[WS-CLEANUP] Deleting project workspace...
+[WS-CLEANUP] Deferred wipeout is disabled by the job configuration...
+[WS-CLEANUP] done
+[Pipeline] }
+$ docker stop --time=1 c3dcd000b0f9ebd5ce5a2827a2fb688506b2bcbc4caf34df72fa99555e7ea51e
+$ docker rm -f c3dcd000b0f9ebd5ce5a2827a2fb688506b2bcbc4caf34df72fa99555e7ea51e
+[Pipeline] // withDockerContainer
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
+

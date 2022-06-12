@@ -1,0 +1,115 @@
+pipeline {
+	
+	parameters {
+        string(name: 'VERSION', defaultValue: '1.0.0', description: '')
+        booleanParam(name: 'PROMOTE', defaultValue: true, description: '')
+    	}
+			
+	agent any
+
+	stages {
+
+		stage('Cloning repo with node.js app from github') {
+			steps {
+				echo 'Cloning repo to volume input'
+				sh 'docker volume create input'
+				sh 'docker volume create output'
+				sh 'docker volume ls'
+				sh 'docker rm tmp || true'
+				sh 'docker run --mount "type=volume,src=input,dst=/app" --name tmp node bash -c "cd ~/ && ls cytoscape.js || git clone --recurse-submodules https://github.com/cytoscape/cytoscape.js.git;cp -R cytoscape.js /app; ls /app"'
+				sh 'docker rm tmp'
+				}
+			}
+	
+		stage('Build') {
+			 steps {
+				echo 'Building app with npm'
+				dir("./ITE/GCL08/JS401810/lab05") {
+					sh 'docker build . -t cytoscape_build -f Dockerfile-build'
+					sh 'docker run --mount type=volume,src="input",dst=/app --mount type=volume,src="output",dst=/app_build cytoscape_build bash -c "cd /app/cytoscape.js && npm i;cd ..;cp -R cytoscape.js /app_build"'
+					  }
+				}
+			post {
+                success {
+                    echo 'SUCCESS =) - your build is complete'
+                }
+                failure {
+                    echo 'FAILURE =( - your build is not ready'
+                }
+            }
+			}
+
+		stage('Test') {
+  			steps {
+    				echo 'Testing app with its tests'
+      				dir("./ITE/GCL08/JS401810/lab05"){
+      					sh 'docker build . -t cytoscape_test -f Dockerfile-test'
+      					sh 'docker run --mount type=volume,src="output",dst=/app_test cytoscape_test bash -c "cd /app_test/cytoscape.js && npm test"'
+      					}
+    				}
+    		post {
+                success {
+                    echo 'SUCCESS =) - all test have passed'
+                }
+                failure {
+                    echo 'FAILURE =( - some test have failed'
+                }
+            }
+			}
+
+		stage('Deploy') {
+			  steps {
+				echo 'Deploying app and checking exit code status'
+				sh 'docker rm -f cytoscape_deploy || true'
+				sh 'docker run -d --name cytoscape_deploy --mount type=volume,src="output",dst=/app node bash -c "cd /app/cytoscape.js && npm run test"'
+				sh 'sleep 30; exit $(docker inspect cytoscape_deploy --format="{{.State.ExitCode}}")'
+				sh 'docker rm -f cytoscape_deploy'
+				}
+			}
+		
+		stage('Prepare publish'){
+	            when {
+                		expression {return params.PROMOTE}
+           			    }
+                steps {
+               			echo 'Preparing folder for publishing .tgz file'
+               			sh 'mkdir /var/jenkins_home/workspace/artifacts || find /var/jenkins_home/workspace -name "artifacts"'
+                	    }
+       			       }
+       			       
+       	stage('Publish') {
+			    when {
+                		expression {return params.PROMOTE}
+           		    	}
+		  	    agent {
+              			  docker {
+                   			image 'node:alpine'
+                    		args '--rm --mount "type=volume,src=output,dst=/usr/local/app" --mount "type=bind,src=/var/jenkins_home/workspace/artifacts,dst=/usr/local/copy" -u root:root'
+                			}
+          			    }
+			steps {
+			    echo 'Creating and publishing artifact'
+			    sh 'rm -f /usr/local/copy/* || true'
+			    sh "cd /usr/local/app/cytoscape.js && npm version ${params.VERSION} && npm pack"
+			    sh "mv /usr/local/app/cytoscape.js/cytoscape-${params.VERSION}.tgz /usr/local/copy"
+			    dir('/var/jenkins_home/workspace/artifacts'){
+                archiveArtifacts artifacts: "*.tgz"
+			    }
+			}
+			post {
+       
+        always {
+            echo 'Cleaning workspace'
+            cleanWs(cleanWhenNotBuilt: false,
+                    deleteDirs: true,
+                    disableDeferredWipeout: true,
+                    notFailBuild: true,
+                    patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
+                               [pattern: '.propsfile', type: 'EXCLUDE']])
+                     }
+                }
+		}
+        
+			
+	}
+}
