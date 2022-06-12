@@ -31,8 +31,8 @@ pipeline {
         }
         stage('Cleanup') {
             steps {
-                sh 'docker rm docker_build'
-                sh 'docker rm docker_test'
+                // sh 'docker rm docker_build'
+                // sh 'docker rm docker_test'
                 // archiveArtifacts artifacts: "build.log"
                 // archiveArtifacts artifacts: "test.log"
             }
