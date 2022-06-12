@@ -41,15 +41,15 @@ docker run \
   --volume jenkins-docker-certs:/certs/client:ro \
   jenkins \
 ```
- 
+
 2. Utworzenie pipeline
-W panelu Jenkinsa należało kliknąć New Item => Pipeline, a następnie nadać mu nazwę. \
-Następnie można było wpisać opis pipelina: \
-![](Screenshot_1.png)    
-I wybrać by nasz pipeline był zbudowany przez SCM: \  
-![](Screenshot_2.png)    
-Zdefiniowanie gałęzi na której pracujemy oraz ścieżki do Jenkinsfile: \  
-![](Screenshot_3.png)    
+W panelu Jenkinsa należało kliknąć New Item => Pipeline, a następnie nadać mu nazwę.  
+Następnie można było wpisać opis pipelina:  
+![](zdjecia/zdjecia/Screenshot_1.png)    
+I wybrać by nasz pipeline był zbudowany przez SCM:   
+![](zdjecia/Screenshot_2.png)    
+Zdefiniowanie gałęzi na której pracujemy oraz ścieżki do Jenkinsfile:    
+![](zdjecia/Screenshot_3.png)    
 
 #  
 #  Jenkinsfile
@@ -111,7 +111,7 @@ W tym etapie budujemy kontener dockera z podanego pliku: \
 ```
   
 
-Dockerfile: \ 
+Dockerfile:  
 ```
     FROM node:latest
     RUN git clone https://github.com/Lissy93/quick-example-of-testing-in-nodejs.git
@@ -119,7 +119,7 @@ Dockerfile: \
     RUN npm install
 ```
   
-4. Trzeci etap (Build):\
+4. Trzeci etap (Build):  
 Etap trzeci czyli build to oddzielenie tworzenia kontenera, od odpalania kontenera. Tak naprawdę Prebuild i Build w przypadku mojego projektu mógł być w jednym etapie. Miałem jednak problem z odpaleniem Builda ze względu na konflikt nazw i dlatego by "zdebugować" pipeline postanowiłem to oddzielić i tak już zostało. \
   
 ```
@@ -141,8 +141,8 @@ Etap trzeci czyli build to oddzielenie tworzenia kontenera, od odpalania kontene
     }
 ```
   
-5. Czwarty etap (Test):\
-Testujemy projekt z pliku dockerfile: \
+5. Czwarty etap (Test):  
+Testujemy projekt z pliku dockerfile:  
   
 ```
     stage('Test') {
@@ -163,7 +163,7 @@ Testujemy projekt z pliku dockerfile: \
     }
 ```
   
-Dockerfile: \
+Dockerfile:  
   
 ```
     FROM docker_build
@@ -171,8 +171,8 @@ Dockerfile: \
     RUN npm test
 ```
   
-6. Piąty etap (Publish): \
-Po wykonaniu wszystkich czynności, możemy opublikować nasz package na dockerhubie. Dzięki temu upublicznimy paczkę która będzie łatwa do zainstalowania dla innych użytkowników.\
+6. Piąty etap (Publish):  
+Po wykonaniu wszystkich czynności, możemy opublikować nasz package na dockerhubie. Dzięki temu upublicznimy paczkę która będzie łatwa do zainstalowania dla innych użytkowników.  
   
 ```
     stage('Publish'){
@@ -208,11 +208,11 @@ Po wykonaniu wszystkich czynności, możemy opublikować nasz package na dockerh
     }
 ```
   
-Najpierw sprawdzamy czy parametr Promote został zaznaczony. Jeśli tak to tworzymy subfolder o nazwie wersji naszego kodu i puszczamy na nim testy. Następnie odpalamy kontener i kopiujemy zawartość po zainstalowaniu dependencji do folderu docelowego (czyli podfolderu o nazwie wersji).\  
-\  
-Następnie publikujemy zawartość folderu na dockerhubie wykorzystując do tego hasło wpisane przy odpaleniu pipeline'a. Całość kończymy usunięciem instancji dockera i zapakowaniu projektu w skompresowaną paczkę. \
-7. Ostatni krok (Cleanup): \
-Jest to ostatni etap, który usuwa obie instancje stworzone podczas kompilowania pipeline'a, by w przyszłości można było od nowa odpalić cały proces (ponieważ nie możemy stworzyć 2 instancji o tej samej nazwie). \
+Najpierw sprawdzamy czy parametr Promote został zaznaczony. Jeśli tak to tworzymy subfolder o nazwie wersji naszego kodu i puszczamy na nim testy. Następnie odpalamy kontener i kopiujemy zawartość po zainstalowaniu dependencji do folderu docelowego (czyli podfolderu o nazwie wersji).   
+  
+Następnie publikujemy zawartość folderu na dockerhubie wykorzystując do tego hasło wpisane przy odpaleniu pipeline'a. Całość kończymy usunięciem instancji dockera i zapakowaniu projektu w skompresowaną paczkę.  
+7. Ostatni krok (Cleanup):  
+Jest to ostatni etap, który usuwa obie instancje stworzone podczas kompilowania pipeline'a, by w przyszłości można było od nowa odpalić cały proces (ponieważ nie możemy stworzyć 2 instancji o tej samej nazwie). 
   
 ```
     stage('Cleanup') {
@@ -225,18 +225,18 @@ Jest to ostatni etap, który usuwa obie instancje stworzone podczas kompilowania
   
 8. Odpalenie pipeline'a: \
 Wybranie czy promujemy artefakt, numeru wersji i wpisanie hasła do dockerhuba:\
-![](Screenshot_4.png)   
+![](zdjecia/Screenshot_4.png)   
   
 # Wyniki: 
 
-![](Screenshot_5.png)   
-![](Screenshot_6.png)   
-![](Screenshot_7.png)   
+![](zdjecia/Screenshot_5.png)   
+![](zdjecia/Screenshot_6.png)   
+![](zdjecia/Screenshot_7.png)   
 
 # Diagramy
 
 1. Diagram aktywności: \ 
-![](Screenshot_8.png)  
+![](zdjecia/Screenshot_8.png)  
 2. Diagram wdrożenia: \ 
-![](Screenshot_9.png)  
+![](zdjecia/Screenshot_9.png)  
 
