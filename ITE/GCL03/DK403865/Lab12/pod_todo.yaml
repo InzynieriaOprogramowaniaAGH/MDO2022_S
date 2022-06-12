@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-deployment
+spec:
+  selector:
+    matchLabels:
+      app: todo
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        app: todo
+    spec:
+      containers:
+      - name: todo
+        image: quay.io/danieloh30/todo-app:1.0
+        ports:
+        - containerPort: 80      
