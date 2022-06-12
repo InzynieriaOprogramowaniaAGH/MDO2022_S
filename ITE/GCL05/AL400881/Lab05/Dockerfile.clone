@@ -1,0 +1,11 @@
+FROM node:17-alpine
+
+RUN apk add --update git
+RUN git clone https://github.com/sveltejs/svelte.git
+
+RUN mv svelte app
+RUN ls app
+
+#COPY svelte app
+#VOLUME ["vol_input"]
+#ENTRYPOINT [ "cp", "svelte", "/output/svelte" ]

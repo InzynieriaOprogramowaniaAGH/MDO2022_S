@@ -1,0 +1,5 @@
+FROM docker-build
+
+WORKDIR /app
+
+CMD ["npm", "run", "test:unit"]

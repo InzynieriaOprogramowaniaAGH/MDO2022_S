@@ -1,0 +1,14 @@
+#FROM node:17-alpine
+FROM svelte-cloned
+
+#WORKDIR /app/svelte
+WORKDIR /app
+RUN ls
+#RUN cd app
+
+COPY . ./
+RUN npm i
+COPY . ./
+
+RUN npm run build
+#VOLUME ["vol_output"]
