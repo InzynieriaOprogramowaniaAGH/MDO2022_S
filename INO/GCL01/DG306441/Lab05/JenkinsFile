@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'Name')
+        string(name: 'Version')
+    }
+
+    stages{
+        stage('Build') {
+            steps {
+                dir('INO/GCL01/DG306441/Lab05') {
+                    sh 'docker build . -f DockerFile1 -t build'
+                }
+            }
+        }
+        stage('Tests') {
+            steps {
+                dir('INO/GCL01/DG306441/Lab05') {
+                    sh 'docker build . -f DockerFile2 -t test'
+                }
+            }
+        }
+	stage('Deploy') {
+            steps {
+                sh 'docker run --volume /var/jenkins_home/workspace/NewPipeline/INO/GCL01/DG306441/Lab05:/v1 build mv pcalc /v1'
+                dir('INO/GCL01/DG306441/Lab05') {
+                    sh 'docker build . -f DockerFile3 -t deploy'
+                }
+                sh '''
+                docker run -t --name deployc --volume /var/jenkins_home/workspace/NewPipeline/INO/GCL01/DG306441/Lab05:/v1 deploy v1/pcalc&
+                '''
+                sh 'docker exec deployc ps aux' 
+                sh 'docker stop deployc'
+                sh 'docker container rm deployc'
+                
+            }
+        }
+	stage('Publish') {
+            steps {
+                dir('INO/GCL01/DG306441/Lab05') {
+                    sh 'docker build . -f DockerFile4 -t publish'
+                }
+                sh 'docker run --volume /var/jenkins_home/workspace/NewPipeline/INO/GCL01/DG306441/Lab05:/v1 publish mv publish.tar /v1'
+            }
+        }
+    }
+}

@@ -1,0 +1,3 @@
+FROM build:latest
+
+RUN bash ./run-tests.sh
