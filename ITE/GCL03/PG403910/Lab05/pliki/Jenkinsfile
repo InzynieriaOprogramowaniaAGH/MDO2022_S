@@ -29,11 +29,26 @@ pipeline {
                 }
             }
         }
+        stage('PreBuild') {
+            steps {
+                dir('./ITE/GCL03/PG403910/Lab05/pliki'){
+                    echo 'Pre building'
+                    sh 'docker build -t docker_build:latest . -f docker_build'
+                }
+            }
+            post{
+                success{
+                    echo 'Success'
+                }
+                unsuccessful{
+                    echo 'Failed'
+                }
+            }
+        }
         stage('Build') {
             steps {
                 dir('./ITE/GCL03/PG403910/Lab05/pliki'){
                     echo 'Building'
-                    sh 'docker build -t docker_build:latest . -f docker_build'
                     sh 'docker run --name  docker_build docker_build:latest'
                 }
             }
