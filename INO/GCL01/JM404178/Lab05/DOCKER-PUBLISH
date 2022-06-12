@@ -1,0 +1,3 @@
+FROM fedora:latest
+
+WORKDIR vol_out_irssi

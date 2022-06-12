@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Start') {
+            steps {
+                echo 'Hello'
+                sh "docker build -t dependencies:latest . -f DOCKER-DEPENDENCIES"
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Build'
+                sh "docker build -t build:latest . -f DOCKER-BUILDER"
+                sh "docker run -t -d --name irssi -v vol_out_irssi:/vol_out_irssi build:latest"
+                sh "docker cp irssi:/irssi/build ./build-irssi"
+                sh "docker cp ./build-irssi irssi:/vol_out_irssi/build"
+                sh "docker stop irssi"
+                sh "docker container rm irssi"
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Test'
+                sh "docker build -t test:latest . -f DOCKER-TEST"
+            }
+        }
+                stage('Deploy') {
+            steps {
+                echo 'Deploy'
+                sh "docker build -t deploy:latest . -f DOCKER-DEPLOY"
+		sh "docker run -t -d -e TERM=xterm --name deploy -v vol_out_irssi:/vol_out_irssi deploy:latest"
+		sh "docker exec deploy irssi"
+		sh "docker stop deploy"
+		sh "docker container rm deploy"
+            }
+        }
+                stage('Publish') {
+            steps {
+                echo 'Publish'
+                sh "docker build -t publish:latest . -f DOCKER-PUBLISH"
+		 sh "docker run -t -d --name publish -v vol_out_irssi:/vol_out_irssi publish:latest"
+		 sh "docker exec publish tar -czvf ${params.VERSION}.tgz ./build"
+		 sh "docker stop publish"
+		 sh "docker container rm publish"
+            }
+        }
+    }
+}
+

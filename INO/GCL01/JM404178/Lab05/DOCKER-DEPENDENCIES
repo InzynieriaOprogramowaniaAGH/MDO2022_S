@@ -1,0 +1,3 @@
+FROM fedora:latest
+
+RUN yum -y update && yum -y install git gcc gcc-c++ make automake meson ca-c* libgcrypt* glib2* utf8proc* openssl-devel ncurses*
