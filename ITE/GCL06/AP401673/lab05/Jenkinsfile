@@ -1,0 +1,52 @@
+pipeline {
+	agent any
+    parameters {
+        string(name: 'BRANCH', defaultValue: 'master', description: '')
+        string(name: 'VERSION', defaultValue: '0.1.0', description: '')
+        booleanParam(name: 'PROMOTE', defaultValue: false, description: '')
+        }
+  	stages {
+        stage("Clone"){
+            steps {
+              sh 'docker container prune -f'
+              sh 'docker volume prune -f'
+              sh 'docker volume  create --name repo_vol'
+              sh "docker build -t clone_yara . -f jenkins/Dockerfile_clone"
+              sh "docker run -e BRANCH=${BRANCH} -v repo_vol:/yara clone_yara"
+                }
+              }
+        stage("Build") {
+            steps {
+                sh 'docker build -t build_yara . -f jenkins/Dockerfile_build'
+                sh 'docker run -v repo_vol:/yara -v ${PWD}:/public build_yara'
+            }
+        }
+        stage("Test") {
+            steps {
+                sh 'docker build -t test_yara . -f jenkins/Dockerfile_test --build-arg image=build_yara'
+                sh 'docker run  -v repo_vol:/yara test_yara'
+            }
+        }
+        stage("Deploy") {
+            steps {
+                sh 'docker build -t deploy_yara . -f jenkins/Dockerfile_deploy'
+                sh 'docker run  -v ${PWD}:/yara  deploy_yara'
+            }
+        }
+        stage("Publish") {
+           when {
+                  environment name: 'PROMOTE', value: "true"
+            }
+            steps {
+                sh "tar -czvf yara_${VERSION}.tar.gz yara"
+                archiveArtifacts "yara_${VERSION}.tar.gz"
+            }
+        }
+  	}
+  post {
+         always{
+       cleanWs()
+         }
+    }
+      
+}

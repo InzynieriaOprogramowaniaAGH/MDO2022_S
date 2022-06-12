@@ -1,0 +1,13 @@
+FROM ubuntu:bionic
+
+RUN apt-get update && apt-get install -y  \
+automake \
+libtool \
+make \
+gcc \
+pkg-config \
+git 
+
+WORKDIR yara
+
+CMD sh -c "./bootstrap.sh && ./configure && make && cd .. && cp -r yara/. public"

@@ -1,5 +1,0 @@
-FROM yara_build
-
-WORKDIR /yara
-
-CMD make check
