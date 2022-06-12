@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.1 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mysql-db-todo
+  name: mysql-db-todo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: mysql-db-todo
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.1 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: mysql-db-todo
+    spec:
+      containers:
+        - env:
+            - name: network_mode
+              value: host
+          image: sebastian99kul/mysqldbtodoapp
+          name: mysql-container
+          ports:
+            - containerPort: 3306
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: mysql-db-todo-claim0
+      restartPolicy: Always
+      volumes:
+        - name: mysql-db-todo-claim0
+          persistentVolumeClaim:
+            claimName: mysql-db-todo-claim0
+status: {}

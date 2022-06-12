@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: todoapp-namespace
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mysql-db-todo-claim0
+  name: mysql-db-todo-claim0
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+status: {}

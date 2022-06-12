@@ -1,0 +1,26 @@
+---
+
+- name: deploy app
+  hosts: fedora
+  become: yes
+  tasks:
+    - name: install public keys
+      ansible.posix.authorized_key:
+        user: sebastian
+        state: present
+        key: "{{  lookup('file', '~/.ssh/ans_id_rsa.pub') }}"
+    - name: change sudoers
+      ansible.builtin.lineinfile:
+        path: /etc/sudoers
+        state: present
+        regexp: '^%sudo'
+        line: '%sudo ALL=(ALL) NOPASSWD: ALL'
+        validate: /usr/sbin/visudo -cf %s
+    - name: download repo
+      shell:
+        cmd: rm -rf temporary && git clone https://github.com/sebastiankul-99/temporary.git && cd temporary && tar -xvf simple_go_app*.tar.gz
+        chdir: /home
+    - name: run app
+      shell:
+        cmd: go run sum.go
+        chdir: /home/temporary/publish_app
