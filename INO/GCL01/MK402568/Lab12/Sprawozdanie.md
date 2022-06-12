@@ -21,7 +21,7 @@ Aby skonwertować plik  "jawlowy" do  pliku obsługiwanego  przez kubectl korzys
 
 Poniżej plik wdrożenia.
 
-![](./screenshots/...)
+![](./screenshots/yml.png)
 
 Następnie przechodzimy do automatycznego wdrożenia dzięki plikowi .yml. Korzystam z komendy ```kubectl apply -f apache-deployment.yml```.
 
