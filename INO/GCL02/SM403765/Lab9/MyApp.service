@@ -1,0 +1,22 @@
+[Unit]
+Description=MyApp
+
+[Service]
+# will set the Current Working Directory
+WorkingDirectory=/home/build
+# systemd will run this executable to start the service
+ExecStart=/home/App/Panel.EmotoAgh.Backend --urls=http://0.0.0.0:80/  JWTAuthority="http://localhost/" PostgreSqlConnectionString="***********"
+# to query logs using journalctl, set a logical name here
+SyslogIdentifier=/home/build
+
+User=ubuntu
+
+# ensure the service restarts after crashing
+Restart=always
+# amount of time to wait before restarting the service
+RestartSec=5
+
+Environment=DOTNET_ROOT=/home/dotnet
+
+[Install]
+WantedBy=multi-user.target

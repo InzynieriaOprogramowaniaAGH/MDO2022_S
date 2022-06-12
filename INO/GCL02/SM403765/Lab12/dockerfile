@@ -1,0 +1,4 @@
+FROM prodenv
+WORKDIR /build
+EXPOSE 80
+ENTRYPOINT ["dotnet", "Panel.EmotoAgh.Backend.dll", "JWTAuthority=''", "PostgreSqlConnectionString='localhost'", "--urls=http://0.0.0.0:80/"]
