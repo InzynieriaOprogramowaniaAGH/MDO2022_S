@@ -33,6 +33,7 @@ pipeline {
             steps {
                 dir('./ITE/GCL03/PG403910/Lab05/pliki'){
                     echo 'Pre building'
+                    sh 'ls -a'
                     sh 'docker build -t docker_build:latest . -f docker_build'
                 }
             }
