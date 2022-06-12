@@ -8,10 +8,10 @@ Budowanie, testowanie, wdrażanie i publikowanie projektów dzięki technologii 
 # Wykonane kroki
 1. Instalacja i konfiguracja jenkinsa\
 Kontynuowałem zadanie nr. 4, dzięki czemu miałem już zainstalowanego jenkinsa na dockerze.\
-\  
+   
 By jenkins po ponownym uruchomieniu maszyny wirtualnej działał i widział dockera, należało odpalić następujące komendy:\  
 ```
-docker run \
+docker run 
   --name jenkins-docker \
   --rm \
   --detach \
@@ -25,7 +25,7 @@ docker run \
   docker:dind \
   --storage-driver overlay2
 ```
-\  
+  
 ```
 docker run \
   --name jenkins-blueocean \
@@ -44,11 +44,11 @@ docker run \
 2. Utworzenie pipeline
 W panelu Jenkinsa należało kliknąć New Item => Pipeline, a następnie nadać mu nazwę. \
 Następnie można było wpisać opis pipelina: \
-![](Screenshot_1.png)  \  
+![](Screenshot_1.png)    
 I wybrać by nasz pipeline był zbudowany przez SCM: \  
-![](Screenshot_2.png)  \  
+![](Screenshot_2.png)    
 Zdefiniowanie gałęzi na której pracujemy oraz ścieżki do Jenkinsfile: \  
-![](Screenshot_3.png)  \  
+![](Screenshot_3.png)    
 
 #  
 #  Jenkinsfile
@@ -56,19 +56,20 @@ Zdefiniowanie gałęzi na której pracujemy oraz ścieżki do Jenkinsfile: \
 Potrzebujemy wiedzieć, czy chcemy publikować artefakt, jaka będzie wersja naszego projektu i hasło do naszego konta dockerhub (nie chcemy go podawać w pliku):
 ```
     parameters {
-        booleanParam(name: "Promote", \
-            defaultValue: false, \
-            description: "Czy chcesz wypromować artefakt? (Tylko gdy wszystkie etapy wykonają się poprawnie)") \
-        string(name: "Version", \
-            defaultValue: "1.0.0", \
-            description: "Podaj numer wersji") \
-        string(name: "Password", \
-            defaultValue: "123", \
-            description: "Podaj hasło") \
+        booleanParam(name: "Promote",
+            defaultValue: false, 
+            description: "Czy chcesz wypromować artefakt? (Tylko gdy wszystkie etapy wykonają się poprawnie)") 
+        string(name: "Version", 
+            defaultValue: "1.0.0", 
+            description: "Podaj numer wersji") 
+        string(name: "Password", 
+            defaultValue: "123", 
+            description: "Podaj hasło") 
     }
-```  \
-2. Pierwszy etap (Init):\
+```  
+2. Pierwszy etap (Init):
 W pierwszym etapie musimy zdefiniować jakiego repozytorium będziemy używać do pobierania plików Dockerfile:
+  
 ```
     stage('Init'){
         steps {
@@ -84,8 +85,10 @@ W pierwszym etapie musimy zdefiniować jakiego repozytorium będziemy używać d
         }
     }
 ```
+  
 3. Drugi etap (PreBuild):\
 W tym etapie budujemy kontener dockera z podanego pliku: \
+  
 ```
     stage('PreBuild') {
         steps {
@@ -105,7 +108,8 @@ W tym etapie budujemy kontener dockera z podanego pliku: \
         }
     }
 ```
-\  
+  
+
 Dockerfile: \ 
 ```
     FROM node:latest
@@ -113,8 +117,10 @@ Dockerfile: \
     WORKDIR quick-example-of-testing-in-nodejs
     RUN npm install
 ```
+  
 4. Trzeci etap (Build):\
 Etap trzeci czyli build to oddzielenie tworzenia kontenera, od odpalania kontenera. Tak naprawdę Prebuild i Build w przypadku mojego projektu mógł być w jednym etapie. Miałem jednak problem z odpaleniem Builda ze względu na konflikt nazw i dlatego by "zdebugować" pipeline postanowiłem to oddzielić i tak już zostało. \
+  
 ```
     stage('Build') {
         steps {
@@ -133,8 +139,10 @@ Etap trzeci czyli build to oddzielenie tworzenia kontenera, od odpalania kontene
         }
     }
 ```
+  
 5. Czwarty etap (Test):\
 Testujemy projekt z pliku dockerfile: \
+  
 ```
     stage('Test') {
             steps {
@@ -153,14 +161,18 @@ Testujemy projekt z pliku dockerfile: \
         }
     }
 ```
+  
 Dockerfile: \
+  
 ```
     FROM docker_build
     WORKDIR quick-example-of-testing-in-nodejs
     RUN npm test
 ```
+  
 6. Piąty etap (Publish): \
 Po wykonaniu wszystkich czynności, możemy opublikować nasz package na dockerhubie. Dzięki temu upublicznimy paczkę która będzie łatwa do zainstalowania dla innych użytkowników.\
+  
 ```
     stage('Publish'){
         when{
@@ -194,11 +206,13 @@ Po wykonaniu wszystkich czynności, możemy opublikować nasz package na dockerh
         }
     }
 ```
+  
 Najpierw sprawdzamy czy parametr Promote został zaznaczony. Jeśli tak to tworzymy subfolder o nazwie wersji naszego kodu i puszczamy na nim testy. Następnie odpalamy kontener i kopiujemy zawartość po zainstalowaniu dependencji do folderu docelowego (czyli podfolderu o nazwie wersji).\  
 \  
 Następnie publikujemy zawartość folderu na dockerhubie wykorzystując do tego hasło wpisane przy odpaleniu pipeline'a. Całość kończymy usunięciem instancji dockera i zapakowaniu projektu w skompresowaną paczkę. \
 7. Ostatni krok (Cleanup): \
 Jest to ostatni etap, który usuwa obie instancje stworzone podczas kompilowania pipeline'a, by w przyszłości można było od nowa odpalić cały proces (ponieważ nie możemy stworzyć 2 instancji o tej samej nazwie). \
+  
 ```
     stage('Cleanup') {
         steps {
@@ -207,16 +221,16 @@ Jest to ostatni etap, który usuwa obie instancje stworzone podczas kompilowania
         }
     }
 ```
+  
 8. Odpalenie pipeline'a: \
-Wybranie czy promujemy artefakt, numeru wersji i wpisanie hasła do dockerhuba:
-![](Screenshot_4.png)  \  
-\  
-\  
-Wyniki: \ 
+Wybranie czy promujemy artefakt, numeru wersji i wpisanie hasła do dockerhuba:\
+![](Screenshot_4.png)   
+  
+# Wyniki: 
 
-![](Screenshot_5.png)  \  
-![](Screenshot_6.png)  \  
-![](Screenshot_7.png)  \  
+![](Screenshot_5.png)   
+![](Screenshot_6.png)   
+![](Screenshot_7.png)   
 
 # Diagramy
 
