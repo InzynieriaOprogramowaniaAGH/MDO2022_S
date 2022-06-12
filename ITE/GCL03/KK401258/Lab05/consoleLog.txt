@@ -1,0 +1,440 @@
+Started by user admin
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/DevOps_proj
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Clone repo)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ docker volume prune -f
+Total reclaimed space: 0B
+[Pipeline] git
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/DevOps_proj/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git # timeout=10
+Fetching upstream changes from https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.30.2'
+ > git fetch --tags --force --progress -- https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+Checking out Revision d4fc1af6cc99230ebbff19c6576d098dd6d508b0 (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f d4fc1af6cc99230ebbff19c6576d098dd6d508b0 # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D master # timeout=10
+ > git checkout -b master d4fc1af6cc99230ebbff19c6576d098dd6d508b0 # timeout=10
+Commit message: "Merge pull request #687 from InzynieriaOprogramowaniaAGH/Grupa01-DB400735_Lab08"
+ > git rev-list --no-walk d4fc1af6cc99230ebbff19c6576d098dd6d508b0 # timeout=10
+[Pipeline] sh
++ git checkout KK401258
+Switched to branch 'KK401258'
+Your branch is up to date with 'origin/KK401258'.
+[Pipeline] sh
++ git pull origin
+hint: Pulling without specifying how to reconcile divergent branches is
+hint: discouraged. You can squelch this message by running one of the following
+hint: commands sometime before your next pull:
+hint: 
+hint:   git config pull.rebase false  # merge (the default strategy)
+hint:   git config pull.rebase true   # rebase
+hint:   git config pull.ff only       # fast-forward only
+hint: 
+hint: You can replace "git config" with "git config --global" to set a default
+hint: preference for all repositories. You can also pass --rebase, --no-rebase,
+hint: or --ff-only on the command line to override the configured default per
+hint: invocation.
+Already up to date.
+[Pipeline] echo
+The repository was successfully cloned.
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Install dep)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ docker rmi -f calculator-dependencies
+Untagged: calculator-dependencies:latest
+[Pipeline] echo
+pre-docker
+[Pipeline] sh
++ docker build --no-cache -t calculator-dependencies:latest . -f ./ITE/GCL03/KK401258/Lab05/dockerfile-1-dependencies
+Sending build context to Docker daemon  673.7MB
+Step 1/4 : FROM node:15.14.0
+ ---> 3d3f41722daf
+Step 2/4 : RUN git clone https://github.com/ahfarmer/calculator.git
+ ---> Running in c85e3c3daae9
+[91mCloning into 'calculator'...
+[0mRemoving intermediate container c85e3c3daae9
+ ---> 0c17ed541da1
+Step 3/4 : WORKDIR calculator
+ ---> Running in 4e4caa4475db
+Removing intermediate container 4e4caa4475db
+ ---> 503e4baa56e8
+Step 4/4 : RUN npm install
+ ---> Running in cc2b91881423
+
+added 1441 packages, and audited 1574 packages in 33s
+
+70 vulnerabilities (27 moderate, 32 high, 11 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+[91mnpm notice 
+npm notice[0m[91m New major version of npm available! 7.7.6 -> 8.10.0
+npm notice Changelog: <https://github.com/npm/cli/releases/tag/v8.10.0>
+npm[0m[91m notice Run `npm install -g npm@8.10.0` to update!
+npm [0m[91mnotice 
+[0mRemoving intermediate container cc2b91881423
+ ---> 1841abf87a4b
+Successfully built 1841abf87a4b
+Successfully tagged calculator-dependencies:latest
+[Pipeline] echo
+Dependecies were successfully installed.
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ docker rmi -f calculator-build
+Untagged: calculator-build:latest
+Deleted: sha256:c3f145e2d3fd270c7c48295359c0a8bde9ec7637005eed6f45abd52720673a7f
+[Pipeline] sh
++ docker volume create volume_in
+volume_in
+[Pipeline] sh
++ docker build --no-cache -t calculator-build:latest . -f ./ITE/GCL03/KK401258/Lab05/dockerfile-2-build
+Sending build context to Docker daemon  673.7MB
+Step 1/2 : FROM calculator-dependencies:latest
+ ---> 1841abf87a4b
+Step 2/2 : RUN npm run-script build
+ ---> Running in e5e6e0e2e3ca
+
+> calculator@0.1.0 build
+> react-scripts build
+
+Creating an optimized production build...
+[91mBrowserslist: caniuse-lite is outdated. Please run next command `yarn upgrade`
+[0mCompiled successfully.
+
+File sizes after gzip:
+
+  39.41 KB  build/static/js/2.9067ee69.chunk.js
+  1.19 KB   build/static/js/main.56f1f4c3.chunk.js
+  771 B     build/static/js/runtime~main.2539f434.js
+  732 B     build/static/css/2.f87fbcaa.chunk.css
+  539 B     build/static/css/main.6fdcdd19.chunk.css
+
+The project was built assuming it is hosted at /calculator/.
+You can control this with the homepage field in your package.json.
+
+The build folder is ready to be deployed.
+To publish it at http://ahfarmer.github.io/calculator , run:
+
+  yarn run deploy
+
+Find out more about deployment here:
+
+  https://bit.ly/CRA-deploy
+
+[91mnpm notice[0m[91m 
+npm notice New major version of npm available! 7.7.6 -> 8.10.0
+npm notice Changelog: <https://github.com/npm/cli/releases/tag/v8.10.0>
+npm notice Run `npm install -g npm@8.10.0` to update!
+npm notice 
+[0mRemoving intermediate container e5e6e0e2e3ca
+ ---> 4f3adf78bc60
+Successfully built 4f3adf78bc60
+Successfully tagged calculator-build:latest
+[Pipeline] sh
++ docker run --mount type=volume,src=volume_in,dst=/calculator_pipv1/depBuild calculator-build:latest bash -c ls -l && cd .. && cp -r /calculator /calculator_pipv1/depBuild
+total 1628
+-rw-r--r-- 1 root root    1072 May 15 22:01 LICENSE
+-rw-r--r-- 1 root root   54845 May 15 22:01 Logotype primary.png
+-rw-r--r-- 1 root root     400 May 15 22:01 README.md
+drwxr-xr-x 3 root root    4096 May 15 22:02 build
+drwxr-xr-x 1 root root    4096 May 15 22:02 node_modules
+-rw-r--r-- 1 root root 1177895 May 15 22:02 package-lock.json
+-rw-r--r-- 1 root root     881 May 15 22:01 package.json
+drwxr-xr-x 2 root root    4096 May 15 22:01 public
+drwxr-xr-x 4 root root    4096 May 15 22:01 src
+-rw-r--r-- 1 root root  398143 May 15 22:02 yarn.lock
+[Pipeline] echo
+Build was successfully completed.
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ docker rmi -f calculator-test
+Untagged: calculator-test:latest
+Deleted: sha256:79bad545c72b84d392028b0b001629a24a58b7561cf087cb0dcdad7c8a6ab828
+[Pipeline] sh
++ docker build --no-cache -t calculator-test:latest . -f ./ITE/GCL03/KK401258/Lab05/dockerfile-3-test
+Sending build context to Docker daemon  673.7MB
+Step 1/2 : FROM calculator-dependencies:latest
+ ---> 1841abf87a4b
+Step 2/2 : CMD ['/usr/bin/npm', 'test', 'a']
+ ---> Running in cff436e55a88
+Removing intermediate container cff436e55a88
+ ---> 9555b6adcf81
+Successfully built 9555b6adcf81
+Successfully tagged calculator-test:latest
+[Pipeline] echo
+Test was successfully completed.
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy)
+[Pipeline] sh
++ docker rm -f calculator-deploy
+calculator-deploy
+[Pipeline] sh
++ docker run -dit --name calculator-deploy --mount type=volume,src=volume_in,dst=/dest node:15.14.0
+317d5282b0c55c7f6f63e8b94398093c32fdc48e4de7b2f70cf1a13ba9097175
+[Pipeline] sh
++ docker container exec calculator-deploy sh -c ls -l && cd dest && ls -l && cd calculator && ls -l
+total 68
+drwxr-xr-x   1 root root 4096 May 12  2021 bin
+drwxr-xr-x   2 root root 4096 Jul 10  2020 boot
+drwxr-xr-x   3 root root 4096 May 15 20:35 dest
+drwxr-xr-x   5 root root  360 May 15 22:02 dev
+drwxr-xr-x   1 root root 4096 May 15 22:02 etc
+drwxr-xr-x   1 root root 4096 May 12  2021 home
+drwxr-xr-x   1 root root 4096 May 12  2021 lib
+drwxr-xr-x   2 root root 4096 May 11  2021 lib64
+drwxr-xr-x   2 root root 4096 May 11  2021 media
+drwxr-xr-x   2 root root 4096 May 11  2021 mnt
+drwxr-xr-x   1 root root 4096 May 12  2021 opt
+dr-xr-xr-x 315 root root    0 May 15 22:02 proc
+drwx------   1 root root 4096 May 15 22:02 root
+drwxr-xr-x   3 root root 4096 May 11  2021 run
+drwxr-xr-x   1 root root 4096 May 12  2021 sbin
+drwxr-xr-x   2 root root 4096 May 11  2021 srv
+dr-xr-xr-x  13 root root    0 May 15 22:02 sys
+drwxrwxrwt   1 root root 4096 May 12  2021 tmp
+drwxr-xr-x   1 root root 4096 May 11  2021 usr
+drwxr-xr-x   1 root root 4096 May 11  2021 var
+total 4
+drwxr-xr-x 7 root root 4096 May 15 20:35 calculator
+total 1660
+-rw-r--r--    1 root root    1072 May 15 22:02 LICENSE
+-rw-r--r--    1 root root   54845 May 15 22:02 Logotype primary.png
+-rw-r--r--    1 root root     400 May 15 22:02 README.md
+drwxr-xr-x    3 root root    4096 May 15 20:35 build
+drwxr-xr-x 1023 root root   36864 May 15 20:35 node_modules
+-rw-r--r--    1 root root 1177895 May 15 22:02 package-lock.json
+-rw-r--r--    1 root root     881 May 15 22:02 package.json
+drwxr-xr-x    2 root root    4096 May 15 20:35 public
+drwxr-xr-x    4 root root    4096 May 15 20:35 src
+-rw-r--r--    1 root root  398143 May 15 22:02 yarn.lock
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Publish)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ docker rm -f calculator-pub
+calculator-pub
+[Pipeline] sh
++ docker rmi -f calculator-publish
+Untagged: calculator-publish:latest
+[Pipeline] sh
++ rm -rf 1.0.0
+[Pipeline] sh
++ mkdir 1.0.0
+[Pipeline] sh
++ docker build --no-cache -t calculator-publish:latest . -f ./ITE/GCL03/KK401258/Lab05/dockerfile-4-pack
+Sending build context to Docker daemon  673.6MB
+Step 1/2 : FROM calculator-dependencies:latest
+ ---> 1841abf87a4b
+Step 2/2 : RUN npm pack
+ ---> Running in eaec527280f3
+[91mnpm[0m[91m notice 
+[0m[91mnpm notice package: calculator@0.1.0
+npm [0m[91mnotice [0m[91m=== Tarball Contents === 
+[0m[91mnpm[0m[91m notice 1.1kB  LICENSE                      
+npm[0m[91m notice[0m[91m 54.8kB Logotype primary.png         
+npm[0m[91m [0m[91mnotice[0m[91m 400B   README.md                    
+npm[0m[91m [0m[91mnotice 881B   package.json                 
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m 24.8kB public/favicon.ico           
+npm[0m[91m [0m[91mnotice 1.0kB  public/index.html            
+[0m[91mnpm[0m[91m notice[0m[91m 323B   public/manifest.json         
+npm[0m[91m notice[0m[91m 97B    src/component/App.css        
+[0m[91mnpm [0m[91mnotice[0m[91m 598B   src/component/App.js         
+npm[0m[91m [0m[91mnotice[0m[91m 208B   src/component/App.test.js    
+[0m[91mnpm [0m[91mnotice[0m[91m 408B   src/component/Button.css     
+npm[0m[91m [0m[91mnotice[0m[91m 671B   src/component/Button.js      
+npm[0m[91m [0m[91mnotice 241B   src/component/ButtonPanel.css
+[0m[91mnpm[0m[91m [0m[91mnotice 1.8kB  src/component/ButtonPanel.js 
+npm[0m[91m [0m[91mnotice 233B   src/component/Display.css    
+[0m[91mnpm[0m[91m notice[0m[91m 334B   src/component/Display.js     
+npm[0m[91m notice 686B   src/index.css                
+npm [0m[91mnotice 230B   src/index.js                 
+[0m[91mnpm[0m[91m notice[0m[91m 3.1kB  src/logic/calculate.js       
+[0m[91mnpm [0m[91mnotice[0m[91m 3.2kB  src/logic/calculate.test.js  
+[0m[91mnpm [0m[91mnotice[0m[91m 73B    src/logic/isNumber.js        
+[0m[91mnpm [0m[91mnotice[0m[91m 718B   src/logic/operate.js         
+[0m[91mnpm[0m[91m [0m[91mnotice === Tarball Details === 
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m name:          calculator                              
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m version:       0.1.0                                   
+npm notice[0m[91m filename:      calculator-0.1.0.tgz                    
+npm notice[0m[91m package size:  61.8 kB                                 
+npm[0m[91m [0m[91mnotice unpacked size: 95.9 kB                                 
+[0m[91mnpm [0m[91mnotice shasum:        fee881a457a72ef43dad5d8a38a974d2283384ea
+[0m[91mnpm[0m[91m [0m[91mnotice integrity:     sha512-uf4j7QCzzvewL[...]OhBJIfA2s6NMQ==
+[0m[91mnpm[0m[91m notice[0m[91m total files:   22                                      
+[0m[91mnpm[0m[91m notice 
+[0mcalculator-0.1.0.tgz
+[91mnpm[0m[91m notice 
+npm notice[0m[91m New major version of npm available! 7.7.6 -> 8.10.0
+npm[0m[91m [0m[91mnotice Changelog: <https://github.com/npm/cli/releases/tag/v8.10.0>
+npm[0m[91m [0m[91mnotice Run `npm install -g npm@8.10.0` to update!
+[0m[91mnpm[0m[91m notice[0m[91m 
+[0mRemoving intermediate container eaec527280f3
+ ---> a029f5c29abe
+Successfully built a029f5c29abe
+Successfully tagged calculator-publish:latest
+[Pipeline] sh
++ docker run -dit --name calculator-pub calculator-publish:latest
+3dbaca77badad848aa179ae35bb54bde5fe57d8e678a6a0832cac1a636f8f0b3
+[Pipeline] sh
++ docker container exec calculator-pub sh -c ls -l && cd .. && ls -l && cd .. && ls -l
+total 1724
+-rw-r--r--    1 root root    1072 May 15 22:01 LICENSE
+-rw-r--r--    1 root root   54845 May 15 22:01 Logotype primary.png
+-rw-r--r--    1 root root     400 May 15 22:01 README.md
+-rw-r--r--    1 root root   61843 May 15 22:02 calculator-0.1.0.tgz
+drwxr-xr-x 1022 root root   36864 May 15 22:02 node_modules
+-rw-r--r--    1 root root 1177895 May 15 22:02 package-lock.json
+-rw-r--r--    1 root root     881 May 15 22:01 package.json
+drwxr-xr-x    2 root root    4096 May 15 22:01 public
+drwxr-xr-x    4 root root    4096 May 15 22:01 src
+-rw-r--r--    1 root root  398143 May 15 22:02 yarn.lock
+total 68
+drwxr-xr-x   1 root root 4096 May 12  2021 bin
+drwxr-xr-x   2 root root 4096 Jul 10  2020 boot
+drwxr-xr-x   1 root root 4096 May 15 22:02 calculator
+drwxr-xr-x   5 root root  360 May 15 22:02 dev
+drwxr-xr-x   1 root root 4096 May 15 22:02 etc
+drwxr-xr-x   1 root root 4096 May 12  2021 home
+drwxr-xr-x   1 root root 4096 May 12  2021 lib
+drwxr-xr-x   2 root root 4096 May 11  2021 lib64
+drwxr-xr-x   2 root root 4096 May 11  2021 media
+drwxr-xr-x   2 root root 4096 May 11  2021 mnt
+drwxr-xr-x   1 root root 4096 May 12  2021 opt
+dr-xr-xr-x 320 root root    0 May 15 22:02 proc
+drwx------   1 root root 4096 May 15 22:02 root
+drwxr-xr-x   3 root root 4096 May 11  2021 run
+drwxr-xr-x   1 root root 4096 May 12  2021 sbin
+drwxr-xr-x   2 root root 4096 May 11  2021 srv
+dr-xr-xr-x  13 root root    0 May 15 22:02 sys
+drwxrwxrwt   1 root root 4096 May 12  2021 tmp
+drwxr-xr-x   1 root root 4096 May 11  2021 usr
+drwxr-xr-x   1 root root 4096 May 11  2021 var
+total 68
+drwxr-xr-x   1 root root 4096 May 12  2021 bin
+drwxr-xr-x   2 root root 4096 Jul 10  2020 boot
+drwxr-xr-x   1 root root 4096 May 15 22:02 calculator
+drwxr-xr-x   5 root root  360 May 15 22:02 dev
+drwxr-xr-x   1 root root 4096 May 15 22:02 etc
+drwxr-xr-x   1 root root 4096 May 12  2021 home
+drwxr-xr-x   1 root root 4096 May 12  2021 lib
+drwxr-xr-x   2 root root 4096 May 11  2021 lib64
+drwxr-xr-x   2 root root 4096 May 11  2021 media
+drwxr-xr-x   2 root root 4096 May 11  2021 mnt
+drwxr-xr-x   1 root root 4096 May 12  2021 opt
+dr-xr-xr-x 320 root root    0 May 15 22:02 proc
+drwx------   1 root root 4096 May 15 22:02 root
+drwxr-xr-x   3 root root 4096 May 11  2021 run
+drwxr-xr-x   1 root root 4096 May 12  2021 sbin
+drwxr-xr-x   2 root root 4096 May 11  2021 srv
+dr-xr-xr-x  13 root root    0 May 15 22:02 sys
+drwxrwxrwt   1 root root 4096 May 12  2021 tmp
+drwxr-xr-x   1 root root 4096 May 11  2021 usr
+drwxr-xr-x   1 root root 4096 May 11  2021 var
+[Pipeline] sh
++ docker cp calculator-pub:/calculator/calculator-0.1.0.tgz ./1.0.0
+[Pipeline] withCredentials
+Masking supported pattern matches of $user or $pwddockerhub
+[Pipeline] {
+[Pipeline] sh
+Warning: A secret was passed to "sh" using Groovy String interpolation, which is insecure.
+		 Affected argument(s) used the following variable(s): [pwddockerhub, user]
+		 See https://jenkins.io/redirect/groovy-string-interpolation for details.
++ docker login -u **** -p ****
+WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+WARNING! Your password will be stored unencrypted in /var/jenkins_home/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] sh
++ docker tag calculator-publish:latest kali19jr/calculator:1.0.0
+[Pipeline] sh
++ docker push kali19jr/calculator:1.0.0
+The push refers to repository [docker.io/kali19jr/calculator]
+b134a4aa0066: Preparing
+8d9ee456c126: Preparing
+2a4084c05405: Preparing
+f92723793659: Preparing
+f0d8cfcdba81: Preparing
+4a06816805a3: Preparing
+b257e69d416f: Preparing
+1e9c28d06610: Preparing
+cddb98d77163: Preparing
+ed0a3d9cbcc7: Preparing
+8c8e652ecd8f: Preparing
+2f4ee6a2e1b5: Preparing
+4a06816805a3: Waiting
+b257e69d416f: Waiting
+1e9c28d06610: Waiting
+2f4ee6a2e1b5: Waiting
+ed0a3d9cbcc7: Waiting
+cddb98d77163: Waiting
+8c8e652ecd8f: Waiting
+f0d8cfcdba81: Layer already exists
+f92723793659: Layer already exists
+b257e69d416f: Layer already exists
+4a06816805a3: Layer already exists
+1e9c28d06610: Layer already exists
+cddb98d77163: Layer already exists
+ed0a3d9cbcc7: Layer already exists
+8c8e652ecd8f: Layer already exists
+2f4ee6a2e1b5: Layer already exists
+b134a4aa0066: Pushed
+2a4084c05405: Pushed
+8d9ee456c126: Pushed
+1.0.0: digest: sha256:5bf06669283c5cc96cf1cd753c7d23cfb2d91eae886b8af4026d7c4fe22d64de size: 2848
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

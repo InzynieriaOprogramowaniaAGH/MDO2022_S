@@ -1,0 +1,4 @@
+# syntax=docker/dockerfile:1 
+FROM calculator-dependencies:latest
+
+RUN npm pack
