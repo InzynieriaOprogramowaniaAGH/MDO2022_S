@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: planets
+spec:
+  selector:
+    matchLabels:
+      app: planets
+  replicas: 5
+  template:
+    metadata:
+      labels:
+        app: planets
+    spec:
+      containers:
+      - name: planets
+        image: grrd2000/planets
+        ports:
+        - containerPort: 3000
