@@ -1,0 +1,11 @@
+version: "1.0"
+services:
+    building:
+        build:
+            context: building/
+        image: cont_first
+    testing:
+        build:
+            context: testing/
+            args:
+                imagename: cont_first

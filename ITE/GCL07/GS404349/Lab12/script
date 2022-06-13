@@ -1,0 +1,13 @@
+#!/bin/bash
+
+current=$(minikube kubectl get deployment/star-wars-deployment | grep "star-wars-deployment" | awk '{print $2}' | cut -d '/' -f1)
+max=$(minikube kubectl get deployment/star-wars-deployment | grep "star-wars-deployment" | awk '{print $2}' | cut -d '/' -f2)
+
+if [ "$current" == "$max" ]; then
+	echo "successfully deployed"
+	exit 0;
+else
+	echo "didn;t deploy in time"
+	exit 1;
+fi
+

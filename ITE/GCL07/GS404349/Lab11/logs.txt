@@ -1,0 +1,122 @@
+* 
+* ==> Audit <==
+* |---------|------|----------|----------|---------|--------------------------------|--------------------------------|
+| Command | Args | Profile  |   User   | Version |           Start Time           |            End Time            |
+|---------|------|----------|----------|---------|--------------------------------|--------------------------------|
+| start   |      | minikube | grzegorz | v1.25.2 | Sun, 12 Jun 2022 21:15:53 CEST | Sun, 12 Jun 2022 21:20:39 CEST |
+| start   |      | minikube | grzegorz | v1.25.2 | Sun, 12 Jun 2022 22:02:06 CEST | Sun, 12 Jun 2022 22:02:12 CEST |
+| kubectl |      | minikube | grzegorz | v1.25.2 | Sun, 12 Jun 2022 22:02:51 CEST | Sun, 12 Jun 2022 22:02:52 CEST |
+|---------|------|----------|----------|---------|--------------------------------|--------------------------------|
+
+* 
+* ==> Last Start <==
+* Log file created at: 2022/06/12 22:08:14
+Running on machine: grzegorz-pc
+Binary: Built with gc go1.17.7 for linux/amd64
+Log line format: [IWEF]mmdd hh:mm:ss.uuuuuu threadid file:line] msg
+I0612 22:08:14.341901    5027 out.go:297] Setting OutFile to fd 1 ...
+I0612 22:08:14.341959    5027 out.go:349] isatty.IsTerminal(1) = true
+I0612 22:08:14.341962    5027 out.go:310] Setting ErrFile to fd 2...
+I0612 22:08:14.341965    5027 out.go:349] isatty.IsTerminal(2) = true
+I0612 22:08:14.342054    5027 root.go:315] Updating PATH: /home/grzegorz/.minikube/bin
+W0612 22:08:14.342138    5027 root.go:293] Error reading config file at /home/grzegorz/.minikube/config/config.json: open /home/grzegorz/.minikube/config/config.json: no such file or directory
+I0612 22:08:14.342211    5027 out.go:304] Setting JSON to false
+I0612 22:08:14.359659    5027 start.go:112] hostinfo: {"hostname":"grzegorz-pc","uptime":143,"bootTime":1655064352,"procs":239,"os":"linux","platform":"arch","platformFamily":"arch","platformVersion":"21.2.6","kernelVersion":"5.14.21-2-MANJARO","kernelArch":"x86_64","virtualizationSystem":"kvm","virtualizationRole":"host","hostId":"e376d934-ca56-4b64-8c97-ce40974264d3"}
+I0612 22:08:14.359708    5027 start.go:122] virtualization: kvm host
+I0612 22:08:14.363869    5027 out.go:176] 😄  minikube v1.25.2 on Arch 21.2.6
+I0612 22:08:14.363992    5027 notify.go:193] Checking for updates...
+I0612 22:08:14.364235    5027 config.go:176] Loaded profile config "minikube": Driver=kvm2, ContainerRuntime=docker, KubernetesVersion=v1.23.3
+I0612 22:08:14.364267    5027 driver.go:344] Setting default libvirt URI to qemu:///system
+I0612 22:08:14.364601    5027 main.go:130] libmachine: Found binary path at /home/grzegorz/.minikube/bin/docker-machine-driver-kvm2
+I0612 22:08:14.364631    5027 main.go:130] libmachine: Launching plugin server for driver kvm2
+I0612 22:08:14.377083    5027 main.go:130] libmachine: Plugin server listening at address 127.0.0.1:43271
+I0612 22:08:14.377393    5027 main.go:130] libmachine: () Calling .GetVersion
+I0612 22:08:14.377764    5027 main.go:130] libmachine: Using API Version  1
+I0612 22:08:14.377773    5027 main.go:130] libmachine: () Calling .SetConfigRaw
+I0612 22:08:14.377994    5027 main.go:130] libmachine: () Calling .GetMachineName
+I0612 22:08:14.378094    5027 main.go:130] libmachine: (minikube) Calling .DriverName
+I0612 22:08:14.471519    5027 out.go:176] ✨  Using the kvm2 driver based on existing profile
+I0612 22:08:14.471539    5027 start.go:281] selected driver: kvm2
+I0612 22:08:14.471542    5027 start.go:798] validating driver "kvm2" against &{Name:minikube KeepContext:false EmbedCerts:false MinikubeISO:https://storage.googleapis.com/minikube/iso/minikube-v1.25.2.iso KicBaseImage:gcr.io/k8s-minikube/kicbase:v0.0.30@sha256:02c921df998f95e849058af14de7045efc3954d90320967418a0d1f182bbc0b2 Memory:2200 CPUs:2 DiskSize:20000 VMDriver: Driver:kvm2 HyperkitVpnKitSock: HyperkitVSockPorts:[] DockerEnv:[] ContainerVolumeMounts:[] InsecureRegistry:[] RegistryMirror:[] HostOnlyCIDR:192.168.59.1/24 HypervVirtualSwitch: HypervUseExternalSwitch:false HypervExternalAdapter: KVMNetwork:default KVMQemuURI:qemu:///system KVMGPU:false KVMHidden:false KVMNUMACount:1 DockerOpt:[] DisableDriverMounts:false NFSShare:[] NFSSharesRoot:/nfsshares UUID: NoVTXCheck:false DNSProxy:false HostDNSResolver:true HostOnlyNicType:virtio NatNicType:virtio SSHIPAddress: SSHUser:root SSHKey: SSHPort:22 KubernetesConfig:{KubernetesVersion:v1.23.3 ClusterName:minikube Namespace:default APIServerName:minikubeCA APIServerNames:[] APIServerIPs:[] DNSDomain:cluster.local ContainerRuntime:docker CRISocket: NetworkPlugin: FeatureGates: ServiceCIDR:10.96.0.0/12 ImageRepository: LoadBalancerStartIP: LoadBalancerEndIP: CustomIngressCert: ExtraOptions:[{Component:kubelet Key:housekeeping-interval Value:5m}] ShouldLoadCachedImages:true EnableDefaultCNI:false CNI: NodeIP: NodePort:8443 NodeName:} Nodes:[{Name: IP:192.168.39.209 Port:8443 KubernetesVersion:v1.23.3 ContainerRuntime:docker ControlPlane:true Worker:true}] Addons:map[ambassador:false auto-pause:false csi-hostpath-driver:false dashboard:false default-storageclass:true efk:false freshpod:false gcp-auth:false gvisor:false helm-tiller:false ingress:false ingress-dns:false istio:false istio-provisioner:false kong:false kubevirt:false logviewer:false metallb:false metrics-server:false nvidia-driver-installer:false nvidia-gpu-device-plugin:false olm:false pod-security-policy:false portainer:false registry:false registry-aliases:false registry-creds:false storage-provisioner:true storage-provisioner-gluster:false volumesnapshots:false] CustomAddonImages:map[] CustomAddonRegistries:map[] VerifyComponents:map[apiserver:true system_pods:true] StartHostTimeout:6m0s ScheduledStop:<nil> ExposedPorts:[] ListenAddress: Network: MultiNodeRequested:false ExtraDisks:0 CertExpiration:26280h0m0s Mount:false MountString:/home/grzegorz:/minikube-host Mount9PVersion:9p2000.L MountGID:docker MountIP: MountMSize:262144 MountOptions:[] MountPort:0 MountType:9p MountUID:docker BinaryMirror: DisableOptimizations:false}
+I0612 22:08:14.471624    5027 start.go:809] status for kvm2: {Installed:true Healthy:true Running:true NeedsImprovement:false Error:<nil> Reason: Fix: Doc: Version:}
+I0612 22:08:14.471846    5027 install.go:52] acquiring lock: {Name:mk900956b073697a4aa6c80a27c6bb0742a99a53 Clock:{} Delay:500ms Timeout:10m0s Cancel:<nil>}
+I0612 22:08:14.471967    5027 install.go:117] Validating docker-machine-driver-kvm2, PATH=/home/grzegorz/.minikube/bin:/home/grzegorz/.local/share/gem/ruby/3.0.0/bin:/home/grzegorz/.local/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/var/lib/snapd/snap/bin
+I0612 22:08:14.487431    5027 install.go:137] /home/grzegorz/.minikube/bin/docker-machine-driver-kvm2 version is 1.25.2
+I0612 22:08:14.506244    5027 cni.go:93] Creating CNI manager for ""
+I0612 22:08:14.506250    5027 cni.go:167] CNI unnecessary in this configuration, recommending no CNI
+I0612 22:08:14.506254    5027 start_flags.go:302] config:
+{Name:minikube KeepContext:false EmbedCerts:false MinikubeISO:https://storage.googleapis.com/minikube/iso/minikube-v1.25.2.iso KicBaseImage:gcr.io/k8s-minikube/kicbase:v0.0.30@sha256:02c921df998f95e849058af14de7045efc3954d90320967418a0d1f182bbc0b2 Memory:2200 CPUs:2 DiskSize:20000 VMDriver: Driver:kvm2 HyperkitVpnKitSock: HyperkitVSockPorts:[] DockerEnv:[] ContainerVolumeMounts:[] InsecureRegistry:[] RegistryMirror:[] HostOnlyCIDR:192.168.59.1/24 HypervVirtualSwitch: HypervUseExternalSwitch:false HypervExternalAdapter: KVMNetwork:default KVMQemuURI:qemu:///system KVMGPU:false KVMHidden:false KVMNUMACount:1 DockerOpt:[] DisableDriverMounts:false NFSShare:[] NFSSharesRoot:/nfsshares UUID: NoVTXCheck:false DNSProxy:false HostDNSResolver:true HostOnlyNicType:virtio NatNicType:virtio SSHIPAddress: SSHUser:root SSHKey: SSHPort:22 KubernetesConfig:{KubernetesVersion:v1.23.3 ClusterName:minikube Namespace:default APIServerName:minikubeCA APIServerNames:[] APIServerIPs:[] DNSDomain:cluster.local ContainerRuntime:docker CRISocket: NetworkPlugin: FeatureGates: ServiceCIDR:10.96.0.0/12 ImageRepository: LoadBalancerStartIP: LoadBalancerEndIP: CustomIngressCert: ExtraOptions:[{Component:kubelet Key:housekeeping-interval Value:5m}] ShouldLoadCachedImages:true EnableDefaultCNI:false CNI: NodeIP: NodePort:8443 NodeName:} Nodes:[{Name: IP:192.168.39.209 Port:8443 KubernetesVersion:v1.23.3 ContainerRuntime:docker ControlPlane:true Worker:true}] Addons:map[ambassador:false auto-pause:false csi-hostpath-driver:false dashboard:false default-storageclass:true efk:false freshpod:false gcp-auth:false gvisor:false helm-tiller:false ingress:false ingress-dns:false istio:false istio-provisioner:false kong:false kubevirt:false logviewer:false metallb:false metrics-server:false nvidia-driver-installer:false nvidia-gpu-device-plugin:false olm:false pod-security-policy:false portainer:false registry:false registry-aliases:false registry-creds:false storage-provisioner:true storage-provisioner-gluster:false volumesnapshots:false] CustomAddonImages:map[] CustomAddonRegistries:map[] VerifyComponents:map[apiserver:true system_pods:true] StartHostTimeout:6m0s ScheduledStop:<nil> ExposedPorts:[] ListenAddress: Network: MultiNodeRequested:false ExtraDisks:0 CertExpiration:26280h0m0s Mount:false MountString:/home/grzegorz:/minikube-host Mount9PVersion:9p2000.L MountGID:docker MountIP: MountMSize:262144 MountOptions:[] MountPort:0 MountType:9p MountUID:docker BinaryMirror: DisableOptimizations:false}
+I0612 22:08:14.506367    5027 iso.go:123] acquiring lock: {Name:mk890e7b94a4f41afe9c565b35ce7c1c82a81eb6 Clock:{} Delay:500ms Timeout:10m0s Cancel:<nil>}
+I0612 22:08:14.512983    5027 out.go:176] 👍  Starting control plane node minikube in cluster minikube
+I0612 22:08:14.513003    5027 preload.go:132] Checking if preload exists for k8s version v1.23.3 and runtime docker
+I0612 22:08:14.513025    5027 preload.go:148] Found local preload: /home/grzegorz/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v17-v1.23.3-docker-overlay2-amd64.tar.lz4
+I0612 22:08:14.513030    5027 cache.go:57] Caching tarball of preloaded images
+I0612 22:08:14.513184    5027 preload.go:174] Found /home/grzegorz/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v17-v1.23.3-docker-overlay2-amd64.tar.lz4 in cache, skipping download
+I0612 22:08:14.513229    5027 cache.go:60] Finished verifying existence of preloaded tar for  v1.23.3 on docker
+I0612 22:08:14.513720    5027 profile.go:148] Saving config to /home/grzegorz/.minikube/profiles/minikube/config.json ...
+I0612 22:08:14.514231    5027 cache.go:208] Successfully downloaded all kic artifacts
+I0612 22:08:14.514271    5027 start.go:313] acquiring machines lock for minikube: {Name:mk49cf4c614106e01b6f9be61592bacb344219de Clock:{} Delay:500ms Timeout:13m0s Cancel:<nil>}
+I0612 22:08:14.514444    5027 start.go:317] acquired machines lock for "minikube" in 144.985µs
+I0612 22:08:14.514474    5027 start.go:93] Skipping create...Using existing machine configuration
+I0612 22:08:14.514499    5027 fix.go:55] fixHost starting: 
+I0612 22:08:14.515200    5027 main.go:130] libmachine: Found binary path at /home/grzegorz/.minikube/bin/docker-machine-driver-kvm2
+I0612 22:08:14.515234    5027 main.go:130] libmachine: Launching plugin server for driver kvm2
+I0612 22:08:14.529521    5027 main.go:130] libmachine: Plugin server listening at address 127.0.0.1:43855
+I0612 22:08:14.529804    5027 main.go:130] libmachine: () Calling .GetVersion
+I0612 22:08:14.530130    5027 main.go:130] libmachine: Using API Version  1
+I0612 22:08:14.530139    5027 main.go:130] libmachine: () Calling .SetConfigRaw
+I0612 22:08:14.530366    5027 main.go:130] libmachine: () Calling .GetMachineName
+I0612 22:08:14.530482    5027 main.go:130] libmachine: (minikube) Calling .DriverName
+I0612 22:08:14.530559    5027 main.go:130] libmachine: (minikube) Calling .GetState
+I0612 22:08:14.536486    5027 fix.go:108] recreateIfNeeded on minikube: state=Paused err=<nil>
+W0612 22:08:14.536497    5027 fix.go:134] unexpected machine state, will restart: <nil>
+I0612 22:08:14.539948    5027 out.go:176] 🔄  Restarting existing kvm2 VM for "minikube" ...
+I0612 22:08:14.539970    5027 main.go:130] libmachine: (minikube) Calling .Start
+I0612 22:08:14.540077    5027 main.go:130] libmachine: (minikube) Ensuring networks are active...
+I0612 22:08:14.544393    5027 main.go:130] libmachine: (minikube) Ensuring network default is active
+I0612 22:08:14.544599    5027 main.go:130] libmachine: (minikube) Ensuring network mk-minikube is active
+I0612 22:08:14.544857    5027 main.go:130] libmachine: (minikube) Getting domain xml...
+I0612 22:08:14.549119    5027 main.go:130] libmachine: (minikube) Creating domain...
+I0612 22:08:14.549690    5027 fix.go:57] fixHost completed within 35.20682ms
+I0612 22:08:14.549695    5027 start.go:80] releasing machines lock for "minikube", held for 35.239726ms
+W0612 22:08:14.549712    5027 start.go:570] error starting host: driver start: error creating VM: virError(Code=55, Domain=10, Message='Requested operation is not valid: domain is already running')
+W0612 22:08:14.549795    5027 out.go:241] 🤦  StartHost failed, but will try again: driver start: error creating VM: virError(Code=55, Domain=10, Message='Requested operation is not valid: domain is already running')
+I0612 22:08:14.549807    5027 start.go:585] Will try again in 5 seconds ...
+I0612 22:08:19.550985    5027 start.go:313] acquiring machines lock for minikube: {Name:mk49cf4c614106e01b6f9be61592bacb344219de Clock:{} Delay:500ms Timeout:13m0s Cancel:<nil>}
+I0612 22:08:19.551156    5027 start.go:317] acquired machines lock for "minikube" in 131.451µs
+I0612 22:08:19.551179    5027 start.go:93] Skipping create...Using existing machine configuration
+I0612 22:08:19.551185    5027 fix.go:55] fixHost starting: 
+I0612 22:08:19.551687    5027 main.go:130] libmachine: Found binary path at /home/grzegorz/.minikube/bin/docker-machine-driver-kvm2
+I0612 22:08:19.551730    5027 main.go:130] libmachine: Launching plugin server for driver kvm2
+I0612 22:08:19.567995    5027 main.go:130] libmachine: Plugin server listening at address 127.0.0.1:45141
+I0612 22:08:19.568279    5027 main.go:130] libmachine: () Calling .GetVersion
+I0612 22:08:19.568598    5027 main.go:130] libmachine: Using API Version  1
+I0612 22:08:19.568607    5027 main.go:130] libmachine: () Calling .SetConfigRaw
+I0612 22:08:19.568789    5027 main.go:130] libmachine: () Calling .GetMachineName
+I0612 22:08:19.568877    5027 main.go:130] libmachine: (minikube) Calling .DriverName
+I0612 22:08:19.568956    5027 main.go:130] libmachine: (minikube) Calling .GetState
+I0612 22:08:19.573985    5027 fix.go:108] recreateIfNeeded on minikube: state=Paused err=<nil>
+W0612 22:08:19.573997    5027 fix.go:134] unexpected machine state, will restart: <nil>
+I0612 22:08:19.580066    5027 out.go:176] 🔄  Restarting existing kvm2 VM for "minikube" ...
+I0612 22:08:19.580087    5027 main.go:130] libmachine: (minikube) Calling .Start
+I0612 22:08:19.580180    5027 main.go:130] libmachine: (minikube) Ensuring networks are active...
+I0612 22:08:19.584356    5027 main.go:130] libmachine: (minikube) Ensuring network default is active
+I0612 22:08:19.584564    5027 main.go:130] libmachine: (minikube) Ensuring network mk-minikube is active
+I0612 22:08:19.584792    5027 main.go:130] libmachine: (minikube) Getting domain xml...
+I0612 22:08:19.588871    5027 main.go:130] libmachine: (minikube) Creating domain...
+I0612 22:08:19.589452    5027 fix.go:57] fixHost completed within 38.268279ms
+I0612 22:08:19.589460    5027 start.go:80] releasing machines lock for "minikube", held for 38.292937ms
+W0612 22:08:19.589564    5027 out.go:241] 😿  Failed to start kvm2 VM. Running "minikube delete" may fix it: driver start: error creating VM: virError(Code=55, Domain=10, Message='Requested operation is not valid: domain is already running')
+I0612 22:08:19.592800    5027 out.go:176] 
+W0612 22:08:19.592859    5027 out.go:241] ❌  Exiting due to GUEST_PROVISION: Failed to start host: driver start: error creating VM: virError(Code=55, Domain=10, Message='Requested operation is not valid: domain is already running')
+W0612 22:08:19.592866    5027 out.go:241] 
+W0612 22:08:19.593576    5027 out.go:241] [31m╭───────────────────────────────────────────────────────────────────────────────────────────╮[0m
+[31m│[0m                                                                                           [31m│[0m
+[31m│[0m    😿  If the above advice does not help, please let us know:                             [31m│[0m
+[31m│[0m    👉  https://github.com/kubernetes/minikube/issues/new/choose                           [31m│[0m
+[31m│[0m                                                                                           [31m│[0m
+[31m│[0m    Please run `minikube logs --file=logs.txt` and attach logs.txt to the GitHub issue.    [31m│[0m
+[31m│[0m                                                                                           [31m│[0m
+[31m╰───────────────────────────────────────────────────────────────────────────────────────────╯[0m
+
+* 
