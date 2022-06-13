@@ -1,0 +1,3 @@
+FROM cos_bui:latest
+
+RUN  mvn test -e -X

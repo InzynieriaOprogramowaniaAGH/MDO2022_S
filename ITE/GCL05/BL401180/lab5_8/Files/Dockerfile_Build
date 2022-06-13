@@ -1,0 +1,4 @@
+FROM cos_dep:latest
+RUN mvn install
+ENTRYPOINT [ "cp", "target/cosdodevopsa-1.0-SNAPSHOT.jar", "/output/app.jar" ]
+

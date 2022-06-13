@@ -1,0 +1,7 @@
+FROM alpine:latest
+WORKDIR cosdodevopsa
+RUN apk add maven
+RUN apk add openjdk11
+COPY app app
+WORKDIR app
+RUN mvn dependency:go-offline
