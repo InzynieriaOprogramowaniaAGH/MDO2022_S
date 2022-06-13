@@ -1,0 +1,80 @@
+pipeline {
+			
+	agent any
+	
+    parameters {
+        string(name: 'Version', defaultValue: '1.0.0', description: 'Version')
+        booleanParam(name: 'Promote', defaultValue: true, description: '')
+        string(name: 'Dockerfiles', defaultValue: './ITE/GCL07/BS401926/lab05', description: 'Dockerfiles path')
+    }
+    
+	stages {
+		stage('Clone') {
+			steps {
+				echo 'Creating volume'
+				sh 'docker volume create in_vol'
+				sh 'docker rm tmp_container || true'
+				sh 'docker run -v in_vol:/data --name tmp_container node'
+				sh 'cd ~/ && ls nexe || git clone --recurse-submodules https://github.com/nexe/nexe.git'
+				sh 'docker cp ~/nexe tmp_container:/data'
+				sh 'docker rm tmp_container'
+			}
+		}
+	    stage('Build') {
+			steps {
+				echo 'Building nexe with npm'
+				dir('./ITE/GCL07/BS401926/lab05') {
+					sh 'docker build . -t nexe_build -f docker-build'
+					sh 'docker volume create out_vol'
+					sh 'docker run --mount type=volume,src="in_vol",dst=/nexe_app --mount type=volume,src="out_vol",dst=/nexe_app_build nexe_build bash -c "cd /nexe_app/nexe && npm i; cp -R /nexe_app/nexe /nexe_app_build"'
+				}
+			}
+		}
+		stage('Test') {
+  			steps {
+    				echo 'Nexe test'
+      				dir("./ITE/GCL07/BS401926/lab05"){
+      					sh 'docker build . -t nexe_test -f docker-test'
+      					sh 'docker run -t --mount type=volume,src="out_vol",dst=/nexe_app_test nexe_test bash -c "cd /nexe_app_test/nexe && npm test"'
+      					}
+    				}
+			}
+		stage('Deploy') {
+			steps {
+				echo 'Deploying'
+				sh 'docker run --name tmp_container --mount "type=volume,src=out_vol,dst=/usr/local/nexe_app" nexe_test bash -c "cd /usr/local/nexe_app/nexe && npm run"'
+				sh 'exit $(docker inspect tmp_container --format="{{.State.ExitCode}}")'
+				sh 'docker rm -f tmp_container'
+			}
+		}
+		stage('Publish') {
+			when {
+				expression {return params.Promote}
+			}
+	    agent {
+                docker {
+                    image 'node:alpine'
+                    args '--rm --mount "type=volume,src=out_vol,dst=/usr/local/nexe_app" --mount "type=bind,source=/var/jenkins_home/workspace/artifacts,dst=/usr/local/copy" -u root:root'
+                }
+            }
+			steps {
+				echo 'Publishing'
+				sh 'mkdir /var/jenkins_home/workspace/artifacts'
+				sh "cd /usr/local/nexe_app/nexe && npm version ${params.Version} && npm pack"
+			    sh "mv /usr/local/nexe_app/nexe/nexe-${params.Version}.tgz /usr/local/copy"
+			    dir('/var/jenkins_home/workspace/artifacts'){
+			        archiveArtifacts artifacts: "nexe-${params.Version}.tgz"
+				}
+			}
+		}
+	
+	}
+	post {
+        	success {
+            		echo 'Pipeline succsess'
+        	}
+        	failure {
+            		echo 'Pipeline fail'
+        	}
+    	}	
+}

@@ -1,0 +1,372 @@
+Started by user Generali1
+Obtained ./ITE/GCL07/BS401926/lab05/Jenkinsfile from git https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/DevOps
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+The recommended git tool is: git
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/DevOps/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git # timeout=10
+Fetching upstream changes from https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.30.2'
+ > git fetch --tags --force --progress -- https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/BS401926^{commit} # timeout=10
+Checking out Revision 400cd97f1a0ff90a8d8200b55493532a414ccc45 (refs/remotes/origin/BS401926)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 400cd97f1a0ff90a8d8200b55493532a414ccc45 # timeout=10
+Commit message: "BS401926"
+ > git rev-list --no-walk 78d62aa45b5ba7342a0b019b69c8e6978d815645 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Clone)
+[Pipeline] echo
+Creating volume
+[Pipeline] sh
++ docker volume create in_vol
+in_vol
+[Pipeline] sh
++ docker rm tmp_container
+Error: No such container: tmp_container
++ true
+[Pipeline] sh
++ docker run -v in_vol:/data --name tmp_container node
+[Pipeline] sh
++ cd /var/jenkins_home/
++ ls nexe
+CHANGELOG.md
+LICENSE
+README.md
+azure-pipelines.yml
+examples
+index.js
+package-lock.json
+package.json
+src
+tasks
+test
+tsconfig.json
+tslint.json
+[Pipeline] sh
++ docker cp /var/jenkins_home/nexe tmp_container:/data
+[Pipeline] sh
++ docker rm tmp_container
+tmp_container
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] echo
+Building nexe with npm
+[Pipeline] dir
+Running in /var/jenkins_home/workspace/DevOps/ITE/GCL07/BS401926/lab05
+[Pipeline] {
+[Pipeline] sh
++ docker build . -t nexe_build -f docker-build
+Sending build context to Docker daemon  164.9kB
+
+Step 1/4 : FROM node:alpine
+ ---> d94913fe64df
+Step 2/4 : WORKDIR nexe_app
+ ---> Using cache
+ ---> 091fb7afbf02
+Step 3/4 : WORKDIR nexe_app_build
+ ---> Using cache
+ ---> c7aa0bbdb9e4
+Step 4/4 : RUN apk update && apk add git && apk add bash
+ ---> Using cache
+ ---> cb409d278a04
+Successfully built cb409d278a04
+Successfully tagged nexe_build:latest
+[Pipeline] sh
++ docker volume create out_vol
+out_vol
+[Pipeline] sh
++ docker run --mount type=volume,src=in_vol,dst=/nexe_app --mount type=volume,src=out_vol,dst=/nexe_app_build nexe_build bash -c cd /nexe_app/nexe && npm i; cp -R /nexe_app/nexe /nexe_app_build
+
+> nexe@4.0.0-rc.1 prepare
+> npm run lint && npm run build && npm test
+
+
+npm notice 
+npm notice New minor version of npm available! 8.8.0 -> 8.10.0
+npm notice Changelog: <https://github.com/npm/cli/releases/tag/v8.10.0>
+npm notice Run `npm install -g npm@8.10.0` to update!
+npm notice 
+npm ERR! code 243
+npm ERR! path /nexe_app/nexe
+npm ERR! command failed
+npm ERR! command sh -c npm run lint && npm run build && npm test
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /root/.npm/_logs/2022-05-15T17_37_01_373Z-debug-0.log
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] echo
+Nexe test
+[Pipeline] dir
+Running in /var/jenkins_home/workspace/DevOps/ITE/GCL07/BS401926/lab05
+[Pipeline] {
+[Pipeline] sh
++ docker build . -t nexe_test -f docker-test
+Sending build context to Docker daemon  164.9kB
+
+Step 1/4 : FROM node:alpine
+ ---> d94913fe64df
+Step 2/4 : WORKDIR nexe_app_test
+ ---> Using cache
+ ---> 242c0e8d8b10
+Step 3/4 : WORKDIR nexe
+ ---> Using cache
+ ---> 69f9f410cc63
+Step 4/4 : RUN apk update && apk add bash
+ ---> Using cache
+ ---> 892fd293161a
+Successfully built 892fd293161a
+Successfully tagged nexe_test:latest
+[Pipeline] sh
++ docker run -t --mount type=volume,src=out_vol,dst=/nexe_app_test nexe_test bash -c cd /nexe_app_test/nexe && npm test
+
+> nexe@4.0.0-rc.1 test
+> mocha
+
+
+[0m[0m
+[0m  options[0m
+[0m    cwd[0m
+    [32m  [32m✔[39m[0m[90m should use process.cwd() if nothing is provided[0m
+    [32m  [32m✔[39m[0m[90m should use the main module in a package directory (if not in a TTY)[0m
+    [32m  [32m✔[39m[0m[90m should resolve relative paths for input[0m
+    [32m  [32m✔[39m[0m[90m should accept a module entry as input[0m
+    [32m  [32m✔[39m[0m[90m should resolve pathed options against cwd[0m
+[0m    remote[0m
+    [32m  [32m✔[39m[0m[90m should use default remote[0m
+    [32m  [32m✔[39m[0m[90m should append trailing slash to third-party remote if necessary[0m
+    [32m  [32m✔[39m[0m[90m should not append trailing slash to third-party remote that already has one[0m
+[0m    output[0m
+    [32m  [32m✔[39m[0m[90m should work[0m
+    [32m  [32m✔[39m[0m[90m should default to the input file name if not index[0m
+    [32m  [32m✔[39m[0m[90m should default to the folder/project name if filename is index[0m
+
+[0m  Targets[0m
+  [32m  [32m✔[39m[0m[90m should accept: "win-ia32-6.11.2"                                     [34m->[39m   windows-x86-6.11.2[0m
+  [32m  [32m✔[39m[0m[90m should accept: {"version":"6.11.2","platform":"win","arch":"ia32"}   [34m->[39m   windows-x86-6.11.2[0m
+  [32m  [32m✔[39m[0m[90m should accept: "win32-x64-6.11.2"                                    [34m->[39m   windows-x64-6.11.2[0m
+  [32m  [32m✔[39m[0m[90m should accept: "win-amd64-6.11.2"                                    [34m->[39m   windows-x64-6.11.2[0m
+  [32m  [32m✔[39m[0m[90m should accept: "darwin-x64-v8.4.0"                                   [34m->[39m   mac-x64-8.4.0[0m
+  [32m  [32m✔[39m[0m[90m should accept: "macos-x64-v8.4.0"                                    [34m->[39m   mac-x64-8.4.0[0m
+  [32m  [32m✔[39m[0m[90m should accept: "static-x86-6.10.3"                                   [34m->[39m   alpine-x86-6.10.3[0m
+  [32m  [32m✔[39m[0m[90m should accept: "linux-x32"                                           [34m->[39m   linux-x86-18.1.0[0m
+  [32m  [32m✔[39m[0m[90m should accept: "alpine-notsupported-6.10.3"                          [34m->[39m   alpine-x64-6.10.3[0m
+  [32m  [32m✔[39m[0m[90m should accept: "not-a-thing"                                         [34m->[39m   linux-x64-18.1.0[0m
+  [32m  [32m✔[39m[0m[90m should stringify and toString[0m
+
+
+[92m [0m[32m 22 passing[0m[90m (101ms)[0m
+
+[37;40mnpm[0m [0m[36;40mnotice[0m[35m[0m 
+[0m[37;40mnpm[0m [0m[36;40mnotice[0m[35m[0m New [33mminor[39m version of npm available! [31m8.8.0[39m -> [32m8.10.0[39m
+[0m[37;40mnpm[0m [0m[36;40mnotice[0m[35m[0m Changelog: [36mhttps://github.com/npm/cli/releases/tag/v8.10.0[39m
+[0m[37;40mnpm[0m [0m[36;40mnotice[0m[35m[0m Run [32mnpm install -g npm@8.10.0[39m to update!
+[0m[37;40mnpm[0m [0m[36;40mnotice[0m[35m[0m 
+[0m
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy)
+[Pipeline] echo
+Deploying
+[Pipeline] sh
++ docker run --name tmp_container --mount type=volume,src=out_vol,dst=/usr/local/nexe_app nexe_test bash -c cd /usr/local/nexe_app/nexe && npm run
+Lifecycle scripts included in nexe@4.0.0-rc.1:
+  test
+    mocha
+
+available via `npm run-script`:
+  ci:build
+    ts-node tasks/build
+  lint
+    tslint "{src,plugins,tasks}/**/*.ts" --fix
+  prepare
+    npm run lint && npm run build && npm test
+  prebuild
+    rimraf lib
+  build
+    tsc --declaration && tsc tasks/*.ts --noEmit --skipLibCheck
+  postbuild
+    ts-node tasks/post-build
+
+[Pipeline] sh
++ docker inspect tmp_container --format={{.State.ExitCode}}
++ exit 0
+[Pipeline] sh
++ docker rm -f tmp_container
+tmp_container
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Publish)
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/DevOps@2
+[Pipeline] {
+[Pipeline] checkout
+The recommended git tool is: git
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/DevOps@2/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git # timeout=10
+Fetching upstream changes from https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.30.2'
+ > git fetch --tags --force --progress -- https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/BS401926^{commit} # timeout=10
+Checking out Revision 400cd97f1a0ff90a8d8200b55493532a414ccc45 (refs/remotes/origin/BS401926)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 400cd97f1a0ff90a8d8200b55493532a414ccc45 # timeout=10
+Commit message: "BS401926"
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker inspect -f . node:alpine
+.
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] withDockerContainer
+Jenkins seems to be running inside container 4702925b2afc4b3e0d36be8dea51da54ed7f2f24f58b6dd8f11df3fe66d981fe
+but /var/jenkins_home/workspace/DevOps@2 could not be found among []
+but /var/jenkins_home/workspace/DevOps@2@tmp could not be found among []
+$ docker run -t -d -u 1000:1000 --rm --mount type=volume,src=out_vol,dst=/usr/local/nexe_app --mount type=bind,source=/var/jenkins_home/workspace/artifacts,dst=/usr/local/copy -u root:root -w /var/jenkins_home/workspace/DevOps@2 -v /var/jenkins_home/workspace/DevOps@2:/var/jenkins_home/workspace/DevOps@2:rw,z -v /var/jenkins_home/workspace/DevOps@2@tmp:/var/jenkins_home/workspace/DevOps@2@tmp:rw,z -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** node:alpine cat
+$ docker top 0ee9fb7d0d6c0b49a22bbe5a723d4b2ad6abb8bba8aa7777ab6e5fe798a15fea -eo pid,comm
+[Pipeline] {
+[Pipeline] echo
+Publishing
+[Pipeline] sh
++ mkdir /var/jenkins_home/workspace/artifacts
+[Pipeline] sh
++ cd /usr/local/nexe_app/nexe
++ npm version 1.0.0
+npm WARN version This is a Git checkout, but the git command was not found. npm could not create a Git tag for this release!
+v1.0.0
++ npm pack
+npm notice 
+npm notice package: nexe@1.0.0
+npm notice === Tarball Contents === 
+npm notice 1.1kB  LICENSE                          
+npm notice 12.4kB README.md                        
+npm notice 1.1kB  index.js                         
+npm notice 2.9kB  lib/compiler.d.ts                
+npm notice 11.4kB lib/compiler.js                  
+npm notice 794B   lib/fs/bootstrap.js              
+npm notice 1.2kB  lib/fs/bundle.d.ts               
+npm notice 5.6kB  lib/fs/bundle.js                 
+npm notice 264B   lib/fs/package.json              
+npm notice 474B   lib/fs/patch.d.ts                
+npm notice 15.3kB lib/fs/patch.js                  
+npm notice 1.5kB  lib/fs/README.md                 
+npm notice 557B   lib/logger.d.ts                  
+npm notice 1.8kB  lib/logger.js                    
+npm notice 301B   lib/nexe.d.ts                    
+npm notice 2.7kB  lib/nexe.js                      
+npm notice 1.6kB  lib/options.d.ts                 
+npm notice 9.5kB  lib/options.js                   
+npm notice 318B   lib/patches/boot-nexe.d.ts       
+npm notice 1.7kB  lib/patches/boot-nexe.js         
+npm notice 146B   lib/patches/build-fixes.d.ts     
+npm notice 1.2kB  lib/patches/build-fixes.js       
+npm notice 150B   lib/patches/disable-node-cli.d.ts
+npm notice 2.3kB  lib/patches/disable-node-cli.js  
+npm notice 141B   lib/patches/flags.d.ts           
+npm notice 1.2kB  lib/patches/flags.js             
+npm notice 164B   lib/patches/gyp.d.ts             
+npm notice 1.2kB  lib/patches/gyp.js               
+npm notice 139B   lib/patches/ico.d.ts             
+npm notice 1.2kB  lib/patches/ico.js               
+npm notice 88B    lib/patches/index.d.ts           
+npm notice 633B   lib/patches/index.js             
+npm notice 142B   lib/patches/node-rc.d.ts         
+npm notice 1.7kB  lib/patches/node-rc.js           
+npm notice 136B   lib/patches/snapshot.d.ts        
+npm notice 1.5kB  lib/patches/snapshot.js          
+npm notice 140B   lib/patches/third-party-main.d.ts
+npm notice 10.2kB lib/patches/third-party-main.js  
+npm notice 450B   lib/releases.d.ts                
+npm notice 2.7kB  lib/releases.js                  
+npm notice 617B   lib/steps/artifacts.d.ts         
+npm notice 3.2kB  lib/steps/artifacts.js           
+npm notice 125B   lib/steps/bundle.d.ts            
+npm notice 3.6kB  lib/steps/bundle.js              
+npm notice 139B   lib/steps/clean.d.ts             
+npm notice 1.5kB  lib/steps/clean.js               
+npm notice 444B   lib/steps/cli.d.ts               
+npm notice 2.7kB  lib/steps/cli.js                 
+npm notice 265B   lib/steps/download.d.ts          
+npm notice 3.6kB  lib/steps/download.js            
+npm notice 142B   lib/steps/resource.d.ts          
+npm notice 1.8kB  lib/steps/resource.js            
+npm notice 136B   lib/steps/shim.d.ts              
+npm notice 17.4kB lib/steps/shim.js                
+npm notice 526B   lib/target.d.ts                  
+npm notice 2.2kB  lib/target.js                    
+npm notice 1.4kB  lib/util.d.ts                    
+npm notice 3.9kB  lib/util.js                      
+npm notice 2.0kB  package.json                     
+npm notice === Tarball Details === 
+npm notice name:          nexe                                    
+npm notice version:       1.0.0                                   
+npm notice filename:      nexe-1.0.0.tgz                          
+npm notice package size:  32.8 kB                                 
+npm notice unpacked size: 143.8 kB                                
+npm notice shasum:        7d82faee80fe039b41454d8eb40990e9d785a20a
+npm notice integrity:     sha512-FMRxXBloO6B3k[...]tIJrBEj1H+2FA==
+npm notice total files:   59                                      
+npm notice 
+nexe-1.0.0.tgz
+[Pipeline] sh
++ mv /usr/local/nexe_app/nexe/nexe-1.0.0.tgz /usr/local/copy
+[Pipeline] dir
+Running in /var/jenkins_home/workspace/artifacts
+[Pipeline] {
+[Pipeline] archiveArtifacts
+Archiving artifacts
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+$ docker stop --time=1 0ee9fb7d0d6c0b49a22bbe5a723d4b2ad6abb8bba8aa7777ab6e5fe798a15fea
+$ docker rm -f 0ee9fb7d0d6c0b49a22bbe5a723d4b2ad6abb8bba8aa7777ab6e5fe798a15fea
+[Pipeline] // withDockerContainer
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] echo
+Pipeline succsess
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
+

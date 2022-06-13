@@ -1,0 +1,11 @@
+#FROM node:latest
+#RUN apt update
+#RUN git clone https://github.com/nexe/nexe.git
+#RUN cd nexe && npm install
+
+FROM node:alpine
+
+WORKDIR nexe_app
+WORKDIR nexe_app_build
+
+RUN apk update && apk add git && apk add bash
