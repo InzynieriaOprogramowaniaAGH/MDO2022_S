@@ -1,0 +1,12 @@
+#!/bin/bash
+
+kubectl apply -f .
+sleep 60
+if ! kubectl rollout status deployment httpd; then
+	echo "error, undoing changes"
+	kubectl rollout undo deployment httpd
+	exit 1
+else
+	echo "success"
+fi
+
