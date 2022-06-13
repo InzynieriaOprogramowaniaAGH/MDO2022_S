@@ -1,0 +1,15 @@
+pipeline 
+{
+    agent {dockerfile{filename 'Dockerfile' dir '../../'}}
+
+    stages 
+    {
+        stage('Hello') 
+        {
+            steps 
+            {
+                echo 'Hello World'
+            }
+        }
+    }
+}

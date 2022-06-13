@@ -1,0 +1,45 @@
+pipeline {
+    
+    agent none
+
+    stages {
+        stage('First Clean') {
+            agent any
+            steps{
+                cleanWs()
+            }
+        }
+
+        stage('Git Gud') {
+            agent {
+                docker {
+                    image 'carmellino/ubuntus' 
+                    args '-u root:sudo'}
+                }
+            steps {
+                sh 'ls'
+                sh 'git clone https://github.com/carmellino/naDevOps.git'
+                sh 'mv naDevOps/Dockerfile Dockerfile'
+            }
+        }
+        stage('Dockerfile Build')
+        {
+            agent {dockerfile{filename 'Dockerfile' args '-u root:sudo'}}
+            steps
+            {
+                sh 'mkdir build'
+                sh 'cp naDevOps/* build'
+                sh '(cd build;cmake CMakeLists.txt;make;)'
+
+            }
+        }
+        stage('Build Tests')
+        {
+            agent any
+            steps
+            {
+                sh '(cd build;./runTests)'
+            }
+        }
+    }
+}
