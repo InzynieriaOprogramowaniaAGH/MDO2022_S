@@ -1,0 +1,5 @@
+if (self.CavalryLogger) { CavalryLogger.start_js_script(document.currentScript); }/*FB_PKG_DELIM*/
+
+__d("MWChatMediaRootQuery_facebookRelayOperation",[],(function(a,b,c,d,e,f){e.exports="5599281390099224"}),null);
+__d("MWChatMediaRootQuery$Parameters",["MWChatMediaRootQuery_facebookRelayOperation"],(function(a,b,c,d,e,f){"use strict";a={kind:"PreloadableConcreteRequest",params:{id:b("MWChatMediaRootQuery_facebookRelayOperation"),metadata:{},name:"MWChatMediaRootQuery",operationKind:"query",text:null}};e.exports=a}),null);
+__d("MWChatMediaRoot.entrypoint",["JSResourceForInteraction","MWChatMediaRootQuery$Parameters","WebPixelRatio"],(function(a,b,c,d,e,f,g){"use strict";a={getPreloadProps:function(a){a=a.routeParams;var c=a.message_id;a=a.thread_id;return{queries:{messengerMediaRootQueryReference:{parameters:b("MWChatMediaRootQuery$Parameters"),variables:{messageID:c,scale:d("WebPixelRatio").get(),threadID:a}}}}},root:c("JSResourceForInteraction")("MWChatMediaRoot.react").__setRef("MWChatMediaRoot.entrypoint")};g["default"]=a}),98);

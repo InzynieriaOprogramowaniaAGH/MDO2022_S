@@ -1,0 +1,10 @@
+if (self.CavalryLogger) { CavalryLogger.start_js_script(document.currentScript); }/*FB_PKG_DELIM*/
+
+__d("LSRoomTruncate",[],(function(a,b,c,d,e,f){function a(){var a=arguments,b=a[a.length-1];b.n;var c=[],d;return b.seq([function(a){return b.fe(b.ftr(b.db.table(63).fetch(),function(a){return b.i64.eq(a.groupRoomType,d)||b.i64.eq(a.groupRoomType,[0,5])}),function(a){return a["delete"]()})},function(a){return b.resolve(c)}])}e.exports=a}),null);
+__d("CometGamingVideoGameDirectoryRootQuery_facebookRelayOperation",[],(function(a,b,c,d,e,f){e.exports="5144268782273122"}),null);
+__d("CometTimelineReviewViewerQuery_facebookRelayOperation",[],(function(a,b,c,d,e,f){e.exports="4682649041818839"}),null);
+__d("GroupsCometPeopleMembersRootSuccessQuery_facebookRelayOperation",[],(function(a,b,c,d,e,f){e.exports="5060160984106355"}),null);
+__d("GroupsCometPeopleRootSuccessQuery_facebookRelayOperation",[],(function(a,b,c,d,e,f){e.exports="8132180710129129"}),null);
+__d("GroupsCometViewerContentRemovedRootQuery_facebookRelayOperation",[],(function(a,b,c,d,e,f){e.exports="7940700249281109"}),null);
+__d("HelpCenterHomePageRootQuery_facebookRelayOperation",[],(function(a,b,c,d,e,f){e.exports="5098443023544612"}),null);
+__d("VideoHomeHistoryRootQuery_facebookRelayOperation",[],(function(a,b,c,d,e,f){e.exports="5520182508026949"}),null);

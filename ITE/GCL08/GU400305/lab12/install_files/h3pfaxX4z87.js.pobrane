@@ -1,0 +1,4 @@
+if (self.CavalryLogger) { CavalryLogger.start_js_script(document.currentScript); }/*FB_PKG_DELIM*/
+
+__d("LSReplaceOptimsiticMessage",[],(function(a,b,c,d,e,f){function a(){var a=arguments,b=a[a.length-1];b.n;var c=[];return b.seq([function(c){return b.fe(b.ftr(b.db.table(12).fetch([[[a[0]]],"optimistic"]),function(c){return c.offlineThreadingId===a[0]&&b.i64.eq(c.authorityLevel,[0,20])}),function(b){var c=b.update;b.item;return c({messageId:a[1],authorityLevel:[0,60],sendStatus:[0,2],sendStatusV2:[0,2]})})},function(a){return b.resolve(c)}])}e.exports=a}),null);
+__d("CometIXTFacebookDefaultTriggerRootQuery_facebookRelayOperation",[],(function(a,b,c,d,e,f){e.exports="5145261345570376"}),null);
