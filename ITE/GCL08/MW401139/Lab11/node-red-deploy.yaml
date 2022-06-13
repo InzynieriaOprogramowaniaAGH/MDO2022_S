@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-red-deploy
+  labels:
+    app: node-red
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: node-red
+  template:
+    metadata:
+      labels:
+        app: node-red
+    spec:
+      containers:
+        - name: node-red
+          image: mihaf70/node-red-new:err
+          ports:
+            - containerPort: 1880

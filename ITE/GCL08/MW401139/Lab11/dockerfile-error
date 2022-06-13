@@ -1,0 +1,10 @@
+FROM node:14.16.1-buster
+
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends git nano
+
+RUN git clone https://github.com/node-red/node-red.git
+WORKDIR /node-red/
+WORKDIR ./node-chat-app
+EXPOSE 3000
+ENTRYPOINT npm run start

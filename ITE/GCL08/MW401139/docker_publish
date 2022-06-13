@@ -1,0 +1,3 @@
+FROM node-red_build:latest
+RUN cd .. && tar cfJ archive.tar.xz node-red
+RUN cd .. && mv archive.tar.xz node-red
