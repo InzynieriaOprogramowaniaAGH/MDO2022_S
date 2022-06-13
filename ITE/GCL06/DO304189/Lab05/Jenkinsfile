@@ -1,18 +1,27 @@
 pipeline 
 {
+    parameters
+    {
+        string(name: 'VERSION', defaultValue: '1.0.0', description: '')
+        booleanParam(name: 'PROMOTE', defaultValue: true, description: '')
+    }
+
     agent any
+
     stages
      {
         stage('Build') 
         {
             steps 
             {
-               sh 'docker container prune -f'
-               sh 'docker volume prune -f' 
-               sh 'docker volume  create --name node_vol_in'
-               sh 'docker volume  create --name node_vol_out' 
-               sh 'docker build . -f ./ITE/GCL06/DO304189/Lab05/dockerfile_build -t nodered_build'
-               sh 'docker run -v node_vol_in:/node-red nodered_build'
+                script
+                {
+                    sh 'docker rm -f nodered_build || true'
+                    sh 'docker volume prune -f'
+                    sh 'docker build . -f ./ITE/GCL06/DO304189/Lab05/dockerfile_build -t nodered_build'
+                    sh 'docker volume create node_vol_out'
+                    sh 'docker run --mount type=volume,src="node_vol_out",dst=/node_app nodered_build:latest bash -c "ls -l && cd .. && ls -l && cp -r /node-red /node_app"'
+                }
             }
         }
 
@@ -20,15 +29,39 @@ pipeline
         {
             steps 
             {
-              sh 'docker build . -f ./ITE/GCL06/DO304189/Lab05/dockerfile_test -t nodered_test'
+                sh 'docker rm -f nodered_test || true'
+                sh 'docker build . -f ./ITE/GCL06/DO304189/Lab05/dockerfile_test -t nodered_test'
             }
         }
 
         stage('Deploy')
         {
             steps
-            { 
-              sh 'docker build . -f ./ITE/GCL06/DO304189/Lab05/dockerfile_deploy -t nodered_deploy'
+            {
+                sh 'docker rm -f nodered_deploy || true'
+                sh 'docker run -dit --name nodered_deploy --mount type=volume,src="node_vol_out",dst=/node_app node'
+                sh 'docker container exec nodered_deploy sh -c "ls -l"'
+                sh 'exit $(docker inspect nodered_deploy --format="{{.State.ExitCode}}")'
+            }
+        }
+
+        stage ('Publish')
+        {
+            when
+            {
+                expression {return params.PROMOTE}
+            }
+            steps
+            {
+                sh 'rm -rf /var/jenkins_home/workspace/artifacts && mkdir /var/jenkins_home/workspace/artifacts'
+                sh 'docker rm -f nodered_publish || true'
+                sh 'docker run -d --name nodered_publish --mount type=volume,src="node_vol-out",dst=/usr/local/node_app --mount type=bind,source=/var/jenkins_home/workspace/artifacts,target=/usr/local/copy node bash -c "chmod -R 777 /usr/local/node_app && cp -R /usr/local/node_app/. /usr/local/copy"'
+                sh "tar -zcvf node-red_${params.VERSION}.tar.xz -C /var/jenkins_home/workspace/artifacts ."
+                archiveArtifacts artifacts: "node-red_${params.VERSION}.tar.xz"
+                sh 'docker rm -f nodered_build || true'
+                sh 'docker rm -f nodered_test || true'
+                sh 'docker rm -f nodered_deploy || true'
+                sh 'docker rm -f nodered_publish || true'
             }
         }
     }
