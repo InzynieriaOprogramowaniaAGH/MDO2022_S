@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: nodejsorg-deploy
+   namespace: default
+spec:
+   selector:
+      matchLabels:
+         app: nodejsorg-deploy
+   strategy:
+      type: Recreate
+   replicas: 4
+   template:
+      metadata:
+         labels:
+            app: nodejsorg-deploy
+      spec:
+         containers:
+            - name: nodejsorg-deploy
+              image: djwo/nodejs.org
+              ports:
+                 - containerPort: 8080
