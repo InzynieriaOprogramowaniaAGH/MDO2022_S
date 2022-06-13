@@ -1,0 +1,51 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'Name')
+        string(name: 'Version')
+    }
+
+    stages{
+        stage('Build') {
+            steps {
+                echo 'BUILD'
+                dir('ITE/GCL07/SK403205/Lab05') {
+                    sh 'docker build . -f dockerfile1.dockerfile -t builder'
+                }
+            }
+        }
+        stage('Tests') {
+            steps {
+                echo 'TESTS'
+                dir('ITE/GCL07/SK403205/Lab05') {
+                    sh 'docker build . -f dockerfile2.dockerfile -t tester'
+                }
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                echo 'DEPLOY'
+                sh 'docker run --volume /var/jenkins_home/workspace/pipeline1/ITE/GCL07/SK403205/Lab05:/final builder mv -n build /final'
+                dir('ITE/GCL07/SK403205/Lab05') {
+                    sh 'docker build . -f dockerfile3.dockerfile -t deploy'
+                }
+                sh 'docker run --volume /var/jenkins_home/workspace/pipeline1/ITE/GCL07/SK403205/Lab05/build:/build -d -p 3000:80 deploy'
+                sh 'docker stop $(docker ps -a -q)'
+            }
+        }
+        
+        stage('Publish') {
+            steps {
+                echo 'PUBLISH'
+                dir('ITE/GCL07/SK403205/Lab05') {
+                    sh 'docker build . -f dockerfile4.dockerfile -t publisher'
+                }
+                sh "docker run --volume /var/jenkins_home/workspace/pipeline1/ITE/GCL07/SK403205/Lab05:/final publisher mv archive.tar.xz /final"
+            }
+        }
+    }
+    
+}
+
