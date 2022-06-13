@@ -1,0 +1,29 @@
+1. git branch Grupa01-NB404005_Lab03
+
+Stworzyłam nową branch zgodnie ze wzorem w instrukcji.
+
+2. Następnie utworzono folder Lab03, a w nim plik sprawozdanie. Dodałam git hooka, którego napisałam na poprzednich zajęciach do swojego folderu ("<repo>/Grupy/Grupa1/NB404005/Lab02/hooks/).
+
+3. Docker juz był zainstalowany
+
+4.Stworzyłam nowe konto na Docker Hub
+
+5.Utworzyłam plik Dockerfile:
+
+FROM ubuntu:latest
+
+RUN apt-get update
+
+RUN apt install -y git
+
+6.Uruchomiłam kontener:
+docker build . -t 'lab03_nb404005' 
+sudo docker run -it 'lab03_nb404005' bash
+
+Nastepnie sklonowałam repozytorium:
+git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S 
+   
+
+ 
+
+

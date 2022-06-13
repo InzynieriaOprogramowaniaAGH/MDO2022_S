@@ -1,0 +1,52 @@
+Temat: Pipeline CI/CD - podstawy & testowanie.
+
+Uwagi wstępne: 
+- korzystamy z tego samego repo co w zeszłym tygodniu
+- po wykonaniu każdego numerowanego polecenia, wykonaj zrzut ekranu z efektem twojej pracy - będzie to potrzebne później.
+- wszystkie skrypty które tworzysz zamieszczaj w odpowiednim swoim folderze w repozytorium
+- w czasie wykonywania zadania pisz plik "sprawozdanie.txt", zawierający treść instrukcji którymi się posłużyłeś do wykonania zadania.
+- Zwróć uwagę by w komentarzu do commita zawrzeć czytelną informację w ramach którego ćwiczenia laboratoryjnego i którego zdania to robisz.
+- Na mastera wrzucamy zmiany tylko przez pull requesta! 
+
+
+1.Stwórz twoje "źródło prawdy" - umieść  (skopiuj) wszystkie pliki źródłowe (skrypty uruchamiające środowiska, Dockerfile, docker-compose.yaml, Jenkinsfile z tych zajęć też etc.) w repozytorium - sam podejmij decyzję którym z tych które używasz na zajęciach, ale uzasadnij ją. 
+- Zachowaj następujący porządek folderów: <twój folder>/<nazwa technologii>/<pliki> - np.: "KM123456/Docker/Dockerfile_rockechat_build"
+- używaj znaczących deklaratywnych nazw, tak by sama nazwa pliku wskazywała do czego służy.
+
+2. Ze swojego planu CI/CD pipeline'a stworzonego na poprzednich zajęciach wybierz ten punkt(y) które odpowiadają za "Uruchomienie szybkiego i niezawodnego testowania."
+2.1 Następnie stwórz Jenkinsfile i umieść go w repo z komunikatorem (to nie koniecznie to samo repo co na skrypty z pkt 1!). 
+2.2 (opcjonalnie) Zwróć uwagę, że być może będziesz chciał zrobić "forka" na oryginalnym repo.
+2.3 W Jenkinsfile stwórz nowego Jenkins pipeline (przykład tutaj: https://www.jenkins.io/doc/book/pipeline/jenkinsfile/) , a w nim w sekcji "stages" nowy "stage('Test')".
+2.4 Wewnątrz Jenkinsfile w sekcji "stage('Test')" oskryptuj uruchamianie testów dla aplikacji z pkt. 2.1 - zwróć uwagę, by:
+- log z efektami testowania trafił do użytkownika ("powiadamianie o rezultatach")
+- wykryj i obsłuż przypadek gdy
+-- testy się powiodły (100%)
+-- testy się nie powiodły (< 100%)
+2.5. Wykonaj i wykaż przykład wykonania tych testów z użyciem Jenkinsfile.
+2.6. Wrzuć Jenkinsfile na repo z pkt 1.
+
+3. Rozszerz Jenkinsfile o nowy stage ("Build") - dokumnetacja z dostępnymi poleceniami jest tu: https://www.jenkins.io/doc/book/pipeline/jenkinsfile/.
+3.1 W stage("Build") upewnij się że:
+- jest pobierana najnowsza wersja kodów źródłowych z repozytorium
+- program jest budowany
+- użytkownik jest powiadamiany zarówno o sukcesie jak i porażce etapu budowania.
+3.2 Upewnij się, że po zbudowaniu z sukcesem jest uruchamiany stage("Test"), ale po nieudanym budowaniu to się nie dzieje.
+
+4. Zarejestruj w swoim repozytorium z komunikatorem "post-commit" githook'a lub webhook'a (dokumentacja np.:  https://docs.github.com/en/developers/webhooks-and-events/about-webhooks). Takiego by:
+- za każdym razem gdy na głównym branchu pojawia się commit, uruchom pipeline opisywany w Jenkinsfile.
+- w przypadku problemów z połączeniem w ramach hook'a można postawić klona repozytorium lokalnie by uniknąć tychże problemów z połączeniem
+- wykaż i udokumentuj automatyczne wyzwalanie pipeline'a 
+
+5. Rozszerz Jenkinsfile o nowy stage("Deploy") - dokumentacja z dostępnymi poleceniami jest tu: https://www.jenkins.io/doc/book/pipeline/jenkinsfile/.
+5.1 W stage("Deploy") upewnij się że:
+- deploy jest wykonywany na dedykowany kontener dockerowy
+- do deploya jest przekazywany artefakt stworzony w stage("Build") 
+- użytkownik jest powiadamiany zarówno o sukcesie jak i porażce etapu wdrażania.
+
+6. Na cele sprawozdawcze wykaż i udokumentuj że:
+6.1 pipeline jest zdefiniowany w Jenkinsfile w repo
+6.2 pipeline jest automatycznie wyzwalany
+6.3 pipeline przechodzi wszystkie etapy (stage build-test-deploy)
+6.4 pipeline obsługuje powiadamianie o rezultatach każdego z etapów
+
+Uwaga: zgłoś zadanie na MS Teams!

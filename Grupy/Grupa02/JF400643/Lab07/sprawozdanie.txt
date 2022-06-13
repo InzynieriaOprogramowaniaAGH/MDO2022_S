@@ -1,0 +1,2 @@
+=Notka do zadania 4=
+Webhook zostal zaimplementowany poprawnie i wyzwolony po commicie, lecz niestety nie mogl sie polaczyc z serwerem dlatego ze nie moze sie polaczyc z Jenkinsem na localhoscie (nawet po podaniu adresu IP komputera)

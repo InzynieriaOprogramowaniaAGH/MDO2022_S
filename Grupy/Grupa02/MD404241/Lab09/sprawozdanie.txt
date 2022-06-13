@@ -1,0 +1,28 @@
+Pobrano i zainstalowano Minikube oraz kubectl 
+
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 - pobranie Minikube
+sudo install minikube-linux-amd64 /usr/local/bin/minikube - zainstalowanie Minikube
+minikube kubectl -- get po -A - pobranie Kubectl
+
+Uruchuomienie Minikube
+
+minikube start - uruchomienie Minikube
+minikube dashboard - uruchomienie Minikube dashboard w przegladarce (dashboard zatrzymuje sie poprzez ctrl+C w terminalu, z ktorego zostal on uruchomiony)
+
+
+Przegląd funkcjonalnosci dostepnych w Minikube dashboard:
+    
+-wdrazanie kontenerowych aplikacji na klaster Kubernetesowy
+-zarzadzanie klastrem i kontenerami
+-wykrywanie bledow w kontenerowych aplikacjach
+-przegladanie informacji o uruchomionych aplikacjach w klastrze
+-tworzenie i modyfikowanie wirtualnych klastrow
+
+
+kubectl run komunikator --image=marcindadura/deltachat --port=9999 --labels app=komunikator Uruchomienie komunikatora  
+Ze wzgledu na wersje aplikacji tj desktop skorzystałem z innej apki dostępnej na dockerhub to przekierowania portów
+
+minikube kubectl -- run newkomunikator --image=secopstech/socket-io-chat:latest --port=9999 --labels app=newkomunikator inna apka     
+kubectl port-forward pods/newkomunikator 3111:3000 przekierowanie portów 
+
+Udukomentowano poprawne działanie na przekierowanym porcie w klastrze Kubernetesa

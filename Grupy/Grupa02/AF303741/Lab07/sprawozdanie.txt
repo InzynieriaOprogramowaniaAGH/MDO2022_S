@@ -1,0 +1,12 @@
+1. Skopiowanie plikow Dockerfile, Jenkinsfile oraz docker-compose.yml z poprzednich laboratoriow
+    zdj1.png
+2. Utworzeniu stage'u Test, ktory po pomyslnym lub nieudanym wykonaiu wysyla adekwatny email
+    zad2-Jenkinsfile.png, zad2-JobRun.png, zad2-successfulEmail.png
+3. Rozbicie stae'u Test na Build i Test, po obu wysylane sa emaile z rezultatem 
+    zad3-jenkinsfile.png, zad3-buildRun.png, zad3_emails.png
+4. Dodano webook na push git'a , ktory automatycznie uruchamia jenkins Job
+    zad4-job.png, zad4-ngrok.png, zad4-webhook.png
+5. Utworzenie kroku Deploy, ktory wrzuca obraz build_agent na DockerHub
+    zad5-deployStage.png, zad5-emails.png, zad5-jobRun.png
+
+W repozytorium zajec oraz repozytorium aplikacji znajduja sie wykorzystywane pliki: Dockerfile_build, Dockerfile_test, docker-compose.yml oraz Jenkinsfile

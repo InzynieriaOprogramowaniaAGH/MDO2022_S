@@ -27,5 +27,6 @@ Zadania do wykonania:
 5. Wykonaj pull request swojego brancha do głównego brancha (master/main). Zrób push'a na remota.
 - Wykonaj zrzut ekranu z tego punktu, zapisz, dodaj do repo i zrób commita.
 - Uaktualnij pull requesta wysyłając zmiany na remote'a.
+- https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S/pulls
 
 6. Na koniec wypełnij zadanie "Lab01" na teamsach.

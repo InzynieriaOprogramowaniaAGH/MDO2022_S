@@ -1,0 +1,8 @@
+tresc Dockerfile:
+FROM ubuntu:latest          #ustalenie kontenera bazowego
+RUN apt update              #uruchomienie polecenia wewnatrz kontenera
+RUN apt install -y git
+
+docker run nazwaObrazu - uruchomienie kontenera z danym obrazem
+docker run -it nazwaObrazu - uruchomienie kontenera w ,,wersji interaktywnej"
+docker build -t nazwaObrazu sciezkaDoDockerfile - zbudowanie obrazu korzystajac ze wskazanego Dockerfile

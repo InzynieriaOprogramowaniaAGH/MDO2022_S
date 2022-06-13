@@ -1,0 +1,5 @@
+1. Opublikowano obraz z poprzednich zajec w serwisie Docker Hub, obrazek Zad1_1.png
+2. Wybrano komunikator wireapp/wire-desktop
+3. Utworzenie Dockerfile dla build-agent, obrazek Zad3.png
+4. Utworzenie Dockerfile dla test-agent, obrazek Zad4.png
+5. Utworzenie docker-compose automatyzucjacego proces uruchamiania build i test agent, obrazek Zad5.png

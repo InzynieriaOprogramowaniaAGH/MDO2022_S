@@ -1,0 +1,7 @@
+1. Stworzyłem obraz oraz udostępniłem go na serwisie Dockerhub (screen1)(screen2)
+
+2. Utworzyłem obraz build-agent oraz poprawnie go skonfigurowałem
+
+3. Na podstawie utowrzonego build-agenta utworzyłem test-agenta oraz go uruchomiłem (screen3)
+
+4. Utworzyłem docker-compose który współdzieli komunikator między kontenerami oraz testuje czy aplikacja działa na kontenerze test-agent (screen4) (screen5)

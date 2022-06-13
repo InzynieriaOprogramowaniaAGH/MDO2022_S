@@ -1,0 +1,24 @@
+1. Kontener docker'owy (obraz) ze zbudowanym komunikatorem => drinaaf/lab09
+
+2. Zainstalowanie Minikube
+	- uruchomienie klastra
+		minikube start
+	- pobranie kubectl
+		minikube kubectl -- get po -A
+
+3. Włączenie dashboarda
+	minikube dashboard
+
+3.1. Co można zrobić korzystając z Minikube Dashboard
+	- uruchomienie klaster Kubernetes na maszynie lokalnej
+	- wdrażać aplikacje kontenerowe w klastrze Kubernetes
+	- rozwiązywać problemy z aplikacjami w kontenerze
+	- wykrywać błędy o aplikacjach
+
+4. Uruchomienie kontenera w kubernets:
+	kubectl run komunikator --image=drinaaf/lab9 --port=9999 --labels app=komunikator --restart=OnFailure
+
+4.1. Przekierowanie portów => nieudane (error: unable to forward port because pod is not running. Current status=Succeeded)
+	kubectl port-forward pod/komunikator 8080:9999 
+
+5. Komunikator działa w klastrze

@@ -1,0 +1,13 @@
+- Źródło prawdy zostało dodane na repo
+
+- Uruchomiono kontenery
+
+- Napisano Jenkinsfile zawierający pipeline ze stage test, został następnie rozszerzony o stage build:
+	Sprawdzono poprawne budowanie się projektu + pominięcie etapu testów w przypadku nieprawidłowego zbudowania
+
+- Dodano obsługę wzbudzania pipeline przez webhook(ngrok)
+	Dla githooka postawiono serwer za pomocą ngrok w kontenerze dockerowym uruchamianym komendą:
+
+- Dodano stage deploy do Jenkinsfilena repo
+
+

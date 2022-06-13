@@ -1,0 +1,21 @@
+Sprawozdanie 07
+
+
+1. Stworzenie "źródła prawdy", w którym umieszczono wszystkie pliki źródłowe w repozytorium.
+
+2. Zrobienie forka na oryginalnym repozytorium komunikatora.
+
+3. Stworzenie Jenkinsfile i umieszczenie go w repo z komunikatorem.
+
+4. Wewnątrz Jenkinsfile w sekcji "stage('Test')" oskryptowanie uruchamiania testów dla aplikacji.
+
+5. Rozszerzenie Jenkinsfile o nowy stage ("Build").
+
+6. Zarejestrowanie w swoim repozytorium z komunikatorem "post-commit" webhook'a.
+
+7. Rozszerzenie Jenkinsfile o nowy stage("Deploy").
+
+8. Pipeline jest zdefiniowany w Jenkinsfile w repo
+   - pipeline jest automatycznie wyzwalany
+   - pipeline przechodzi wszystkie etapy (stage build-test-deploy)
+   - pipeline obsługuje powiadamianie o rezultatach każdego z etapów

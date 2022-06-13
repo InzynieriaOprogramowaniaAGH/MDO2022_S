@@ -1,0 +1,15 @@
+Sprawozdanie lab11
+
+1. Uruchomienie klastra Kubernetesa poleceniem minikube start oraz minikube dashboard
+
+2.Stworzenie pliku komunikator-deployment-recreate.yaml
+
+3. Wykonanie deploymentu z wykorzystaniem strategii recreate
+Uruchomeinie komendą kubectl apply -f komunikator-deployment-recreate.yaml
+
+4. Wykonanie deploymentu z wykorzystaniem strategii RollingUpdate
+Uruchomeinie komendą kubectl apply -f komunikator-deployment-rolling_update.yaml
+
+5. Stworzenie pliku komunikator-deployment-canary.yaml oraz canary_servce.yaml
+Stworzenie serwisu: kubectl apply -f canary_service.yaml
+Wykonanie deploymentu z wykorzystaniem strategi Canary: kubectl apply -f komunikator-deployment-canary.yaml

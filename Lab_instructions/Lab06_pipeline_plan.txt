@@ -1,0 +1,30 @@
+Temat: Pipeline CI/CD - plan.
+
+- korzystamy z tego samego repo co w zeszłym tygodniu
+- wszystkie skrypty które tworzysz zamieszczaj w odpowiednim swoim folderze w repozytorium
+- Zwróć uwagę by w komentarzu do commita zawrzeć czytelną informację w ramach którego ćwiczenia laboratoryjnego i którego zdania to robisz.
+- Na mastera wrzucamy zmiany tylko przez pull requesta! 
+- Nie używamy na tym etapie clouda.
+
+
+1. Na dzisiejszych zajęciach stajesz w roli DevOps'a którego zadaniem jest przygotowanie planu tzw. Release pipeline'a (sekwencja kroków wdrożeniowych) oraz przygotowanie dokumentu (w formacie pdf) przedstawiającego zaplanowany proces. Nie trzeba tego procesu w tym momecie implementować! Zanim przystąpisz do ich realizacji bardzo dokładnie zapoznaj się z koncepcją tzw. Jenkinsfile (https://www.jenkins.io/doc/book/pipeline/ wraz z podrozdziałami jak zajdzie potrzeba). Docelowo w przyszłości dużą część (lub nawet całość) planu który stworzysz trzeba będzie zawżeć w postaci Jenkinsfile. 
+
+2. Program będącym podmiotem ww. pipeline'a jest ten który wybrałeś w ramach poprzedniego Laboratorium. Pamiętaj, że w celu posiadania własnego egzemplarza repozytorium programu opensource (w celu np.: jego modyfikacji, umieszczania dodatkowych plików, git hooków, etc.) możesz skorzystać z opcji "fork", tak jak opisana tutaj: https://guides.github.com/activities/forking/.
+
+4. Plik z planem ma zawierać lub spełniać następujące wymagania:
+- stronę tytułową z informacją kto, dla jakiej aplikacji, kiedy, z planowanym użyciem jakich technologii ten plan przygotował
+
+- diagram aktywności (UML Activity diagram) ukazyjący w sposób schematyczny wszystkie czynności oraz główne decyzje. Można (a nawet należy) odnieść się do diagramu "CI/CD Pipeline" omawianego na wykładzie, ale każdy z ogólnych kroków należy 1) uszczegółowić - rozbić na konkretne akcje
+2) wskazać konkretna technologię zaplanowaną do wykrzystania w danym kroku.
+
+- diagram wdrożeniowy (UML Deployment Diagram) analogiczny do tego omawianego na zajęciach. Należy go dostosować do rzeczywistości, dodać elementy brakujące, usunąć te które w tym przypadku nie występują lub nie mają znaczenia.
+
+- słowne omówienie wszystkich kroków zaplanowanych do wykonania w ramach CI/CD Pipeline - konkretnie, nie teoretycznie
+
+- ma wykorzystywać następujące technologie lub ich ekwiwalenty (można też poszerzyć o inne technologie, o ile uzasadnione)
+1) git (w tym git hooks, GitHub)
+2) docker (w tym docker compose)
+3) docker registry (w tym DockerHub)
+4) Jenkins (w tym Jenkinsfile)
+
+Uwaga: zgłoś zadanie na MS Teams!

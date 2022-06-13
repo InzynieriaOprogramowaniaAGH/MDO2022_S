@@ -1,0 +1,12 @@
+#!bin/bash
+
+
+MSG=$1
+
+TEXT="DB402381"
+
+if ! [[ $(cat $1) =~ $TEXT ]] ;then
+	cat "$MSG"
+	echo "$TEXT need to be included in commit name"
+	exit 1
+fi

@@ -1,0 +1,14 @@
+Zgodnie z poleceniami zainstalowano minikube oraz wykorzystano obraz z pipeline'a.
+
+Następnie wedle instrukcji w punkcie 4 uruchomiono kontener w Kuberneties. Niestety okazało się to nieco trudniejsze niż powinno.
+Program którego używałem (Deltachat) okazał się być aplikacją okienkową zatem nie możliwym było udostępnienie go na porcie.
+Co więcej aplikacja Deltachat, pomimo braku błędów w kompilacji, uruchamia się i wyłącza po krótkiej chwili co prowadziło w Kuberneties do
+CrashLoopBackOff. W skrócie aplikacja wyłączała się więc Kuberneties uznawał to za błąd i restartował ją w nieskończoność. 
+
+Błąd ten nie jest do końca do naprawienia ale udało mi się poradzić sobie z nim zmuszając Kuberneties do nie odświeżania podów. 
+Rozwiązanie to nie jest idealne ponieważ działa globalnie nie tylko na jeden pod ale z punktu widzenia ćwiczenia pozwala pokazać,
+że pod został poprawnie uruchomiony, co widać na załączonym zrzucie ekranu. [Kuberneties działający pod]
+
+Co ciekawe pomimo tego, że aplikacja już zdążyła się wyłączyć i że nie jest to aplikacja webowa Kuberneties nie ma najmniejszych obiekcji
+przed przekierowaniem jej portów. Zgaduję że nie jest to błąd, po prostu przekierowujemy pusty port, aczkolwiek uznałem to za dość ciekawe 
+że użytkownik nie dostaje błędu albo ostrzeżenia. [Kuberneties port forward] 

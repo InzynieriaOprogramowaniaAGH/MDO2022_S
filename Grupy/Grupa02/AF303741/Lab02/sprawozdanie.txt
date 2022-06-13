@@ -1,0 +1,15 @@
+1. Ustawienie połączenia ssh zgodnie z instrukcją
+	git remote -v : wyświetla aktualne połączenie
+	git remote set-url origin git@github.com:InzynieriaOprogramowaniaAGH/MDO2022_S.git : przełącza sposób komunikacji z serwerem z http na ssh
+	
+2. Dodanie tagu do commita
+	git tag -a AF303741 -m "Aleksander Filek, lab01"
+
+2.1 Wrzucenie tagu na repo
+	git push --follow-tags
+	
+3. Stworzenie nowej struktury folderów
+
+4. Utworzenie git hook sprawdzającego czy wiadomość commita zaczyna się od AF303741
+
+5. Dołącznie swoich zmian do brancha grupy

@@ -1,0 +1,23 @@
+Lab 1
+
+git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git
+	Pobiera repozytorium z serwera na komputer
+
+git branch AC401177
+	Tworzy nową gałąź
+
+git checkout AC401177
+	Przełącza repozytorium na wybraną gałąź
+
+git add .
+	Dodaje pliki do indeksu repozytorium (git zaczyna śledzić ich zmianny)
+
+git commit -m "Tutuł commita"
+	Tworzy nowy commit
+
+git status
+	Pokazuje stan plików w lokalnym repozytorium
+
+git push origin AC401177
+	Wysyła wprowadzone zmiany na serwer
+

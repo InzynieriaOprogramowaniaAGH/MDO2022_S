@@ -1,0 +1,70 @@
+1.Po zapoznaniu się z oprogramowaniem jenkinsa i zainstalowaniu go według instrukcji z linku przystąpiłem do wykonania ćwiczenia:
+
+    git checkout -b Grupa01-TA404116-Lab05
+        ^ - utworzenie brancha i przeniesienie sie na niego
+
+2.Stworzenie kontenerow:
+
+    docker network create jenkins
+        ^ - stworzenie sieci dla kontenera jenkinsa
+
+    docker run \                                                           
+        --name jenkins-docker \   
+        --rm \
+        --detach \
+        --privileged \     
+        --network jenkins \                  
+        --network-alias docker \              
+        --env DOCKER_TLS_CERTDIR=/certs \
+        --volume jenkins-docker-certs:/certs/client \
+        --volume jenkins-data:/var/jenkins_home \
+        --publish 2376:2376 \                           
+        docker:dind \                
+        --storage-driver overlay2
+          ^ - Uruchomienie kontenera z dockerem, aby moc uzywac docker-compose w kontenerze
+
+
+    FROM jenkins/jenkins:2.332.1-jdk11
+    USER root
+    RUN apt-get update && apt-get install -y lsb-release
+    RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
+        https://download.docker.com/linux/debian/gpg
+    RUN echo "deb [arch=$(dpkg --print-architecture) \
+        signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \
+        https://download.docker.com/linux/debian \
+        $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
+    RUN apt-get update && apt-get install -y docker-ce-cli
+    RUN curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    RUN chmod +x /usr/local/bin/docker-compose
+    USER jenkins
+    RUN jenkins-plugin-cli --plugins "blueocean:1.25.3 docker-workflow:1.28"
+        ^ - jenkins dockerfile
+
+    docker build -t myjenkins-blueocean:2.332.1-1 .
+        ^ - zbudowanie obrazu z dockerfile
+
+    docker run --name jenkins-blueocean --rm --detach \
+    --network jenkins --env DOCKER_HOST=tcp://docker:2376 \
+    --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 \
+    --volume jenkins-data:/var/jenkins_home \
+    --volume jenkins-docker-certs:/certs/client:ro \
+    --publish 8080:8080 --publish 50000:50000 myjenkins-blueocean:2.332.1-1
+        ^ - uruchomienie kontenera jenkinsa
+
+3.Wypchniecie obrazu jenkinsa na docker-hub:
+    docker login
+        ^ - logowanie do docker-hub
+    docker tag d3c39acc2339 dtomart/devops-lab5:1.0
+        ^ - tagowanie obrazu
+    docker push dtomart/devops-lab5:1.0
+        ^ - pushowanie obrazu na docker hub
+
+4.Stworzenie projektu na GUI dostępnym pod adresem http://localhost:8080:
+
+    docker exec 6cadb14e5b6d cat /var/jenkins_home/secrets/initialAdminPassword
+        ^ - skopiowanie hasła za pomocą cat z kontenera dockera
+
+Nastepnie stworzylem konto, zainstalowalem pluginy, stworzylem projekt i ustawilem repo, galaz (*/Grupa1) i nastepujace skrypty shellowe:
+    cd Grupy/Grupa01/TA404116/Lab04
+    docker-compose build
+    docker-compose up

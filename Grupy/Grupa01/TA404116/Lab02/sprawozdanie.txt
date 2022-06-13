@@ -1,0 +1,24 @@
+➜  ~ ls -al ~/.ssh
+    ^ - sprawdz czy posiadasz istniejace klucze ssh
+➜  ~ eval "$(ssh-agent -s)"
+    ^ - zacznij dzialanie ssh-agent w tle
+➜  ~ ssh-add ~/.ssh/id_ed25519
+    ^ - dodaj klucz do ssh-agent
+
+➜  ~ git tag -a nazwa-taga -m "tresc-wiadomosci"
+    ^ - dodaj tag na aktualnego commita
+
+➜  ~ chmod +x commit-msg 
+    ^ - nadanie uprawnien do wykonywania skryptu
+
+git hook:
+/////
+#!/bin/bash
+
+ID="TA404116"
+
+if ! [[ $(cat $1) == $ID* ]] ;then
+    echo "Nazwa commita musi zawierac $ID"
+    exit 1
+fi
+////

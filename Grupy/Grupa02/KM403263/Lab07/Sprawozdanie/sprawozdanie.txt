@@ -1,0 +1,9 @@
+1. Sworzony pipeline składa się z trzech części "Build", "Test" oraz "Deploy". W pierwszej kolejności skonfigurowałem pipeline podając mu sforkowane repo jako źródło. (screen3)
+    Repozytorium to składało się z dwóch folderów: Katalogu App gdzie przechowywałem całą aplikację oraz Katalogu pipeline gdzie przechowywałem konfiguracje potrzebne do stworzenia obrazów.
+    Następnie dodałem ścieżkę do pliku Jenkinsfile na podstawie którego tworzony był pipeline (screen4)
+
+2. Pierwszą częścią pipeline jest "Build". Buduje on kontener build-agenta i powiadamia użytkownika o wyniku operacji.
+
+3. Drugą częścią jest "Test". Buduje on kontener test-agenta oraz również powiadamia o wyniku operacji.
+
+4. Ostatnią częścią jest udostępnienie obrazu. Następuje logowanie do serwisu Dockerhub oraz spushowanie działającego obrazu do chmury. O wyniku tej operacji użytownik również jest powiadamiany. (screen3 i screen4)

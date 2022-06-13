@@ -1,0 +1,13 @@
+{
+  "Image": "mnichmaciej/cicd:{TAG}",
+  "HostConfig": {
+    "PortBindings": {
+      "8080/tcp": [
+        {
+          "HostIp": "0.0.0.0",
+          "HostPort": "8081"
+        }
+      ]
+    }
+  }
+}

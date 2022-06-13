@@ -1,0 +1,10 @@
+1.1 - 1.2 ssh-keygen -t rsa -b 4096 -C "your_email@example.com" - generuje klucz SSH dla podanego emaila. W trakcie poprosi o podanie hasła do klucza oraz lokalizacji. Nie wprowadzenie lokalizacji oznacza lokalizację domyślną.
+
+1.3 start-ssh-agent - jak nazwa wskazuje rozpoczyna nowego agenta SSH. Po podaniu hasła powinno znaleźć klucz jeżeli jest on w domyślnej lokalizacji. (start-ssh-agent)
+
+1.4 w ustawieniach konta na GitHub'ie jest specjalna zakładka do kluczy SSH w której pierwszą opcją jest dodanie nowego klucza. (ssh-key-github)
+
+1.5 następnie ustawiamy nowy url w naszym origin'ie żeby przejść z protokołu HTTPS na SSH. (zmiana-na-ssh)
+
+2 git tag -a Nazwa_Taga -m "Jakaś wiadomość" - tworzy nowego taga. -a sprawia że tworzony jest nowy niepodpisany tag o danej nazwie. -m dodaje do niego wiadomość. (git-tag-cmd, git-tag-github)
+

@@ -1,0 +1,52 @@
+Sprawozdanie LAB04 Adrian Dąbrowski 401894 
+
+(Podpunkt 1) Utworzono nowego brancha z przełączeniem oraz opublikowanie obrazu z poprzednich zajęć na docker HUB
+
+    git checkout -b Grupa02-AD401894_Lab04
+
+    docker login - zalogowanie do docker huba
+
+    docker tag hello_world:devopslab4 adriandabrowski/lab4-devops  -tagowanie obrazu
+
+    docker push adriandabrowski/lab4-devops -push na repo dockerowe
+
+
+(Podpunkt 2) Napisz samodzielnie lub znajdź w internecie 1 dowolny komunikator
+
+    Wybrano deltachat-desktop -  https://github.com/deltachat/deltachat-desktop
+
+(Podpunkt 3) 
+
+    Utworzono odpowiedni Dockerfile i na jego podstawie utworzono image (build-agent)
+
+    docker build -t build-agent .
+
+    //Dockerfile znajduję się w plikach
+
+(Podpunkt 4)
+
+    Utworzono odpowiedni Dockerfile i na jego podstawie utworzono image (test-agent)
+
+    docker build -t test-agent .
+
+    //Dockerfile znajduję się w plikach
+
+
+
+(Podpunkt 5) 
+
+    Utworzono odpowiedni plik docker-compose.yml
+
+    docker-compose build - tworzymy obraz na podstawie docker-compose.yml
+
+    docker-compose up - budujemy i uruchamiamy obraz zdefiniowany w docker-compose.yml
+
+    //docker-compose.yml znajduję się w plikach
+
+(Podpunkt 6) 
+
+    Wrzucono pliki na repozytorium
+
+
+
+

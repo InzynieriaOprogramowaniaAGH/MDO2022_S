@@ -1,0 +1,26 @@
+1. pobranie klastra Kubernetes oraz minikube
+
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+
+uruchomienie klastra:
+minikube start
+
+dodanie aliasu do kubectl:
+alias kubectl="minikube kubectl --"
+
+2. Uruchomienie minikube dashboard
+minikube dashboard
+
+3. Odpowiedzialny jest za:
+*deploy'owanie kontenerów do klastra Kubernetes
+*zarządzanie i przeglądanie kontenerami
+*naprawianiem kontenerów
+*podglądanie działania aplikacji działających w naszym klastrze
+*tworzenie i zarządzanie Jobs'ów, DeamonSet'ów, Pods'ów, Deployment'ów
+
+4. Uruchomienie kontener-komunikator odpowiadającemu stage'owi "Deploy" w Jenkinsfile:
+kubectl run komunikator --image=radglay/komunikator:v1 --port=9999 --labels app=komunikator
+
+4.1. Przekierowanie portów:
+kubectl port-forward komunikator 8080:8080

@@ -1,0 +1,14 @@
+services:
+  build-agent:
+    build:
+      context: ../../app
+      dockerfile: ../MM400503/Docker/Dockerfile.build
+    image: mnichmaciej/cicd:${TAG}
+  test-agent:
+    build:
+      context: ../../app
+      dockerfile: ../MM400503/Docker/Dockerfile.test
+      args:
+          TAG: ${TAG}
+    depends_on:
+      - build-agent

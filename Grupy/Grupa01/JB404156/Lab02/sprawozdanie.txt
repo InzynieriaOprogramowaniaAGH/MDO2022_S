@@ -1,0 +1,36 @@
+Sprawozdanie Jarosław Bednarczyk
+
+git remote -v
+Wyświetla sposób połączenia z repozytorium
+
+ssh-keygen -t rsa -b 4096 -C "email" 
+wygenerowanie klucza ssh
+
+git tag -a JB404156 -m "Jarosław Bednarczyk, lab01, na razie chyba działa, w jakie rpgi pan gra jesli mozna spytac?"
+Otagowanie commita
+
+git push --follow-tags
+Wysłanie zmian na zdalny serwer git wraz z tagami
+
+git mv JB404156 Grupy/Grupa01/
+Przeniesienie katalogu do nowej struktury na gicie
+
+git checkout -b Grupa01-JB404156_Lab02
+Przejście na brancha wychodzącego z gałęzi Grupa1
+
+git merge nazwa_brancha
+scalenie gałęzi
+
+Skrypt git hooka:
+
+#!/bin/bash
+
+MSG=$1
+
+TEXT="JB404156"
+
+if ! [[ $(cat $1) =~ $TEXT ]] ;then
+    cat "$MSG"
+    echo "$TEXT need to be included in commit name"
+    exit 1
+fi

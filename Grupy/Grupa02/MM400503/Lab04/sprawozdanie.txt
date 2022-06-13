@@ -1,0 +1,5 @@
+1. Stworzyłem brancha osobistego odbijając się od brancha grupowego oraz opublikowałem obraz. Najpierw dodałem tag poleceniem 'docker tag', a następnie go opublikowałem poleceniem 'docker push'.
+2. Aplikacja, którą wybrałem to wireapp https://github.com/wireapp/.
+3. Stworzyłem Dockerfile.build dla obrazu budującego aplikację.
+4. Stworzyłem Dockerfile.test dla obrazu testującego aplikację zbudowaną w poprzednim obrazie.
+5. Stworzyłem plik docker-compose.yml i skonfigurowałem zależności pomiędzy obrazami. Następnie zbudowałem obrazy i uruchomiłem kontenery poleceniami 'docker-compose build; docker-compose up'.

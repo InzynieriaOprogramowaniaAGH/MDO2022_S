@@ -1,0 +1,27 @@
+1. 	wygenerowanie klucza ssh za pomocą polecenia:  ssh-keygen -t rsa -b 4096 -C "czesak@student.agh.edu.pl"
+	manualne uruchomienie klienta: eval "$(ssh-agent -s)"	
+	dodanie ssh do ssh-agent: ssh-add ~/.ssh/id_rsa
+	dodanie ssh do githuba
+	zmiana sposobu logowania na ssh: git remote set-url origin git@github.com:InzynieriaOprogramowaniaAGH/MDO2022_S.git
+	wyświetlenie połączenia: git remote -v
+	
+2.   	Nadanie taga na commita: git tag -a AC403771_Lab02 -m "Anna Czesak, lab02"
+	Dodanie zmian na remote: git push --follow-tag
+	sprawdzenie poprawnosci: git tag
+
+3. 	1. Uporządkowanie struktury folderów, stworzenie Grupy/Grupa02. Przeniesienie folderu AC403771
+	2. Utworzenie nowego brancha: git checkout -b Grupa02-AC403771_Lab02
+
+4. 	napisanie hook'a:
+
+#!/bin/bash
+
+inicjaly="AC403771"
+
+if ! [[ $(cat $1) == $inicjaly* ]] ; then
+        echo "rozpocznij commit od podania inicjalow!"
+        exit 1
+fi
+echo "komentarz commita prawidlowy :)"
+
+	

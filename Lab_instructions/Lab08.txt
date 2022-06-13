@@ -1,0 +1,30 @@
+Temat: Pipeline CI/CD - pipeline implementation review
+
+Uwaga: korzystamy z tego samego repo co w zeszłym tygodniu, czyli git@github.com:InzynieriaOprogramowaniaAGH/MIFT2021.git
+Uwaga: wszystkie skrypty które tworzysz zamieszczaj w odpowiednim swoim folderze w repozytorium
+Uwaga: Zwróć uwagę by w komentarzu do commita zawrzeć czytelną informację w ramach którego ćwiczenia laboratoryjnego i którego zdania to robisz.
+Uwaga: Na mastera wrzucamy zmiany tylko przez pull requesta! 
+Uwaga: Nie używamy na tym etapie clouda.
+
+Uwaga: Zwróć uwagę by w komentarzu do commita zawrzeć czytelną informację w ramach którego ćwiczenia laboratoryjnego i którego zdania to robisz.
+Uwaga: Na mastera i branche grupowe wrzucamy zmiany tylko przez pull requesta! 
+
+1. Na dzisiejszych zajęciach stajesz w roli DevOps'a którego zadaniem było przygotowanie i REALIZACJA planu tzw. Release pipeline'a (sekwencja kroków wdrożeniowych). Teraz twoim zadaniem jest przygotowanie NOWEGO DOKUMENTU (w formacie pdf) przedstawiającego ZAIMPLEMENTOWANY proces w kontekście procesu zaplanowanego. 
+
+2. Nowy plik z omówieniem zaimplementowanego planu (w formacie PDF!) ma zawierać lub spełniać następujące wymagania:
+2.1 (analogicznie jak poprzednio) stronę tytułową z informacją kto, dla jakiej aplikacji, kiedy, z użyciem jakich technologii to OMÓWIENIE IMPLEMENTACJI przygotował
+
+2.2 Diagram aktywności (UML Activity diagram) ukazyjący w sposób PRECYZYJNY wszystkie czynności oraz główne decyzje oraz wskazać konkretna technologię wykrzystaną w danym kroku. 
+Zaznaczyć czerwonym kolorem wszystkie które się nie pojawiły lub pojawiły nowe wzglęm oryginalnego planu.
+
+2.3 Diagram wdrożeniowy (UML Deployment Diagram). Należy go dostosować do ZAIMPLEMENTOWANEJ rzeczywistości.
+Zaznaczyć czerwonym kolorem wszystkie które się nie pojawiły lub pojawiły nowe względm oryginalnego planu.
+
+2.4 Tabelaryczne zestawienie do diagramu 2.2  przedstawiające:
+Nazwa kroku | Technologia | Linku do pliku konfigurującego  (repo) | Nr linii | Czy zgodnie z planem + komentarz
+
+2.5 Tabelaryczne zestawienie do diagramu 2.3  przedstawiające:
+Nazwa artefaktu | Technologia | Link do pliku w repo | Nr linii | Czy zgodnie z planem  + komentarz
+
+
+Uwaga: zgłoś zadanie na MS Teams - plik PDF!

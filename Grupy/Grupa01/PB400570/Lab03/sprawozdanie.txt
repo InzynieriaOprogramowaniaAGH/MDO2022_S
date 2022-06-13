@@ -1,0 +1,22 @@
+5. 
+
+touch Dockerfile - stworzenie pliku Dockerfile
+
+listowanie pliku Dockerfile:
+
+FROM ubuntu:latest
+RUN apt-get update
+RUN apt install -y git 
+EXPOSE 8080
+
+sudo docker build -t "docker-test" . - zbudowanie obrazu dockera z pliku Dockerfile, 
+                                       opcja -t pozwala na nazwanie budowanego obrazu, '.' wzkazuje ze Dockerfile znajduje sie sie w aktualnym folderze
+
+sudo docker images - wylistowanie pobranych obrazow dockera
+
+6.
+
+sudo docker ps -a - wylistowanie wszystkich uruchomionych obrazow dockera
+
+sudo docker run -it docer-test - uruchomienie obrazu dockera, opcja -it pozwala na otworzenie powloki linux w kontenerze
+

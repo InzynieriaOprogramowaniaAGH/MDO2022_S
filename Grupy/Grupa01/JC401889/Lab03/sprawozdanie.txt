@@ -1,0 +1,8 @@
+1 winget install "Docker Desktop" - Pobranie Docker Desktop za pomocą winget'a
+2 stworzono plik Docker file, jego zawartosc mozna zobaczyc na screenie Dockerfile-screen lub w samym pliku.
+3 docker build -t docker-lab3 . - tworzy nowy obraz o nazwie docker-lab3 z pliku Dockerfile.
+4 docker run -it --name lab3 -dp 80:80 docker-lab3 - tworzy i uruchamia kontener o nazwie lab3 w trybie interaktywnym na porcie 80 w trybe detached
+
+Następnie przeszedłem do swojego katalogu i zmieniłem brancha na swojego.
+Niestety nie byłem w stanie wykonać commita z contenera ponieważ github nie pozwolił mi się zalogować.
+Można zobaczyć to na zrzucie ekranu "docker push error".

@@ -1,0 +1,75 @@
+1.
+    minikube start
+        ^ uruchomienie klastra
+
+    minikube kubectl -- get po -A
+        ^ - pobranie minikube
+
+    alias kubectl="minikube kubectl --"
+        ^ - dodanie aliasu do korzystania z minikube
+
+2.
+    minikube dashboard
+        ^ - włączenie GUI do kubernetesa
+
+
+4.
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+    name: komunikator-deployment
+    labels:
+        app: komunikator
+    spec:
+    replicas: 4
+    selector:
+        matchLabels:
+        app: komunikator
+    template:
+        metadata:
+        labels:
+            app: komunikator
+        spec:
+        containers:
+            - name: komunikator
+            image: secopstech/socket-io-chat:latest
+            ports:
+                - containerPort: 80
+
+
+5.
+    kubectl apply -f komunikator-deployment.yaml 
+        ^ - zleć klastrowi wykonanie pliku yaml używając polecenia
+    kubectl rollout status deployment/komunikator-deployment
+        ^ - sprawdź status wdrażania nowej wersji
+
+6.
+
+    6.1. 
+        w pliku yaml: replicas: 4
+
+    6.2. 
+        docker login --username=dtomart
+            ^ - zalogowanie na dockerhub
+        
+        docker pull secopstech/socket-io-chat:latest
+            ^ - pobranie obrazu komunikatora
+        
+        docker tag secopstech/socket-io-chat dtomart/devops-lab10-komunikator:1.0
+            ^ - tagowanie obrazu
+
+        docker push dtomart/devops-lab10-komunikator:1.0
+            ^ - spushowanie obrazu na dockerhub
+
+        oraz zmiana pliku yaml: 
+            image: dtomart/devops-lab10-komunikator:1.0
+
+    6.2.2
+        Zmiana pliku yaml na nieistniejący obraz: 
+            image: dtomart/devops-lab10-komunikator:2.0
+
+    6.3. 
+        kubectl rollout history deployment/komunikator-deployment
+            ^ - sprawdz historie deploymentow
+        kubectl rollout undo deployment/nginx-deployment
+            ^ - cofnij ostatni deployment

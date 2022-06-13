@@ -1,0 +1,100 @@
+1. Uruchomienie minikube
+minikube start
+
+2. Uruchomienie dashboard
+minikube dashboard
+
+3-4. Stworzenie pliku komunikator-deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: komunikator-deployment
+  labels:
+    app: komunikator
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: komunikator
+  template:
+    metadata:
+      labels:
+        app: komunikator
+    spec:
+      containers:
+      - name: komunikator
+        image: radglay/komunikator:v1
+        ports:
+        - containerPort: 8080
+
+5. zrealizowanie powyższego pliku poleceniem: 
+kubectl apply -f komunikator-deployment.yaml
+
+sprawdzenie statusu wdrażania:
+kubectl rollout status deployment/komunikator-deployment
+
+6. Wprowadzani pojedynczych zmian w pliku komunikator-deployment.yaml i zlecanie aktualizacji:
+6.1: dwukrotna liczba replik:
+spec:
+  replicas: 4 ---> replicas: 8
+
+6.2: podaj nowszą wersję obrazu z aplikacją (v1 ---> v2)
+containers:
+      - name: komunikator
+        image: radglay/komunikator:v1 --> image: radglay/komunikator:v2
+
+6.3: podaj błędną/niedziałającą wersje obrazu:
+containers:
+      - name: komunikator
+        image: radglay/komunikator:v1 --> image: nieistnieje
+
+6.4: przywróć wersję deploymentu z 6.2:
+  kubectl rollout undo deployment/komunikator-deployment
+
+
+7. Napisz skrypt tworzący deployment file z podaną w argumencie nazwą obrazu
+
+import os
+import sys
+import time
+import multiprocessing
+#nazwa obrazu: sys.argv[1]
+
+
+def execution():
+    os.system("minikube kubectl -- apply -f created.yaml")
+
+
+if __name__ == '__main__':
+    image = sys.argv[1]
+
+    yaml_command = "minikube kubectl -- run komunikator-deployment --image=" + image + " --port=8080 --dry-run=client -o yaml"
+
+    print("Command: " + yaml_command)
+    os.system("minikube start")
+    os.system(yaml_command + " >> created.yaml")
+
+    print("Created yaml file:")
+    os.system("cat created.yaml")
+
+    print("***************")
+
+    p = multiprocessing.Process(target=execution, name="Execution")
+    p.start()
+
+    time.sleep(60)
+    
+    p.terminate()
+
+    p.join()
+
+
+Skrypt pobiera nazwe obrazu, uruchamia minikube, tworzy poleceniem minikube kubectl -- run plik yaml z odpowiednim podanym przez nas obrazem
+--image= .... oraz nazwą komunikator-deployment
+
+
+os.system("minikube kubectl -- apply -f created.yaml") uruchamia pod
+
+Aby wyłączyć uruchamianie po 60 sekundach, tak aby nie budować w kółko ze źle napisanego pliku, wątek odpowiedzialny za polecenie minikube kubectl -- apply
+zostaje zakończony po 60 sekundach.

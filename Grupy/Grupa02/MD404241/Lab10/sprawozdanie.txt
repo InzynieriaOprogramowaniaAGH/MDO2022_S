@@ -1,0 +1,29 @@
+Uruchomienie minikube komendą minikube start
+Uruchomiono dashboard komendą minikube dashboard
+Zapoznano się z dokumentacją tworzenia manifestów dla obiektów "Deployment"
+
+Stworzono plik konfiguracyjny komunikator-deployment.yaml zawierający
+        
+- nazwa: komunikator-deployment
+- app: komunikator
+- obraz z komunikatorem tak jak na poprzednich zajęciach
+- 4 repliki
+   
+Zlecenie klastrowi zrealizowanie powyższego pliku używając polecenia
+
+-kubectl apply -f komunikator-deployment.yaml
+        
+Następnie sprawdzono status wdrazania nowej wersji:
+        
+-kubectl rollout status deployment/komunikator-deployment
+  
+Wprowadzono poniższe zmiany w pliku komunikator-deployment.yaml i zlecono klastrowi aktualizację
+
+- zwiekszono ilosc replik dwukrotnie;
+- podano nowszą wersję obrazu z aplikacja 
+- podano błedną nieistniejącą wersji obrazu z aplikacją;
+- przywrocno poprzednią wersji deploymnetu przy uzyciu komend:
+ 
+    kubectl rollout history deployment/komunikator-deployment
+    kubectl rollout undo deployment/komunikator-deployment
+

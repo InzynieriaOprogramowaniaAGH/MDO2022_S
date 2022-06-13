@@ -1,0 +1,42 @@
+Sprawozdanie Lab10
+1.2. Urucjoeminie Minikube Dashboard i sprawdzenie czy wszystko działa
+
+3. Zapoznanie się z dokumentacją tworzenia manifestów oraz przystąpienie do stworzenia pliku komunikator-deployment.yaml
+
+4. Plik komunikator-deployment.yaml:
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: komunikator-deployment
+  labels:
+    app: komunikator
+spec:
+  replicas: 8
+  selector:
+    matchLabels:
+      app: komunikator
+  template:
+    metadata:
+      labels:
+        app: komunikator
+    spec:
+      containers:
+      - name: komunikator
+        image: modernsege/lab11
+        ports:
+        - containerPort: 8080
+
+5. Zlecenie klastrowi zrealizowanie pliku yaml:
+kubectl apply -f komunikator-deployment.yaml 
+
+Sprawdzenie statusu wdrożenia nowej wersji:
+kubectl rollout status deployment/komunikator-deployment
+
+6. Wprowadzanie kolejno zamin w pliku .yaml: 
+-zwięszenie ilości replik, 
+-podanie nowszej wersji aplikacji, 
+-podanie błędnej wersji obrazu, 
+-przywrócenie poprzedniej wersji depoloymentu poleceniami:
+kubectl rollout history deployment/komunikator-deployment
+kubectl rollout undo deployment/komunikator-deployment
+

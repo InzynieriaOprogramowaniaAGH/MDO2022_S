@@ -1,0 +1,4 @@
+1. Stworzyłam folder w którym zebrałam dockerfile build, test i dockerfile jenkins 
+2. zrobiłam forka komunikatora i dodałam do swojego prywatnego repo
+3. Utworzyłam jenkins file, a w nim sekcje build, test, deploy
+4. Utworzyłam webhook'a

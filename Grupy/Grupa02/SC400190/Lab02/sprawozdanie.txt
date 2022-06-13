@@ -1,0 +1,61 @@
+Sprawozdanie lab02
+
+zad.1 Dodanie klucza SSH i połączenie po SSh zamiast HTTPS
+
+
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com" 
+tworzenie nowego klucza SSH za pomocą podanego maila
+
+eval "$(ssh-agent -s)"
+uruchomienie agenta SSH do obsługi klucza SSH
+
+$ ssh-add ~/.ssh/id_rsa
+dodanie prywatnego klucza SSH do agenta SSH
+W kolejnym kroku, aby połaczenie zadziałało, dodałem publiczny klucz po stronie servera (na Github)
+
+"git remote set-url origin git@github.com:InzynieriaOprogramowaniaAGH/MDO2022_S.git"
+zmienienie sposobu logowania na połaczenie po SSH
+
+git remote -v
+wyświetlene sposobu w jaki jesteśmy połączeni z zdalnym repozytorium
+
+
+zad.2 Nadanie taga na commita
+
+
+git tag -a SC400190_Lab01 -m"Szymon Cygan, Lab 01 wszystko działa, 10/10 proszę"
+tworzy nowy tag o podanej nazwie i z daną wiadomością
+
+git push --follow-tags origin SC400190 
+wypycha tagi do remotea 
+
+
+zad.3 
+
+git checkout -b Grupa02-SC400190_Lab02
+Utworzenie nowego brancha krótkożyjącego
+
+zad.4 napisanie hooka
+
+
+#!/bin/sh
+
+MSG=`cat $1`
+PREFIX="SC400190"
+if ! [[ $MSG == $PREFIX ]]; then
+    echo 'Commit message have to start with $PREFIX'
+    exit 1;
+fi
+
+
+zad.5 zrobienie merga z brancha sobistego do grupowego
+
+
+
+git merge Grupa02-SC400190_Lab02 
+scalenie brancha podanego w argumencie
+
+git branch -d Grupa02-SC400190_Lab02
+usunięcie brancha podanego w argumencie
+
+

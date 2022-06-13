@@ -1,0 +1,26 @@
+Sprawozdanie LAB01 Adrian Dąbrowski 401894 
+
+0. sudo pacman -S git
+     - instalacja gita (jako że był już zainstlowany doszo do reinstalacji)
+
+1. git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S
+     - zostanie pobrana każda rewizja, każdego pliku w historii projektu. (pobranie projektu)
+
+2. git branch AD401894 
+    - tworzy nową gałąź
+
+3. git checkout AD401894 
+    - przełączenie się na nowego brancha
+
+4. git status
+   - Sprawdza status plików
+
+5. git add .
+    - dodoaje śledzenie na pliki (git bedzie śledział zmiany w tych plikach), kropka oznacza że dodajemy wszystkie pliki.
+
+6. git commit -m "message"
+    - tworzenie commita
+
+7. git push  origin AD401894 
+    - wypchanie brancha z repozytorium lokalnego na zdalne (origin mówi że chodzi nam o zdalne repozytoeium)
+  

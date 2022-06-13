@@ -1,0 +1,4 @@
+FROM build-agent:latest
+
+CMD ["npm", "run", "test"]
+RUN npm run test

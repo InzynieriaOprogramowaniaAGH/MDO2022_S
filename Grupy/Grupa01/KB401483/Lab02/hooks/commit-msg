@@ -1,0 +1,11 @@
+#!/bin/bash
+
+commit_mesage="KB401483"
+
+
+if ! grep -qE "$commit_mesage" "$1" ;then
+
+     echo "commit jest błędny, ponieważ nie zawiera KB401483"
+     exit 1
+fi
+     echo "commit jest poprawny"

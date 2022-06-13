@@ -1,0 +1,12 @@
+#!/bin/bash
+
+COMMIT_MSG_FILE=$1
+MSG=$(cat "$COMMIT_MSG_FILE")
+if [[ $MSG = MM400503* ]]
+then
+	echo "Commit message is correct."
+else
+	echo "Commit message should start with the prefix 'MM400503'."
+  exit 1;
+fi
+  

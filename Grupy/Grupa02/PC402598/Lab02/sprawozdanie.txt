@@ -1,0 +1,28 @@
+ssh-keygen -t rsa -b 4096 -C "email" - stworzenie nowego klucza SSH z użyciem podanego emaila
+
+eval "$(ssh-agent -s)" - włączenie agenta SSH
+
+$ ssh-add ~/.ssh/id_rsa - dodanie klucza SSH do agenta
+
+"git remote set-url origin git@github.com:InzynieriaOprogramowaniaAGH/MDO2022_S.git" - ustawienie sposób logowania na SSH
+
+git remote -v - wyświetla jak jesteśmy połączeni z rezpozytorium
+
+git tag -a PC402598_Lab01 -m "Patryk Chwaja" - stworzenie tagu z podaną nazwą i wiadomością
+
+git push --follow-tags - wrzucenie tagów na remote
+
+git checkout -b Grupa02-PC402598_Lab02 - nowy branch krótko żyjący
+
+git merge Grupa02-PC402598_Lab02 - zmergowanie podanego brancha
+
+git branch -d Grupa02-PC402598_Lab02 - usunięcie podanego brancha
+
+
+#!/bin/sh
+
+MSG=`cat $1`
+if ! [[ $MSG == "PC402598" ]]; then
+    echo 'Commit message have to start with PC402598'
+    exit 1;
+fi

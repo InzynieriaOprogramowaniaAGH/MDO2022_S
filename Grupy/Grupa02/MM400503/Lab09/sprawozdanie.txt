@@ -1,0 +1,17 @@
+1. Obraz potrzebny do wykonania zadania znajduje się w docker hubie.
+2. Zainstalowałem klaster Kubenetes następującymi poleceniami:
+- winget install minikube
+- minikube config set driver docker (pierwsze uruchomienie spowodowało błąd, więc musiałem ręcznie ustawić driver i dla bezpieczeństwa usunąłem kontener)
+- minikube delete
+- minikube start
+- minikube kubectl -- get po -A
+(Screenshoty 1-3)
+3. Uruchomiłem dashboard poleceniem "minikube dashboard". (Screenshot 4)
+3.1 Lista możliwości dashboarda:
+- sprawdzenie stanu podów, deploymentów
+- sprawdzenie stanu i konfiguracja serwisów
+- zarządzanie koniguracją i sekretami
+- zarządzanie klustrami
+4. Uruchomiłem kontenerz komunikatorem za pomocą polecenia 'kubectl run komunikator --image=mnichmaciej/cicd:0.78 --port=8080 --labels app=komunikator'. (Screenshot 5)
+4.1 Przekierowałem porty poleceniem 'kubectl port-forward komunikator 8080:8081'. (Screenshot 6)
+5. Za pomocą postmana wywołałem endpoint komunikatora, który informuje o jego statusie działania. (Screenshoty 7-9)

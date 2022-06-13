@@ -1,0 +1,4 @@
+2. Zalogowano się i zarejestrowano do Microsoft Azure
+3. Zapoznano się z cennikiem usług chmurowych Azure Container Instances
+4. Zapoznano się z Azure Cloud Shell
+5. Zapoznano się z instrukcją uruchamiania kontenerów w ACI

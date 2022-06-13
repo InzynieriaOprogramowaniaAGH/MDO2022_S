@@ -1,0 +1,67 @@
+Sprawozdanie Lab05
+
+1.Utworzenie nowego brancha od brancha Grupa2 poleceniem: git checkout -b Grupa02-WD400843_Lab05
+
+2.Zapoznanie się z oprogramowaniem Jenkins: https://www.jenkins.io/.
+
+3.Stworzenie kontenera dockerowy z Jenkinsem:
+
+     -Utworzenie sieci: docker network create jenkins
+
+     -Pobranie i uruchomienie docker:dind
+      docker run --name jenkins-docker --rm --detach ^
+       --privileged --network jenkins --network-alias docker ^
+       --env DOCKER_TLS_CERTDIR=/certs ^
+       --volume jenkins-docker-certs:/certs/client ^
+       --volume jenkins-data:/var/jenkins_home ^
+       --publish 2376:2376 ^
+       docker:dind
+
+     -Utworzenie Dockerfile
+      FROM jenkins/jenkins:2.332.1-jdk11
+      USER root
+      RUN apt-get update && apt-get install -y lsb-release
+      RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
+        https://download.docker.com/linux/debian/gpg
+      RUN echo "deb [arch=$(dpkg --print-architecture) \
+        signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \
+        https://download.docker.com/linux/debian \
+        $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
+      RUN apt-get update && apt-get install -y docker-ce-cli
+      RUN curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+      RUN chmod +x /usr/local/bin/docker-compose
+      USER jenkins
+      RUN jenkins-plugin-cli --plugins "blueocean:1.25.3 docker-workflow:1.28"     
+
+     -Zbudowanie obrazu z Dockerfilem: docker build -t myjenkins-blueocean:2.332.1-1 .
+
+     -Uruchomienie kontenera z Jenkinsem
+      docker run --name jenkins-blueocean --rm --detach ^
+       --network jenkins --env DOCKER_HOST=tcp://docker:2376 ^
+       --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 ^
+       --volume jenkins-data:/var/jenkins_home ^
+       --volume jenkins-docker-certs:/certs/client:ro ^
+       --publish 8080:8080 --publish 50000:50000 myjenkins-blueocean:2.332.1-1
+
+     -Uruchomienie Jenkinsa w przeglądarce:http://localhost:8080
+ 
+4.Wrzucenie obrazu Jenkinsa na DockerHub'a.    
+   
+    -Zrobienie taga:  docker tag myjenkins-blueocean:2.332.1-1 dwioletta/jenkins
+    
+    -Zrobienie pusha: docker push dwioletta/jenkins
+
+5.Z poziomu Jenkinsa uruchomionego w kontenerze (pkt 2) uruchomiono docker-compose stworzony w ramach Lab04.
+   
+  -Utworzenie ogólnego projektu,
+  -Dodanie repozytorium: https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S
+  -Ustawienie brancha,
+
+  -Budowanie z komendami:
+     cd Grupy/Grupa02/WD400843/lab04
+     docker-compose build
+     docker-compose up
+  
+   -Uruchomienie zakończone sukcesem
+
+     

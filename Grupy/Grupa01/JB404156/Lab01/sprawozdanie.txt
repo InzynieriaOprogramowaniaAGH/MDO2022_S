@@ -1,0 +1,19 @@
+Lab1
+
+git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git - użyte do skopiowania repozytorium
+
+Otworzenie odpowiedniego katalogu w VS code i następnie sprawdzenie czy repozytorium zostało skopiowane komendą:
+git status
+
+git branch JB404156 - utworzenie nowej gałęzi
+
+git checkout JB404156 - przełączenie na gałąź
+
+git add . - dodanie plików do indeksu repozytorium
+
+git commit -m "Tytuł" - utworzenie nowego commita
+
+git push origin JB404156 - wysłanie zmian na serwer
+
+
+Ostatni zrzut ekranu dla git pusha został wykonany na linuksie, gdyż na windowsie pojawiły się problemy

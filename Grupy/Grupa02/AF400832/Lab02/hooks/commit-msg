@@ -1,0 +1,9 @@
+#!/bin/bash
+
+MSG="$(cat $1)"
+
+if [[ "$MSG" =~ ^AF400832 ]];then
+        exit 0
+fi
+echo "Commit message must starts with AF400832!"
+exit -1

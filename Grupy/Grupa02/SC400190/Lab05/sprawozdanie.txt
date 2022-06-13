@@ -1,0 +1,54 @@
+Sprawozdanie Lab05
+
+zad.0 Zapoznanie się z diagramem wdrożeniowym omawianym na zajęciach
+zad.1 Zapoznanie się z oprogramowaniem Jenkins
+zad.2 Stworzenie kontenera dokerowego z Jenkinsem zgodnie z instrukcją:
+	 docker network create jenkins
+	 docker run \
+ 		 --name jenkins-docker \
+ 		 --rm \
+ 		 --detach \
+		 --privileged \
+ 		 --network jenkins \
+ 		 --network-alias docker \
+ 		 --env DOCKER_TLS_CERTDIR=/certs \
+ 		 --volume jenkins-docker-certs:/certs/client \
+ 		 --volume jenkins-data:/var/jenkins_home \
+ 		 --publish 2376:2376 \
+ 		 docker:dind \
+ 		 --storage-driver overlay2
+
+	Utworzenie Dockerfile i zbudowanie obrazu:
+	 docker build -t myjenkins-blueocean:2.332.1-1 .
+
+	Uruchomienie kontenera:docker run \
+ 		 --name jenkins-blueocean \
+ 		 --rm \
+ 		 --detach \
+ 		 --network jenkins \
+ 		 --env DOCKER_HOST=tcp://docker:2376 \
+ 		 --env DOCKER_CERT_PATH=/certs/client \
+ 		 --env DOCKER_TLS_VERIFY=1 \
+ 		 --publish 8080:8080 \
+ 		 --publish 50000:50000 \
+ 		 --volume jenkins-data:/var/jenkins_home \
+ 		 --volume jenkins-docker-certs:/certs/client:ro \
+ 		 myjenkins-blueocean:2.332.1-1
+
+zad.3  Wrzucenie obrazu Jenkinsa na DockerHub'a
+
+skomitowanie zmian:W
+docker commit 6fb9b2fc538d modernsege/myjenkins-blueocean:2.332.1-1
+
+wypchanie zmian na remote'a:
+docker push modernsege/myjenkins-blueocean:2.332.1-1
+
+zad.4 Z poziomu Jenkinsa uruchomionego w kontenerze (pkt 2) uruchomiono docker-compose stworzony w ramach Lab04:
+Jenkins został uruchomiony na localhost:8080 
+
+cd /var/jenkins_home/secrets
+cat initialAdminPassword
+odszukanie i wypisanie hasła wymaganego do pierwszego logowania
+
+
+

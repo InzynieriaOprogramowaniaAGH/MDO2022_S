@@ -1,0 +1,21 @@
+Sprawozdanie Lab04
+
+1.Stworzenie brancha osobistego od brancha grupowego: git checkout -b Grupa02-WD400843_Lab04
+
+2.Opublikowanie obrazu z porzednich zajęć w serwisie Docker HUB 
+
+  docker push dwioletta/wd400843
+
+3.Wybrano komunikator (opensource chat app.) o nazwie deltachat-desktop
+
+   https://github.com/deltachat/deltachat-desktop
+
+4.Utworzono plik Dockerfile-build oraz zbudowano obraz odpowiedzialny za budowanie aplikacji 
+  
+  docker build -t build . -f Dockerfile-build 
+
+5.Utworzono plik Dockerfile-test odpowiedzialny za testowanie, w którym wykorzystano wcześniej zbudowany obraz build
+  
+  docker build -t test . -f Dockerfile
+
+6.Utworzono plik docker-compose.yml

@@ -1,0 +1,46 @@
+Sprawozdanie LAB03 Adrian Dąbrowski 401894 
+
+(Podpunkt 1) Utworzono nowego brancha z przełączeniem.
+
+git checkout -b Grupa02-AD401894_Lab03   
+
+
+(Podpunkt 2) Przeniesienie git hooka z poprzednich zajęć do folderu lab02/hooks
+
+cp .git/hooks/commit-msg Grupy/Grupa02/AD401894/Lab02/hooks/  
+
+
+(Podpunkt 3) docker był już zainstalowany, więc została wyświetlona jego wersja
+
+ docker version 
+
+
+(Podpunkt 4) Zerejestrowano się na docker HUB
+
+
+(Podpunkt 5) Stworzone plik Dockerfile z najnowszym ubuntu (upewniono się że jest git)
+
+FROM ubuntu:latest     
+// obraz będzie budowany na podstawie obrazu ubuntu (najnowszej wersji )
+RUN apt update      
+// aktualizacja pakietów
+RUN apt install -y git
+// instalacja gita
+CMD ["bash"]
+ uruchomienie basha
+
+
+(Podpunkt 6) Uruchomiono kontener, sklonowano repozytorium oraz sprawdzono czy stworzony wcześniej branch istnieje
+
+docker run -it hello_world bash
+
+git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S 
+
+cd MDO2022_S/ 
+
+git checkout Grupa02-AD401894_Lab03
+
+
+
+
+
