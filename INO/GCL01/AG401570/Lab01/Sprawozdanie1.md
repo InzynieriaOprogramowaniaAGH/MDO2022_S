@@ -74,7 +74,4 @@ Wysłano zmiany do zdalnego źródła.
 		$ git push --set-upstream  origin AG401570
 ```
 
-![send](send.png)
-
-Następnie spróbowano wyciągnąć swoją gałąź do gałęzi grupowej.
 ![merge](merge.png)
