@@ -1,0 +1,3 @@
+FROM petclinic-build:latest
+WORKDIR /application-pet
+RUN ./mvnw test

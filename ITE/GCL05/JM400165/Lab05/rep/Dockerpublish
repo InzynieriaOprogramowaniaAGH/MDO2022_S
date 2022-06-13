@@ -1,0 +1,4 @@
+FROM openjdk:16-jdk-alpine
+RUN apk add --no-cache --upgrade bash
+COPY shared_volume/application-pet.jar /application-pet.jar
+ENTRYPOINT [ "java", "-jar", "application-pet.jar" ]

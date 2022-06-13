@@ -1,0 +1,3 @@
+FROM openjdk:16-jdk-alpine
+COPY application-pet application-pet
+RUN cd application-pet && ./mvnw dependency:go-offline
