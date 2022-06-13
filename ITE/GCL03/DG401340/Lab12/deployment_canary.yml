@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mc
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: mc
+  template:
+    metadata:
+      labels:
+        app: mc
+        track: stable
+        version: "1.5"
+    spec:
+      containers:
+      - name: mc
+        image: itzg/minecraft-server:2022.3.0
+        ports:
+        - containerPort: 25565
+        env:
+          - name: EULA
+            value: "TRUE"

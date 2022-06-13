@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mc-canary
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mc
+  template:
+    metadata:
+      labels:
+        app: mc
+        track: new
+        version: "2.0"
+    spec:
+      containers:
+      - name: mc
+        image: itzg/minecraft-server
+        ports:
+        - containerPort: 25565
+        env:
+          - name: EULA
+            value: "TRUE"
