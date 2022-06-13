@@ -5,7 +5,7 @@ metadata:
   labels:
     app: grafana
 spec:
-  replicas: 6
+  replicas: 5 
   selector:
     matchLabels:
       app: grafana
