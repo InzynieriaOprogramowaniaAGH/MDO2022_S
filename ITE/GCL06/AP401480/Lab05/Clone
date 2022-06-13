@@ -1,0 +1,5 @@
+FROM fedora:36
+
+RUN yum install git -y
+
+CMD sh -c 'git clone https://github.com/antooni/l2beat.git /input/l2beat'

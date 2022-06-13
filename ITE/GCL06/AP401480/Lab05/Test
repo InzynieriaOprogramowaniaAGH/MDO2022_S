@@ -1,0 +1,5 @@
+FROM build
+
+WORKDIR /input/l2beat
+
+CMD sh -c 'yarn test'

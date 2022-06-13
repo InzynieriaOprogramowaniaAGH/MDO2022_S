@@ -1,0 +1,6 @@
+FROM node:14
+
+WORKDIR /input/l2beat
+
+CMD sh -c 'yarn && cd ./packages/common && yarn build && cd ../config && yarn build && cd ../backend && yarn build:mock && tar cvzf l2beat_backend.tar.gz ./build && cp l2beat_backend.tar.gz /output'
+ 

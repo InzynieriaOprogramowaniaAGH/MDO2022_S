@@ -1,0 +1,68 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'VERSION', defaultValue: '1.0.0', description: '')
+        booleanParam(name: 'PROMOTE', defaultValue: true, description: '')
+    }
+
+    stages {
+        stage('Clone') {
+            steps {
+                sh '''
+                    docker container prune -f
+                    docker volume prune -f
+                    docker volume create --name input
+                    docker build -t clone -f ./ITE/GCL06/AP401480/Lab05/Clone .
+                    docker run -v "input:/input" clone
+                '''
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh '''
+                    docker build -t build -f ITE/GCL06/AP401480/Lab05/Build .
+                    docker run -v "input:/input" -v "${PWD}:/output" build
+                '''
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh '''
+                    docker build -t test -f ITE/GCL06/AP401480/Lab05/Test .
+                    docker run -v "input:/input" test
+                '''
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh '''
+                    docker build -t deploy -f ITE/GCL06/AP401480/Lab05/Deploy .
+                    docker run -v "input:/input" deploy
+                '''
+            }
+        }
+
+        stage("Publish") {
+            when {
+                environment name: 'PROMOTE', value: "true"
+            }
+            steps {
+                sh '''
+                    mv l2beat_backend.tar.gz l2beat_backend${VERSION}.tar.gz
+                '''
+                archiveArtifacts artifacts: "l2beat_backend${VERSION}.tar.gz"
+            }
+        }
+    }
+
+    post {
+         always{
+            cleanWs()
+         }
+    }    
+}
+
