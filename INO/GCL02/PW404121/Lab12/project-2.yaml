@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-project
+  labels:
+    app: node-project
+spec:
+  replicas: 5
+  template:
+    metadata:
+    labels:
+      app: node-project
+      version: "2.0"
+  selector:
+    matchLabels:
+      app: node-project
+  template:
+    metadata:
+      labels:
+        app: node-project
+    spec:
+      containers:
+      - name: node-project-container
+        image: pwilkosz99/pwilkosz-node.js.org:beta
+        ports:
+        - containerPort: 8080
