@@ -1,0 +1,11 @@
+FROM node:16-alpine
+
+WORKDIR myapp
+WORKDIR myapp_build
+
+RUN apk update
+RUN apk add git
+RUN apk add bash
+
+RUN yarn --version
+

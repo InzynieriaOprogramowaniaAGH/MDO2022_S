@@ -1,0 +1,83 @@
+pipeline {
+	parameters {
+		string(name: 'Version', defaultValue: '1.0.0', description: 'Program version')
+		booleanParam(name: 'Promote', defaultValue: true, description: 'Promote statement')
+	}
+    agent any 
+    stages {
+    	stage('Clone') { 
+            steps {
+            	echo 'Creating input volume'
+                sh 'docker volume create input-volume'
+                sh 'docker rm tmp || true'
+                sh 'docker run -v input-volume:/data --name tmp node:16-alpine'
+                sh 'cd ~/ && ls vscode || git clone --recurse-submodules https://github.com/microsoft/vscode.git'
+                sh 'docker cp ~/vscode tmp:/data'
+                sh 'docker rm tmp'
+            }
+        }
+        stage('Build') { 
+            steps {
+                dir("./ITE/GCL08/MZ402779/Lab05") {
+                	sh 'docker build . -t vscode -f dockerfile-build'
+                	sh 'docker volume create output-volume'
+                	sh 'docker rm vscodebuild || true'
+                	sh 'docker run --rm --name vscodebuid --mount type=volume,src="input-volume",dst=/myapp --mount type=volume,src="output-volume",dst=/myapp_build vscode bash -c "cd /myapp/vscode && yarn; cp -R /myapp/vscode /myapp_build"'
+                	     	
+                }
+            }
+        }
+        stage('Test') { 
+            steps {
+                dir("./ITE/GCL08/MZ402779/Lab05") {                	
+                	sh 'docker rm vscodetest || true'
+                	sh 'docker run --rm --name vscodetest --mount type=volume,src="output-volume",dst=/myapp_build vscode bash -c "cd /myapp_build/vscode && npm test"'
+                }
+            }
+        }
+        stage('Deploy') { 
+            steps {
+                sh 'docker rm vscodedeploy || true'
+                sh 'docker run -d --name vscodedeploy --mount type=volume,src="output-volume",dst=/myapp_build vscode bash -c "cd /myapp_build/vscode && npm run"'
+                sh 'sleep 5; exit $(docker inspect vscodedeploy --format="{{.State.ExitCode}}")'
+                sh 'docker rm -f vscodedeploy'
+            }
+        }
+        stage('Promote'){
+        	when {
+        		expression {return params.Promote}
+        	}
+        	steps {
+        		sh 'ls /var/jenkins_home/workspace/artifacts || mkdir /var/jenkins_home/workspace/artifacts'
+        	}
+        }        
+        stage('Publish') { 
+        when {
+        	expression {return params.Promote}
+        }  
+        agent {
+        	docker {
+        		image 'node:16-alpine'
+        		args '--rm --mount "type=volume,src=output-volume,dst=/usr/local/app" --mount "type=bind,src=/var/jenkins_home/workspace/artifacts,dst=/usr/local/copy" -u root:root'
+        	}
+        }      
+            steps {
+                sh 'rm -rf /usr/local/copy/* || true'
+                sh "cd /usr/local/app/vscode && npm version ${params.Version} && npm pack"
+                sh "mv /usr/local/app/vscode/code-oss-dev-${params.Version}.tgz /usr/local/copy"
+                dir('/var/jenkins_home/workspace/artifacts'){
+                	archiveArtifacts artifacts: "code-oss-dev-${params.Version}.tgz",
+                	fingerprint: true
+                }
+            }
+        }
+    }
+    post {
+    	success {
+    		echo 'Pipeline executed successfully'
+    	}
+    	failure {
+    		echo 'Pipeline has encountered some errors. Check logs for more information.'
+    	}
+    }
+}
