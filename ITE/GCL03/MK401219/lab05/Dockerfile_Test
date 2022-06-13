@@ -1,0 +1,2 @@
+FROM mk_build:latest
+RUN ./runUnitTests
