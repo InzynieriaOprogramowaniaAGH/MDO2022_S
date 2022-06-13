@@ -4,10 +4,10 @@ pipeline {
 	npm_creds = credentials('npm-creds')
 } 
 	stages {
-		stage('Build') {
+		stage('Build_and_publish') {
 			steps {
-				dir('/lab5')
-					{	
+				dir('ITE/GCL04/WM400039/lab5')
+					{
 						sh 'docker build -f ./build_dockerfile -t app_build:latest .'
 						sh 'docker run app_build'
 					}
@@ -15,21 +15,13 @@ pipeline {
 			}
 		stage('Test') {
 			steps {
-			        dir('/lab5')
-					{ 
-						sh 'docker build -f ./test_dockerfile -t app_test:latest .'
-						sh 'docker run app_test'
+			        dir('ITE/GCL04/WM400039/lab5')
+					{
+						sh 'docker run '
+						sh 'docker run test_build'
 					}
 				}
 			}
-		stage('Publish') {
-			steps{
-				dir('/lab5')
-					{
-						sh 'npm publish'
-					}
-					}
-				}
 		}
 }
 

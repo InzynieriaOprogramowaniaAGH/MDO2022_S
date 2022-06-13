@@ -1,4 +1,4 @@
-FROM build_image:latest
+FROM app_build:latest
 
 WORKDIR /wire-webapp
 
