@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<title>LZ4</title>
+<h2>LZ4 Web App</h2>
+<h5>Version: {{info.version}}</h5>
+<hr />
+<h4>LZ4 Compress</h4>
+<form method="post" action="/lz4-compress" enctype="multipart/form-data">
+  <dl>
+    <p>
+      <input type="file" name="file" autocomplete="off" required />
+    </p>
+  </dl>
+  <p>
+    <input type="submit" value="Submit" />
+  </p>
+</form>
+<hr />
+<h4>LZ4 Decompress</h4>
+<form method="post" action="/lz4-decompress" enctype="multipart/form-data">
+  <dl>
+    <p>
+      <input type="file" name="file" autocomplete="off" required />
+    </p>
+  </dl>
+  <p>
+    <input type="submit" value="Submit" />
+  </p>
+</form>

@@ -1,0 +1,22 @@
+FROM debian:10 as builder
+ARG branch
+ENV branch ${branch}
+RUN apt update
+RUN apt install -y git gcc make
+RUN git clone  https://github.com/lz4/lz4.git --branch ${branch}
+RUN mkdir build
+WORKDIR lz4
+RUN sh -c "make prefix= DESTDIR=/build install"
+
+FROM python:3.9
+RUN mkdir -p /build/bin
+ARG version
+ENV version ${version}
+RUN mkdir ./service
+ADD ./service/requirements.txt ./service
+RUN pip install -r ./service/requirements.txt
+COPY --from=builder /build/bin/lz4 /build/bin/lz4
+COPY ./service ./service
+WORKDIR service
+EXPOSE 8000
+CMD python3 server.py /build/bin/lz4 ${version}
