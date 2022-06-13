@@ -108,3 +108,112 @@ spec:
 ![4.0](./4.0.png)
 
 ![4.1](./4.1.png)
+
+# Część 2
+
+## Konwersja wdrożenia ręcznego na wdrożenie deklaratywne YAML
+
+-Upewnij się, że posiadasz wdrożenie z poprzednich zajęć zapisane jako plik
+-Wzbogać swój obraz o 4 repliki
+-Rozpocznij wdrożenie za pomocą kubectl apply
+-Zbadaj stan za pomocą kubectl rollout status
+
+![5.0](./Lab12/5.0.png)
+
+## Przygotowanie nowego obrazu
+
+![6.0](./Lab12/6.1.png)
+
+-Przygotuj wersję obrazu, którego uruchomienie kończy się błędem
+
+Aby uruchomienie zakończyło się błędem po prostu usunąłem jeden niezbędny import.
+
+![6.1](./Lab12/6.1.png)
+
+![6.2](./Lab12/6.2.png)
+
+Wszytskie 3 obrazy na dockerhubie
+
+![6.3](./Lab12/6.3.png)
+
+## Zmiany w deploymencie
+
+Aktualizuj plik YAML z wdrożeniem i przeprowadzaj je ponownie po zastosowaniu następujących zmian:
+
+-zwiększenie replik
+
+Zwiększyłem liczbę replik z 4 na 6
+
+![7.0](./Lab12/7.0.png)
+
+![7.1](./Lab12/7.1.png)
+
+-zmniejszenie liczby replik do 1
+
+![7.2](./Lab12/7.2.png)
+
+![7.3](./Lab12/7.3.png)
+
+-zmniejszenie liczby replik do 0
+
+![7.4](./Lab12/7.4.png)
+
+![7.5](./Lab12/7.5.png)
+
+-zastosowanie nowej wersji obrazu
+
+Aby zastosować nową wersję obrazu zmieniłem w pliku .yaml linijkę odnoszącą się do obrazu odwołując sie do tagu latest2, liczba podsów została na 0 tak jak w podpunkcie wyzej
+
+![7.6](./Lab12/7.6.png)
+
+![7.7](./Lab12/7.7.png)
+
+-zastosowanie starszej wersji obrazu
+
+Został uzyty obraz wywołujący błąd
+
+![7.8](./Lab12/7.8.png)
+
+-Przywracaj poprzednie wersje wdrożeń za pomocą poleceń
+
+![7.9](./Lab12/7.9.png)
+
+# Kontrola wdrożenia
+
+Napisz skrypt weryfikujący, czy wdrożenie "zdążyło" się wdrożyć (60 sekund)
+
+```
+#!/bin/bash
+
+cmd() {
+  kubectl rollout status deployments/devops-chat-deployment
+}
+
+if cmd | grep -q 'deployment "devops-chat-deployment" successfully rolled out'; then
+  echo "Deployment running"
+else
+  echo "Something went wrong"
+fi
+```
+
+Działanie skryptu:
+
+![8.0](./Lab12/8.0.png)
+
+# Strategie wdrozenia
+
+Przygotuj wersje wdrożeń stosujące następujące strategie wdrożeń:
+
+-Recreate
+
+StWorzono devops-chat-deployment-recreate.yaml na podstawie devops-chat-komunikator-deployment.yaml (strategia Recreate).
+
+-Rolling Update
+
+Stworzono strategie wdrazania RollingUpdate. Parametry maxSurage=1 oraz maxUnavailable=1
+
+Początkowo stworzony został zestaw replik z nową wersją aplikacji następnie liczba replik starej wersji byla zmniejszana na rzecz nowych.
+
+-Canary Deployment workload
+
+Zapewnia to dzialanie dwoch serwisow obok siebie, a uzytkownik je przepina.

@@ -5,7 +5,9 @@ metadata:
   labels:
     app: devops-chat
 spec:
-  replicas: 1
+  replicas: 8
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: devops-chat

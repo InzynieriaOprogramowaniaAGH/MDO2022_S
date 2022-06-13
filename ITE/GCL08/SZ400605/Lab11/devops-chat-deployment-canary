@@ -1,11 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: devops-chat-deployment
+  name: devops-chat-deployment-canary
   labels:
-    app: devops-chat
+    app: komunikator
+    version: "2.0"
 spec:
-  replicas: 1
+  replicas: 8
   selector:
     matchLabels:
       app: devops-chat
@@ -18,4 +19,4 @@ spec:
         - name: devops-chat
           image: luxikhs/chat:latest
           ports:
-            - containerPort: 30001
+            - containerPort: 3030
