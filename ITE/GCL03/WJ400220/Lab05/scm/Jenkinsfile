@@ -1,0 +1,62 @@
+pipeline {
+    parameters {
+	string(name: 'VERSION', defaultValue: '1.0.0', description: '')
+	booleanParam(name: 'PROMOTE', defaultValue: true, description: '')
+    }
+    agent any
+    tools {nodejs "nodejs-16"}
+
+    stages {
+        stage('Build') {
+            steps {
+                script {
+		    sh 'docker rm -f build_node || true'
+                    sh 'docker volume prune -f'
+                    git 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git'
+                    sh 'git checkout WJ400220'
+                    sh 'git pull origin'
+                    sh 'cd ITE/GCL03/WJ400220/Lab05/dockerfiles/ ; docker build --no-cache -t build_node:latest . -f ./build.dockerfile'
+                    sh 'docker volume create volume_out'
+                    sh 'docker run --mount type=volume,src="volume_out",dst=/node_app/files build_node:latest bash -c "ls -l && cd .. && ls -l && cp -r /testing-node-apps /node_app/files"'
+                }
+           }
+        }
+        stage('Test') {
+            steps {
+		sh 'docker rm -f test_node || true'
+                sh 'cd ITE/GCL03/WJ400220/Lab05/dockerfiles/ ; docker build --no-cache -t test_node:latest . -f ./test.dockerfile'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'docker rm -f deploy_node || true'
+		sh 'docker run --rm -dit --name deploy_node --mount type=volume,src="volume_out",dst=/node_app/files node'
+		sh 'docker container exec deploy_node sh -c "ls -l"'
+		sh 'docker container exec deploy_node sh -c "cd node_app/files/testing-node-apps && ls -l && npm run validate"'
+            }
+        }
+	stage('Publish') {
+	     when {
+		expression {return params.PROMOTE}
+	     }
+	     steps {
+		sh 'docker rm -f publish_node || true'
+		sh 'find /var/jenkins_home/workspace -name "artifacts" || mkdir /var/jenkins_home/workspace/artifacts'
+		sh 'docker run -d --rm --name publish_node --mount type=volume,src="volume_out",dst=/node_app/files --mount type=bind,source=/var/jenkins_home/workspace/artifacts,target=/usr/local/copy node bash -c "ls -al && chmod -R 777 /node_app  && cd node_app/files && tar -xvz testing-node-apps -f testing-node-apps-${params.VERSION}.tgz  && ls -al && cd ../.. && cp -r /node_app/. /usr/local/copy"'
+		sh 'ls -al'
+		sh 'docker ps'
+		sh 'cd ../artifacts/files/testing-node-apps && ls -al'
+		sh 'cd /var/jenkins_home/workspace/artifacts/files/testing-node-apps && ls -al'
+		sh 'pwd'
+		sh "ls -al && cd ../artifacts/files/ && ls -al && cd testing-node-apps && ls -al && cp testing-node-apps-${params.VERSION}.tgz /var/jenkins_home/workspace/pipeline1"
+		sh 'ls -al'
+		archiveArtifacts artifacts: "testing-node-apps-${params.VERSION}.tgz"
+		sh 'docker rm -f build_node || true'
+                sh 'docker rm -f test_node || true'
+                sh 'docker rm -f deploy_node || true'
+                sh 'docker rm -f publish_node || true'
+	     }
+	}
+    }
+}
+
