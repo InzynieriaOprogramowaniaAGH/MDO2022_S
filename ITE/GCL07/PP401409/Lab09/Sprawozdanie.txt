@@ -1,0 +1,27 @@
+
+# Sprawozdanie lab 09
+#### Patrycja Pstrag
+
+## Przygotowanie wdrożeń nienadzorowanych dla platform z pełnym OS
+
+## 1. Przygotowanie systemu pod uruchomienie - instalacja pierwszej Fedory
+Pierwszym punktem zajęć była instalacja systemu Fedora w VM. W moim przypadku pojawił się problem z instalacją obrazu Fedora-Server 36, dlatego zainstalowałam Fedora-Server 35. Instalacja polegała na pobraniu obrazu systemu fedora-server oraz przeprowadzeniu instalacji.
+
+##### Uruchomienie instalacji:
+![[](maszynaWirtualna1.png)
+
+##### Uruchomienie instalacji:
+![[](maszynaWirtualna1.png)
+
+
+
+
+
+
+ Następna była konfiguracja użytkownika:
+
+ - [ ] Użytkownik:
+
+		**login**: *patpst7*
+		**hasło**: *devops1234*
+Podczas instalacji został wybrany podstawowy zbiór oprogramowania, **bez GUI**.
