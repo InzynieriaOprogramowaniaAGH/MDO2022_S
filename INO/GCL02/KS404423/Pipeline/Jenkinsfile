@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Build') {
+            steps {
+                echo '1. Building step...'
+                dir ('INO/GCL02/KS404423/Pipeline') {
+                    sh 'docker build -f ./docker/build/Dockerfile -t simple-tetris-builder .'
+                }
+            }
+        }
+        
+        stage('Tests') {
+            steps {
+                echo '2. Running tests...'
+                dir ('INO/GCL02/KS404423/Pipeline') {
+                    sh 'docker build -f ./docker/test/Dockerfile -t simple-tetris-tester .'
+                }
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                echo '3. Deploying...'
+                dir ('INO/GCL02/KS404423/Pipeline') {
+                    sh 'docker run -v $PWD:/home/vol-out simple-tetris-builder:latest cp -r /home/simple-tetris/dist /home/vol-out/'
+                    sh 'docker build -f ./docker/deploy/Dockerfile -t simple-tetris-deploy .'
+                }
+                sh 'docker run --detach simple-tetris-deploy:latest'
+            }
+        }
+        
+        stage('Publish') {
+            steps {
+                echo '4. Publishing package...'
+                dir ('./artifact') {
+                    sh 'docker run -v $PWD:/home/vol-publish simple-tetris-builder:latest bash -c \"npm pack /home/simple-tetris --pack-destination=/home/vol-publish/\" '
+                    archiveArtifacts artifacts: '*.tgz'
+                }
+            }
+        }
+        
+    }    
+    
+}
