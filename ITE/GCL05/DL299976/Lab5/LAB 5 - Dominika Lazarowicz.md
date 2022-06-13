@@ -405,3 +405,8 @@ post{
 ![image-20220613020536834](./img/image-20220613020536834.png)
 
 ![image-20220613020604203](./img/image-20220613020604203.png)
+
+## **Wnioski**
+
+Udało mi się stworzyć 2 działające pipeliny. . Pierwszy z nich działa na podstawie budowania obrazów z Dockerfile, przy jednoczesnym zastosowaniu zalet skryptowego jenkinsfile. W drugim rozwiązaniu cały kod znajduje się w jednym pliku a sam pipepline został rozszerzony o działanie na voluminach oraz agencie node.
+Oba również mocno różnią się sposobem publikacji.
