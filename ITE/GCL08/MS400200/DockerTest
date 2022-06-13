@@ -1,0 +1,3 @@
+FROM basictracer_build:latest
+RUN ls
+RUN python3 -m venv make test

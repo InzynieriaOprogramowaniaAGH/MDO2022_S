@@ -1,0 +1,13 @@
+protobuf>=3.0.0b2.post2
+opentracing<3.0,>=2.0
+six<2.0,>=1.10.0
+
+[tests]
+flake8
+flake8-quotes
+mock<1.1.0
+pytest
+pytest-cov
+pytest-mock
+Sphinx
+sphinx_rtd_theme

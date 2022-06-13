@@ -1,0 +1,81 @@
+pipeline {
+    agent any
+
+    parameters {
+        booleanParam(name: 'Promote', defaultValue: true, description: 'Promote statement')
+        string(name: 'Build_files', defaultValue: './ITE/GCL08/MS400200', description: 'build files path')
+        string(name: 'Version', defaultValue: '1.0.0', description: 'Version')
+    }
+
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('MS400200')
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'building basictracer'
+				dir("${params.Build_files}") {
+                    sh 'docker build . -f DockerBuild -t basictracer_build'
+				}
+                
+            }
+        }
+        
+        stage('Tests') {
+            steps {
+                echo 'testing basictracer'
+				dir("${params.Build_files}") {
+                    sh 'docker build . -f DockerTest -t basictracer_test'
+				}
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'deploying basictracer'
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh 'docker tag basictracer_build:latest dockerenjoyer456/basictracer-devops-deploy'
+                sh 'docker push dockerenjoyer456/basictracer-devops-deploy'
+            }
+        }
+
+        stage('Publish'){
+            when {
+                expression {return params.Promote}
+		    }
+            steps {
+                echo 'Publish'
+                dir("${params.Build_files}") {
+                    sh 'ls -a'
+                    sh 'docker build . -f DockerPublish -t basictracer_publish'
+                    
+				}
+                sh "docker run --volume /var/jenkins_home/workspace/basictracer:/finalArchive node-red_publish mv archive.tar.xz /finalArchive"
+                 dir('/var/jenkins_home/workspace/basictracer'){
+                    sh "mv archive.tar.xz archive-${params.Version}.tar.xz"
+			        archiveArtifacts artifacts: "archive-${params.Version}.tar.xz"
+			    }
+               
+            }
+        }
+    }
+        
+
+	post {
+        success {
+            echo 'Pipeline succsess'
+        }
+        failure {
+            echo 'Pipeline fail'
+        }
+        // always {
+        //     cleanWs(cleanWhenNotBuilt: false,
+        //             deleteDirs: true,
+        //             disableDeferredWipeout: true,
+        //             notFailBuild: true,
+        //             patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
+        //                        [pattern: '.propsfile', type: 'EXCLUDE']])
+        // }
+    }
+}
