@@ -1,0 +1,49 @@
+pipeline {
+    agent any
+    
+    parameters {
+        string(name: 'ProgramName')
+        string(name: 'Version')
+    }
+    
+    stages {
+        stage('Build') {
+            steps {
+                echo 'BUILD'
+                dir('INO/GCL02/AS302774/Lab05') {
+                    sh 'docker build . -f file1.dockerfile -t builder'
+                }
+            }
+        }
+        
+        stage('Tests') {
+            steps {
+                echo 'TESTS'
+                dir('INO/GCL02/AS302774/Lab05') {
+                    sh 'docker build . -f file2.dockerfile -t tester'
+                }
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                echo 'DEPLOY'
+                sh 'docker run --volume /var/jenkins_home/workspace/pipeline1/INO/GCL02/AS302774/Lab05:/finalBuild builder mv -n build /finalBuild'
+                dir('INO/GCL02/AS302774/Lab05') {
+                    sh 'docker build . -f file3.dockerfile -t deploy'
+                }
+                sh 'docker stop $(docker ps -a -q)'
+            }
+        }
+        
+        stage('Publish') {
+            steps {
+                echo 'PUBLISH'
+                dir('INO/GCL02/AS302774/Lab05') {
+                    sh 'docker build . -f file4.dockerfile -t publisher'
+                }
+                sh "docker run --volume /var/jenkins_home/workspace/pipeline1/INO/GCL02/AS302774/Lab05:/finalArchive publisher mv archive.tar.xz /finalArchive"
+            }
+        }
+    }
+}
