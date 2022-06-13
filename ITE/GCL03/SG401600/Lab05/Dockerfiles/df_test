@@ -1,0 +1,2 @@
+FROM jenkins_build
+RUN npm test --detectOpenHandles

@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+    options {
+        timeout(time: 1, unit: 'HOURS')
+    }
+
+    stages {
+        
+        stage('build') {
+            steps {
+                sh 'echo "Start building"'
+                sh 'docker build -t jenkins_build:latest . -f ITE/GCL03/SG401600/Lab05/Dockerfiles/df_build | tee logs_from_build.log'
+                sh 'docker run --name jenkins_build jenkins_build:latest'
+            }
+        }
+        
+        stage('test') {
+            steps {
+                sh 'echo "Building succesful. Start testing"'
+                sh 'docker build -t jenkins_test:latest . -f ITE/GCL03/SG401600/Lab05/Dockerfiles/df_test | tee logs_from_test.log'
+                sh 'docker run --name jenkins_test jenkins_test:latest'
+            }
+        }
+        
+        stage('publish') {
+            steps {
+                sh 'echo "Stop testing. Start publishing"'
+                steps {
+                    sh 'rm -r jenkins_file || true'
+                    sh 'mkdir jenkins_file'
+                    sh 'docker run --name jenkins_test jenkins_test:latest'
+                    sh 'docker cp jenkins_test:/visual-recognition-nodejs ./jenkins_file'
+                        
+                    sh 'tar -zcf my_jenkins_${params.version}.tar.gz jenkins_file'
+                    archiveArtifacts artifacts: 'my_jenkins_${params.version}.tar.gz'
+                }
+            }
+        }
+    }
+}
