@@ -1,0 +1,3 @@
+FROM docker_build
+WORKDIR quick-example-of-testing-in-nodejs
+RUN npm test

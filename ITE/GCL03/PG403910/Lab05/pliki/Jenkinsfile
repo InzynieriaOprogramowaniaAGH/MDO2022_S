@@ -1,0 +1,127 @@
+pipeline {
+    agent any
+
+    parameters {
+        booleanParam(name: "Promote",
+            defaultValue: false,
+            description: "Czy chcesz wypromować artefakt? (Tylko gdy wszystkie etapy wykonają się poprawnie)")
+        string(name: "Version",
+            defaultValue: "1.0.0",
+            description: "Podaj numer wersji")
+        string(name: "Password",
+            defaultValue: "123",
+            description: "Podaj hasło")
+    }
+
+    stages {
+        stage('Init'){
+            steps {
+                git url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git', branch: 'PG403910'
+            }
+            post{
+                success{
+                    echo 'Project initialized'
+                }
+                unsuccessful{
+                    echo 'Failed to initialize project'
+                }
+            }
+        }
+        // stage('Cleanup') {
+        //     steps {
+        //         // sh 'docker rm docker_build'
+        //         // sh 'docker rm docker_test'
+        //         // archiveArtifacts artifacts: "build.log"
+        //         // archiveArtifacts artifacts: "test.log"
+        //     }
+        // }
+        stage('PreBuild') {
+            steps {
+                dir('./ITE/GCL03/PG403910/Lab05/pliki'){
+                    echo 'Pre building'
+                    sh 'ls -a'
+                    sh 'docker build -t docker_build:latest . -f docker_build'
+                }
+            }
+            post{
+                success{
+                    echo 'Success'
+                }
+                unsuccessful{
+                    echo 'Failed'
+                }
+            }
+        }
+        stage('Build') {
+            steps {
+                dir('./ITE/GCL03/PG403910/Lab05/pliki'){
+                    echo 'Building'
+                    sh 'docker run --name  docker_build docker_build:latest'
+                }
+            }
+            post{
+                success{
+                    echo 'Success'
+                }
+                unsuccessful{
+                    echo 'Failed'
+                }
+            }
+        }
+	    stage('Test') {
+                steps {
+                    dir('./ITE/GCL03/PG403910/Lab05/pliki'){
+                        echo 'Starting Testing'
+                        sh 'docker build -t docker_test:latest . -f docker_test'
+                    }
+                }
+            post{
+                success{
+                    echo 'Tested successfully'
+                }
+                unsuccessful{
+                    echo 'Failed to make tests'
+                }
+            }
+
+        }
+
+        stage('Publish'){
+            when{
+                expression{
+                    return params.Promote == true; 
+                }
+            }
+            steps{
+                echo 'Starting Publishing'
+                sh "mkdir ${params.Version}"
+                sh 'docker run --name docker_test docker_test:latest'
+                sh "docker cp docker_test:/quick-example-of-testing-in-nodejs ./${params.Version}"
+                echo "Pushing Image to DockerHub"
+
+                sh "docker login -u malokreatywny22222 -p ${params.Password}"
+                sh "docker tag docker_test:latest malokreatywny22222/quick-example-of-testing-in-nodejs:${params.Version}"
+                sh "docker push malokreatywny22222/quick-example-of-testing-in-nodejs:${params.Version}"
+                
+                sh 'docker rm docker_test'
+                sh "tar -czvf quick-example-of-testing-in-nodejs-${params.Version}.tar.gz ${params.Version}/"
+                echo "Creating Artifact"
+                archiveArtifacts artifacts: "quick-example-of-testing-in-nodejs-${params.Version}.tar.gz"
+            }
+            post{
+                success{
+                    echo "Publishing complete"
+                }
+                unsuccessful{
+                    echo "Failed to publish"
+                }
+            }
+        }
+        stage('Cleanup') {
+            steps {
+                sh 'docker rm docker_build'
+                sh 'docker rm docker_test'
+            }
+        }
+    }
+}
