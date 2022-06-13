@@ -1,0 +1,4 @@
+FROM petclinic-dep:latest
+RUN cd petclinic && ./mvnw package
+WORKDIR /app
+ENTRYPOINT [ "cp", "target/spring-petclinic-2.7.0.jar", "/output/app.jar"]
