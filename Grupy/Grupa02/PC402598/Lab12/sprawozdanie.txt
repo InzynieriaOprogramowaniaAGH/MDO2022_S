@@ -1,0 +1,4 @@
+2. Zarejestrowałem sie do Microstoft Azure
+3. Zapoznałem się z cennikiem chmurowym dla Azure Container Instances
+4. Zaponzałem się z tym co to jest Azure Cloud Shell i ja kmożna w niej korzystać z Basha'a
+5. Zapoznałem się z intrukcja uruchanmiania kontenerów w ACI
