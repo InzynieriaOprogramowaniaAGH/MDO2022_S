@@ -92,4 +92,7 @@ kubectl create deployment redis --image=redis/alpine
 
 ![image](https://user-images.githubusercontent.com/75485199/173448809-d7ef5b38-8046-4bd8-a689-4b895bba17c1.png)
 
+Minikube to narzędzie, którego można użyć do uruchomienia Kubernetes (k8s) na komputerze lokalnym. Tworzy ono klaster z jednym węzłem w maszynie wirtualnej (VM). Klaster ten umożliwia demonstrację operacji Kubernetes bez konieczności czasochłonnej i zasobochłonnej instalacji pełnego K8s.
 
+Jaki jest cel używania Kubernetes?
+Kubernetes, często określany skrótem "K8s", orkiestruje skonteneryzowane aplikacje, które mają działać na klastrze hostów. System K8s automatyzuje wdrażanie i zarządzanie aplikacjami działającymi w chmurze przy użyciu infrastruktury lokalnej lub platform chmury publicznej.
