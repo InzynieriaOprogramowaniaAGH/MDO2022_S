@@ -109,4 +109,37 @@ Widok z konsoli
 ![image-20220614015140374](./img/image-20220614015140374.png)
 
 
+## Próba wczytania swojego obrazu
 
+Tym razem postanowiłam skorzytać z obrazów z jednych z pierwszych zajęć, które 
+
+wypycham go na dockerHub (konto stworzone na jednych z pierwszych zajęć). 
+
+
+![image-20220614210423916](./img/image-20220614210423916.png)
+
+![image-20220614210512180](./img/image-20220614210512180.png)
+
+Udało się wypushować obraz na założone kontro
+
+![image-20220614211709902](./img/image-20220614211709902.png
+
+plik YAML
+
+![image-20220614212509083](./img/image-20220614212509083.png)
+
+po uruchomieniu pody zostały stworzone jednek nie wystartowały
+
+![image-20220614212133041](./img/image-20220614212133041.png)
+
+
+
+
+
+![image-20220614212314283](./img/image-20220614212314283.png)
+
+
+
+Niestety po próbie uruchomienia widać. że pody nie działają prawidłowo
+
+![image-20220614212653137](./img/image-20220614212653137.png)
