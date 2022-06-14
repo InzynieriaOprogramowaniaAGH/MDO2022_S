@@ -1,8 +1,6 @@
 # Konwersja wdrożenia ręcznego na wdrożenie deklaratywne YAML
 
-Dodano do pliku 4 repliki ora rozpoczeto wdraæanie 
-`kubectl apply -f lab11.yaml`
-![](./1.png)
+
 uruchomiono klaster przy użyciu komendy z przełącznikiem 
 `minikube start --driver=docker`
 ![](./2.png)
