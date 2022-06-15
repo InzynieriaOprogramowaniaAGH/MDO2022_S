@@ -12,8 +12,7 @@ W tym celu posługuje się komendą `docker volume create`. Przełącznik `--nam
 
 
 
- `Docker volume inspect` wyświetla informacje o stworzonym woluminie. Będą one potrzebne w późniejszej części zadania.![image-20220610212425144](C:\Users\dominika.lazarowicz\source\repos\priv\MDO2022_S\ITE\GCL05\DL299976\Lab4\1)
-
+ `Docker volume inspect` wyświetla informacje o stworzonym woluminie. Będą one potrzebne w późniejszej części zadania.
 
 
 W celu utworzenia kontenera z zamontowanymi voluminami należy posłużyć się poleceniem 
@@ -31,12 +30,10 @@ gdzie devOps to nazwa kontenera.
 Do volumina wejściowego zostało sklonowane moje repozytorium.
 
 Widok z poziomu vm:
-
-.
+ ![image-20220613020604203](./img/1.png)
 
 Z poziomu kontenera:
-
-.
+ ![image-20220613020604203](./img/2.png)
 
 
 
@@ -44,7 +41,7 @@ Instalacja i uruchomienie builda z poziomu kontenera (polecenie`npm run build`).
 
 Pliki zostały przeniesione do volumina wyjściowego
 
-.
+ ![image-20220613020604203](./img/4.png)
 
 ##### 2.	Eksponowanie portu
 
@@ -58,13 +55,13 @@ Aby połączyć się z drugiego kontenera uruchamiam go jako klient (flaga `-c` 
 
 Działanie serwera i kleinta:
 
-.
+ ![image-20220613020604203](./img/5.png)
 
 
 
 Dodatkowo komendą `sudo docker logs <name>` wyświetlam zapisane logi
 
-.
+ ![image-20220613020604203](./img/6.png)
 
 ##### 3.	Jenkins
 
@@ -74,18 +71,15 @@ Do utworzenia sieci użyłam polecenia `sudo docker network create jenkins`.
 
 Jako, iż moja sieć została już utworzona widnieje na liście
 
-.
-
+ ![image-20220613020604203](./img/7.png)
 
 
 Dzięki wcześniej utworzonemu obrazowi Dockerfile mogę w prosty sposób użyć go do zbudowania Jenkinsa i uruchomienia obrazu.
 
-.
-
-.
-
+ ![image-20220613020604203](./img/8.png)
+ ![image-20220613020604203](./img/9.png)
 
 
 Finalnie udało się uruchomić Jenkinsa w przeglądarce
 
-.
+ ![image-20220613020604203](./img/10.png)
