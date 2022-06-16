@@ -1,7 +1,7 @@
-#Cel
+# Cel
  Celem projektu było przygotowanie środowiska wdrożeniowego dla prostej aplikacji z Javy (Maven) odpowiedzialnej za wypisywanie na ekran "Hello world".
  
-#Streszczenie kroków
+# Streszczenie kroków
  W Celu wykonania opisanych kroków należy mieć przygotowany działający Jenkins i Docker.
 
  1. W graficznym interfejsie Jenkinska należy wybrać "Nowy Projekt", następnie wpisać w pole nazwy projektu wybraną przez siebie nazwe projektu, wybrać "Pipeline" jako typ projektu i końcu wcisnąć przycisk potwierdzający "OK".
@@ -63,7 +63,7 @@
  
 
 
-#Etapy pipeline
+# Etapy pipeline
  - Clone
  Etap ten składa się następujących kroków
  ```
@@ -135,7 +135,7 @@
   i publikuje zmiany na swojej stronie lub wypisuje w konsoli informacje o powodzeniu procesu, lecz nie publikowaniu nowej wersji.
   
   
-#Diagram
+# Diagram
 
 
  **Diagram aktywności**
