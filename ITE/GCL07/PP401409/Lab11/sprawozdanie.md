@@ -117,4 +117,4 @@ spec:
 
 Efekt wdrożenia YAML'a:
 
-![](efektYamlaDashboard)
+![](efektYamlaDashboard.png)
