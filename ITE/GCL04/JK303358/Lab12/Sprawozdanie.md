@@ -10,7 +10,7 @@
  
  W pliku wdrożeniowym zmieniono wartość parametru `replicas`
  
- ```
+ ```yml
  apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -58,7 +58,7 @@ spec:
  
  Aby uruchomienie kończyło się błędem można na przykład wykorzystać parametry minReadySeconds i progressDeadlineSeconds. Utworzono nowy plik wdrożeniowy `wrong_deployment.yml`:
  
- ```
+ ```yml
  apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -89,10 +89,63 @@ spec:
 ### Zmiany w deploymencie
  * Aktualizuj plik YAML z wdrożeniem i przeprowadzaj je ponownie po zastosowaniu następujących zmian:
    * zwiększenie replik
+
+   Zwiększono ilość replik do 8:
+   
+   ![8 replicas](Pictures/4.png?raw=true)
+   
+   ![8 replicas](Pictures/5.png?raw=true)
+   
+   ![8 replicas](Pictures/6.png?raw=true)
+   
+   ![8 replicas](Pictures/7.png?raw=true)
+
    * zmniejszenie liczby replik do 1
+
+   ![1 replica](Pictures/8.png?raw=true)
+   
+   ![1 replica](Pictures/9.png?raw=true)
+   
+   ![1 replica](Pictures/10.png?raw=true)
+
    * zmniejszenie liczby replik do 0
+
+   ![0 replicas](Pictures/11.png?raw=true)
+   
+   ![0 replicas](Pictures/12.png?raw=true)
+
    * Zastosowanie nowej wersji obrazu
+
+   Pobrano najnowszą wersję beta:
+   
+   ![docker pull](Pictures/13.png?raw=true)
+   
+   Przywrócono ilość replik do 2 oraz zmieniono obraz i nazwę w pliku wdrożeniowym.
+   
+   Uruchomiono wdrożenie:
+   
+   ![deployment](Pictures/14.png?raw=true)
+   
+   ![dashboard](Pictures/15.png?raw=true)
+   
+   ![dashboard](Pictures/16.png?raw=true)
+
    * Zastosowanie starszej wersji obrazu
+
+   Pobrano obraz starszej wersji:
+   
+   ![docker pull](Pictures/17.png?raw=true)
+   
+   Ponownie edytowano plik wdrożeniowy oraz je uruchomiono:
+   
+   ![deployment](Pictures/18.png?raw=true)
+   
+   ![dashboard](Pictures/19.png?raw=true)
+   
+   ![dashboard](Pictures/20.png?raw=true)
+   
+   ![dashboard](Pictures/21.png?raw=true)
+
  * Przywracaj poprzednie wersje wdrożeń za pomocą poleceń
    * ```kubectl rollout history```
    * ```kubectl rollout undo```
