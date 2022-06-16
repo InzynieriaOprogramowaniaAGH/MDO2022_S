@@ -148,11 +148,35 @@ spec:
 
  * Przywracaj poprzednie wersje wdrożeń za pomocą poleceń
    * ```kubectl rollout history```
+
+   `kubectl rollout history deployment/postgres`
+   
+   ![rollout history](Pictures/22.png?raw=true)
+
    * ```kubectl rollout undo```
+
+   `kubectl rollout undo deployment/postgres --to-revision`
+   
+   ![rollout undo](Pictures/23.png?raw=true)
+   
+   ![rollout undo](Pictures/24.png?raw=true)
 
 ### Kontrola wdrożenia
  * Napisz skrypt weryfikujący, czy wdrożenie "zdążyło" się wdrożyć (60 sekund)
- * Zakres rozszerzony: Ujmij skrypt w pipeline Jenkins (o ile minikube jest dostępny z zewnątrz)
+ 
+ ```shell
+ kubectl apply -f deployment.yml
+sleep 60
+kubectl rollout status -f deployment.yml
+if [[ "$?" -ne 0 ]]
+then
+	echo "deploy fail"
+else
+	echo "deploy success"
+fi
+ ```
+ 
+ ![deploy script](Pictures/25.png?raw=true)
  
 ### Strategie wdrożenia
  * Przygotuj wersje wdrożeń stosujące następujące strategie wdrożeń
