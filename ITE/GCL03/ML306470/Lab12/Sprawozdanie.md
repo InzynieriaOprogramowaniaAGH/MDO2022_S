@@ -230,4 +230,4 @@ spec:
    
    * Canary Deployment workload
    
-	Canary Deployment to strategia wdrażania, która stopniowo udostępnia aplikację lub usługę małemu zbiorowi użytkowników. Cała infrastruktura w środowisku docelowym jest aktualizowana w małych fazach np. 2%, 10%, 30%, 60%, 80%, 100%.
+Canary Deployment to strategia wdrażania, która stopniowo udostępnia aplikację lub usługę małemu zbiorowi użytkowników. Cała infrastruktura w środowisku docelowym jest aktualizowana w małych fazach np. 2%, 10%, 30%, 60%, 80%, 100%.
