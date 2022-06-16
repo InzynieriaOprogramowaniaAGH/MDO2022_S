@@ -127,11 +127,8 @@
 		}
 		else{
 		 echo 'Pipeline finished work sucessfully but new version wasn\'t published.'
-		}
-	
-	
+		}	
 	}
-	
   ```
   W celu użycia instrukcji warunkowej zawarość kroku "Publish" jest umieszczona w 'script'.
   Zależnie od podanego przez użytkownika parametru "promote" (boolean) pipeline zmienia nazwę artefaktu SimpleApp.jar na SimpleApp-```version```.jar
