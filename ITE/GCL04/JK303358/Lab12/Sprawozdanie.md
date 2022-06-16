@@ -181,9 +181,28 @@ fi
 ### Strategie wdrożenia
  * Przygotuj wersje wdrożeń stosujące następujące strategie wdrożeń
    * Recreate
+
+   Utworzono nowy plik wdrożeniowy `deployment_recreate.yml`. Aby wykorzystać strategię wdrożeń należy w sekcji `spec` użyć parametru `strategy -> type`. Ustawiono go na `Recreate`.
+   
+   ![deploy recreate](Pictures/26.png?raw=true)
+   
+
    * Rolling Update
-   * Canary Deployment workload
+
+   Utworzono nowy plik wdrożeniowy `deployment_rollingupdate.yml`. Zdefiniowano w nim nowe parametry: 
+   ```yml
+   strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+   ```
+   
+   ![deploy rolling update](Pictures/28.png?raw=true)
+   
+   ![deploy rolling update](Pictures/27.png?raw=true)
+
  * Zaobserwuj i opisz różnice
- * Uzyj etykiet
- * https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+
+  Strategia Recreate usuwa wszystkie istniejące pody jednocześnie i tworzy nowe, aktualne. Strategia Rolling Update jest domyślną strategią wdrożeniową w Kubernetesie i usuwa pody pojedynczo. Parametr `maxSurge` określa ile podów może być utworzonych jednocześnie, a `maxUnavailable` ile maksymalnie podów może być niedostępnych podczas rolloutu.
  
