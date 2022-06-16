@@ -7,6 +7,10 @@
 ### Instalacja klastra Kubernetes
  * Zaopatrz się w implementację stosu k8s: minikube
  
+ Wykonano komendę `curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64`
+ 
+ Zainstalowano: `sudo install minikube-linux-amd64 /usr/local/bin/minikube`
+ 
  ![curl minikube](Pictures/1.png?raw=true)
  
  ![minikube version](Pictures/2.png?raw=true)
@@ -15,13 +19,24 @@
  * Przeprowadź instalację, wykaż poziom bezpieczeństwa instalacji
  * zaopatrz się w polecenie kubectl
  
- ![curl kubectl](Pictures/3.png?raw=true) 
+ Pobrano kubectl: `curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"`
+ 
+ ![curl kubectl](Pictures/3.png?raw=true)
+ 
+ Pobrano i sprawdzono sumę kontrolną: `curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"`
+ `echo "$(cat kubectl.sha256) kubectl" | sha256sum --check`
  
  ![curl checksum](Pictures/4.png?raw=true)
  
  ![kubectl install/version](Pictures/5.png?raw=true)
  
  * Uruchom Kubernetes, pokaż działający kontener/worker
+
+ Uruchomienie Kubernetesa należy poprzedzić dodaniem użytkownika do grupy docker:
+ `sudo groupadd docker`
+ `sudo usermod -aG docker $USER && newgrp docker`
+ 
+ Następnie można uruchomić Kubernetesa poleceniem `minikube start`
  
  ![sudo groupadd](Pictures/6.png?raw=true) 
  
@@ -29,6 +44,8 @@
  
  * Zmityguj problemy wynikające z wymagań sprzętowych lub odnieś się do nich (względem dokumentacji)
  * Uruchom Dashboard, otwórz w przeglądarce, przedstaw łączność
+
+ Uruchomienie dashboard: `minikube dashboard`
  
  ![dashboard](Pictures/8.png?raw=true)
  
