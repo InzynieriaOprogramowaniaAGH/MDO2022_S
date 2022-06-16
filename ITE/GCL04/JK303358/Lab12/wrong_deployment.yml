@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  minReadySeconds: 5
+  progressDeadlineSeconds: 10
+  selector:
+    matchLabels:
+      app: postgres
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres
+        ports:
+        - containerPort: 5432
