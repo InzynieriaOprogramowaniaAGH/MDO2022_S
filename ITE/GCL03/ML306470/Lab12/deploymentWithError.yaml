@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: pg
 spec:
+  minReadySeconds: 55
+  progressDeadlineSeconds: 60
   selector:
     matchLabels:
       app: mypostgres
@@ -15,8 +17,5 @@ spec:
       containers:
       - name: pg
         image: postgres
-        env:
-        - name: POSTGRES_PASSWORD
-          value: "admin123"
         ports:
         - containerPort: 5432

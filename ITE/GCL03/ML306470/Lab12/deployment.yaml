@@ -20,3 +20,4 @@ spec:
           value: "admin123"
         ports:
         - containerPort: 5432
+        

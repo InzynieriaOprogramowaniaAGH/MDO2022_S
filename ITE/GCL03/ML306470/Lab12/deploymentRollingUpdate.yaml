@@ -3,10 +3,15 @@ kind: Deployment
 metadata:
   name: pg
 spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
   selector:
     matchLabels:
       app: mypostgres
-  replicas: 4 # tells deployment to run 2 pods matching the template
+  replicas: 4 
   template:
     metadata:
       labels:
@@ -14,9 +19,10 @@ spec:
     spec:
       containers:
       - name: pg
-        image: postgres
+        image: postgres:11
         env:
         - name: POSTGRES_PASSWORD
           value: "admin123"
         ports:
         - containerPort: 5432
+        

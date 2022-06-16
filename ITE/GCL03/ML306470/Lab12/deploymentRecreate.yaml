@@ -3,10 +3,12 @@ kind: Deployment
 metadata:
   name: pg
 spec:
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: mypostgres
-  replicas: 4 # tells deployment to run 2 pods matching the template
+  replicas: 4 
   template:
     metadata:
       labels:
@@ -20,3 +22,4 @@ spec:
           value: "admin123"
         ports:
         - containerPort: 5432
+        
