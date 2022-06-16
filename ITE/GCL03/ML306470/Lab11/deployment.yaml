@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pg
+spec:
+  selector:
+    matchLabels:
+      app: mypostgres
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: mypostgres
+    spec:
+      containers:
+      - name: pg
+        image: postgres
+        env:
+        - name: POSTGRES_PASSWORD
+          value: "admin123"
+        ports:
+        - containerPort: 5432

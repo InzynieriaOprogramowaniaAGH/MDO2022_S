@@ -121,7 +121,36 @@ repo --name=updates --mirrorlist=http://mirrors.fedoraproject.org/mirrorlist?rep
   * Jako demon uruchamiany po starcie sieci @ boot
   * Jako podłączanie serwera w systemu plików w ramach udziału udostępnionego
   
+  
+  Zmieniono plik odpowiedzi z instalacji w następujący sposób
+  
+  ![](ScreenShots/EdittedAnaconda.png?raw=true)
+  
+  
 ### Infrastructure as a code
 * Umieść plik odpowiedzi w repozytorium
+
+	Umieszczono plik w repozytorium
+	
+	![](ScreenShots/gitAddAnaconda.png?raw=true)
+	
+	
+
 * Połącz plik odpowiedzi z ISO instalacyjnym
+
+	W celu połączenia odpowiedzi z ISO instalacyjnym utworzono nową maszynę Fedory i połączono ustawiono jej wcześniej stworzoną sieć.
+	
+	![](ScreenShots/gitAddAnaconda.png?raw=true)
+	
+	
+	
+	Następnie podczas instalacji
+	
+	![](ScreenShots/gitAddAnaconda.png?raw=true)
+	
+	
+	
+	Po zakończeniu procesu artefakt z powodzeniem został pobrany.
+	
+	![](ScreenShots/gitAddAnaconda.png?raw=true)
 

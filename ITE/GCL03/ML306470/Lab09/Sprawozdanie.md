@@ -129,5 +129,29 @@ repo --name=updates --mirrorlist=http://mirrors.fedoraproject.org/mirrorlist?rep
   
 ### Infrastructure as a code
 * Umieść plik odpowiedzi w repozytorium
+
+	Umieszczono plik w repozytorium
+	
+	![](ScreenShots/gitAddAnaconda.png?raw=true)
+	
+	
+
 * Połącz plik odpowiedzi z ISO instalacyjnym
+
+	W celu połączenia odpowiedzi z ISO instalacyjnym utworzono nową maszynę Fedory i połączono ustawiono jej wcześniej stworzoną sieć.
+	
+	![](ScreenShots/gitAddAnaconda.png?raw=true)
+	
+	
+	
+	Następnie podczas instalacji kliknięto przycisk tab w celu uruchomienia zaawansowanych ustawień+
+	
+	
+	![](ScreenShots/gitAddAnaconda.png?raw=true)
+	
+	
+	
+	Po zakończeniu procesu artefakt z powodzeniem został pobrany.
+	
+	![](ScreenShots/gitAddAnaconda.png?raw=true)
 
