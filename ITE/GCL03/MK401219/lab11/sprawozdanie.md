@@ -1,5 +1,8 @@
 # Sprawozdanie z lab 11
-## 1.Instalacja klastra Kubernetes
+
+Ze względu na wyjazd instrukcje związane z Kubernetesem były wykonywane na sprzęcie innym niż uprzednio.
+
+## 1.Instalacja klastra Kubernetes 
 Komendą `curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64`
 zaopatrzono się w implementację kubernetesa oraz przeprowadzono instalację poprzez `sudo install minikube-darwin-amd64 /usr/local/bin/minikube`
 
