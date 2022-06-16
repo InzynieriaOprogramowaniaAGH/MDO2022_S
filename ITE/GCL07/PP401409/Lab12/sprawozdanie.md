@@ -39,3 +39,107 @@ Pod nginx nie powinien się pojawiać, w tym momencie przypomniałam sobie o jeg
 
  - **Liczba replik = 0**
 ![](0replik.png)
+
+## Kontrola wdrożeń
+Kontrolą wdrożeń był skrypt weryfikujący, czy wdrożenie wykonało się w mniej niż 60 sekund. Początek skryptu to komendy używane dotychczas przy wdrożeniu czyli: 
+```minikube kubectl apply -- -f deploy.yaml``` oraz ```minikube kubectl rollout status -- -f deploy.yaml```. Sprawdzenie czy wdrożenie wykonało się w ciągu 60s sprawdzam poprzez ```timeout 60```.
+
+Treść skryptu:
+
+```
+#!/bin/bash
+
+minikube kubectl apply -- -f deploy.yaml
+timeout 60 minikube kubectl rollout status -- -f deploy.yaml
+if [ $? -eq 0 ]
+then
+    echo "Wdrozenie przeszlo pomyslnie"
+else
+    echo  "Wdrozenie nieudane"
+fi
+```
+
+![](kontrola.png)
+
+## Strategie wdrożenia
+Aby zmienić strategię wdrożenia należało dodać ``` strategy ``` do sekcji ``` spec ``` a następnie określić typ.
+
+### **Recreate** - w miejsce starej wersji wdrażana jest nowa.
+
+Treść dla typu Recreate:
+
+```                                                                                            apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  replicas: 10
+  strategy:
+        type: Recreate
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+```
+
+Efekt dla 
+``` 
+strategy:
+	type: Recreate
+```
+
+![](sprawdzenieWdrozenia.png)
+(Błąd pojawił się ponieważ użyłam z automatu tabulacji zamiast spacji ale wiemy że sprawdzanie wdrożenia działa poprawnie)
+
+
+
+### RollingUpdate 
+- w tym typie pody są wyłączane, a następnie uruchamiane.
+
+Skrypt:
+``` 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  replicas: 10
+  strategy:
+      type: RollingUpdate
+      rollingUpdate:
+                 maxSurge: 4
+                 maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+```
+`maxSurge` - maksymalna ilość podów które mogą zostać dodane `maxUnavailable` - maksymalna ilość podów które mogą być niedostępne. 
+
+W swoim przykładzie przedstawiam wdrożenie w którym możemy mieć 4 dodane pody oraz 1 niedostępy. Ogólna ilość replik: 10.
+
+![](RollingUpdate.png)
+
+
