@@ -149,6 +149,7 @@ fi
    Strategia ta na nowo tworzy pody (usuwa stare -> tworzy nowe).
    
    ```yaml
+   
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -191,6 +192,7 @@ spec:
  
    
    ```yaml
+   
 apiVersion: apps/v1
 kind: Deployment
 metadata:
