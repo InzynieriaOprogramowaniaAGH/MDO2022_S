@@ -148,7 +148,7 @@ fi
    
    Strategia ta na nowo tworzy pody (usuwa stare -> tworzy nowe).
    
-   ```yml
+```yml
    
 apiVersion: apps/v1
 kind: Deployment
