@@ -1,0 +1,121 @@
+pipeline 
+{
+    parameters
+    {
+        string(name: 'VERSION', defaultValue: '1.0.0', description: '')
+        booleanParam(name: 'PROMOTE', defaultValue: true, description: '')
+    }
+
+    agent any
+    
+    stages
+     {
+     	stage('Preparing and Build Cleaning')
+     	{
+     	  steps
+     	  {
+     	    sh 'docker volume create input_vol'
+            sh 'docker volume create output_vol'
+            sh 'docker rm -f bw_build || true'
+            sh 'docker volume prune -f'
+     	  }
+     	}
+     	
+        stage('Build') 
+        {
+            steps 
+            {
+              
+              sh 'docker build . -f ./ITE/GCL08/BW402373/Lab05/Dockerfile1 -t bw_build'
+  	      sh 'docker run --mount type=volume,src="bw_build",dst=/input_vol bw_build:latest bash -c "cd .. && cp -r /mongo-express /input_vol && cp -r /input_vol /output_vol && ls ./input_vol && ls ./output_vol"'
+            
+            }
+        }
+        
+        stage('Test Cleaning')
+        {
+        steps
+         {
+          sh 'docker rm -f tests || true'
+         }
+        }
+
+         stage('Test') 
+        {
+            steps 
+            {
+              
+              sh 'docker build . -f ./ITE/GCL08/BW402373/Lab05/Dockerfile2 -t tests'
+              sh "docker run --name tests --rm --mount source=tests,target=/input_vol tests:latest"
+              
+            }
+        }
+        stage('Deploy Cleaning')
+        {
+        steps
+         {
+          sh 'docker rm -f bwdeploy || true'
+         }
+        }
+
+         stage('Deploy')
+        {
+            steps
+            {
+                
+                sh 'docker run -dit --name bwdeploy --mount type=volume,src="output_vol",dst=/bwproj node'
+                sh 'exit $(docker inspect bwdeploy --format="{{.State.ExitCode}}")'
+            }
+        }
+        
+        stage('Publish Cleaning')
+        {
+         steps
+         {
+          sh 'rm -rf /var/jenkins_home/workspace/bw_artifacts'
+          sh 'docker rm -f bw_publish || true'
+         }
+        }
+        
+        stage ('Publish')
+        {
+            when
+            {
+                expression {return params.PROMOTE}
+            }
+            steps
+            {
+                
+                sh 'mkdir /var/jenkins_home/workspace/bw_artifacts'
+                sh 'docker run -d --name bw_publish --mount type=volume,src="output_vol",dst=/usr/local/bw_proj --mount type=bind,source=/var/jenkins_home/workspace/bw_artifacts,target=/usr/local/bw_copy node bash -c "chmod -R 777 /usr/local/bw_proj && cp -R /usr/local/bw_proj/. /usr/local/bw_copy"'
+                sh "tar -zcvf mongo-express_${params.VERSION}.tar.xz -C /var/jenkins_home/workspace/bw_artifacts ."
+                archiveArtifacts artifacts: "mongo-express_${params.VERSION}.tar.xz"
+                
+            }
+        } 
+        
+        stage ('Clearing Memory')
+        {
+        	steps
+        	{
+        	sh 'docker rm -f bw_build || true'
+                sh 'docker rm -f tests || true'
+                sh 'docker rm -f bwdeploy || true'
+                sh 'docker rm -f bw_publish || true'
+                }
+        }
+        
+      }
+      
+   post
+   {
+   	success{
+   		echo 'You successfully ended Pipline'
+   	}
+   	failure
+   	{
+   		echo 'ERROR'
+   	}
+   } 
+   
+   }
