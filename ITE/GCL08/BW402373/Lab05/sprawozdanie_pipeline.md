@@ -12,5 +12,27 @@ z listy "SCM" wybrać ```Git```, a w URL wpisać link do repozytorium ```https:/
 ![first_part_of_config](1_conf.PNG)
 2. W polu "Branch specifier" wpisać ```*/BW402373```, a następnie w "Script Path" wpisać ścieżkę do pliku Jenkinsowego z kodem Pipeline ```ITE/GCL08/BW402373/Lab05/Jenkinsfile```.
 ![sec_part_of_config](2_conf2.PNG)
-3. 
+3. Pliki potrzebne do przygotowania pipeline<br>
+Aby przejść do pisania pipline'u wymagane jest umieszczenie trzech plików dockerfile'owych 
+na repozytorium i w branchu dodanym podczas konfiguracji pipeline'u.
+Pierwszym z nich jest Dockerfile1 który klonuje repozytorium oraz przeprowadza instalację i budowanie projektu.<br>
+```
+FROM node:latest
+
+RUN git clone https://github.com/mongo-express/mongo-express.git
+
+WORKDIR mongo-express
+RUN npm install
+RUN npm run build
+```
+<br>
+Plik Dockerfile2 odpowiada za uruchomienie testów znajdujących się w projekcie.<br>
+```
+FROM bw_build:latest
+
+WORKDIR mongo-express
+
+RUN npm test
+```
+<br>
 
