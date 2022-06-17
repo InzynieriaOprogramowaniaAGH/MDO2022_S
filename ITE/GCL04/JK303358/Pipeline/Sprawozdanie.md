@@ -106,4 +106,4 @@ Dotarcie do tego kroku informuje nas o tym, że aplikacja jest gotowa do opublik
 
 Jenkinsfile:
 
-![Jenkinsfile stage clone](Pictures/17.png?raw=true)
+![Jenkinsfile stage clone](Pictures/17_1.png?raw=true)
