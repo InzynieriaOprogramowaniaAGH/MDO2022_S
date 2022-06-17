@@ -1,4 +1,4 @@
-# Projekt pipeline'u
+# Projekt pipeline'u - Bartłomiej Walasek
 ## Lab 05
 ### 1. Opis projektu<br>
 Celem laboratorium było przygotowanie projektu z mozliwoscią automatycznego wykonania czynności wykonanych na poprzednich labolatoriach,
