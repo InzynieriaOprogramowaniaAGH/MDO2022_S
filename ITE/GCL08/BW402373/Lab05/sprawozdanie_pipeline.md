@@ -7,7 +7,8 @@ zawiera polecenia potrzebne do sklonowania repozytorium, zainstalowania potrzebn
 polecenia uruchomiające testy przeprowadzone dla wybranego repozytorium. Deploy zostal przeprowadzony wewnątrz kontenera wykorzystując obraz Node. 
 W kroku publish ze zbudowanego programu została stworzona paczka tar.tgz.<br>
 ### 2. Wykonanie projektu<br>
-1. Konfiguracja pipeline odbywa się w zakładce "Konfiguracja". Po nadaniu nazwy projektowi w liście rozwijanej Definition należy wybrać ```Pipeline script from SCM```, 
+##### 1. Konfiguracja pipeline<br> 
+1. Odbywa się w zakładce "Konfiguracja". Po nadaniu nazwy projektowi w liście rozwijanej Definition należy wybrać ```Pipeline script from SCM```, 
 z listy "SCM" wybrać ```Git```, a w URL wpisać link do repozytorium ```https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S```.<br>
 ![first_part_of_config](1_conf.PNG)
 2. W polu "Branch specifier" wpisać ```*/BW402373```, a następnie w "Script Path" wpisać ścieżkę do pliku Jenkinsowego z kodem Pipeline ```ITE/GCL08/BW402373/Lab05/Jenkinsfile```.
@@ -33,7 +34,7 @@ WORKDIR mongo-express
 RUN npm test
 ```
 
-4. Zawartość pipeline<br>
+##### 3. Zawartość pipeline<br>
 1. Parameters<br>
 Pipeline przyjmuje dwa parametry PROMOTE oraz VERSION. Parametr VERSION oznacza wersję wydawanego programu. Parametr określający wersję 
 domyślnie ustawiony jest na 1.0.0 lecz przy każdym uruchomieniu pipeline'u istnieje możliwość zmiany wersji. 
