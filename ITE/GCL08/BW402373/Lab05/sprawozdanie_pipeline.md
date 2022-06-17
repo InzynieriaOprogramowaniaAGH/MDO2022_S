@@ -34,6 +34,7 @@ WORKDIR mongo-express
 
 RUN npm test
 ```
+<br>
 4. Zawartość pipeline<br>
 1. Parameters<br>
 Pipline przyjmuje dwa parametry PROMOTE oraz VERSION. Parametr VERSION oznacza wersję wydawanego programu. Parametr określający wersję 
