@@ -26,7 +26,7 @@ RUN npm install
 RUN npm run build
 ```
 <br>
-Plik Dockerfile2 odpowiada za uruchomienie testów znajdujących się w projekcie.
+Plik Dockerfile2 odpowiada za uruchomienie testów znajdujących się w projekcie.<br>
 ```
 FROM bw_build:latest
 WORKDIR mongo-express
