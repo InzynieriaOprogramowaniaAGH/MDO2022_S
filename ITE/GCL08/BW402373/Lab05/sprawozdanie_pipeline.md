@@ -26,7 +26,7 @@ RUN npm install
 RUN npm run build
 ```
 <br>
-Plik Dockerfile2 odpowiada za uruchomienie testów znajdujących się w projekcie.<br>
+Plik Dockerfile2 odpowiada za uruchomienie testów znajdujących się w projekcie.
 ```
 FROM bw_build:latest
 
@@ -37,12 +37,11 @@ RUN npm test
 <br>
 4. Zawartość pipeline<br>
 1. Parameters<br>
-Pipline przyjmuje dwa parametry PROMOTE oraz VERSION. Parametr VERSION oznacza wersję wydawanego programu. Parametr określający wersję 
-domyślnie ustawiony jest na 1.0.0 lecz przy każdym uruchomieniu pipline'u istnieje możliwość zmiany wersji. 
+Pipeline przyjmuje dwa parametry PROMOTE oraz VERSION. Parametr VERSION oznacza wersję wydawanego programu. Parametr określający wersję 
+domyślnie ustawiony jest na 1.0.0 lecz przy każdym uruchomieniu pipeline'u istnieje możliwość zmiany wersji. 
 Parametr PROMOTE decyduje czy sekcja Publish się wykona. Jeżeli wszystkie poprzednie etapy pipeline'u przejdą poprawnie i PROMOTE jest zaznaczone, 
 sekcja Publish buduje publikowalny artefakt, o numerze wersji z parametru VERSION.
 Sekcja agent konfiguruje, na których węzłach można uruchomić potok. Określenie agent any oznacza, że ​​Jenkins uruchomi zadanie na dowolnym z dostępnych węzłów.
-<br>
 ```
 parameters
     {
@@ -52,9 +51,8 @@ parameters
 
     agent any
 ```
-<br>
 2. Preparing and Build Cleaning.<br>
-Tworzone są woluminy wejściowy i wyjściowy. W przypadku istnienia nieaktywnych woluminów są one usuwane, a kontenery są czyszczone.<br>
+Tworzone są woluminy wejściowy i wyjściowy. W przypadku istnienia nieaktywnych woluminów są one usuwane, a kontenery są czyszczone.
 ```
 stages
      {
@@ -69,12 +67,12 @@ stages
      	  }
      	}
 ```
-<br>
+
 3. Build<br>
 W tym kroku na początku zostanie wykonane sklonowanie i zbudowanie programu używając wyżej opisanego Dockerfile1,
 które zostanie wykonane w kontenerze ```bw_build```, następnie zostanie on uruchomiony z podpiętym woluminem wejsciowym, 
 na który zostaje skopiowana zawartość kontenera ze zbudowanym programem, po czym z kontenra wejściowego zawartość 
-zostaje skopiowana na wolumin wyjsciowy. Na koniec zostają wyświetlone zawartości obu woluminow w celu sprawdzenia, czy kopiowanie przebiegło pomyślnie.<br>
+zostaje skopiowana na wolumin wyjsciowy. Na koniec zostają wyświetlone zawartości obu woluminow w celu sprawdzenia, czy kopiowanie przebiegło pomyślnie.
 ```
 stage('Build') 
         {
@@ -87,7 +85,7 @@ stage('Build')
             }
         }
 ```
-<br>
+
 4. Test<br>
 W sekcji ```Test Cleaning``` usuwany jest istniejący dotychczas kontener z uruchomionymi testami.
 Testy zostają przeprowadzone używajac Dockerfile2, wg zawartych tam poleceń potrzebnych do uruchomienia testów. 
@@ -169,7 +167,7 @@ stage('Publish Cleaning')
         }
 ```
 7. Clearing memory<br>
-Poniższy kod usuwa kontenery powstałe podczas wykonywania opisywanych powyżej kroków.<br>
+Poniższy kod usuwa kontenery powstałe podczas wykonywania opisywanych powyżej kroków.
 ```
 stage ('Clearing Memory')
         {
@@ -186,7 +184,7 @@ stage ('Clearing Memory')
 ```
 8. Efekt<br>
 Jeśli wszystkie kroki zostaną przeprowadzone pomyślnie, to zostanie wypisany komunikat ```Everything ended successfully.```
-W przeciwnym razie wyświetlony zostaje komunikat ```There are some errors.```.<br>
+W przeciwnym razie wyświetlony zostaje komunikat ```There are some errors.```.
 ```
 post
   {
