@@ -138,20 +138,24 @@ repo --name=updates --mirrorlist=http://mirrors.fedoraproject.org/mirrorlist?rep
 
 * Połącz plik odpowiedzi z ISO instalacyjnym
 
-	W celu połączenia odpowiedzi z ISO instalacyjnym utworzono nową maszynę Fedory i połączono ustawiono jej wcześniej stworzoną sieć.
+	W celu połączenia odpowiedzi z ISO instalacyjnym skopiowano plik iso Fedory i edytowano jego pliki za pomocą programu AnyBurn (4 inne nie działały z różnych powodów -.-) -> wrzucono plik "anaconda-ks.cfg" do ścieżki ```./isolinux``` i zmieniono plik "isolinux.cfg" zmieniając sekcję:
+```
+label linux
+  menu label ^Install Fedora 36
+  kernel vmlinuz
+  append initrd=initrd.img inst.stage2=hd:LABEL=Fedora-S-dvd-x86_64-36 quiet
+```
 	
-	![](ScreenShots/gitAddAnaconda.png?raw=true)
+na:
+```
+label linux
+  menu label ^Install Fedora 36
+  kernel vmlinuz
+  append initrd=initrd.img inst.stage2=hd:LABEL=Fedora-S-dvd-x86_64-36 quiet inst.ks=cdrom:/anaconda-ks.cfg
+```
+	![](ScreenShots/MakeshiftSettings.png?raw=true)
 	
 	
+	![](ScreenShots/MakeMakeshiftFedoraIso.png?raw=true)
 	
-	Następnie podczas instalacji kliknięto przycisk tab w celu uruchomienia zaawansowanych ustawień+
-	
-	
-	![](ScreenShots/gitAddAnaconda.png?raw=true)
-	
-	
-	
-	Po zakończeniu procesu artefakt z powodzeniem został pobrany.
-	
-	![](ScreenShots/gitAddAnaconda.png?raw=true)
 
