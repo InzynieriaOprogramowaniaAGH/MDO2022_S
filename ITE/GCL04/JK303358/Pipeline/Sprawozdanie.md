@@ -36,7 +36,7 @@ Serwer Jenkinsa uruchomiony jest na porcie 8080, zatem po wpisaniu w przeglądar
 *Aby ułatwić sobie pracę port wirtualnej maszyny 8080 został przekierowany na port hosta 8282*
 ![port forwarding](Pictures/5.png?raw=true)
 
-Konfiguracja projektu:
+Konfiguracja projektu - musimy zapewnić ścieżki do projektu oraz repozytorium, wskazać brancha oraz nazwę pliku wdrożeniowego Jenkinsfile. Panel jest bardzo przejrzysty. Każde pole uzupełnione jest podpowiedzią.
 
 ![general](Pictures/6.png?raw=true)
 
