@@ -196,5 +196,7 @@ post
 Przykladowe uruchomienie napisanego Pipeline'a. Jak widać na poniższym zrzucie wszystkie etapy zakończyły się sukcesem
 i można zaobserwować stworzenie sie pliku z artefaktami.
 ![running](3_uruchomienie.png)
+### 4. Diagram 
+![diagram](4_diagram.PNG)
 
 
