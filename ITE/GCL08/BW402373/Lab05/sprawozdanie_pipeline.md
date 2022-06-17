@@ -115,22 +115,21 @@ wdrożenia z podpiętym woluminem wyjściowym, w którym znajduje sie skopiowane
 Następnie zostaje sprawdzony exit code. Jeśli wykonał się poprawnie, kolejne kroki sa wykonywane.<br>
 ```
 stage('Deploy Cleaning')
-        {
-        steps
-			{
-				sh 'docker rm -f bwdeploy || true'
-			}
-        }
+{
+	steps
+	{
+		sh 'docker rm -f bwdeploy || true'
+	}
+}
 
-         stage('Deploy')
+stage('Deploy')
+{
+	steps
         {
-            steps
-            {
-                
-                sh 'docker run -dit --name bwdeploy --mount type=volume,src="output_vol",dst=/bwproj node'
+		sh 'docker run -dit --name bwdeploy --mount type=volume,src="output_vol",dst=/bwproj node'
                 sh 'exit $(docker inspect bwdeploy --format="{{.State.ExitCode}}")'
-            }
         }
+}
 ```
 6. Publish<br>
 Jeśli parametr PROMOTE wynosi on true, to zostają wykonane polecenia znajdujące się obszarze steps, 
@@ -139,46 +138,42 @@ W obszarze zostaje stworzony folder w ktorym beda zapisywane artefakty, gdzie zo
 Następnie zostaje stworzony kontener bw_publish z podpiętym woluminem wyjściowym. Artefakty zostają zapakowane do pliku tar.xz z nadana wersja z parametru VERSION.<br>
 ```
 stage('Publish Cleaning')
-        {
-			steps
-			{
-				sh 'rm -rf /var/jenkins_home/workspace/bw_artifacts'
-				sh 'docker rm -f bw_publish || true'
-			}
-        }
+{
+	steps
+	{
+		sh 'rm -rf /var/jenkins_home/workspace/bw_artifacts'
+		sh 'docker rm -f bw_publish || true'
+	}
+}
         
-        stage ('Publish')
+stage ('Publish')
+{
+	when
         {
-            when
-            {
-                expression {return params.PROMOTE}
-            }
-            steps
-            {
-                
-                sh 'mkdir /var/jenkins_home/workspace/bw_artifacts'
+		expression {return params.PROMOTE}
+        }
+        steps
+        {
+		sh 'mkdir /var/jenkins_home/workspace/bw_artifacts'
                 sh 'docker run -d --name bw_publish --mount type=volume,src="output_vol",dst=/usr/local/bw_proj --mount type=bind,source=/var/jenkins_home/workspace/bw_artifacts,target=/usr/local/bw_copy node bash -c "chmod -R 777 /usr/local/bw_proj && cp -R /usr/local/bw_proj/. /usr/local/bw_copy"'
                 sh "tar -zcvf mongo-express_${params.VERSION}.tar.xz -C /var/jenkins_home/workspace/bw_artifacts ."
                 archiveArtifacts artifacts: "mongo-express_${params.VERSION}.tar.xz"
-                
-            }
-        }
+	}
+}
 ```
 7. Clearing memory<br>
 Poniższy kod usuwa kontenery powstałe podczas wykonywania opisywanych powyżej kroków.
 ```
 stage ('Clearing Memory')
-        {
-        	steps
-        	{
-				sh 'docker rm -f bw_build || true'
-                sh 'docker rm -f tests || true'
-                sh 'docker rm -f bwdeploy || true'
-                sh 'docker rm -f bw_publish || true'
-            }
+{
+	steps
+	{
+		sh 'docker rm -f bw_build || true'
+		sh 'docker rm -f tests || true'
+		sh 'docker rm -f bwdeploy || true'
+		sh 'docker rm -f bw_publish || true'
         }
-        
-    }
+}
 ```
 8. Efekt<br>
 Jeśli wszystkie kroki zostaną przeprowadzone pomyślnie, to zostanie wypisany komunikat ```Everything ended successfully.```
@@ -188,11 +183,11 @@ post
   {
    success
    {
-		echo 'Everything ended successfully.'
-    }
+	echo 'Everything ended successfully.'
+   }
    failure
    {
-		echo 'There are some errors.'
+	echo 'There are some errors.'
    }
 } 
 ```
