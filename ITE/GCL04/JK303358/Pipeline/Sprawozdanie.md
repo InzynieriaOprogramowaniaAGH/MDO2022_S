@@ -55,30 +55,30 @@ Dockerfile (docker-clone):
 W tym etapie najpierw tworzony jest obraz z zainstalowanym Maven oraz Javą. Następnie wykonane zostaje polecenie `mvn package` na projekcie znajdującym na woluminie wejściowym - skutkuje to kompilacją programu i spakowaniem go do pliku JAR. 
 
 Jenkinsfile:
-![Jenkinsfile stage clone](Pictures/9.png?raw=true)
+![Jenkinsfile stage clone](Pictures/12.png?raw=true)
 
 Dockerfile (docker-clone):
-![docker-clone](Pictures/10.png?raw=true)
+![docker-clone](Pictures/11.png?raw=true)
 
 ## Test
 Etap uruchamia testy w kontenerze stworzonym na podstawie obrazu tego z etapu Build. Testy uruchamiane są poleceniem `mvn test` z podaniem ścieżki do projektu (wolumin wejściowy).
 
 Jenkinsfile:
-![Jenkinsfile stage clone](Pictures/9.png?raw=true)
+![Jenkinsfile stage clone](Pictures/13.png?raw=true)
 
 Dockerfile (docker-clone):
-![docker-clone](Pictures/10.png?raw=true)
+![docker-clone](Pictures/14.png?raw=true)
 ## Deploy
 Po przejściu testów działanie programu sprawdzane jest jeszcze w innym środowisku. W tym przypadku jest to kontener stworzony na podstawie obrazu Javy. Do kontenera podpięty zostaje wolumin wyjściowy, na którym znajduje się plik wynikowy z etapu Build czyli SimpleApp.jar. Polecenie `java -jar` uruchamia program. Dodatkowo utworzony zostaje katalog `artifact`, do którego z woluminu zostaje przeniesiony plik JAR.
 
 Jenkinsfile:
-![Jenkinsfile stage clone](Pictures/9.png?raw=true)
+![Jenkinsfile stage clone](Pictures/16.png?raw=true)
 
 Dockerfile (docker-clone):
-![docker-clone](Pictures/10.png?raw=true)
+![docker-clone](Pictures/15.png?raw=true)
 ## Publish
 Dotarcie do tego kroku informuje nas o tym, że aplikacja jest gotowa do opublikowania. Jako że nie każdy build musi kończyć się publikacją, wykonanie tego kroku zależy od parametru `promote` zadawanego przy uruchamianiu Pipeline'a. Jeśli parametr `promote` jest zaznaczony plik projektu (artefakt) zostaje zarchiwizowany - staje się dostępny do pobrania w naszym panelu Jenkinsa. 
 
 
 Jenkinsfile:
-![Jenkinsfile stage clone](Pictures/9.png?raw=true)
+![Jenkinsfile stage clone](Pictures/17.png?raw=true)
