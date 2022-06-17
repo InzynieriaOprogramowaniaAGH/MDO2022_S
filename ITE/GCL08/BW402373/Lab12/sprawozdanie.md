@@ -34,7 +34,7 @@ FROM nginx:latest
 CMD [ "exit", "1" ]
 ```
 5. Zbudowano nowy obraz nginx poleceniem ```sudo docker build . -f Dockerfile_error -t mynginx-err```<br>
-![dockerfile](3_first_build.PNG)
+![dockerfile](3_first_build.PNG)<br>
 Potwierdzenie utworzenia nowego obrazu<br>
 ![new_image](4_images_with_err.PNG)
 6. Rozszerzono ilość podów do 8, zmieniając w pliku "deploy.yml" wartość ```replicas``` na 8.<br>
