@@ -92,6 +92,22 @@ Podczas instalacji nie wybrano wersji minimalnej. Gdyby tak było trzeba by był
 * Umieść plik odpowiedzi w repozytorium
 * Połącz plik odpowiedzi z ISO instalacyjnym
 
-#### Zakres rozszerzony
-* Umieść ISO na serwerze HTTP
-* Dodaj krok pipeline'a, wdrażający OS i ISO na wybranym hoście wirtualizacji
+Na domyślny system Linux przesłano plik ISO i plik konfiguracyjny instalacji. Zmontowano obraz do utworzonego uprzednio katalogu.
+
+![mount](Pictures/13.png?raw=true)
+
+Utworzono nowy katalog, do którego skopiowano zawartość zmontowanego katalogu i skopiowano tam również plik konfiguracyjny.
+
+![copy](Pictures/14.png?raw=true)
+
+Edytowano sekcję label linux w pliku isolinux.cf
+
+![copy](Pictures/15.png?raw=true)
+
+Utworzono obraz poleceniem:
+`sudo genisoimage -U -r -v -T -J -joliet-long -V "RHEL-6.9" -volset "RHEL-6.9" -A "RHEL-6.9" -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -eltorito-alt-boot -eltorito-boot images/efiboot.img -no-emul-boot -o ../My_fedora.iso .`
+
+![copy](Pictures/16.png?raw=true)
+
+![copy](Pictures/17.png?raw=true)
+
