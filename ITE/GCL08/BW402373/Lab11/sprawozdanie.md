@@ -1,5 +1,5 @@
 # Sprawozdanie - lab 11 - Bartłomiej Walasek
-1. Zainstalowano minikube wg dokumentacji ```https://minikube.sigs.k8s.io/docs/start/```
+1. Zainstalowano minikube wg dokumentacji ```https://minikube.sigs.k8s.io/docs/start/```<br>
 Użyte polecenia:
 ```curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64```<br>
 ```sudo install minikube-linux-amd64 /usr/local/bin/minikube```<br>
