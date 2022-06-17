@@ -110,11 +110,11 @@ pipeline
    post
    {
    	success{
-   		echo 'You successfully ended Pipline'
+   		echo 'Everything ended successfully.'
    	}
    	failure
    	{
-   		echo 'ERROR'
+   		echo 'There are some errors.'
    	}
    } 
    
