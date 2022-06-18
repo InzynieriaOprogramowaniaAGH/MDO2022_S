@@ -1,0 +1,11 @@
+FROM openjdk:8
+
+RUN apt update
+RUN apt -y upgrade
+RUN apt -y install maven
+
+RUN git clone https://github.com/ThomasJaspers/java-junit-sample.git
+
+WORKDIR /java-junit-sample/
+
+RUN mvn clean package -DSkipTests
