@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pg
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: mypostgres
+  replicas: 4 
+  template:
+    metadata:
+      labels:
+        app: mypostgres
+    spec:
+      containers:
+      - name: pg
+        image: postgres:11
+        env:
+        - name: POSTGRES_PASSWORD
+          value: "admin123"
+        ports:
+        - containerPort: 5432
+        

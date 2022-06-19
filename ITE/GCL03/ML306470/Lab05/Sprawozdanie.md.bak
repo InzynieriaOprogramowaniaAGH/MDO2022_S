@@ -1,7 +1,7 @@
-# Cel
+#Cel
  Celem projektu było przygotowanie środowiska wdrożeniowego dla prostej aplikacji z Javy (Maven) odpowiedzialnej za wypisywanie na ekran "Hello world".
  
-# Streszczenie kroków
+#Streszczenie kroków
  W Celu wykonania opisanych kroków należy mieć przygotowany działający Jenkins i Docker.
 
  1. W graficznym interfejsie Jenkinska należy wybrać "Nowy Projekt", następnie wpisać w pole nazwy projektu wybraną przez siebie nazwe projektu, wybrać "Pipeline" jako typ projektu i końcu wcisnąć przycisk potwierdzający "OK".
@@ -52,18 +52,16 @@
  
  4. Następnie należy ponownie uruchomić pipeline tym razem wybierająć opcję "Uruchom z parametrami" (powinna zastąpić opcję "Uruchom" - należy jednak odświeżyć stronę).
  
- Tym razem przed uruchomieniem pipeline będzie konieczne wprowadzenie parametrów opisanych w kroku 3, należy je ustawić wedle woli, a następnie kliknąć przycisk "Buduj".
+ Tym razem przed uruchomieniem pipelina będzie konieczne wprowadzenie parametrów opisanych w kroku 3, należy je ustawić wedle woli, a następnie kliknąć przycisk "Buduj".
+ 
  
  ![](ScreenShots/RunWithParameters.png?raw=true)
- 
- 
- Po zakończeniu działania pipeline w przypadku zaznaczenia parapetru publikuj na stronie pojawi się artefakt projektu (po odświeżeniu strony). W przypadku tej aplikacji będzie to plik jar zawierający kod wykonawczy wraz z wszystkimi jego zależnościami. Można go po prostu uruchomić na komputerach z zainstalowaną virtualną maszyną Javy.
  
  ![](ScreenShots/PipelineCompleted.png?raw=true)
  
 
 
-# Etapy pipeline
+#Etapy pipeline
  - Clone
  Etap ten składa się następujących kroków
  ```
@@ -127,15 +125,18 @@
 		}
 		else{
 		 echo 'Pipeline finished work sucessfully but new version wasn\'t published.'
-		}	
+		}
+	
+	
 	}
+	
   ```
   W celu użycia instrukcji warunkowej zawarość kroku "Publish" jest umieszczona w 'script'.
   Zależnie od podanego przez użytkownika parametru "promote" (boolean) pipeline zmienia nazwę artefaktu SimpleApp.jar na SimpleApp-```version```.jar
   i publikuje zmiany na swojej stronie lub wypisuje w konsoli informacje o powodzeniu procesu, lecz nie publikowaniu nowej wersji.
   
   
-# Diagram
+#Diagram
 
 
  **Diagram aktywności**
