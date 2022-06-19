@@ -9,7 +9,7 @@ pipeline {
             steps {
 		//sh 'docker kill tempContainer || true'
 		sleep 1
-                sh 'docker build . -f ITE/GCL04/PK401667/DockerBuild -t buildirssi'
+                sh 'docker build . -f ITE/GCL04/PK401667/BuildDocker -t buildirssi'
 		sh 'docker run --name tempContainer -dit --rm buildirssi'
 		sh 'rm -r fe-text || true'
 		sh 'rm -r irssi || true'
