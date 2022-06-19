@@ -1,0 +1,13 @@
+FROM ubuntu:latest
+
+RUN apt-get -y update && apt-get -y install git
+
+ENV TZ=Europe/Warsaw
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN apt-get -y install maven
+
+RUN apt-get -y install openjdk-11-jdk
+
+RUN git clone https://github.com/EchoOfCasual/Hello-World-With-Tests-Maven.git
+WORKDIR Hello-World-With-Tests-Maven
+RUN mvn install
