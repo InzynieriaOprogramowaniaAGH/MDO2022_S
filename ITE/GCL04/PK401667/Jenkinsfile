@@ -9,8 +9,8 @@ pipeline {
             steps {
 		//sh 'docker kill tempContainer || true'
 		sleep 1
-                sh 'docker build . -f ITE/GCL04/PK401667/BuildDocker -t buildirssi'
-		sh 'docker run --name tempContainer -dit --rm buildirssi'
+                sh 'docker build . -f ITE/GCL04/PK401667/BuildDocker -t buildIrssi'
+		sh 'docker run --name tempContainer -dit --rm buildIrssi'
 		sh 'rm -r fe-text || true'
 		sh 'rm -r irssi || true'
 		sh 'docker container exec tempContainer ls'
