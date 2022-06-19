@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+	echo "Script takes 1 argument - deployment name"
+	exit
+fi
+
+deploymentName=$1
+
+timeout 10 /usr/local/bin/minikube kubectl rollout status $deploymentName
+
+if [ $? -eq 0 ]; then
+	echo "Deployment successful"
+else
+	echo "Deployment failed"
+fi

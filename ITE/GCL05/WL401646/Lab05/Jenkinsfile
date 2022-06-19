@@ -1,0 +1,95 @@
+pipeline {
+    agent any
+    parameters {
+    	booleanParam(name: 'PROMOTE', defaultValue: true, description: '')
+    }
+    stages {
+        stage("Prebuild") {
+            steps {
+                script {
+                    sh 'mkdir -p shared_dir'
+                }
+            }
+            post {
+                success {
+                    sh 'echo Prebuild success'
+                }
+                failure {
+                    sh 'echo Prebuild failure'
+                }
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
+                    sh '''
+                    echo Build
+                    
+                    docker build -f dockerBuilder -t nodejs.org . --no-cache
+                    docker run -v \$(pwd)/shared_dir:/docker_volume nodejs.org 
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo Build success'
+                }
+                failure {
+                    sh 'echo Build failure'
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                script {
+                    sh '''
+                    echo Test
+
+                    docker build . -f dockerTester -t nodejs.org-test
+                    docker run nodejs.org-test
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo Tests success'
+                }
+                failure {
+                    sh 'echo Tests failure'
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                script {
+                    sh '''
+                    echo Deploy
+                    
+
+                    docker build . -f dockerDeploy -t nodejs.org-deploy
+                    docker run -d -v \$(pwd)/shared_dir:/docker_volume nodejs.org-deploy
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo Deploy success'
+                }
+                failure {
+                    sh 'echo Deploy failure'
+                }
+            }
+        }
+	stage('Publish') {
+	    when 
+                {
+                    expression {return params.PROMOTE}
+                }
+            steps {
+                script {
+                	archiveArtifacts artifacts: 'shared_dir/nodejs.org-*.tgz', fingerprint: true
+                }
+            }
+        }
+    }
+}

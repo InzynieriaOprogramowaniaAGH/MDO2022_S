@@ -1,0 +1,8 @@
+FROM nodejs.org:latest
+RUN mkdir /nodejs.org-deploy
+RUN cp /artifacts/nodejs.org-*.tgz /nodejs.org-deploy/
+RUN tar -xzf /nodejs.org-deploy/nodejs.org-*.tgz -C /nodejs.org-deploy
+WORKDIR /nodejs.org-deploy/package/
+RUN npm install
+EXPOSE 8080
+CMD ["npm", "start"]
