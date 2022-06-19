@@ -1,0 +1,1 @@
+vmlinuz initrd=initrd.img inst.stage2=hd:LABEL=Fedora-S-dvd-x86_64-36 rd.live.check quiet inst.ks=https://raw.githubusercontent.com/malokreatywny/devops/main/anakonda-ks.cfg
