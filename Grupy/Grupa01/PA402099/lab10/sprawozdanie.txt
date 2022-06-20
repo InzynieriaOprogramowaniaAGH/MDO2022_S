@@ -1,0 +1,56 @@
+Dotychczas do wykonywania zadań używałem komunikatora deltachat jednak w przypadku klastrów 
+kubernetesa uruchamianie go nie działało. Żeby wykonać zdanie wykorzystałem gotowy obraz dockerowy
+z dockerhub dla czatu socket-io. 
+
+1. Uruchomienie lokalnego klastra kubernete za pomocą minikube:
+
+minikube start - uruchomienie minikube
+
+2. Uruchomienie serwera z ekranem zarządzania Kubernetes
+
+minikube dashboard
+
+3. Zapoznanie się z dokumentacją
+
+4.  Utworzenie pliku do wdrożenia aplikacji w klastrze kubernetesa
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: socket-io-deployment
+  labels:
+    app: socket-io
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: socket-io
+  template:
+    metadata:
+      labels:
+        app: socket-io
+    spec:
+      containers:
+      - name: socket-io
+        image: secopstech/socket-io:latest
+        ports:
+        - containerPort: 80
+
+5. Utworzenie klastra z użyciem powyższego kodu za pomocą poniższych poleceń:
+
+kubectl apply -f socket-io-deployment.yaml - Utworzenie wdrożenia na podstawie pliku
+kubectl rollout status deployment/socket-io-deployment - Sprawdzenie statusu wdrożenia
+
+6. Wprowadzanie zmian we wdrożeniu
+6.1 Zwiekszenie ilosci replik - replicas: 8
+6.2 Utworzenie nowej wersji aplikacji poprzez pobranie oficjalnego obrazu otagowanie go
+i przesłanie na mojego dockerhuba
+
+ image: piotrekapriasz/lab10-socket-io:1.0
+
+6.3 Podanie w pliku błędnego obrazu poprzez zmianę numeru wersji na taką która nie istnieje. 
+Utworzenie klastrów nie powiodło się
+6.4 Przywrócenie poprzedniej wersji klastrów 
+
+kubectl rollout history deployment/socket-io-deployment - pokazanie hisotri wdrażania
+kubectl rollout undo deployment/socket-io-deployment - Przywrócenie ostatniej działającej instancji klastrów

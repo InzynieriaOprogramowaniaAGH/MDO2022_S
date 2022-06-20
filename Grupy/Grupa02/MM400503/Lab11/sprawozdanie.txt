@@ -1,0 +1,4 @@
+1. Uruchomienie kubectl+minikube poleceniami "minikube start" i "minikube dashboard".
+2-3. Wykonanie deploymentu strategią "recreate" poleceniem ' kubectl apply -f .\komunikator-deployment-recreate.yaml'. (Screenshot 2-4)
+4. Analogiczne wykonanie deploymentu strategią "rollingUpdate". (Screenshoty 5-6) 
+5. Utworzenie seriwsu poleceniem "kubectl apply -f .\canary-service.yaml", stworzenie deploymentu "canary" poleceniem "kubectl apply -f .\komunikator-deployment-canary.yaml". Zmiana pliku bazowego do deploymentu i uruchomienie dla wersji stabilnej. (Screenshoty 7-11)

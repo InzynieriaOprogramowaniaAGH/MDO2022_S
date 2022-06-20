@@ -14,7 +14,7 @@ Uwagi wstępne:
 - używaj znaczących deklaratywnych nazw, tak by sama nazwa pliku wskazywała do czego służy.
 
 2. Ze swojego planu CI/CD pipeline'a stworzonego na poprzednich zajęciach wybierz ten punkt(y) które odpowiadają za "Uruchomienie szybkiego i niezawodnego testowania."
-2.1 Następnie stwórz Jenkinsfile i umieść go w repo z komunikatorem (to nie to samo repo co na skrypty z pkt 1!). 
+2.1 Następnie stwórz Jenkinsfile i umieść go w repo z komunikatorem (to nie koniecznie to samo repo co na skrypty z pkt 1!). 
 2.2 (opcjonalnie) Zwróć uwagę, że być może będziesz chciał zrobić "forka" na oryginalnym repo.
 2.3 W Jenkinsfile stwórz nowego Jenkins pipeline (przykład tutaj: https://www.jenkins.io/doc/book/pipeline/jenkinsfile/) , a w nim w sekcji "stages" nowy "stage('Test')".
 2.4 Wewnątrz Jenkinsfile w sekcji "stage('Test')" oskryptuj uruchamianie testów dla aplikacji z pkt. 2.1 - zwróć uwagę, by:

@@ -1,0 +1,98 @@
+pipeline {
+	agent any
+
+    environment {
+                DOCKERHUB_CREDENTIALS = credentials("docker-hub-creds")
+            }
+
+	stages {
+
+        stage('Build') {
+			steps {
+                
+               dir ('Grupy/Grupa01/JC401889/Lab07/Docker'){
+				    sh 'docker-compose up build_agent'
+                }
+            }
+            post {
+                failure {
+                    echo 'ERROR IN BUILDING'
+
+                    dir('Grupy/Grupa01/JC401889/Lab07/Docker/deploy docker'){
+                        sh 'docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW'
+                        sh 'docker pull jjchmielewski/lab7:latest' 
+                        sh 'docker run --detach jjchmielewski/lab7:latest'
+                    }
+                }
+                success {
+                    echo 'SUCCESS IN BUILDING'
+                }
+            }
+        }
+
+		stage('Test') {
+			steps {
+
+                sh 'ls'
+
+                dir ('Grupy/Grupa01/JC401889/Lab07/Docker'){
+				    sh 'docker-compose up test_agent'
+                }
+            }
+            post {
+                failure {
+                    echo 'ERROR IN TESTING'
+
+                    dir('Grupy/Grupa01/JC401889/Lab07/Docker/deploy docker'){
+                        sh 'docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW'
+                        sh 'docker pull jjchmielewski/lab7:latest' 
+                        sh 'docker run --detach jjchmielewski/lab7:latest'
+                        sh 'docker logout'
+                    }
+                }
+                success {
+                    echo 'SUCCESS IN TESTING'
+                }
+            }
+        }
+
+        stage('Deploy') {
+
+			steps {
+
+                dir ('Grupy/Grupa01/JC401889/Lab07/Docker'){
+
+				    sh 'docker-compose up build_agent'
+
+				    sh 'docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW'
+                    sh 'docker tag build-agent:latest jjchmielewski/lab7'
+                    sh 'docker push jjchmielewski/lab7'
+
+                    sh 'docker run --detach jjchmielewski/lab7:latest'
+
+                }
+            }
+            post {
+                always{
+                       sh 'docker logout'
+                }
+                failure {
+                    echo 'ERROR IN DEPLOYING'
+
+                    dir('Grupy/Grupa01/JC401889/Lab07/Docker/deploy docker'){
+                        sh 'docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW'
+                        sh 'docker pull jjchmielewski/lab7:latest' 
+                        sh 'docker run --detach jjchmielewski/lab7:latest'
+                        sh 'docker logout'
+                    }
+
+                }
+                success {
+                    echo 'SUCCESS IN DEPLOYING'
+                }
+            }
+        }
+
+    
+    }
+}

@@ -1,0 +1,5 @@
+FROM build:latest
+
+WORKDIR chat
+
+RUN npm test

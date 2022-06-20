@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+  build_agent:
+    image: build_agent:lts
+    build:
+      context: "."
+      dockerfile: "Dockerfile_build"
+  test_agent:
+    image: test_agent:lts
+    build:
+      context: "."
+      dockerfile: "Dockerfile_test"
+    depends_on:
+      - build_agent

@@ -1,0 +1,57 @@
+1. Uruchomiono lokalny klaster kubernetesa i pobrano minikube za pomocą komend:
+
+    minikube start
+        ^ uruchomienie klastra
+
+    minikube kubectl -- get po -A
+        ^ - pobranie minikube
+
+    alias kubectl="minikube kubectl --"
+        ^ - dodanie aliasu do korzystania z minikube
+
+    minikube dashboard
+        ^ - włączenie GUI do kubernetesa
+
+3. Dodano strategię wdrażania recreate(.spec.strategy.type):
+
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+    name: komunikator-deployment
+    labels:
+        app: komunikator
+    spec:
+    strategy:
+        type: Recreate
+    replicas: 8
+    selector:
+        matchLabels:
+        app: komunikator
+    template:
+        metadata:
+        labels:
+            app: komunikator
+        spec:
+        containers:
+            - name: komunikator
+            image: dtomart/devops-lab10-komunikator:1.0
+            ports:
+                - containerPort: 80
+
+    kubectl apply -f komunikator-deployment-recreate.yaml
+        ^ - zleć klastrowi wykonanie pliku yaml używając polecenia
+
+3. Zamieniono strategię recreate na RollingUpdate:
+
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 3
+      maxSurge: 20%
+
+5. Za pomocą Canary Deployment postawiono dwa serwisy obok siebie używając innych etykiet:
+    
+    metadata:
+    name: komunikator-deployment-canary
+    labels:
+        app: komunikator
+        version: "2.0"

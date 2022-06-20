@@ -1,0 +1,14 @@
+Sprawozdania lab11
+
+1. Uruchomiono loklany klaster Kubernetes (kubectl+Minikube) za pomocą poleceń :
+
+-minikube start
+-minikube dashboard
+
+2. Stworzono plik komunikator-deployment-recreate.yaml na podstawie komunikator-deployment.yaml z poprzedniego laboratorium. Wykorzystano strategię wdrażania "Recreate" oraz uruchomiono deployment za pomocą polecenia:
+
+- kubectl apply -f komunikator-deployment-recreate.yaml
+
+3. Następnie stworzono plik komunikator-deployment-RollingUpdate.yaml. Wykorzystano strategię wdrażania "RollingUpdate", ustawiono parametry "maxSurge"  na 2 oraz "maxUnavailable" na 0, a następnie uruchomiono deployment.
+
+4.Stworzono plik komunikator-deployment-canaru. Wykorzystano strategię wdrażania "Canary deployment", nadano etykiety i uruchomiono. deployment.

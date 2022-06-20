@@ -1,0 +1,33 @@
+Arkadiusz Czader 401177
+
+Wykorzystane komendy:
+	Uruchomienie minikube i dashboard:
+		minikube start
+		minikube dashboard
+	Deployment i sprawdzenie:
+		minikube kubectl -- apply -f komunikator-deployment-recreate.yaml
+		minikube kubectl -- rollout status deployment/komunikator-deployment
+
+Wpisy w .yaml:
+	Strategia recreate:
+		spec:
+        		strategy:
+        			type: Recreate
+	Strategia rolling update:
+		spec:
+        		strategy:
+        		        type: RollingUpdate
+        		        rollingUpdate:
+        		                maxSurge: 1
+        		                maxUnavailable: 1
+	Strategi cannary update:
+		metadata:
+			labels:
+				version: "2.0"
+
+Dla rolling update i cannary zmniejszono ilość replik z 8 do 2 ze względnu na niską wydajnośc zestawu komuputerowego na którym minikube był uruchamiany.
+
+Opis strategii:
+	Recreate - stare pody są usuwane jednocześnie a po ich usunięciu są tworznone nowe
+	RollingUpdate - najpierw są tworzne nowe pody i dopiero po ich utworzniu usuwane są ich stare instancje (domyślna strategia)
+

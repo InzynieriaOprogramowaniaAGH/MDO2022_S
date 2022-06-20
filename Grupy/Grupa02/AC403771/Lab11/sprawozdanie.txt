@@ -1,0 +1,11 @@
+1. uruchomiłam (lokalny) klaster Kubernetes oraz przygotowałam plik komunikator-deployment.yaml z ostatniego ćwiczenia.
+
+2.  Stwórzyłam nowy plik komunikator-deployment-recreate.yaml na podstawie komunikator-deployment.yaml
+	dodałam strategię Recreate
+
+3. Uruchomiłam deployment poleceniem apply -f komunikator-deployment-recreate.yaml 
+
+4. Stwórzyłam nowy plik komunikator-deployment-rollingUpdate.yaml dodałam typ strategii Rollingupdate oraz parametry maxSurge=2 i maxUnavailable=0
+
+5. Stworzyłam nowy plik komunikator-deployment-canary.yaml oraz canary-service.yaml uruchomiłam deployment, 
+	utworzyłam serwis za pomocą polecenia kubectl apply -f canary_service.yam, sprawdziłam czy service sie utowrzył poleceniem  kubectl get services, a następnie deployment kubectl apply -f komunikator-deployment-canary.yaml

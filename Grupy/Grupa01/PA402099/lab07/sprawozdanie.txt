@@ -1,0 +1,24 @@
+1. Utworzone zostały foldery do przechowywania dotychczas utworoznych plików służących do wykonania zadań.
+Znajdują się tutaj pliki dockera czy Jenkinsfile
+
+2. Na podstawie przygotowanego planu został przygotowany Jenkinsfile ze stagem Test. 
+Aby pipeline działał poprawnie zforkowałem repozytorium wybranego czau aby móc go modyfikować
+niezależnie od oryginału. Repo zostało zklonowane i w nim utworzyłem Jenkinsfile. 
+
+3. Do Jenkinsfile dodany został stage build, który od podstaw buduje aplikacje.
+
+4. Aby pipeline mógł być automatycznie wywoływany do repozytorum z czatem został dodany
+web hook, który jest wysyłany w momencie dodania nowego pusha na reposytorium. Działa on z połączeniem z 
+ngrok, który mapuje sieć lokalną na udostępniony adres w internecie dzięki czemu webhook może połączyć się
+z Jenkinsem. 
+
+5. Do Jenkinsfile dodany został stage Deploy, który wysyła artefakty zbudowanej aplikacji 
+na kontener na dockerhub. 
+
+OPIS JENKINSFILE: Jenkinsfile do powiadamiania o sukcesie czy błędach używa wysyłki mila na zadany
+adres, w którym informowany jest o statusie ukończonych zadań, który to build a dodatkowo 
+zawarte są logi. W poszczególnych stage'ach do zmiennej subject przypisywana jest informacja 
+o statusie danego stage'a. Jeśli chodzi o komendy budowania i testowania to są to standardowe
+komendy używane przy docker-compose. Aby przesłać artefakty na dockerhub, w ustawieniach Jenkinsa
+należało zapisać dane logowania pod odpowiednią zmienną a w Jenkinsfile zapisać je do zmiennej
+środowiskowej CREDENTIALS

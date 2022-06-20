@@ -1,0 +1,21 @@
+Sprawozdanie Lab09
+
+1. Umieszczenie na Dockerhub'ie obrazu z komunikatorem
+
+2. Zainstalownie minikube
+minikube start - uruchomienie klastra
+minikube kubectl -- get po -A - pobranie kubectl
+
+3. Uruchomienie minikube dashboard
+3.1 dashboard odpowiada za:
+    wdrażanie aplikacji kontenerowych,
+    wizualizacje wyników uruchomionych klastrów, 
+    zarządzanie zasobami klastra,
+    przeglądanie serwisów,zadań i klastrów
+    rozwiązywanie problemów z aplikacją,
+
+4.
+    kubectl -- run komunikator-app --image=modernsege/lab11 --port=9999 --labels app=komunikator-app -uruchomienie kontenera z komunikatorem
+    kubectl port-forward komunikator-app 9999:8080 - przekierowanie portow
+
+

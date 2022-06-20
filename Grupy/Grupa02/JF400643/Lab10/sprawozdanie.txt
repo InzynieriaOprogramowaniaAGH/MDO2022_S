@@ -1,0 +1,4 @@
+kubectl apply -f nazwaPliku - uruchomienie kubernetesowego Deploymentu zgodnie z wlasnosciami zapisanymi w pliku o nazwie nazwaPliku
+kubectl rollout status deployment/nazwaDeploymentu - sprawdzenie statusu kubernetesowego Deploymentu
+kubectl rollout history deployment/nazwaDeploymentu - wyswietlenie historii Deploymentu (zawierajacej numer zmiany i ewentualnie polecenie, ktore dokonalo zmiany)
+kubectl rollout undo deployment/nazwaDeploymentu - cofniecie Deploymentu do poprzedniej wersji obecnej w historii

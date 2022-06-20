@@ -1,0 +1,38 @@
+Sprawozdanie LAB10 Adrian Dąbrowski 401894 
+
+(Podpunkt 1) Uruchomienie
+
+         minikube start
+
+(Podpunkt 2) Dashboard
+   
+         minikube dashboard
+
+
+(Podpunkt 3)  Zapoznano  się z dokumentacją tworzenia manifestów dla obiektów "Deployment"
+
+
+(Podpunkt 4) Plik konfiguracyjny  komunikator-deployment.yaml
+        
+        - nazwa: komunikator-deployment
+        - app: komunikator
+        - obraz z komunikatorem tak jak na poprzednich zajęciach
+        - 4 repliki
+
+
+
+    
+(Podpunkt 5) Zlecenie klastrowi zrealizowanie powyższego pliku używając polecenia
+
+        -kubectl apply -f komunikator-deployment.yaml
+        -sprawdzono status wdrazania nowej wersji:
+        -kubectl rollout status deployment/komunikator-deployment
+  
+
+
+(Podpunkt 6) Dokonywanie  zmian w pliku yaml
+
+        - dwukrotnie wieksza ilosc replik;
+        - podanie nowszej wersji obrazu z aplikacja 
+        - podanie blednej nieistniejacej wersji obrazu z aplikacja;
+        - przywrocenie poprzedniej wersji deploymnetu przy uzyciu komend: kubectl rollout history deployment/komunikator-deployment, kubectl rollout undo deployment/komunikator-deployment

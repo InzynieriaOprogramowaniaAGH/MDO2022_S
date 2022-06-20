@@ -1,0 +1,62 @@
+Sprawozdanie LAB09 Adrian Dąbrowski 401894 
+
+(Podpunkt 1) Kontener dokerowy
+
+        Wykorzystano image z poprzednich zajęć, oraz zrobiono dodatkowy (webowy), aby możliwy był port forwarding oraz zastartowanie aplikacji 
+
+    
+(Podpunkt 2) Pobrano i  zainstalowano Minikube oraz kubectl
+
+   
+        curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+        
+        sudo install minikube-linux-amd64 /usr/local/bin/minikube
+        
+        minikube start
+
+        minikube kubectl -- get po -A
+
+
+
+(Podpunkt 3)  utuchomienie dashboarda
+
+       minikube dashboard (uruchomiono dashboard)
+        
+       Dzieki temu wylistowano opis co mozna robic korzystajac z Minikube Dashboarda 
+
+        - zarzadzac klastrem,
+        - przegladac aplikacje w klastrze,
+        - tworzyc i modyfilkowac  zasoby,
+        - monitorowac aplikacje,
+        - tworzyc wirtualne klastry
+        - wdrazac apliakcje kontenerowe ,
+
+        
+    
+
+(Podpunkt 4) Uruchamianie
+        
+        Opublikowano obrazy na dockerhub (dwa obrazy, jeden webowy drugi desktopowy)
+
+        Po tym uruchomiono kontener-komunikator oraz komunkator-web za pomoca komendy:
+        kubectl run komunikator --image=adriandabrowski/deltachat --port=9999 --labels app=komunikator
+        kubectl run komunikator-web --image=adriandabrowski/web-app-lab-9  --port=9999 --labels app=komunikator-web
+
+
+        A nastepnie sprobowano przekierowac porty dla deltachat-desktop (niepowodzenie ze względu na typ aplikacji):
+        kubectl port-forward pods/komunikator 9999:9999
+        
+        A nastepnie sprobowano przekierowac porty dla feathers-chat (wszysko poszło zgodnie z planem, aplikacja webowa stałą się widoczna pod adresem localhost:3030):
+        kubectl port-forward pods/komunikator-web 3030:3030
+
+
+
+    
+(Podpunkt 5) Udokumentowanie działania
+
+        Na koniec udukomenotwano dzialanie komunikatora w klastrze Kubernetes - dzialanie na localhost:3030
+  
+
+
+
+

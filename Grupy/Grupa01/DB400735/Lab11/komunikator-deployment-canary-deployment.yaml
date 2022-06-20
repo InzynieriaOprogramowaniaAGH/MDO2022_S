@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: komunikator-canary-deployment
+  labels:
+    app: komunikator
+    version: "2.0"
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: komunikator
+  template:
+    metadata:
+      labels:
+        app: komunikator
+    spec:
+      containers:
+      - name: komunikator
+        image: dodomax/build-agent2:1.0
+        ports:
+        - containerPort: 8080

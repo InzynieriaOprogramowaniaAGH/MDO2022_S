@@ -1,0 +1,65 @@
+1. stworzenie nowego brancha
+	git checkout -b Grupa02-AF400832_Lab04
+1.1 Opublikowanie obrazu z poprzednich zajęć
+1.1.1 Dodanie taga 	
+	docker tag ubuntu:latest drinaaf/af400832
+1.1.2 Wypchnięcie do repozytorium
+	docker push drinaaf/af400832
+2. Wybrałam tinode
+	https://github.com/tinode/chat
+3. Build agent: Stworzenie nowego obrazu kontenera dockerowego o nazwie "build-agent"
+	docker build -t build-agent:latest -f . dockerfile
+
+	dockerfile:
+
+	FROM ubuntu:latest
+
+	ENV TZ=Europe/Warsaw
+	RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+	RUN apt-get -y update
+	RUN apt-get -y upgrade
+	RUN apt-get install -y build-essential
+	RUN apt-get -y install git
+	RUN apt-get install nodejs -y
+	RUN apt-get install npm -y
+	RUN cd ~
+	RUN git clone https://github.com/tinode/chat
+	WORKDIR chat
+	RUN npm install
+	CMD ["echo", "mamy to"]
+
+4. Test agent: Stworzenie nowego obrazu kontenera dockerowego o nazwie "test-agent"
+	docker build -t test-agent:latest -f . dockerfile2
+
+	dockerfile2:
+
+	FROM build:latest
+
+	WORKDIR chat
+
+	RUN npm test
+
+
+5. Stworzenie pliku docker-compose.yml
+	docker-compose up
+
+	docker-compose.yml:
+
+	version: '3.3'
+	services:
+	 build-agent:
+	  container_name: build-agent
+	  image: build-agent:latest
+	  build:
+	   context: .
+	   dockerfile: dockerfile
+	 test-agent:
+	  container_name: test-agent
+	  image: test-agent:latest
+	  build:
+	   context: .
+	   dockerfile: dockerfile2
+	  depends_on:
+	  - build-agent
+
+6. Wrzucenie plików: dockerfile, dockerfile2, docker-compose.yml, sprawozdania oraz screenshotów na rezpozytorium

@@ -1,0 +1,64 @@
+Temat: Pipeline CI/CD - podstawy & testowanie.
+
+
+1.  Źródło prawdy zostało dodane na repo.
+
+
+2.  Stworzono Jenkinsfile i dodano na fork repozytorium deltachat-desktop pod adresem:
+        https://github.com/DTomArt/deltachat-desktop-fork
+        Zawartość Jenkinsfile na tym etapie została przedstawiona na zrzucie ekranu: 2-1-jenkinsfile-in-repo.png
+        Przeprowadzono testy widoczne także na zrzutach.
+
+        docker run \
+                --name jenkins-docker \
+                --rm \
+                --detach \
+                --privileged \
+                --network jenkins \
+                --network-alias docker \
+                --env DOCKER_TLS_CERTDIR=/certs \
+                --volume jenkins-docker-certs:/certs/client \
+                --volume jenkins-data:/var/jenkins_home \
+                --publish 2376:2376 \
+                docker:dind \
+                --storage-driver overlay2
+                ^ - Uruchomienie kontenera z dockerem, aby moc uzywac docker-compose w kontenerze
+
+        docker run --name jenkins-blueocean-root --rm --detach \
+        --network jenkins --env DOCKER_HOST=tcp://docker:2376 \
+        --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 \
+        --volume jenkins-data:/var/jenkins_home \
+        --volume jenkins-docker-certs:/certs/client:ro \
+        --publish 8080:8080 --publish 50000:50000 myjenkins-blueocean:2.332.1-1
+                ^ - uruchomienie kontenera jenkinsa
+
+
+3.Jenkinsfile został rozszerzony o nowy stage "Build", którego zawartość jest widoczna na zrzucie: 3-0-adding-building-stage.png
+        Sprawdzono poprawne budowanie się projektu (3-1-building-stage-logs.png), a także pominięcie etapu testów w przypadku nieprawidłowego zbudowania (3-2-tests-wont-start-without-build.png). Powiadomienia w postaci logów są widoczne na obu zrzutach.
+
+
+4. Zaznaczono build trigger w ustawieniach repo w Jenkinsie (4-1-jenkins-config.png)
+        Dla githooka postawiono serwer za pomocą ngrok w kontenerze dockerowym uruchamianym komendą:
+        docker run --net=host -it -e NGROK_AUTHTOKEN=<secret_token> ngrok/ngrok http 8080
+        (4-2-webhook-config.png)
+        Sprawdzono poprawne pingowanie serwera i automatyczne uruchamianie pipeline'u (4-3-working-webhook.png).
+
+
+5. Dodano deploy stage do jenkinsfile'a i zacommitowano na repo: (5-0-Deploy-stage.png , https://github.com/DTomArt/deltachat-desktop-fork/blob/master/Jenkinsfile)
+        Dodano użytkownika za pomocą GUI Jenkinsa (5-1-Jenkins-user.png) a także odwołanie do niego w Jenkinsfile:
+                environment {
+                        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+                }
+        Dodano repo na dockerhub ( na zrzucie ekranu 5-1-Dockerhub-repo.png widać od razu pushnięty obraz po deployu)
+        Dodano także artefakty wdrożeniowe stworzone w fazie build:
+                sh 'docker-compose logs > logs.txt'
+        i przekazane w deployu za pomocą:
+                archiveArtifacts(artifacts: '**/*.txt', followSymlinks: false)
+        (5-1-Archive-artifacts.png)
+        Pomyślne zakończenie pipeline'u widoczne jest na zrzucie: 5-1-Jenkins-pipeline.png
+
+
+6.1 jenkinsfile w repo: https://github.com/DTomArt/deltachat-desktop-fork/blob/master/Jenkinsfile - (6-1-Jenkinsfile-defined-in-repo.png)
+6.2 Automatyczne wyzwalanie widoczne na zrzucie: (6-2-webhook.png)
+6.3 Pipeline przechodzi przez wszystkie etapy (6-3-Pipeline-is-working-on-all-stages.png)
+6.4 Powiadamianie o reltatach etapów w logach widoczne na zrzutach: 6-4-error-appearing-in-logs.png oraz 6-4-success-appearing-in-logs

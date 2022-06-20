@@ -1,0 +1,24 @@
+1. Umieściłem pliki źródłowe do folderów zachowując porządek folderów.
+2. Sklonowałem repozytorium chatu do własnego repozytorium dzięki opcji fork,
+   w celu możliwości modyfikacji plików.
+   -Do repozytorium dodałem pliki dockerowe build-agent i test-agent oraz docker-compose.yml z laboratorium nr5
+   -Do repozytorium dodałem Jenkinsfile, który posiada obsłóżone stage(Test) i stage(Build)
+   -stage(Build) zapisuje logi do pliku result.txt
+   -Dodałem zmiany do zdalnego repozytorium
+3. Przetestowałem dwa przypadki, jeden dla nieprawidłowego stage(Build) aby sprawdzić czy pomija stage(Test).
+   W drugim przypadku poprawilem stage(Build) i pipline został wykonany poprawnie.
+4. W celu dodania webhook'a należało zainstalować ngrok i uruchomić polecenie nasłuchiwania: 
+   	ngrok http 8080
+   następnie do repozytorium z naszą aplikacją należało dodać webhooka pod adresem dostarczony przez ngrok
+   z routingiem /github-webhook/.
+   Po wybraniu opcji ze zdjecia 4.2 i zaakceptowaniu stworzylismy webhook'a.
+   Przy poprawnym utworzeniu webhook'a otrzymalismy ping'a do ngrok'a.
+   Ostatnim krokiem jest zkonfigurowanie pipline tak aby github wyzwalał uruchomienie pipline.
+   Po wszystkim webhook został pomyślnie przetestowany.
+5. Uzupelnilem Jenkinsfile w prawidlowy stage('Deploy')
+   - powiadamia on o rezultacie wzdrożenia
+   - do deploya jest przekazywany artefakt stworzony w stage('Build')
+   - deploy jest wykonywany na dedykowany kontener ktory jest umieszczany w dockerhubie.
+     W tym celu użyto utworzony credentials, w którym przekazywana była nazwa użytkownika oraz token
+     wygenerowany na Docker-hubie. W konfiguracji pipeline należało wybrać odpowiednie credentials.
+

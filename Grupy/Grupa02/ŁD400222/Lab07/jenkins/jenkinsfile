@@ -1,0 +1,68 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    try {
+                        
+                            git 'https://github.com/Radglay/messaging-app.git'
+                            dir('docker') {
+                                sh 'docker-compose up msg_server'
+                            }
+                        
+                    } catch(Exception e) {
+                        echo 'Error in building stage...'
+                        currentBuild.result = 'FAILED'
+                    } finally {
+                        if (currentBuild.result != 'FAILED') {
+                            echo 'Building stage complete'
+                        }
+                    }
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                script {
+                    try {
+                        dir('docker') {
+                            sh 'docker-compose up test'
+                        }
+                        junit('**/target/surefire-reports/*.xml')
+                        
+                    } catch(Exception e) {
+                        echo 'Error in testing stage...'
+                        currentBuild.result = 'FAILED'
+                    } finally {
+                        if (currentBuild.result != 'FAILED') {
+                            echo 'Testing stage complete'
+                        }
+                    }
+                }
+                
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                script {
+                    try {
+                        sh 'docker login -u radglay -p docker123'
+                        sh 'docker tag build-agent radglay/jenkins-deploy:v1'
+                        sh 'docker push radglay/jenkins-deploy:v1'
+                        
+                    } catch(Exception e) {
+                        echo 'Error in deploying stage...'
+                        currentBuild.result = 'FAILED'
+                    } finally {
+                        if (currentBuild.result != 'FAILED') {
+                            echo 'Deploying stage complete'
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

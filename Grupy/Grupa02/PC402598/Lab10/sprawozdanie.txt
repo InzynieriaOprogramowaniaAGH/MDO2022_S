@@ -1,0 +1,47 @@
+minikube start - uruchomienie klastra
+minikube kubectl -- get po -A - pobranie kubectl
+
+4:
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: komunikator-deployment
+  labels:
+    app: komunikator
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: komunikator
+  template:
+    metadata:
+      labels:
+        app: komunikator
+    spec:
+      containers:
+        - name: komunikator
+          image: wymek/myjenkins-blueocean:2.332.1-1
+          ports:
+            - containerPort: 8080
+
+5:
+kubectl apply -f komunikator-deployment.yaml
+
+6.1:
+spec:
+	replicas: 4 -> replicas: 8
+
+6.2:
+containers:
+        - name: komunikator
+          image: wymek/myjenkins-blueocean:2.332.1-1 -> image: wymek/myjenkins-blueocean:new
+
+6.3:
+
+containers:
+        - name: komunikator
+          image: wymek/myjenkins-blueocean:2.332.1-1 -> image: nie_ma_takie_obrazu
+
+6.4:
+kubectl rollout history deployment/komunikator-deployment
+kubectl rollout undo deployment/komunikator-deployment

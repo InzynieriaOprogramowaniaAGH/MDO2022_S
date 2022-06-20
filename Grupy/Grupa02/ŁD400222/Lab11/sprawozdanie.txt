@@ -1,0 +1,155 @@
+1. Uruchomienie klastra Kubernetes, kubectl + minikube
+minikube start
+
+Ułatwienie pracy z kubectl
+alias kubectl="tminikube kubectl --"
+
+3. Stworzenie nowego pliku komunikator-deployment-recreate.yaml
+Powinien on zawierać zmodyfikowany plik yaml z poprzednich zajęć, plik powinien wykorzystywać strategię
+wdrażania "Recreate"
+
+Recreate zamyka wszystkie stare pody przed utworzeniem nowych, strategia ta powoduje downtime.
+
+
+spec:
+  replicas: 4
+  strategy:
+    type: Recreate
+
+
+wdrożenie:
+kubectl apply -f komunikator-deployment-recreate.yaml
+
+podmiana obrazu:
+kubectl set image deployment/komunikator-deployment komunikator=radglay/komunikator:v2
+
+
+
+4. Stworzenie nowego pliku komunikator-deployment-rolling_update.yaml
+Powinien on zawierać zmodyfikowany plik yaml z poprzednich zajęć, plik powinien wykorzystywać strategię
+wdrażania "RollingUpdate"
+
+RollingUpdate jest domyślną strategią wdrażania, zamienia Pody w klastrze jeden po drugim bez downtime'u
+
+
+Dodatkowe parametry:
+
+maxSurge: liczba podów, które mogą być jednocześnie stworzone (liczba lub %)
+maxUnavailable: liczba podów, które mogą być niedostępne podczas wdrażania(liczba lub %)
+
+podmiana obrazu:
+kubectl set image deployment/komunikator-deployment komunikator=radglay/komunikator:v2
+
+
+wersja 1:
+spec:
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+
+wersja 2:
+spec:
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+
+
+wdrożenie:
+kubectl apply -f komunikator-deployment-rolling_update.yaml
+
+5. Stworzenie nowego pliku komunikator-deployment-canary_deployment.yaml
+Powinien on zawierać zmodyfikowany plik yaml z poprzednich zajęć, plik powinien wykorzystywać strategię
+wdrażania "Canary deployment"
+
+Canary deployment polega na powolnym, częśiowym wdrażaniu aplikacji do klastra. Wynika z tego że pewna część użytkowników korzysta nadal ze starej wersji podczas gdy inni korzystają już z nowej.
+Gdy wprowadzone zmiany nie spowodują w perspektywie czasu żadnych błędów, aplikacja zostanie całkowicie wdrożona na serwer.
+
+
+krok 1: wdrażamy podstawową aplikację z dodanym parametrem version: "1.0":
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: komunikator-deployment
+  labels:
+    app: komunikator
+    version: "1.0"
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: komunikator
+  template:
+    metadata:
+      labels:
+        app: komunikator
+    spec:
+      containers:
+      - name: komunikator
+        image: radglay/komunikator:v1
+        ports:
+        - containerPort: 8080
+
+
+
+krok 2:
+
+tworzymy service.yaml odpowiedzialny za przekierowanie zapytań do odpowiednich podów z label version "1.0", gdy usuniemy :
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: komunikator-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: komunikator
+    version: "1.0"  //gdy go usuniemy, czesc uzytkownikow bedzie mogla korzystac rowniez z wersji 2.0
+  ports:
+  - port: 1234
+    targetPort: 8080
+
+
+type: LoadBalancer odpowiada za równomierne rozłożenie obciążenia serwera na pody z labelami app i version podanymi w pliku .service.yaml
+
+
+krok 3:
+
+Dodanie pliku z innym name oraz version "2.0"
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: komunikator-canary-deployment
+  labels:
+    app: komunikator
+    version: "2.0"
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: komunikator
+  template:
+    metadata:
+      labels:
+        app: komunikator
+    spec:
+      containers:
+      - name: komunikator
+        image: radglay/komunikator:v1
+        ports:
+        - containerPort: 8080
+
+
+
+Gdy zmiany nie będą zadawalające możemy wrócić do wersji 1.0:
+
+kubectl delete deployment.apps/komunikator-canary-deployment
+
+Gdy chcemy całkowicie wprowadzić nową wersję 2.0, usuwamy wersje 1.0:
+kubectl delete deployment.apps/komunikator-deployment
+
+lub zmieniamy w .service.yaml version na "2.0"

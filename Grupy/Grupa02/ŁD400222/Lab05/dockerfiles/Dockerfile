@@ -1,7 +1,7 @@
 FROM ubuntu:latest AS git
 RUN apt-get -y update
 RUN apt-get -y install git
-RUN git clone https://github.com/brandon1024/Java-Simple-Messenger.git
+RUN git clone https://github.com/Radglay/messaging-app
 COPY ./init.sh ./Java-Simple-Messenger/init.sh
 
 FROM git as java
