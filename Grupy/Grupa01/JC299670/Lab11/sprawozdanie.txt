@@ -1,0 +1,58 @@
+Temat: Podstawy obsługi klastra Kubernetes - Deployment Strategies.
+
+1. Do wykonania tego ćwiczenia uruchomiłam  (lokalny) klaster Kubernetes jak w poprzednich ćwiczeniach za pomocą komendy:
+     minikube start oraz minikube dashboard
+
+2. Stworzyłam nowy plik komunikator-deployment-recreate.yaml na podstawie komunikator-deployment.yaml z poprzedniego ćwiczenia. 
+
+3. Wykorzystałam strategię wdrażania "Recreate" ;
+    w polu .spec.strategy.type wpisałam powyższą wartość
+    (...)
+       spec:
+            strategy:
+                type: Recreate
+        replicas: 8
+    (...)
+      
+    Uruchomiłam deployment komendą:
+        kubectl apply -f komunikator-deployment-recreate.yaml 
+
+    i udokumentowałam jego działanie.
+    Jest to podstawowy wzorzec wdrażania, który po prostu wyłącza wszystkie stare pody i zastępuje je nowymi.
+
+4. Następnie ykorzystałam strategię wdrażania "RollingUpdate" (
+    
+    zmieniłam wartość .spec.strategy.type
+    za pomocą parametrów maxSurge" oraz "maxUnavailable" ustawiłam odpowiednie wrtości dla ilości Pod'ów.
+
+        (...)
+        spec:
+            strategy:
+                type: RollingUpdate
+                rollingUpdate:
+                    maxUnavailable: 3
+                    maxSurge: 25%
+        (...)
+
+    Uruchomiłam deployment i udokumentowałam jego działanie.
+    Jest to domyślna strategia wdrażania, jednakże dzięki dodatkowym parametrom, można zarządzać tym procesem:
+    Parametr maxUnavailable określał maksymalną ilość podów które mogą być niedostępne podczas wdrażania.
+    MaxSurge określa maksymalną liczbę podów, które wdrożenie może utworzyć jednocześnie. 
+    
+5. Wykorzystałam strategię wdrażania "Canary deployment". W tym celu nadałam właściwe etykiety:
+     (...)
+     metadata:
+        labels:
+            app: komunikator
+            release : "canary"
+            environment : "dev"
+    spec:
+    (...)
+    template:
+        metadata:
+        labels:
+            app: komunikator
+            track : "weekly"
+
+    Uruchomiłam deployment i udokumentowałam  działanie.
+    W tym podpunkcie dodałam etykiety, które pozwalały szybko rozróżnić wdrażane wersje. Może być to wykorzystywane,gdy co najmniej dwie usługi lub wersje aplikacji są wdrażane równolegle.
