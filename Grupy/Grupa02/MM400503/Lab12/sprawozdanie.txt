@@ -1,0 +1,11 @@
+1-4. Stworzyłem konto i pobrałem Azure CLI.
+5.1. Utworzyłem grupę zasobów poleceniem: az group create --name mmnichResource -l germanywestcentral. (Screenshot 1)
+5.2. Utworzyłem kontener na bazie obrazu z docker Hub'a i sprawdziłem jego działanie.
+    Polecenia:
+    * az container create --resource-group mmnichResource --name mmnich-container --image mnichmaciej/cicd:0.79 --dns-name-label aci-demo --ports 8081
+    * az container show --resource-group mmnichResource --name mmnich-container --query ipAddress.fqdn
+    * az container logs --resource-group mmnichResource --name mmnich-container
+    (Screenshoty 2-6)
+5.3. Usunąłem kontener i upewniłem się, że grupa zasobów już nie istnieje. Dodatkowo sprawdziłem ilość pozostałych środków na koncie.
+    Polecenie: az group delete --name mmnichResource
+    (Screenshoty 7-8)

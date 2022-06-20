@@ -1,0 +1,16 @@
+Arkadiusz Czader 401177
+
+Wykorzystane komendy:
+	Tworzenie nowej grupy zasobów:
+		az group create --location northeurope --name Wireapp
+
+	Uruchomienie nowego kontenera na podstawie obrazu z dockerhub:
+		az container create -n mycont -g Wireapp --image arczan/jenkins-wireapp:2.0 --ports 8000
+
+Podczas laboratorium wykonano:
+	- Rejestracja na platformie Azure
+	- Zalogowanie do AzueCLI
+	- Utworzono grupę zasobów
+	- Uruchomiono kontener na podstawie obrazu z dockerhub
+	- Usunięto kontener aby nie płacić za jego działanie
+

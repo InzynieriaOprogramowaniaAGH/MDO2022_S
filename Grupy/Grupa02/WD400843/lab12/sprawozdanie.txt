@@ -1,0 +1,17 @@
+Sprawozdanie lab12
+
+1.Zarejestrowanie się w Microsoft Azure.
+
+2.Zapoznanie się z cennikiem usług chmurowych dla Azure Conatiner Instances.
+
+3.Zapoznanie się z tym co to jest "Azure Cloud Shell" i jak można w niej korzystać z Bash'a.
+
+4. Zapoznanie się z instrukcją uruchaminia kontenerów w ACI.
+
+5. Stworzono grupę zasobów za pomocą komendy: az group create --name Group2 --location eastus
+
+6. Stworzono kontener za pomocą komendy: az container create --resource-group Group2 --name webapp --image dwioletta/komunikator --dns-name-label komunikator --ports 9999
+
+7.Usunięto kontener za pomocą polecenia "az container delete --resource-group Group2 --name webapp" oraz sprawdzono czy faktycznie został usunięty za pomocą komendy "az container list --resource-group Group2 --output table" 
+
+8.Usunięto grupe zasobów za pomocą polecenia: az group delete --name Group2

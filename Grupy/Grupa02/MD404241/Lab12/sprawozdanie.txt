@@ -1,0 +1,8 @@
+2. Zalogowano się i zarejestrowano do Microsoft Azure
+3. Zapoznano się z cennikiem usług chmurowych Azure Container Instances
+4. Zapoznano się z Azure Cloud Shell
+5. Zapoznano się z instrukcją uruchamiania kontenerów w ACI
+5.1 Tworzenie nowej grupy zasobów: az group create --location westeurope --name socket-io
+5.2 Uruchomienie nowego kontenera na podstawie obrazu z dockerhub: az container create -n devops -g socket-io --image secopstech/socket-io-chat:latest --ports 3030
+5.3 Uruchomiono kontener na podstawie obrazu z dockerhub
+5.4 Usunięto kontener aby nie płacić za jego działanie

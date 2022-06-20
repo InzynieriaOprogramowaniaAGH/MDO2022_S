@@ -1,0 +1,9 @@
+1.0 Uruchomiono minikube dashboard.
+
+2.0 Za pomocą kubectl apply wykonano poniższe kroki:
+2.1 Uruchomiono komunikator-deployment-recreate. [recreate success]
+2.2 Uruchomiono komunikator-deployment-rollingUpdate. Podczas pierwszego uruchomienia tego deploymentu Kuberneties się zawiesił.
+Nie jestem przekonany czy było to z powodów niezależnych ode mnie czy problemem była ilość podmian która ustawiona była na 4.
+Po ustawieniu na 2 przez moment dashboard działał a potem na nowo się zawiesił. Na zrzucie ekranu "rolling update" widzimy ze kuberneties załapał, że coś się zmieniło.
+wydaje mi się jednak że nie był w stanie wykonać tej strategii bo czas ostatniego updatu nie pokrywa się z czasem sprzed rolling update'a.
+2.3 Uruchomiono komunikator-deployment-canary który umożliwia odpalenie kilku serwisów równolegle.

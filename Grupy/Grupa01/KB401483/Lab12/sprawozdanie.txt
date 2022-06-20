@@ -1,0 +1,26 @@
+Sprawozdanie 12
+
+1. Korzystając ze swojego konta studenckiego MS Teams zalogowano się i zarejestrowano do Microsoft Azure.
+
+2. Uważnie zapoznano się z cennikiem usług chmurowych dla Azure Conatiner Instances.
+
+3. Zapoznano się z tym co to jest "Azure Cloud Shell" i jak można w niej korzystać z Bash'a.
+
+4. Zapoznano się z instrukcją uruchaminia kontenerów w ACI.
+
+5.Pobrano Azure CLI.
+ 
+	Zalogowano się poleceniem: az login
+
+	Utworzono nową grupę zasobów poleceniem: az group create --name Group1 --location eastus
+
+	Utworzono kontener w chmurze poleceniem: az container create --resource-group Group1 --name webapp --image klabalicka/kom-lab10 --dns-name-label komunikator --ports 3000
+	
+ 	Kontener nie działał pod adresem: http://komunikator.eastus.azurecontainer.io:3000/ mogło to być spowodowane źle dobranymi portami.
+    	
+	Sprawdzono status kontenera w chmurze poleceniem: az container show --resource-group Group1 --name webapp --query "{FQDN:ipAddress.fqdn,ProvisioningState:provisioningState}" --out table
+	
+  	Usunięto kontener z chmury poleceniem: az container delete --resource-group Group1 --name webapp
+	
+	Usunięto grupę zasobów poleceniem: az group delete --name Group1
+	
