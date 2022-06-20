@@ -5,4 +5,4 @@ sudo apt-get install git - instalacja git'a w systemie linux
 git clone <nazwa repo> - wykonanie kopii repozytorium
 git status - sprawdzenie obecnego branch'u oraz commit'ow
 git add - dodanie pliku do repozytorium
-git init
+git init- tworzenie nowego repozytorium
