@@ -24,7 +24,7 @@
 
 Ponizej zrzut ekranu z terminalu pokazujący, że pobranie przy pomocy ssh działa
 
-![Clone repo](clone.png "Clone_repo")
+![clone](clone.png "clone")
 
 2. Przejście poleceniem git checkout na gałąź główną a następnie na grupową, tak aby upewnić się, że jestem wstanie wykonać polecenia git-a
 
@@ -49,7 +49,7 @@ Ponizej zrzut ekranu z terminalu pokazujący, że pobranie przy pomocy ssh dzia�
 8. Po wykonaniu pierwszego push'u przystąpiono do wykonania sprawozdania.
 
 
-![Main](branch.png "Main")
+![branch](branch.png "branch")
 
 </br>
 
