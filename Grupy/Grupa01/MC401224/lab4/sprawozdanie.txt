@@ -33,4 +33,4 @@ Zawartosc pliku Dockerfile:
 5. docker-compose.yml -plik do stworzenie srodowiska uruchomieniowego
 	docker-compose build - polcenie do zbudowania pliku
    	docker-compose up -uruchomienie srodowiska
-   	
+ 
