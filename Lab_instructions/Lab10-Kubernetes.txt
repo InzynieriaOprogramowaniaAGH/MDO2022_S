@@ -1,0 +1,42 @@
+Temat: Podstawy obsługi klastra Kubernetes - Deployment Manifest
+Uwagi: 
+- korzystamy z tego samego repo co poprzednio
+- wszystkie skrypty które tworzysz zamieszczaj w odpowiednim swoim folderze w repozytorium
+- Zwróć uwagę by w komentarzu do commita zawrzeć czytelną informację w ramach którego ćwiczenia laboratoryjnego i którego zdania to robisz.
+- Na mastera wrzucamy zmiany tylko przez pull requesta! 
+
+Sprawozdanie: Stwórz plik sprawozdanie.txt w odpowiednim folderze i zawrzyj w nim opis komend, którymi zrealizowałeś ćwiczenie laboratoryjne. Dokumentuj wykonanie kolejnych kroków screenshotami, które wrzcisz do repo. 
+
+
+1. Do wykonania tego ćwiczenia będzie nam potrzebny uruchomiony (lokalny) klaster Kubernetes (kubectl+Minikube) tak jak omawiany na poprzednim ćwiczeniu.
+
+2. Uruchom Minikube Dashboard poleceniem "minikube dashboard" i upewnij się że działa.
+
+3. Zapoznaj się z dokumentacją tworzenia manifestów dla obiektów "Deployment": https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+
+4. Stwórz plik komunikator-deployment.yaml zgodnie z powyższą dokumentacją, ale zawierający:
+- nazwa: komunikator-deployment
+- app: komunikator
+- obraz z komunikatorem tak jak na poprzednich zajęciach
+- 4 repliki
+
+5. Zleć klastrowi zrealizowanie powyższego pliku używając polecenia:
+kubectl apply -f komunikator-deployment.yaml 
+a następnie sprawdź status wdrażania nowej wersji poleceniem:
+kubectl rollout status deployment/komunikator-deployment
+
+6. Wprowadź pojedynczo poniższe zmiany w pliku komunikator-deployment.yaml i zleć klastrowi aktualizację tak jak w pkt. 5. Każdorazowo udokumentuj stan klastra Kubernetes.
+6.1 zwiększ dwukrotnie ilość replik
+6.2 podaj nowszą wersję obrazu z aplilkacją (musisz najpierw go stworzyć, jeżeli nie ma jeszcze nowszej wersji)
+6.2 podaj błędną (nieistniejącą/niedziałającą) wersję obrazu z aplikacją
+6.3 przywróć poprzednią (6.2) wersję deploymentu, pomocne polecenia:
+- kubectl rollout history deployment/komunikator-deployment
+- kubectl rollout undo deployment/nginx-deployment
+
+7*. Napisz prosty skrypt w wybranym przez siebie języku (może być bash), który:
+- przyjmuje jako argument nazwę obrazu do deploymentu
+- tworzy plik z deploymentem
+- zleca jego wykonanie klastrowi Kubernetes
+- jeżeli w ciągu 60s klaster nie wykona poprawnie deploymentu, przywraca poprzednią wersję deploymentu
+
+Uwaga: zgłoś zadanie na MS Teams.

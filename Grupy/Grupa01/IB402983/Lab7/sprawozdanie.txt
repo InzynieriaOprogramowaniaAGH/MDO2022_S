@@ -1,0 +1,5 @@
+Projekt polegał na stworzeniu pipeline z istiejącego projektu (Lab6). 
+Na początku został zforkowany projekt na githuba (link : https://github.com/IzabelaBubula/berty)
+Następnie zostały stworzone odpowiednie katalogi i Jenkns file.
+Jenkins zostł uruchomiony i został w nim stworzony projekt pipeline, który był skonfigurowany
+Na końcu pipeline stał uruchomiony a o powodzeniu świadczył mail.

@@ -1,0 +1,7 @@
+Tworzenie automatycznego budowania w Jenkinsie:
+->wybranie Item typu Freestyle
+->dodanie linku do githubowego repozytorium
+->dodanie Build Triggers typu skrypt shellowy
+    cd Grupa2/JF400643/Lab04
+    docker-compose build
+    docker-compose up

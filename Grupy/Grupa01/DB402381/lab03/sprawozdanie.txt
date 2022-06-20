@@ -1,0 +1,10 @@
+- git checkout -b Grupa01-DB402381_Lab03
+
+- RUN apt-get update - aktualizacja systemu i jego zależności
+- RUN apt install -y git - zainstalowanie gita w systemie
+
+- docker build -t ubuntu-image .
+Stowrzenie obrazu przy użyciu Dockerfile znajdującego się w tym samym katalogu
+
+- docker run -it ubuntu-image
+Uruchomienie kontenera przy użyciu obrazu

@@ -1,15 +1,15 @@
 Temat: Pipeline CI/CD - plan.
 
-Uwaga: korzystamy z tego samego repo co w zeszłym tygodniu, czyli git@github.com:InzynieriaOprogramowaniaAGH/MIFT2021.git
-Uwaga: wszystkie skrypty które tworzysz zamieszczaj w odpowiednim swoim folderze w repozytorium
-Uwaga: Zwróć uwagę by w komentarzu do commita zawrzeć czytelną informację w ramach którego ćwiczenia laboratoryjnego i którego zdania to robisz.
-Uwaga: Na mastera wrzucamy zmiany tylko przez pull requesta! 
-Uwaga: Nie używamy na tym etapie clouda.
+- korzystamy z tego samego repo co w zeszłym tygodniu
+- wszystkie skrypty które tworzysz zamieszczaj w odpowiednim swoim folderze w repozytorium
+- Zwróć uwagę by w komentarzu do commita zawrzeć czytelną informację w ramach którego ćwiczenia laboratoryjnego i którego zdania to robisz.
+- Na mastera wrzucamy zmiany tylko przez pull requesta! 
+- Nie używamy na tym etapie clouda.
 
 
 1. Na dzisiejszych zajęciach stajesz w roli DevOps'a którego zadaniem jest przygotowanie planu tzw. Release pipeline'a (sekwencja kroków wdrożeniowych) oraz przygotowanie dokumentu (w formacie pdf) przedstawiającego zaplanowany proces. Nie trzeba tego procesu w tym momecie implementować! Zanim przystąpisz do ich realizacji bardzo dokładnie zapoznaj się z koncepcją tzw. Jenkinsfile (https://www.jenkins.io/doc/book/pipeline/ wraz z podrozdziałami jak zajdzie potrzeba). Docelowo w przyszłości dużą część (lub nawet całość) planu który stworzysz trzeba będzie zawżeć w postaci Jenkinsfile. 
 
-2. Program będącym podmiotem ww. pipeline'a jest ten który wybrałeś w ramach Laboratorium 3. Pamiętaj, że w celu posiadania własnego egzemplarza repozytorium programu opensource (w celu np.: jego modyfikacji, umieszczania dodatkowych plików, git hooków, etc.) możesz skorzystać z opcji "fork", tak jak opisana tutaj: https://guides.github.com/activities/forking/.
+2. Program będącym podmiotem ww. pipeline'a jest ten który wybrałeś w ramach poprzedniego Laboratorium. Pamiętaj, że w celu posiadania własnego egzemplarza repozytorium programu opensource (w celu np.: jego modyfikacji, umieszczania dodatkowych plików, git hooków, etc.) możesz skorzystać z opcji "fork", tak jak opisana tutaj: https://guides.github.com/activities/forking/.
 
 4. Plik z planem ma zawierać lub spełniać następujące wymagania:
 - stronę tytułową z informacją kto, dla jakiej aplikacji, kiedy, z planowanym użyciem jakich technologii ten plan przygotował

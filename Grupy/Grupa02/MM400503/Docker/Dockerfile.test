@@ -1,0 +1,4 @@
+ARG TAG
+FROM mnichmaciej/cicd:${TAG}
+
+CMD ["yarn","test:server"]

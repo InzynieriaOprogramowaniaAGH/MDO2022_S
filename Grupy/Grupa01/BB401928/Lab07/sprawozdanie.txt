@@ -1,0 +1,23 @@
+Sprawozdanie
+======
+
+1. Repozytorium wykorzystywane na potrzeby laboratorium
+> https://github.com/Suvres/wire-desktop
+jest to fork 
+> https://github.com/wireapp/wire-desktop
+
+
+2. Github webhook
+Następnym krokiem jest uruchomienie github webhook. Wykorzystywane jest do tego ngrok który rejestruje adres lokalny na zewnątrz
+
+3. Napisano konfigurację pipeline w jenkinsie, która obsługuje webhook
+
+4. Sprawdzenie poprawności połączenia jenkinsa z githubem za pomocą github-webhook
+
+5. Utworzenie stage TEST w jenkinsfile, oraz uruchomienie przygotowanego do testowania obrazu dockera
+
+6. Konfiguracja powiadamiania mailem o rezultacie testów
+
+7. Rozszerzenie Jenkinsfile o etap: Build, oraz połączenie go z powiadomieniami
+
+8. Rozszerzenie Jenkinsfile o etap: DEPLOY, oraz połączenie go z powiadomieniami

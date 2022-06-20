@@ -1,0 +1,25 @@
+minikube start - uruchomienie klastra
+minikube kubectl -- get po -A - pobranie kubectl
+
+3. Stworzenie nowego pliku komunikator-deployment-recreate.yaml, zastosowanie strategii Recreatem, która zamyka wszystkie stare pody przed utworzeniem nowych, powoduje ona downtime.
+
+kubectl apply -f komunikator-deployment-recreate.yaml
+
+4. Stworzenie nowego pliku komunikator-deployment-rolling_update.yaml, zastosowanie strategii RollingUpdate, która jest domyślną strategia wdrażania, zamienia Pody w klastrze jeden po drugim bez downtime-u
+
+kubectl apply -f komunikator-deployment-rolling_update.yaml
+
+5. Stworzenie nowego pliku komunikator-deployment-canary_deployment.yaml, zastosowanie strategii canary deploment, która polega n apowolnym, częściowym wdrażaniu aplikacji do klastra, co wynika z faktu, że część użytkowników nadal korzysta ze starej wersji podczas gdy inni korzystają już z nowej.
+
+Tutaj trzeba wdrożyć podstawową aplikacje z jakimś paramterem np 1.0, potem stworzyć service.yaml odpowiedzialny za przekierowywanie zaptytań do odpowiednik podów z wersji 1.0, i dodanie nowej wersji.
+
+
+kubectl apply -f komunikator-deployment-canary_deployment.yaml
+
+W tej strategii gdy zmiany nie są zadowalające można wrócić do wcześniejszej wersji za pomocą komendy:
+kubectl delete deployment.apps/komunikator-canary-deployment
+
+Gdy chcemy całkowicie wprowadzić nową wersje, używamy komendy:
+kubectl delete deployment.apps/komunikator-deployment
+
+lub zmieniamy w service.yaml na version 2.0

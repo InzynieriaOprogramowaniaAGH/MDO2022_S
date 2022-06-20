@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: komunikator-deployment2
+  labels:
+    app: komunikator3
+spec:
+  replicas: 8
+  selector:
+    matchLabels:
+      app: komunikator3
+  template:
+    metadata:
+      labels:
+        app: komunikator3
+    spec:
+      containers:
+      - name: komunikator3
+        image: jjchmielewski/lab11
+        ports:
+        - containerPort: 8080

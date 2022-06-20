@@ -1,0 +1,12 @@
+minikube start - uruchomienie klastra
+minikube kubectl -- get po -A - pobranie kubectl
+
+3:
+- zarządzanie zasobami klastra,
+- wizualizacje wyników uruchomionych klastrów, 
+- rozwiązywanie problemów z aplikacją,
+- przeglądanie serwisów,zadań i klastrów
+- wdrażanie aplikacji kontenerowych.
+
+kubectl -- run "nazwa" --image="obraz" --port="port na którym zostanie uruchomiony" --labels app="label" -uruchomienie kontenera
+kubectl port-forward "nazwa" 9999:8080 - przekierowanie portow w tym wypadku z 9999 na  8080

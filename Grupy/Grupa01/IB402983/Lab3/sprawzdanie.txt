@@ -10,6 +10,5 @@ Zad 5
 	Budowanei i uruchamianie kontenera
 		docker build . -t "lab_3-image"
 Zad 6 
-	Klonowanie ropozytorum na dockera poprzez git clone ...
-		
+	Klonowanie ropozytorum na dockera poprzez git clone ...		
 		

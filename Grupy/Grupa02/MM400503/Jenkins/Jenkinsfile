@@ -1,0 +1,91 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build'){
+            steps{
+                echo "TAG: ${TAG}"
+                sh "git checkout tags/${TAG}"
+                dir('/var/jenkins_home/workspace/LAB07/MM400503/Docker'){
+                    sh "docker-compose -f ./docker-compose.yml build --build-arg TAG=${TAG} build-agent"
+                }
+            }
+            post{
+                success{
+                    echo -e "\033[0;32mBuilt successfully!\033[0m"
+                }
+                failure{
+                    sh 'echo "\033[0;31mBuild failed!\033[0m"'
+                }
+            }
+        }
+        stage('Test'){
+            steps{
+                dir('/var/jenkins_home/workspace/LAB07/MM400503/Docker'){
+                    sh "docker-compose -f ./docker-compose.yml build --build-arg TAG=${TAG} test-agent"
+                    sh 'docker-compose  up --force-recreate -d test-agent'
+                    sh '''
+                        TEST_OUTPUT=`docker-compose logs`
+                        TEST_OUTPUT=`echo $TEST_OUTPUT | tr '|' '\n' | grep 'Tests: ' | sed -e 's/^[[:space:]]*//'`
+                        PASSED=$(echo $TEST_OUTPUT | awk -F ' ' '{print $3}')
+                        TOTAL=$(echo $TEST_OUTPUT | awk -F ' ' '{print $5}')
+                        if [ $PASSED == $TOTAL ]; then echo 100% passed; else echo Failure. Rate  $(awk -v var1=$PASSED -v var2=$TOTAL 'BEGIN { print  ( var1 / var2 * 100 ) }'); return 1;fi
+                    '''
+                }
+            }
+            post{
+                success{
+                    sh 'echo "\033[0;32mTest successfully!\033[0m"'
+                }
+                failure{
+                    sh 'echo "\033[0;31mTest failed!\033[0m"'
+                }
+            }
+        }
+        stage('Deploy'){
+            steps{
+                dir('/var/jenkins_home/workspace/LAB07/MM400503/Docker'){
+                    sh "docker login"
+                    sh "docker-compose push"
+                    sh """
+                        sed -e "s/{TAG}/${TAG}/" create-container.template.json > create-container.json
+                        cat create-container.json
+                        """ 
+                    sh """
+                        curl --unix-socket /var/run/docker.sock \
+                            -X DELETE \
+                            http:/v1.41/containers/wirewebapp?force=1
+                        """
+                    sh """
+                        curl --unix-socket /var/run/docker.sock \
+                            -H "Content-Type: application/json" \
+                            -d @create-container.json \
+                            -X POST \
+                            http:/v1.41/containers/create?name=wirewebapp
+                        """
+                    sh "curl --unix-socket /var/run/docker.sock -X POST http:/v1.24/containers/wirewebapp/start"
+                    sh 'echo "Waiting 10 seconds for container start"'
+                    sh 'sleep 10'
+                    sh "curl --unix-socket /var/run/docker.sock -X GET 'http:/v1.24/containers/wirewebapp/logs?stderr=1&stdout=1' --output logs.json"
+                    sh '''IS_RUNNING=`grep -a -o "Server is running on port" logs.json | wc -l`
+                        if [ "$IS_RUNNING" = 0 ]; then exit 1; fi'''
+                }
+            }
+            post{
+                always {
+                    dir('/var/jenkins_home/workspace/LAB07/MM400503/Docker'){
+                        sh 'docker-compose rm -f'
+                        sh 'docker image rm -f docker_test-agent'
+                        sh "docker image rm -f mnichmaciej/cicd:${TAG}"
+                    }
+                }
+                success {
+                    sh 'echo "\033[0;32msuccessfully deploy\033[0m"'
+                }
+                failure{
+                    sh 'echo "\033[0;31mdeploy failed\033[0m"'
+                }
+            }
+        }
+    }
+}

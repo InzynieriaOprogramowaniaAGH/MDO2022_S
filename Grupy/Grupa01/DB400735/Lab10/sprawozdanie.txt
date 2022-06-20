@@ -1,0 +1,23 @@
+1. Uruchomienie klastra Kubernetes poleceniem:
+	minikube start
+   oraz zaktualizowanie kubectl poleceniem:
+	minikube kubectl -- get pods -A
+2.Uruchomiłem Minikube Dashboard poleceniem:
+	minikube dashboard
+3.Zapoznałem się z dokumentacją manifestów dla obiektów "Deploymeny" przedstawionych na stronie:
+	https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+4.Stworzyłem plik komunikator-deploymeny.yaml zgodnie z dokumentacją.
+5. Zleciłem klastrowi zrealizowanie deploymentu poleceniem:
+	kubectl apply -f komunikator-deploymeny.yaml
+   Sprawdziłem status wdrażania nowej wersji poleceniem:
+	kubectl rollout status deployment/komunikator-deployment
+6.Dokonywałem pojedyńczych zmian w pliku yaml takich jak:
+  -zwiększyłem dwukrotnie ilosc replik (teraz 8)
+  -podałem nowszą wersję obrazu (najpierw stworzyłem i umieściłem nowszą wersjie obrazu na dockerhubie)
+   z powodu błędów zmniejszyłem ilość replik wersji wcześniejszej
+  -podałem błędną wersję aplikacji
+  -przywróciłem poprzednią wersję deploymentu korzystając z polecenia:
+	kubectl rollout undo deployment/komunikator-deployment
+   sprawdziłem również historię deploymentu poleceniem:
+	kubectl rollout history deployment/komunikator-deployment
+7.

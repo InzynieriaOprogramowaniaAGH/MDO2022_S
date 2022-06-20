@@ -1,0 +1,38 @@
+Temat: Podstawy obsługi klastra Kubernetes
+
+Uwagi: 
+- korzystamy z tego samego repo co poprzednio
+- wszystkie skrypty które tworzysz zamieszczaj w odpowiednim swoim folderze w repozytorium
+- Zwróć uwagę by w komentarzu do commita zawrzeć czytelną informację w ramach którego ćwiczenia laboratoryjnego i którego zdania to robisz.
+- Na mastera wrzucamy zmiany tylko przez pull requesta! 
+
+Sprawozdanie: Stwórz plik sprawozdanie.txt w odpowiednim folderze i zawrzyj w nim opis komend, którymi zrealizowałeś ćwiczenie laboratoryjne. Dokumentuj wykonanie kolejnych kroków screenshotami, które wrzcisz do repo. 
+
+
+1. Do wykonania tego ćwiczenia będzie nam potrzebny kontener docker'owy (obraz) ze zbudowanym komunikatorem (z wcześniej wykonywanych zajęć).
+
+2. Upewnij się że posiadasz zainstalowany klaster Kubernetes. Jeżeli już posiadasz Kubectl i Minikube to nie musisz nic robić.
+Jeżeli jeszcze nie, to pobierz i zainstaluj Minikube.
+Na tej stronie: https://minikube.sigs.k8s.io/docs/start/ znajdują się szczegółowe instrukcje jak to wykonać. 
+Zwróć uwagę na:
+- uruchomienie klastra (minikube start)
+- pobranie kubectl (minikube kubectl -- get po -A) jeżeli jeszcze go nie ma
+
+3. Włącz i uruchom Minikube Dashboard tak jak opisane tutaj: https://minikube.sigs.k8s.io/docs/handbook/dashboard/.
+Najczęściej robi się to poleceniem "minikube dashboard".
+
+3.1. Wypisz listę zawierającą opis co można zrobić korzystając z Minikube Dashboard
+
+4. Uruchom teraz kontener-komunikator [odpowiadający "stage("Deploy") w Jenkinsfile] w Kubernetes, używając polecenia na wzór tego:
+"kubectl run komunikator --image=YOUR_DOCKER_ID/YOUR_KOMUNIKATOR_IMG --port=9999 --labels app=komunikator"
+
+4.1 Aby sprawdzić czy działa potrzebujesz dokonać przekierowania portów w celu umożliwienia dostępu z zewnątrz:
+"kubectl port-forward deploy/komunikator <NR_PORTU_NA_LOCALHOST>:<NR_PORTU_W_KONTENERZE>"
+
+4.2 alternatywnie możesz skorzystać z sekcji czwartej dokumentacji Minikube (https://minikube.sigs.k8s.io/docs/start/) i użyć do tego celu polecenia "deployment".
+
+5. Udokumentuj że komunikator działa w klastrze Kubernetes. 
+Gratulacje!
+
+
+Uwaga: zgłoś zadanie na MS Teams.

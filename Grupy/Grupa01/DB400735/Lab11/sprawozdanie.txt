@@ -1,0 +1,24 @@
+1.Uruchomienie klastra Kubernetes poleceniem:
+	minikube start
+  zaktualizowanie kubectl poleceniem:
+	minikube kubectl -- get pods -A
+  uruchomiłem Minikube Dashboard poleceniem:
+	minikube dashboard
+  utworzyłem komunikator-deployment.yaml z poprzednich zajęć,
+  Zleciłem klastrowi zrealizowanie deploymentu poleceniem:
+	kubectl apply -f komunikator-deploymeny.yaml
+   Sprawdziłem status wdrażania nowej wersji poleceniem:
+	kubectl rollout status deployment/komunikator-deployment
+2.Utworzyłem nowy plik komunikator-deployment-recreate.yaml na podstawie pliku komunikator-deployment.yaml
+  z poprzednich zajęć.
+3.Wykorzystałem strategię "Recreate" w komunikator-deployment-recreate.yaml i uruchomiłem deployment,
+  strategia ta zakańcza i ponownie tworzy wystąpienia
+4.Wykorzystałem strategię RollingUpdate.
+  Strategia przyjmuje dwa parametry:
+   maxSurge - wskazuje na liczbe jednoczesnych podmian
+   maxUnavailable - wskazuje na liczbe ile ma zostac nie podmienionych
+  strategia ta polega na aktualizacji lub tworzeniu nowych pod'ów na raz
+5.Wykorzystałem strategię CannaryDeployment.
+  Polega ona na działaniu dwóch serwisów obok siebie, które mogą zostać przepinane przez użytkownika,
+  po to aby zachować ciągłość pracy i zmiana wersji nie była odczuwalna.
+

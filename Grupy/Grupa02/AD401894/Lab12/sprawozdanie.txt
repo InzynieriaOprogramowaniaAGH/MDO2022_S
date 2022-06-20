@@ -1,0 +1,15 @@
+Sprawozdanie LAB12 Adrian Dąbrowski 401894 
+
+
+(Podpunkt 0) Zapoznano się z teorią dotyczącą rozwiazania chmurowego od Microsoftu (Azure)
+
+(Podpunkt 1) Obraz dockerowy znajduję sie na repozytorium dockerhubowym adriandabrowski/web-app-lab-9
+
+(Podpunkt 2) Zalogowano się na istniejace konto
+
+(Podpunkt 3) Zapoznano sie z cennikiem zamieszczonym na stronie  https://azure.microsoft.com/en-us/pricing/details/container-instances/
+
+(Podpunkt 4)Zapoznano się z "Azure Cloud Shell"
+
+
+    Z powodu braku dostępnych środkuw na Azurze nie było możliwości wykonania części praktycnzej

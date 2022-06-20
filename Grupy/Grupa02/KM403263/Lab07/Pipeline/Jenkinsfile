@@ -1,0 +1,57 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {  
+                sh 'echo "BUILD"'                  
+                dir('./Pipeline') {
+                    sh 'docker-compose build build-agent'
+                }
+            }
+            post{
+                success{
+                    sh 'echo "Success (BUILD)"'
+                }
+                failure {
+                    sh 'echo "Failure (BUILD)"'
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'echo "TEST"'      
+                dir('./Pipeline') {
+                    sh 'docker-compose build test-agent'
+                    sh 'docker-compose up'
+                }
+            }
+            post{
+                success{
+                    sh 'echo "Success (TEST)"'
+                }
+                failure {
+                    sh 'echo "Failure (TEST)"'
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'echo "DEPLOY"'
+                dir('./Pipeline') {
+                    sh 'docker login'
+                    sh 'docker search kaseed'
+                    sh 'docker-compose push'
+                }
+            }
+            post{
+                success{
+                    sh 'echo "Success (DEPLOY)"'
+                }
+                failure {
+                    sh 'echo "Failure (DEPLOY)"'
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,14 @@
+version: '3.9'
+services:
+  deltachat-build:
+    image: build-agent:latest
+    build:
+      context: .
+      dockerfile: ./Docker/build-agent/Dockerfile
+  deltachat-test:
+    image: test-agent:latest
+    build:
+      context: .
+      dockerfile: ./Docker/test-agent/Dockerfile
+    depends_on:
+      - deltachat-build

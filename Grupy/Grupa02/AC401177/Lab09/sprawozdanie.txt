@@ -1,0 +1,22 @@
+Arkadiusz Czader
+
+W ramach ćwieczenia wykorzystano obraz dockerowy jenkins-wireapp stworzony w poprzednich ćwiczeniach.
+
+Kroki wykorzystane do realizacji ćwiczenia:
+
+	Instalacja minikube:
+		curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+		sudo install minikube-linux-amd64 /usr/local/bin/minikube
+	
+	Uruchomienie minikube:
+		minikube start
+	
+	Uruchomienie Dashboard: (Graficzny interfejs do zarządzania pod'ami działający w przeglądarce)
+		minikube dashboard
+	
+	Uruchomienie aplikacji: (bez opcje --restart=OnFailure kontener po zakończeniu wykonywania poleceń zakończy swoje działanie)
+		minikube kubectl -- run komunikator --image=arczan/jenkins-wireapp --port=9999 --labels app=komunikator --restart=OnFailure
+	
+	Przekierowanie portów: (wymagane do działania aplikacji przeglądarkowej)
+		minikube kubectl -- port-forward komunikator 8081:8081
+

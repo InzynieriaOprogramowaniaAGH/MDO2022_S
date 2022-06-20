@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: komunikator-deployment-canary
+  labels:
+    app: komunikator
+    version: "2.0"
+spec:
+  replicas: 8
+#  strategy:    
+#   type: Recreate
+#   type: RollingUpdate
+#    rollingUpdate:
+#      maxSurge: 2       
+#      maxUnavailable: 0 
+  selector:
+    matchLabels:
+      app: komunikator
+  template:
+    metadata:
+      labels:
+        app: komunikator
+    spec:
+      containers:
+      - name: komunikator
+        image: suvres/wireapp_app:1.4
+        ports:
+        - containerPort: 8080

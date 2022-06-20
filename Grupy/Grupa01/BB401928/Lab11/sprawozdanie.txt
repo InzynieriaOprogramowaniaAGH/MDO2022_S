@@ -1,0 +1,19 @@
+Sprawozdanie
+==========
+
+1. minikube start
+Uruchomienie procesu minikube
+
+2. minikube dashboard
+uruchomienie panelu minikube
+
+3. minikube kubectl -- apply -f komunikator-deployment-recreate.yaml
+uruchomienie na kubernetesie obrazu z konfiguracji
+
+4. Recreate powoduje zakończenie uruchomionych wystąpień, a następnie ponowne ich utworzenie
+
+5. RollingUpdate powoduje tworzenie nowych podsów w odpowiedniej ilości na raz, w tym przypadku Tworzy pod 2 na raz, albo aktualizuje odpowiednią ilość na raz. zmniejszając ilość niegotowych replik.
+
+6. CannaryDeployment polega na "miękkiej" aktualizacji. Co oznacza, że przez moment działaja dwa serwisy obok siebie, a administrator przepina działające serwisy, tak aby zachować ciągłość pracy, a użytkownicy nie odczuli zmiany wersji. Następnie stara wersja jest usuwana
+
+7. minikube kubectl -- delete deployment komunikator-deployment
