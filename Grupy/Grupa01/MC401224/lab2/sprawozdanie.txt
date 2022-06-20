@@ -1,0 +1,7 @@
+Lab2 Marceli Celadyn
+$ ssh-keygen -t rsa -b 4096 -C "your_email@example.com" -generowanie nowego klucza SSH
+eval "$(ssh-agent -s)" - sprawdzenie czy agent-ssh jest wlaczony
+ssh-add /home/marceli/.ssh/id_rsa - dodanie klucza ssh
+git remote -v - wyswietlenie polaczenia https
+git remote set-url origin git@github.com:InzynieriaOprogramowaniaAGH/MDO2022_S.git - ustawienie polaczenia na SSH
+git tag -a MC401224_Lab02 -m "Marceli Celadyn, lab02" - ustawienie tag'u do commita
