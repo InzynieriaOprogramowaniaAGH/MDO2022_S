@@ -7,7 +7,7 @@ Piotr Kulis GCL04
 	
 	Następnie po wyjściu z kontenera zostały stworzone dwa woluminy:
 	
-	![volume](volume.png "voulme")
+	![volume](volume.png "volume")
 	
 	Po sworzeniu wolumenów za pomocą polecenia sudo su przeszedłem na root-a.
 	
