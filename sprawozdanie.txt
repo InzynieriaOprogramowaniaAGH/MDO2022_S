@@ -1,0 +1,8 @@
+Lab1
+Wykonane polecenia:
+git --version - sprawdzenie zainstalowanej wersji git
+sudo apt-get install git - instalacja git'a w systemie linux
+git clone <nazwa repo> - wykonanie kopii repozytorium
+git status - sprawdzenie obecnego branch'u oraz commit'ow
+git add - dodanie pliku do repozytorium
+git init- tworzenie nowego repozytorium
