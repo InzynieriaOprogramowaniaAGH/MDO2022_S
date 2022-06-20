@@ -65,5 +65,5 @@ Piotr Kulis GCL04
 	Następnie zostały sprawdzone jeszcze jakie są utworzone obrazy dockerowe
 	oraz uruchomino odpowiednie obrazy odpowiadjące za builda i testy.
 	
-	![obrazy] (obrazy_kontener.png "obrazy")
+	![obrazy](obrazy_kontener.png "obrazy")
 		
