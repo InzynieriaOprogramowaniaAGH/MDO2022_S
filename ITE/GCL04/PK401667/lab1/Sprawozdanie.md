@@ -42,7 +42,7 @@ Ponizej zrzut ekranu z terminalu pokazujący, że pobranie przy pomocy ssh dzia�
         git add ../
         git commit -m "Initial commit"
 
-7. Na koniec push'nieto repo na własnego brancha poleceniem:
+7. Na koniec push'niento repo na własnego brancha poleceniem:
 
         git push origin HEAD
 
