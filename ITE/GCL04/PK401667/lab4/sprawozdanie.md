@@ -7,20 +7,20 @@ Piotr Kulis GCL04
 	
 	Następnie po wyjściu z kontenera zostały stworzone dwa woluminy:
 	
-	![volume] (volume.png "voulme")
+	![volume](volume.png "voulme")
 	
 	Po sworzeniu wolumenów za pomocą polecenia sudo su przeszedłem na root-a.
 	
 	W odpowiednim katalogu został sklonowane repozytorium oraz przeniesione do katologu _data wolumenu wejściowego.
 	
-	![clone] (clone.png "clone")
+	![clone](clone.png "clone")
 	
-	![inVolume] (inVolume.png "inVolume")
+	![inVolume](inVolume.png "inVolume")
 	
 	Następnie z użyciem polecenia docker start został ponownie uruchomiony  kontener. Po uruchomieniu otwarto katalog inVolume/_data gdzie jest sklonowane repozytorium.
 	W katalogu została uruchomina aplikacja poleceniem mvn clean package.
 	
-	![build] (build.png "build")
+	![build](build.png "build")
 	
 	Następnie wynik, target, został przekopiowane do katalogu outVolume.
 	
@@ -32,7 +32,7 @@ Piotr Kulis GCL04
 	Natomiast na drugim
 		iperf3 -c 172.17.0.4 -t 30 -p 5566
 	
-	![C-c iperf3] (iperf3_conect.png "C-c iperf3")
+	![C-c iperf3](iperf3_conect.png "C-c iperf3")
 	
 	Następnie procedurę powtórzono łącząc Kontener z Maszyną Wirtualną.
 	
@@ -49,7 +49,7 @@ Piotr Kulis GCL04
 	Został rozpoczęta od utworzenia sieci poleceniem
 		docker network create jenkins
 		
-	![jenkins_network] (jenkins_network.png "jenkins_network")
+	![jenkins_network](jenkins_network.png "jenkins_network")
 	
 	Następnie został utworzony kontener w oparciu o obraz dind:
 	
@@ -61,7 +61,7 @@ Piotr Kulis GCL04
   		--publish 2376:2376 \
   		docker:dind --storage-driver overlay2
   		
-  	![jenkins image] (jenkins_image.png "jenkins image")
+  	![jenkins image](jenkins_image.png "jenkins image")
   	
   	Po utworzeniu kontenera, dla ułatwienia na przyszłość stworzony został Dockerfile:
   	
@@ -87,4 +87,4 @@ Piotr Kulis GCL04
 	Następnie połączono się z Jenkinsem i zalogowana za pomocą uzyskanych danych z polecenia:
 		docker logs jenkins-docker
 		
-	![jenkins] (jenkins.png "jenkins")
+	![jenkins](jenkins.png "jenkins")
