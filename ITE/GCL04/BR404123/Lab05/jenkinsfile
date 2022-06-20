@@ -1,0 +1,113 @@
+pipeline {
+    agent any
+    parameters {
+        string(name: 'VERSION', defaultValue: '1.0.0', description: '')
+        booleanParam(name: 'PROMOTE', defaultValue: false, description: '')
+    }
+    stages {
+    	stage('Prepare') {
+    	    steps {
+            	sh 'echo Uruchomiono Prepare'
+    	    	sh 'mkdir publish -p'
+    	    	sh 'ls publish'
+    	    	sh 'pwd'
+    	        sh 'chmod 777 -R publish'
+		sh 'docker volume prune -f'
+    	    	sh 'docker volume create --name input_v'
+    	    	sh 'docker volume create --name output_v'
+    	    }
+    	}
+        stage('Build 1') {
+            steps {
+                sh 'echo Uruchomiono Build 1'
+                sh 'docker build -t lab05_builder . -f ITE/GCL04/BR404123/Lab05/dockerfile_builder'
+                sh 'ls'
+            }
+        }
+	stage('Build 2'){
+	    agent {
+		docker {
+		    image'lab05_builder'
+                    args '-v input_v:/input_v -v output_v:/output_v --user root'
+                    reuseNode false
+		}
+	    }
+	    steps {
+		sh 'echo Uruchomiono Build 2'
+		sh 'cp -r /input_v/target/* /output_v/'
+		sh 'ls /output_v/'
+	    }
+	}
+        stage('Test 1') {
+            steps {
+                sh 'echo Uruchomiono Test 1'
+                sh 'docker build -t lab05_tester . -f ITE/GCL04/BR404123/Lab05/dockerfile_tester'
+                sh 'ls'
+            }
+        }
+	stage('Test 2') {
+	    agent {
+		docker {
+		    image'lab05_tester'
+                    args '-v input_v:/input_v --user root'
+                    reuseNode false
+		}
+	    }
+	    steps {
+		sh 'echo Uruchomiono Test 2'
+	    }
+	}
+        stage('Deploy 1') {
+            steps {
+                sh 'echo Uruchomiono Deploy'
+                sh 'docker build -t lab05_deploy . -f ITE/GCL04/BR404123/Lab05/dockerfile_deploy'
+                sh 'ls'
+            }
+        }
+	stage('Deploy 2') {
+	    agent {
+		docker {
+		    image'lab05_deploy'
+                    args '-v output_v:/output_v --user root'
+                    reuseNode false
+		}
+	    }
+	    steps {
+		sh 'echo Uruchomiono Deploy 2'
+	    }
+	}
+        stage('Publish') {
+            when {
+                environment name: 'PROMOTE', value: "true"
+            }
+	    agent {
+		docker {
+		    image'lab05_builder'
+                    args '-v output_v:/output_v --user root'
+                    reuseNode false
+		}
+	    }
+            steps {
+                sh 'echo Uruchomiono Publish'
+                sh 'ls'
+		sh 'echo ${VERSION}'
+		sh 'cp -r /output_v/ ./publish/'
+		sh 'ls publish'
+		sh 'mv publish/calculatorDevOps-1.0-SNAPSHOT-jar-with-dependencies.jar	 publish/calculator_${VERSION}.jar'
+		sh 'ls publish'
+		sh 'pwd'
+                archiveArtifacts artifacts: 'publish/calculator_*.jar', fingerprint: true
+		sh 'rm -rf publish'
+            }
+        }
+    }
+    post {
+    	always {
+	    sh 'echo Czyszchoch'
+            sh 'ls publish'
+	    sh 'pwd'
+    	    sh 'chmod 777 -R publish'
+    	    sh 'rm -rf publish'
+    	}
+   }
+}
