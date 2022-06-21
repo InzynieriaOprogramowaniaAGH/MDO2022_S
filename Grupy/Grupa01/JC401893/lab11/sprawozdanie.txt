@@ -1,0 +1,15 @@
+1. minikube start:
+-Uruchomienie procesu
+
+2. minikube dashboard:
+-uruchomienie panelu 
+
+3. minikube kubectl -- apply -f komunikator-deployment-recreate.yaml:
+-uruchomienie na kubernetesie obrazu z konfiguracji
+
+4. Recreate:
+-kończy gotowe wystąpienia, oraz uruchamia je ponownie
+
+5. RollingUpdate:
+-tworzenie nowych podsów w odpowiedniej ilości na raz, w tym przypadku Tworzy pod 2 na raz (atrybut maxSurge)
+-aktualizuje odpowiednią ilość na raz. zmniejszając ilość niegotowych replik (atrybut maxUnavilable)
