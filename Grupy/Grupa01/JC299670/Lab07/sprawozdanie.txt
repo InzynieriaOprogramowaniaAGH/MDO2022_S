@@ -40,7 +40,7 @@ Temat: Pipeline CI/CD - podstawy & testowanie.
         docker:dind
     (...)
 
-2.4. Wrzuć Jenkinsfile na repozytorium przedmiotu
+2.4. Wrzuciłam Jenkinsfile na repozytorium przedmiotu
 
 
 
