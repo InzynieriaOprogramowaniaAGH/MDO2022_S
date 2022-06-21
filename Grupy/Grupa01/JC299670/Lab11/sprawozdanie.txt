@@ -39,7 +39,7 @@ Temat: Podstawy obsługi klastra Kubernetes - Deployment Strategies.
     Parametr maxUnavailable określał maksymalną ilość podów które mogą być niedostępne podczas wdrażania.
     MaxSurge określa maksymalną liczbę podów, które wdrożenie może utworzyć jednocześnie. 
     
-5. Wykorzystałam strategię wdrażania "Canary deployment". W tym celu nadałam właściwe etykiety:
+5. Wykorzystałam strategię wdrażania "Canary deployment". W tym celu nadałam etykiety:
      (...)
      metadata:
         labels:
