@@ -18,6 +18,6 @@ spec:
     spec:
       containers:
       - name: komunikator3
-        image: jjchmielewski/lab10
+        image: ibubula/deployment
         ports:
         - containerPort: 8080
