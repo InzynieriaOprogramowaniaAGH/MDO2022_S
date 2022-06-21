@@ -1,0 +1,13 @@
+1. Uruchomienie klastra Kubernetes poleceniem:
+	minikube start
+   oraz zaktualizowanie kubectl poleceniem:
+	minikube kubectl -- get pods -A
+2.Uruchomiłem Minikube Dashboard poleceniem:
+	minikube dashboard
+3.Zapoznałem się z dokumentacją manifestów dla obiektów "Deploymeny" przedstawionych na stronie:
+	https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+4.Stworzyłem plik komunikator-deploymeny.yaml zgodnie z dokumentacją.
+5. Zleciłem klastrowi zrealizowanie deploymentu poleceniem:
+	kubectl apply -f komunikator-deploymeny.yaml
+   Sprawdziłem status wdrażania nowej wersji poleceniem:
+	kubectl rollout status deployment/komunikator-deployment
