@@ -1,0 +1,16 @@
+Zadanie 10: Podstawy obsługi klastra Kubernetes - Deployment Manifest
+
+2. Uruchomiono minikube i dashboard
+
+4. Utworzono plik deploymentu na podstawie dokumentacji obsługujący obraz naszego komunikatora.
+
+5. Zlecono klastrowi zrealizowanie deploymentu poleceniem kubectl apply -f komunikator-deployment.yaml oraz sprawdzono status realizacji poleceniem kubectl rollout status deployment/komunikator-deployment.
+
+6. Wprowadzono po kolei różne zmiany w implementacji deploymentu i obserwowano zachowanie klastra.
+
+
+UWAGI:
+
+Niestety ze względu na to, że wykorzystano obraz aplikacji desktopowej kontenery wpadały za każdym razem w Crash Loop. Nie było możliwości zapobiegania temu, ponieważ kubernetes nie daje możliowści zmiany polityki restartu dla kontenerów.
+
+
