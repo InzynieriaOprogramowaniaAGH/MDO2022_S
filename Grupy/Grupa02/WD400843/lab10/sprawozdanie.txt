@@ -1,0 +1,27 @@
+Sprawozdanie lab10
+
+1.Uruchom Minikube Dashboard poleceniem "minikube dashboard" i upewnienie się, że działa.
+
+2.Zapoznanie się z dokumentacją manifestów do obiektów "Deployment"
+
+3.Stworzenie pliku komunikator-deployment.yaml:
+- nazwa: komunikator-deployment
+- app: komunikator
+- obraz z komunikatorem
+- 4 repliki
+
+4.Zlecenie klastrowi zrealizowanie pliku używając polecenia: kubectl apply -f komunikator-deployment.yaml 
+
+5. Następnie sprawdzono status wdrażania nowej wersji:kubectl rollout status deployment/komunikator-deployment
+
+6. Wprowadzono pojedyncze zmiany w pliku komunikator-deployment.yaml
+
+-zwiększenie ilości replik
+
+-podanie nowszej wersji obrazu z aplikacją
+
+-podanie błędnej nazwy
+
+-przywrócenie poprzedniej wersji deploymentu za pomocą poleceń:
+  -kubectl rollout history deployment/komunikator-deployment
+  -kubectl rollout undo deployment/komunikator-deployment

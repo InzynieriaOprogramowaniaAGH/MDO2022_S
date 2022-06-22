@@ -1,0 +1,13 @@
+1. Dockerowy obraz został wrzucony na serwer Dockerhub.
+2. Zainstalowano klaster kubernetesa a następnie uruchomiono poleceniem minicube start (screen1)
+3. Następnie pobrałem kubectl poleceniem minikube kubectl -- get po -A (screen2)
+4. Poleceniem minikube dashboard uruchomiłem przeglądarkową wersję (screen3 i screen4)
+5. Minicube dashboard może być wykorzystywany do
+	- sprawdzenia stanu podów
+	- konfiguracja
+	- zarządzanie klustrami
+	- kontrola deploymentów
+6. Uruchomiono kontener-komunikator na porcie 9999 odpowiednim poleceniem (screen5)
+7. W dashboardzie wyświetlony został aktualny stan podów (screen6)
+	Z powodu budowy aplikacji pojawił się błąd "Back-off restarting failed container". Jest on związany z aplikacją, która wyłącza się zaraz po uruchomieniu aplikacji. Z tego powodu serwer blokuje ciągły restart w celu oszczędzania zasobów.
+	

@@ -1,0 +1,13 @@
+docker build -t "nazwa_obrazu" - zbudowanie obrazu
+
+docker images - sprawdzenie posiadanych obrazów
+
+docker tag "existing-image" "nazwa uzytkownia/nazwa respo:nazwa taga" - retagowanie istiejacęgo lokalnego obrazu
+
+docker run -dit "id_obrazu" - uruchomienie kontenera o określonym id obrazu
+
+docker commit "istniejacy kontener" "nazwa uzytkownia/nazwa respo:nazwa taga" - zatwierdzenie zmian
+
+docker push "nazwa uzytkownia/nazwa respo:nazwa taga" - opublikowanie obrazu w serwise Docker Hub
+
+docker-compose build; docker-compose up - zbudowanie obrazów i uruchomienie kontenerów

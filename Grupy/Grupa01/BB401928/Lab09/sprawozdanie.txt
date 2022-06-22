@@ -1,0 +1,31 @@
+Sprawozdanie.txt
+====
+
+1. curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+Pobranie paczki z minikube
+
+2. sudo install minikube-linux-amd64 /usr/local/bin/minikube
+Instalacja minikube
+
+3. minikube start
+Uruchomienie minikube
+
+4. minikube kubectl -- get po -A
+instalacja kubectl
+
+5. minikube dashboard
+Uu
+6. Możliwości Panelu
+- wdrażanie aplikacje kontenerowe w klastrze Kubernetes
+- rozwiązywanie problemów z kontenerami
+- zarządzanie zasobami
+- przegląd aplikacji
+- tworzenie / modyfikacja indywidualnych kubernetesów
+
+7.  minikube kubectl -- run komunikatornew --image=suvres/wireapp_app:latest --port=8080 --labels app=komunikatornew 
+Utworzenie obrazu  
+
+8. kubectl port-forward pods/komunikatornew 7080:8080
+uruchomienie serwisu dla przygotowanego przez deweloperów dockerfile
+
+

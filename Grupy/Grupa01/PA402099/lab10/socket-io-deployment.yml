@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: socket-io-deployment
+  labels:
+    app: socket-io
+spec:
+  replicas: 8
+  selector:
+    matchLabels:
+      app: socket-io
+  template:
+    metadata:
+      labels:
+        app: socket-io
+    spec:
+      containers:
+      - name: socket-io
+        image: piotrekapriasz/lab10-socket-io:1.0
+        ports:
+        - containerPort: 80

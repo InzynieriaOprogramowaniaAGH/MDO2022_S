@@ -1,0 +1,9 @@
+Stworzenie odpowiedniej struktury katalogów.
+
+Zforkowanie repozytorium z komunikatorem. 
+
+Skonfigurowanie serwera email na Jenkins.
+
+Skonfigurowanie pipeline, stworzenie stageów Build, Test, Deploy.
+
+Dodanie webhooka - uruchomiajęcego pipeline co każdego pusha - użycie narzędzia ngrok.

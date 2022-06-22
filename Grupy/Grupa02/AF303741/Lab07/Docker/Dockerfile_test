@@ -1,0 +1,7 @@
+FROM build_agent:lts
+
+WORKDIR wire-desktop-devops
+RUN yarn
+RUN yarn fix:other
+RUN yarn test:types && yarn lint && yarn prestart && yarn build:ts:tests && yarn test:react && yarn test:bin && yarn clear:coverage
+

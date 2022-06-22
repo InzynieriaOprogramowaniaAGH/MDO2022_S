@@ -1,0 +1,21 @@
+Temat: Podstawy obsługi klastra Kubernetes - Deployment Strategies.
+Uwagi: 
+- korzystamy z tego samego repo co poprzednio
+- wszystkie skrypty które tworzysz zamieszczaj w odpowiednim swoim folderze w repozytorium
+- Zwróć uwagę by w komentarzu do commita zawrzeć czytelną informację w ramach którego ćwiczenia laboratoryjnego i którego zdania to robisz.
+- Na mastera wrzucamy zmiany tylko przez pull requesta! 
+
+Sprawozdanie: Stwórz plik sprawozdanie.txt w odpowiednim folderze i zawrzyj w nim opis komend, którymi zrealizowałeś ćwiczenie laboratoryjne. Dokumentuj wykonanie kolejnych kroków screenshotami, które wrzcisz do repo. 
+
+
+1. Do wykonania tego ćwiczenia będzie nam potrzebny uruchomiony (lokalny) klaster Kubernetes (kubectl+Minikube) oraz komunikator-deployment.yaml tak jak omawiany na poprzednim ćwiczeniu 
+
+2. Stwórz nowy plik komunikator-deployment-recreate.yaml na podstawie komunikator-deployment.yaml z poprzedniego ćwiczenia. 
+
+3. Wykorzystaj strategię wdrażania "Recreate" (.spec.strategy.type) . Uruchom deployment i udokumentuj jego działanie.
+
+4. Wykorzystaj strategię wdrażania "RollingUpdate" (.spec.strategy.type), ustaw adekwatne dla ilości Pod'ów parametry "maxSurge" oraz "maxUnavailable". Uruchom deployment i udokumentuj jego działanie.
+
+5. Wykorzystaj strategię wdrażania "Canary deployment" (https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#canary-deployment). W tym celu nadaj właściwe etykiety (https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/). Uruchom deployment i udokumentuj jego działanie.
+
+Uwaga: zgłoś zadanie na MS Teams.

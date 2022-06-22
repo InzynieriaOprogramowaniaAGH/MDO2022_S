@@ -1,0 +1,8 @@
+1. Stworzyłem kontener dockerowy z jenkinsem (screen1, screen2)
+
+2. Włączyłem jenkinsa z poziomu przeglądarki wystawiony na porcie 8080 (screen3)
+
+3. Utworzyłem pipeline i napisałem do niego skrypt, który przy każdym uruchomieniu pobiera pliki z githuba i uruchamia docker-compose (screen4)
+
+4. Pipeline uruchamia się poprawnie (screen5)
+

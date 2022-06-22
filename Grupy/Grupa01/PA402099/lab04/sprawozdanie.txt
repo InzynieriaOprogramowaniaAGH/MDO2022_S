@@ -1,0 +1,48 @@
+1. Utworzenie brancha do zadania standardową komendą 
+
+1.1 Opublikowanie obrazu ubuntu na docker hub
+
+2. Wybranie komunikatora. Wybrany komunikator to deltachat-desktop ze względu
+na stosunkowo łatwe budowanie i testowanie
+
+3. Utworznie build agenta, który buduje sklonowany z githuba komunikator.
+Treść Dockerfile:
+
+FROM node:latest
+
+RUN apt-get update
+RUN apt-get install -y git
+
+RUN git clone https://github.com/deltachat/deltachat-desktop.git
+
+WORKDIR /deltachat-desktop
+
+RUN npm install       //Komenda do instalacji wymaganych pakietów komunikatora
+RUN npm run build     //Komenda do zbudownia komunikatora
+
+4. Utworznie test agenta, który testuje zbudowany wcześniej obraz komunikatora.
+Treść Dockerfile:
+
+FROM build-deltachat:latest   //Używa obrazu utworzonego na podstawie powyższego Dockerfile
+CMD npm run test              //Uruchamia testy komunikatora
+
+
+5. Utworznie docker-compose w celu połączenia obu obrazów i utworzeniu z nich kontenerów
+w celu zbudowania i przetestowania komunikatora.
+Treść docker-compose:
+
+version: '3.9'
+services:
+  deltachat-build:
+    build: 
+      context: .
+      dockerfile: ./buildAgent/Dockerfile
+  deltachat-test:
+    build:
+      context: .
+      dockerfile: ./testAgent/Dockerfile
+    depends_on:
+    - deltachat-build
+
+W pliku tym budowane są kontenery budowania i testowania, a testowanie jest zależne
+od zbudowanego komunikatora

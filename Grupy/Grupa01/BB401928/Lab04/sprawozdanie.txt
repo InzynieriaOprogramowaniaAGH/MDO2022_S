@@ -1,0 +1,26 @@
+# Sprawozdanie
+---
+
+1. docker login
+Logowanie do docker huba aby móc później korzystać z możliwości wrzucania na repozytorium
+
+2. docker build
+budowanie obrazu z poprzednich zajęć
+
+3. docker tag devops:latest suvres/docker-devops-agh:v1.0.0
+Tagowanie zbudowanego obrazu aby móc go wysłać na repozytorium
+
+4. docker images
+Wyświetla wszystkie obrazy dostępne na systemie
+
+5. docker push suvres/docker-devops-agh:v1.0.0
+Pushowanie na repozytorium
+
+6. gedit Dockerfile
+utworzenie dockerfile dla build agenta oraz test agenta
+
+7. gedit docker-compose.yml
+Tworzeenie i edycja pliku dla docker-compose
+
+8. docker-compose up
+Uruchomienie docker-compose

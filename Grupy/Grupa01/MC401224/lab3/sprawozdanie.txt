@@ -1,0 +1,9 @@
+Lab 3 Marceli Celadyn
+git branch -sprawdzenie na ktorym branchu pracuje
+ sudo apt install docker.io - instalacja dockera na systemie linux
+systemctl start docker - start docker service
+systemctl enable docker - dodaj do system boot
+systemctl status docker - sprawdz status serwisu docker
+sudo docker build . -t "lab3_image" -budowanie obrazu docker'a w folderze lab3
+sudo docker run -it "lab3_image" bash -uruchomienie konteneru
+git checkout MC401224 - przelaczenie sie na swojego brancha w obrazie docker

@@ -1,0 +1,102 @@
+uruchomienie obrazu dind, pozwalającego na wykonywanie komend dockera w jenkinsie
+docker run --name jenkins-docker --rm --detach --privileged --network jenkins --network-alias docker --env DOCKER_TLS_CERTDIR=/certs --volume jenkins-docker-certs:/certs/client --volume jenkins-data:/var/jenkins_home --publish 2376:2376 docker:dind --storage-driver overlay2
+
+uruchomienie obrazu jenkinsa
+docker run --name jenkins-blueocean --rm --detach --network jenkins --env DOCKER_HOST=tcp://docker:2376 --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 --volume jenkins-data:/var/jenkins_home --volume jenkins-docker-certs:/certs/client:ro --publish 9000:8080 --publish 50000:50000 --privileged myjenkins-blueocean:2.332.2-1
+
+
+
+
+
+zalogowanie do webhook relay pozwalającego na sprawdzanie czy do repo zostały push'nięte zmiany
+
+C:\Users\lukdy\relay-windows-amd64.exe login -k 788ae3ba-6a7a-415c-9287-0d735b0211a5 -s 9sWBCmEFDELC
+
+włączenie pośredniczenia wysyłania aktywacji webhooka z podanego niżej repo.
+C:\Users\lukdy\relay-windows-amd64.exe forward --bucket github-jenkins http://localhost:9000/github-webhook/
+
+
+
+jenkinsfile:
+
+pipeline {
+    agent any
+    
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    try {
+                        
+                            git 'https://github.com/Radglay/messaging-app.git'
+                            dir('docker') {
+                                sh 'docker-compose up msg_server'
+                            }
+                        
+                    } catch(Exception e) {
+                        echo 'Error in building stage...'
+                        currentBuild.result = 'FAILED'
+                    } finally {
+                        if (currentBuild.result != 'FAILED') {
+                            echo 'Building stage complete'
+                        }
+                    }
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                script {
+                    try {
+                        dir('docker') {
+                            sh 'docker-compose up test'
+                        }
+                        junit('**/target/surefire-reports/*.xml')
+                        
+                    } catch(Exception e) {
+                        echo 'Error in testing stage...'
+                        currentBuild.result = 'FAILED'
+                    } finally {
+                        if (currentBuild.result != 'FAILED') {
+                            echo 'Testing stage complete'
+                        }
+                    }
+                }
+                
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                script {
+                    try {
+                        sh 'docker login -u radglay -p docker123'
+                        sh 'docker tag build-agent radglay/jenkins-deploy:v1'
+                        sh 'docker push radglay/jenkins-deploy:v1'
+                        
+                    } catch(Exception e) {
+                        echo 'Error in deploying stage...'
+                        currentBuild.result = 'FAILED'
+                    } finally {
+                        if (currentBuild.result != 'FAILED') {
+                            echo 'Deploying stage complete'
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+w kazdej fazie używany jest blok try-catch-finally, który ma za zadanie wypisanie rezultatu każdego stage'u
+w fazie build pobieramy poleceniem git aktualną kopie repozytorium z aplikacją, wchodzimy do katalogu docker (dir) i uruchamiamy komende docker-compose up msg_server (sh)
+
+w fazie testowanie uruchamiany jest docker-compose up test, podczas fazy testowania uruchamiana jest baza danych oraz klient oraz uruchamiane są testy.
+Rezultat testów zapisywant jest do katalogu /target/surefefire-reports/
+Aby uzyskać dostęp do tego katalogu należało dodać wolumen:
+    volumes:
+      - /var/jenkins_home/workspace/messenger-app/target:/messaging-app/target 
+
+Następnie za pomocą wtyczki junit sprawdzane są wyniki testów.
+
+Ostatnia faza deploy, w niej logujemy się do docker-hub'a, nazywamy odpowiednio obraz build-agent zbudowany w stage build i wypychany jest na nasze repozytorium.

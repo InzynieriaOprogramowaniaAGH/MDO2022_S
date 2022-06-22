@@ -1,0 +1,54 @@
+Sprawozdanie 
+
+---
+
+1. docker network create jenkins
+Tworzymy nową sieć dla jenkinsa w dockerze
+
+2. docker run \
+  --name jenkins-docker \
+  --rm \
+  --detach \
+  --privileged \
+  --network jenkins \
+  --network-alias docker \
+  --env DOCKER_TLS_CERTDIR=/certs \
+  --volume jenkins-docker-certs:/certs/client \
+  --volume jenkins-data:/var/jenkins_home \
+  --publish 2376:2376 \
+  docker:dind \
+  --storage-driver overlay2
+  
+  Wykorzystujemy to polecnie ze strony https://www.jenkins.io/doc/book/installing/docker/
+  
+3. docker build -t myjenkins-blueocean:2.332.1-1 .
+  Budujemy jenkinsa z dockerfile przez nas utworzonego 
+  
+4 docker run \
+  --name jenkins-blueocean \
+  --rm \
+  --detach \
+  --network jenkins \
+  --env DOCKER_HOST=tcp://docker:2376 \
+  --env DOCKER_CERT_PATH=/certs/client \
+  --env DOCKER_TLS_VERIFY=1 \
+  --publish 8080:8080 \
+  --publish 50000:50000 \
+  --volume jenkins-data:/var/jenkins_home \
+  --volume jenkins-docker-certs:/certs/client:ro \
+  myjenkins-blueocean:2.332.1-1 
+  
+  W tym miejscu stawiamy serwis "internetowy" do obsługi jenkinsa
+  
+5. docker tag myjenkins-blueocean:2.332.1-1 suvres/jenkins-devops-laby:latest
+Otagowanie postawionego buildu na latest
+  
+6. docker push suvres/jenkins-devops-laby:latest
+Wypushowanie obrazu na serwer
+
+7. Następnie w przeglądarce należy wpisać "127.0.0.1:8080" ( jest to adres localhost, oraz na porcie 8080 na którym stoi jenkins ) 
+
+8. Konfiguracja pipeline
+Należy utworzyć nowy projekt pipeline w jenkinsie i skonfigurować go pod githuba, a następnie wykorzystać pole do napisania Jenkinsfile
+
+9. Uruchomienie testów

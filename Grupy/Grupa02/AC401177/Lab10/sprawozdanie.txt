@@ -1,0 +1,73 @@
+Arkadiusz Czader 401177
+
+Plik komunikator-deployment.yaml wersja 1:
+	apiVersion: apps/v1
+	kind: Deployment
+	metadata:
+	        name: komunikator-deployment
+	        labels:
+	                app: komunikator
+	spec:
+	        replicas: 4
+	        selector:
+	                matchLabels:
+	                        app: komunikator
+	        template:
+	                metadata:
+	                        labels:
+	                                app: komunikator
+	                spec:
+	                        containers:
+	                        - name: nginx
+	                          image: arczan/jenkins-wireapp:1.0
+	                          ports:
+	                          - containerPort: 8081
+
+
+Plik komunikator-deployment.yaml wersja 2:
+	apiVersion: apps/v1
+	kind: Deployment
+	metadata:
+	        name: komunikator-deployment
+	        labels:
+	                app: komunikator
+	spec:
+	        replicas: 8
+	        selector:
+	                matchLabels:
+	                        app: komunikator
+	        template:
+	                metadata:
+	                        labels:
+	                                app: komunikator
+	                spec:
+	                        containers:
+	                        - name: nginx
+	                          image: arczan/jenkins-wireapp:2.0
+	                          ports:
+	                          - containerPort: 8081
+
+
+Wykorzystane polecenia:
+
+	Uruchomienie minikube
+	minikube start
+
+	Uruchomienie graficznego interfejsu zarządzania działającego w przeglądarce
+	minikube dashboard
+
+	Wykonanie deploymentu na podstawie podanego pliku yaml
+	minikube kubectl -- apply -f komunikator-deployment.yaml
+
+	Sprawdzenie statusu deploymentu
+	minikube kubectl -- rollout status deployment/komunikator-deployment
+
+	Wyświetlienie historii deploymentów
+	minikube kubectl -- rollout history deployment/komunikator-deployment
+
+	Przywrócenie wersji
+	minikube kubectl -- rollout undo deployment/komunikator-deployment
+
+
+Dla deploymentu z błędną wersją obrazu kubernetes nie mógł utworzyć podów i pod komendą sprawdzającą status zwracał błędy
+

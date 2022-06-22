@@ -1,0 +1,12 @@
+services:
+  build-agent:
+    build:
+      context: .
+      dockerfile: DockerfileBuildAgent
+    image: build-agent
+  test-agent:
+    build:
+      context: .
+      dockerfile: DockerfileTestAgent
+    depends_on:
+      - build-agent

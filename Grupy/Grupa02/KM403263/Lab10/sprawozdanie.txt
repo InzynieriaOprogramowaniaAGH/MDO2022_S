@@ -1,0 +1,9 @@
+1. Stworzyłem komunikator-deployment.yaml zawierający nazwę, obraz z komunikatorem oraz 4 repliki.
+2. Poleceniem "kubectl apply -f komunikator-deployment.yaml" zleciłem klastrowi zrealizowanie pliku. (screen2)
+3. Z powodu problemu z obrazem nie udało się wdrożyć nowej wersji. (screen3)
+4. Po przebudowie aplikacji wdrożenie zostało wykonane poprawie. (screen4, screen5)
+5. Wprowadzono zmiany w pliku yaml.
+	- zwiększono liczbę replik do 8 (screen6, screen7)
+	- wdrożona została nowa wersja obrazu o tagu 1.1 (screen8)
+	- wdrożona została nowa nieistniejąca wersja obrazu 1.2 (screen9)
+	- Przywrócono poprzednią wersję (screen10)

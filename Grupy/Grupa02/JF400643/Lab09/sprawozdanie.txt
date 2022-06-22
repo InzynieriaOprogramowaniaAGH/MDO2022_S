@@ -1,0 +1,14 @@
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 - pobranie Minikube
+sudo install minikube-linux-amd64 /usr/local/bin/minikube - zainstalowanie Minikube
+minikube start - uruchomienie Minikube
+minikube kubectl -- get po -A - pobranie Kubectl
+minikube dashboard - uruchomienie Minikube dashboard w przegladarce (dashboard zatrzymuje sie poprzez ctrl+C w terminalu, z ktorego zostal on uruchomiony)
+
+Lista funkcjonalnosci dostepnych z Minikube dashboard:
+    >wdrazanie skonteneryzowanych aplikacji na klaster Kubernetesowy
+    >wykrywanie bledow w skonteneryzowanych aplikacjach
+    >zarzadzanie zasobami klastra
+    >przegladanie informacji o aplikacjach uruchomionych na klastrze Kubernetesowym
+    >tworzenie i modyfikowanie indywidualnych zasobow Kubernetesowych
+
+kubectl run komunikator --image=namuennov/commm --port=9999 --labels app=komunikator --restart=OnFailure - uruchomienie kontenera dockerowego z obrazu commm na klastrze ; flaga --restart okresla polityke restartu kontenera (tutaj: restart dopiero po bledzie)

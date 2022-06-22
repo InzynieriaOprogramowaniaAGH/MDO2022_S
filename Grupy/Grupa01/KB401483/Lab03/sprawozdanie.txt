@@ -28,8 +28,3 @@ Sprawozdanie 03
    git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S 
    
    cd MDO2022_S/ 
-
-   git checkout Grupa01-KB401483_Lab03
-
-
-

@@ -1,0 +1,74 @@
+Dominik Budzowski
+Lab05
+
+Przenioslem się na Windowsa ponieważ wirtualna maszyna upadla..
+0. Zapoznalem sie z diagramem wdrożeniowym
+1. Zapoznalem sie z oprogramowaniem Jenkins
+2. Stworzylem kontener dockerowy z Jenkinsem posługując się poleceniami:
+   Stworzenie sieci pomostowej:
+		docker network create jenkins
+   Uruchomienie obrazu docker:dind:
+		docker run --name jenkins-docker --rm --detach ^
+		  --privileged --network jenkins --network-alias docker ^
+		  --env DOCKER_TLS_CERTDIR=/certs ^
+		  --volume jenkins-docker-certs:/certs/client ^
+		  --volume jenkins-data:/var/jenkins_home ^
+		  --publish 2376:2376 ^
+		  docker:dind
+	Stworzylem obraz dockerowy Jenkins poprzez utworzenie dockerfile z zawartością:
+		FROM jenkins/jenkins:2.332.1-jdk11
+		USER root
+		RUN apt-get update && apt-get install -y lsb-release
+		RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
+		  https://download.docker.com/linux/debian/gpg
+		RUN echo "deb [arch=$(dpkg --print-architecture) \
+		  signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \
+		  https://download.docker.com/linux/debian \
+		  $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
+		RUN apt-get update && apt-get install -y docker-ce-cli
+		RUN curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+		RUN chmod +x /usr/local/bin/docker-compose
+		USER jenkins
+		RUN jenkins-plugin-cli --plugins "blueocean:1.25.3 docker-workflow:1.28"
+	Zbudowalem nowy obraz dockerowy poleceniem:
+		docker build -t myjenkins-blueocean:2.332.1-1 .
+	uruchomilem obraz myjenkins-blueocean:2.332.1-1 jako kontener poleceniem:
+		docker run --name jenkins-blueocean --rm --detach ^
+		  --network jenkins --env DOCKER_HOST=tcp://docker:2376 ^
+		  --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 ^
+		  --volume jenkins-data:/var/jenkins_home ^
+		  --volume jenkins-docker-certs:/certs/client:ro ^
+		  --publish 8080:8080 --publish 50000:50000 myjenkins-blueocean:2.332.1-1
+3. Wrzucilem obraz swojego Jenkinsa na DockerHub'a.
+	Na początku go otagowałem poleceniem:
+		docker tag myjenkins-blueocean:2.332.1-1 dodomax/lab05_image
+	następnie umieściłem go na DockerHub'ie poleceniem:
+		docker push dodomax/lab05_image
+4. Znalazłem hasło do Jenkinsa poleceniem:
+	docker exec jenkins-blueocean cat /var/jenkins_home/secrets/initialAdminPassword
+   Zalogowalem sie do Jenkinsa czyli na localhost:8080
+   Stworzylem nowego joba
+   Dodałem repozytorium kodu jako: https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S
+   Ustawiłem branch'a na: Grupa1
+   Ustawiłem przy budowaniu uruchomienie powłoki z poleceniami:
+	cd Grupy/Grupa01/DB400735/Lab04
+	docker-compose build
+	docker-compose up
+   Zapisałem i uruchomiłem zadanie
+   Następnie wszedlem w uruchomione zadanie i sprawdziłem w logach konsoli czy wszystko poszlo pomyślnie
+
+   Uzupelnilem pliki oraz dodalem pliki w katalogu do commita poleceniem:
+	git add .
+   Utworzylem commita poleceniem:
+   	git commit -m "DB400735 Lab05 pkt4"
+   Wykonalem push'a poleceniem:
+	git push --set-upstream origin Grupa01-DB400735_Lab05
+   wykonalem pull requesta
+
+   
+  
+
+
+
+	
+	

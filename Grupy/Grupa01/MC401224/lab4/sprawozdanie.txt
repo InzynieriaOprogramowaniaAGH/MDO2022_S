@@ -1,0 +1,36 @@
+Lab 4 Marceli Celadyn
+
+1.docker push snfeek/lab3_image:latest - wyslanie obrazu na docker-hub'a
+	docker login --username=snfeek - logowanie do docker'a
+	docker tag lab3_image:latest snfeek/lab3_image:latest -utworzenie nowego tag'u 
+	
+2. Wykorzystalem komunikator https://github.com/deltachat/deltachat-desktop
+
+3. docker build . -t 'build-agent' - utworzenie nowego obrazu docker z pliku Dockerfile
+	Zawartosc pliku Dockerfile:
+   
+   	FROM node:latest
+	RUN apt-get update
+	RUN apt install -y git
+	RUN git clone https://github.com/deltachat/deltachat-desktop.git
+	WORKDIR deltachat-desktop
+	RUN npm install
+	RUN npm run build
+4. docker build . -t 'test-agent' -utworzenie nowego obrazu test-agent z pliku Dockerfile
+   
+   Zawartosc pliku Dockerfile:
+
+	FROM build-agent:latest
+	WORKDIR deltachat-desktop
+	CMD ["npm", "test"]
+docker build . -t 'test-agent' - utworzenie obrazu test-agent
+
+Zawartosc pliku Dockerfile:
+
+	FROM build-agent:latest
+	WORKDIR deltachat-desktop
+	CMD ["npm", "test"]
+5. docker-compose.yml -plik do stworzenie srodowiska uruchomieniowego
+	docker-compose build - polcenie do zbudowania pliku
+   	docker-compose up -uruchomienie srodowiska
+ 

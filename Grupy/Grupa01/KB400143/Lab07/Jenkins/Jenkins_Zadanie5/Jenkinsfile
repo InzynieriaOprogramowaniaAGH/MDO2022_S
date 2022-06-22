@@ -1,0 +1,62 @@
+pipeline {
+	agent any
+	environment {
+        DOCKERHUB_CREDENTIALS = credentials('lab07delta')
+    }
+	stages {
+        stage('Build') {
+			steps {
+                echo 'Building'
+                sh 'docker-compose build buildsection'
+                sh 'docker-compose logs > logs.txt'
+            }
+            post {
+                failure {
+                    echo 'ERROR IN BUILDING'
+                    sh 'false'
+                }
+                success {
+                    echo 'SUCCESS IN BUILDING'
+                }
+            }
+        }
+		stage('Test') {
+			steps {
+                echo 'Testing'
+                sh 'docker-compose build testsection'
+				sh 'docker-compose up -d testsection'
+            }
+            post {
+                failure {
+                    echo 'ERROR IN TESTING'
+                    sh 'false'
+                }
+                success {
+                    echo 'SUCCESS IN TESTING'
+                }
+            }
+        }
+        stage('Deploy') {
+			steps {
+                echo 'Deploying'
+                archiveArtifacts(artifacts: '**/*.txt', followSymlinks: false)
+				sh 'docker-compose up -d buildsection'
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh 'docker tag build-agent:latest bielak2000/lab07delta'
+                sh 'docker push bielak2000/lab07delta'
+            }
+            post {
+                always{
+                       sh 'docker logout'
+                }
+                failure {
+                    echo 'ERROR IN DEPLOYING'
+                    sh 'false'
+                }
+                success {
+                    echo 'SUCCESS IN DEPLOYING'
+                }
+            }
+        }
+    }
+}

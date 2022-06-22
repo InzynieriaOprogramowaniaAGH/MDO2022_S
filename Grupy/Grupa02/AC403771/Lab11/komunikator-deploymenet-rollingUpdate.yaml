@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: komunikator-deployment-rollingupdate
+  labels:
+    app: komunikator2
+spec:
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: komunikator2
+  template:
+    metadata:
+      labels:
+        app: komunikator2
+    spec:
+      containers:
+      - name: komunikator2
+        image: annaczesak/lab10
+        ports:
+        - containerPort: 9999

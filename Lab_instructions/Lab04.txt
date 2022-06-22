@@ -13,7 +13,7 @@ Uwagi wstępne:
 
 1.1 Opublikuj obraz z porzednich zajęć w serwisie Docker HUB (https://hub.docker.com/)
 
-2. Napisz samodzielnie lub znajdź w internecie 1 dowolny komunikator (opensource messeging app). Przykładowe:
+2. Napisz samodzielnie lub znajdź w internecie 1 dowolny komunikator (opensource messeging app). Zwróć uwagę na tech stack. Przykładowe:
 - https://github.com/wireapp/
 - https://github.com/RocketChat/Rocket.Chat
 - https://github.com/AlexTraher/Socket.io-Messenger

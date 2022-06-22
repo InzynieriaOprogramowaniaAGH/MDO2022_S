@@ -1,0 +1,19 @@
+1.Utworzyłam nowa galaz: Grupa01-NB404005_lab04.
+
+2.Nastepnie zalogowalam sie na dockerhub:docker login
+Aby opublikowac obraz z poprzednich zajec:
+docker tag lab03_nb404005:latest nataviaa/lab03_nb404005:latest - utworzenie taga
+docker push nataviaa/lab03_404005:latest -  wrzucenie obrazu dockerowego do remote'a
+
+3.Wybrałam komunikator: https://github.com/deltachat/deltachat-desktop
+
+4.Utworzyłam Dockerfile oraz obraz dockerowy 'build-agent'  
+docker build -t build-agent
+
+5.Analogicznie został stworzony obraz bulid-test
+docker build -t build-test
+
+6.Stworzyłam docker-compose.yml, ściąga z repo najnowszą wersję komunikatora, buduje go z wykorzystaniem kontenera "build-agent"oraz go testuje.
+docker-compose build
+docker-compose up
+

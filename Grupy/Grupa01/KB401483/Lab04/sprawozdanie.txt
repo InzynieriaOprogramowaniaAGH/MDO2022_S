@@ -1,0 +1,20 @@
+Sprawozdanie 04
+
+
+1. Stworzenie brancha osobistego od swojego brancha grupowego: git checkout -b Grupa01-KB401483_Lab04
+
+1.1 Opublikowanie obrazu z porzednich zajęć w serwisie Docker HUB
+
+    docker tag baefb3af763c klabalicka/devops:latest: tagowanie obrazu
+
+    docker push klabalicka/devops:latest: wrzucenie obrazu dockerowego do remote'a
+ 
+2. Wybranie komunikatora: https://github.com/deltachat/deltachat-desktop
+
+3. Stworzenie nowego obrazu kontenera dockerowego o nazwie "build-agent" (nowy Dokerfile): docker build -t "build-agent" .
+
+4. Stworzenie nowego obrazu kontenera dockerowego (nowy Dokerfile) o nazwie "test-agent": docker build -t "test-agent" .
+
+5. Stworzenie pliku docker-compose.yml 
+   
+   docker-compose up: budowanie i uruchamianie obrazu 
