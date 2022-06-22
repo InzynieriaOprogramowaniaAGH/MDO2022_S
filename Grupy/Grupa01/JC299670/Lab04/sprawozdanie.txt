@@ -1,0 +1,18 @@
+1. Stwórzyłam brancha osobistego Grupa01-JC299670_Lab04 z brancha Grupa01
+
+1.1 Opublikowałam obraz z porzednich zajęć w serwisie Docker HUB (https://hub.docker.com/)
+
+2. Z podanych w instrukcji propozycji wybrałam komunikator (aplikacje webową)
+- https://github.com/deltachat/deltachat-desktop
+ 
+3. Build agent: Utworzyłam nowy obraz kontenera dockerowego o nazwie "build-agent" (nowy Dokerfile) i skonfigurowałam go tak, aby był w stanie wykonał operację budowania "komunikatora" ze źródeł.
+
+4. Test agent: Stwórzyłam nowy obraz kontenera dockerowego o nazwie "test-agent" i skonfigurowałam go tak, że był w stanie wykonać operację testowanie "komunikatora" korzystając ze zbudowanego wcześniej programu w pkt 3.
+
+5. Stworzyłam plik docker-compose.yml. Następnie stwórzyłam środowisko, które po uruchomieniu:
+- ściąga z repo najnowszą wersję wybranego "komunikatora"
+- buduje go z wykorzystaniem kontenera "build-agent"
+- kopiuje/przenosi/współdzieli komunikator między kontenerem "build-agent" oraz "test-agent"
+- testuje "czy komunikator działa?" na kontenerze "test-agent" (możesz użyć więcej niż 1 istancji obrazu 4) jeżeli trzeba.
+
+6. Wrzuciłam wszystkie pliki z tego ćwiczenia do odpowiedniego folderu. Następnie zrobiłam pull requesta do brancha master

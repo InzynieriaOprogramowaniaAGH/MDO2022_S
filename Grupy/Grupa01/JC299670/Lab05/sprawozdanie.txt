@@ -1,0 +1,50 @@
+1. Zapoznaj się z oprogramowaniem Jenkins na stronie https://www.jenkins.io/.
+
+2. Stworzyłam kontener dockerowy z Jenkinsem posługując się instrukcją ze strony https://www.jenkins.io/doc/book/installing/docker/
+    -stworzyłam sieć dla systemów uzywając komendy
+        docker network create jenkins
+    -Uruchomiłam dockera i stworzyłam dodatkowy obraz dind Docker komendą:
+        docker run --name jenkins-docker --rm --detach ^
+        --privileged --network jenkins --network-alias docker ^
+        --env DOCKER_TLS_CERTDIR=/certs ^
+        --volume jenkins-docker-certs:/certs/client ^
+        --volume jenkins-data:/var/jenkins_home ^
+        --publish 2376:2376 ^
+        docker:dind
+
+    - Utworzyłam Dockerfile z następujacą treścią:
+        FROM jenkins/jenkins:2.332.1-jdk11
+        USER root
+        RUN apt-get update && apt-get install -y lsb-release
+        RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
+        https://download.docker.com/linux/debian/gpg
+        RUN echo "deb [arch=$(dpkg --print-architecture) \
+        signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \
+        https://download.docker.com/linux/debian \
+        $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
+        RUN apt-get update && apt-get install -y docker-ce-cli
+        RUN curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        RUN chmod +x /usr/local/bin/docker-compose
+        USER jenkins
+        RUN jenkins-plugin-cli --plugins "blueocean:1.25.3 docker-workflow:1.28"
+        
+    - Zbudowałam nowy obraz z utworzonego powyżej Dockerfile i przypisałam go do nazwy myjenkins-blueocean:2.332.2-1" za pomocą komendy:
+        docker build -t myjenkins-blueocean:2.332.2-1 .
+        
+    - Uruchomiłam mój obaz  myjenkins-blueocean:2.332.2-1 jako kontener na Docker używając komendy:
+         docker run --name jenkins-blueocean --rm --detach ^
+        --network jenkins --env DOCKER_HOST=tcp://docker:2376 ^
+        --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 ^
+        --volume jenkins-data:/var/jenkins_home ^
+        --volume jenkins-docker-certs:/certs/client:ro ^
+        --publish 8080:8080 --publish 50000:50000 myjenkins-blueocean:2.332.2-1
+            
+Nastęnie weszłam na http://localhost:8080/, gdzie uruchomiony został jenkins.
+Zalogowałam się używając hasła znajdujjącego się w outpucie jenkinsa w aplikacji Docker i zainstalowałam rekomendowane wtyczki.
+
+3. Wrzuciłam obraz jenkinsa analogicznie do poprzednich obrazów za pomocą komendy:
+    docker login
+    docker tag 9bbd27f1c1b6 joasia662/myjenkins-blueocean
+    docker push joasia662/myjenkins-blueocean
+
+4. Z poziomu Jenkinsa uruchomiłam docker-compose wykonane na poprzednich laboratoriach
