@@ -1,0 +1,36 @@
+1.Utworzenie nowego brancha Grupa01-NB404005_Lab05
+
+2.Zapoznanie się z oprogramowaniem Jenkins: https://www.jenkins.io/.
+
+3.Stworzenie kontenera dockerowego z Jenkinsem:
+
+     - docker network create jenkins
+
+     -Pobranie i uruchomienie
+
+     -Utworzenie Dockerfile
+
+     -Zbudowanie obrazu z Dockerfilem
+
+     -Uruchomienie kontenera z Jenkinsem
+
+     -Uruchomienie Jenkinsa w przeglądarce:http://localhost:8080
+
+4.Wrzucenie obrazu Jenkinsa na DockerHub'a.
+
+    -Zrobienie taga:  docker tag myjenkins-blueocean:2.332.3-1 nataviaa/jenkins
+
+    -Zrobienie pusha: docker push nataviaa/jenkins
+
+5.Z poziomu Jenkinsa uruchomiono docker-compose stworzony w ramach Lab04.
+
+  -Utworzenie ogólnego projektu,
+  -Dodanie repozytorium: https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S
+  -Ustawienie brancha,
+
+  -Budowanie z komendami:
+     cd Grupy/Grupa01/NB404005/Lab04
+     docker-compose build
+     docker-compose up
+
+   -Uruchomienie zakończone sukcesem <3
