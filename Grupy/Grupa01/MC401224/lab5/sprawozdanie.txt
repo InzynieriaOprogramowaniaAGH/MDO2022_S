@@ -44,6 +44,6 @@ docker build -t myjenkins-blueocean:2.332.1-1 .
 	docker push snfeek/lab05_image - wyslanie obrazu
 4. Z poziomu Jenkinsa uruchomionego w kontenerze uruchomiono docker-compose stworzony w ramach Lab04. Dodano repozytorium, brancha oraz zbudowano projekt(poniższymi komendami):
 
-        cd Grupy/Grupa01/KB401483/Lab04
+        cd Grupy/Grupa01/MC401224/lab4
 	docker-compose build
 	docker-compose up

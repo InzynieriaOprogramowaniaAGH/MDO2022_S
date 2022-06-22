@@ -1,0 +1,21 @@
+Lab11 Marceli Celadyn
+
+1. Uruchomienie klastra Kubernetes
+	minikube start
+Zaktualizowanie kubectl
+	minikube kubectl -- get pods -A
+Uruchomienie minikube Dashboard
+	minikube dashboard
+Zrealizowanie deploymentu
+	kubectl apply -f komunikator-deploymeny.yaml
+Sprawdzenie statusu wdrażania nowej wersji:
+	kubectl rollout status deployment/komunikator-deployment
+2. Stworzenie pliku komunikator-deployment-recreate.yaml
+	Strategia ta resetuje wystapienia
+3.Stworzenie pliku komunikator-deployment-rollingUpdate.yaml
+Parametry pod:
+   maxSurge -liczba jednoczesnych podmian
+   maxUnavailable - liczba niepodmnienianych
+Strategia polega na aktualizacji lub tworzeniu nowych pod'ów z niewielkim wplywem na wydajnosc i bez przestojow
+4. Stworzenie pliku komunikator-deployment-canary-deployment.yaml
+Strategia ta polega na mozwliosci dzialania dwoch serwisow rownoczesnie aby zachować ciągłość pracy.

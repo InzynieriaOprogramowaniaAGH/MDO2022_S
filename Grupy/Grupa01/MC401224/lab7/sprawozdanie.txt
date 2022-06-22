@@ -1,0 +1,88 @@
+Lab7 Marceli Celadyn
+
+1. Utworzenie forka repozytorium komunikatora wireapp
+2. Dodanie do nowego repozytorium plikow Dockerfile, docker-compose.yml oraz Jenkinsfile
+ Jenkinsfile stages:
+	-Build - czyli wykonanie docker-compose aby zbudowac aplikacje
+	-Test - sprawdza dzialanie aplikacji po wykonaniu Build'a
+	-Deploy - Kiedy aplikacja przejdzie poprawnie testy, jej obraz zostaje wyslany na platfome Dockerhub
+
+3. Skonfigurowanie Jenkins Job:
+	-pobieranie repo z githuba i uruchomienie pliku Jenkinsfile
+	-wykorzystanie webhooks do obslugi wzbudzania
+		-webhook skonfigurowany do uruchamiania po kazdym git push'u
+Opis Jenkinsfile:
+
+	- environment - ustawienie zmiennych środowiskowych(login+haslo do dockerhub)
+	- stage('name') {} - stworzenie stag'e do obslugi kolejnych krokow
+	- post{ failure{} success{} } - zaleznie od udanej operacji wykonanie okreslonych polecen
+	- echo 'text' - wypisanie tekstu
+	- sh 'comand' - wykonaj polecenie
+
+Jenkinsfile:
+
+
+
+pipeline{
+	agent any
+
+	environment {
+		DOCKER_LOGIN = credentials('DOCKER_LOGIN')
+		DOCKER_PASSWORD = credentials('DOCKER_PASSWORD')
+	}
+
+	stages{
+		stage('Build'){
+			steps {
+				echo 'Building...'
+				sh '''
+				docker-compose build b-agent
+				'''
+			}
+			post {
+				failure {
+					echo 'Building failed!'
+				}
+				success {
+					echo 'Building successed!'
+				}
+			}
+		}
+
+		stage('Test'){
+			steps {
+				echo 'Testing...'
+				sh '''
+				docker-compose build t-agent
+				docker-compose up -d t-agent
+				'''
+			}
+			post {
+				failure {
+					echo 'Testing failed!'
+				}
+				success {
+					echo 'Testing successed!'
+				}
+			}
+		}
+
+		stage('Deploy') {
+			steps {
+				echo 'Deploying...'
+				sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_LOGIN --password-stdin'
+				sh 'docker tag build-agent:latest snfeek/jenkins-wireapp'
+				sh 'docker push snfeek/jenkins-wireapp'
+			}
+			post {
+				failure {
+					echo 'Deploying failed!'
+				}
+				success {
+					echo 'Deploying successed!'
+				}
+			}
+		}
+	}
+}
+

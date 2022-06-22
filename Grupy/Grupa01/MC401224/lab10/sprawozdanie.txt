@@ -1,0 +1,21 @@
+Lab10 Marceli Celadyn
+
+1. Uruchomienie klastra Kubernetes
+	minikube start
+Zaktualizowanie kubectl
+	minikube kubectl -- get pods -A
+2. Uruchomienie minikube Dashboard
+	minikube dashboard
+3,4. Zapoznanie sie z dokumentacja oraz stworzenie pliku komunikator-deployment.yaml
+5. Zrealizowanie deploymentu
+	kubectl apply -f komunikator-deploymeny.yaml
+Sprawdzenie statusu wdrażania nowej wersji:
+	kubectl rollout status deployment/komunikator-deployment
+	
+6.	Uruchomienie dla 8 replik powiodlo sie bez problemu
+	6a. Przy podaniu nieisteniejacego obrazu minikube po oczekiwaniu otrzymalem blad.
+	6b. Dla starszego obrazu rollout zawieszal sie(rollout fail)
+Przywrocenie poprzedniej wersji deploymentu i poprawne uruchomienie.
+Komendy:
+	 kubectl rollout history deployment/komunikator-deployment
+	- kubectl rollout undo deployment/nginx-deployment
