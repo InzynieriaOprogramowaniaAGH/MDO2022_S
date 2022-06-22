@@ -1,0 +1,7 @@
+- Pobrano Minikube i kubectl
+-uruchomino klastra: "minikube start"
+-uruchomino dashboard "minikube dashboard"
+-uruchomienie kontenera w aplikacji:
+kubectl run komunikator --image=arturhamerski98/ah-remote:latest --port=9999 --labels app=komunikator --restart=OnFailure
+-Przekierowanie portów
+kubectl port-forward pod/komunikator 7080:8080
