@@ -4,7 +4,8 @@ pipeline {
         stage('Build') {
 			steps {
                 echo 'Building'
-                sh 'docker-compose build buildsection'
+                sh 'docker-compose build --no-cache'
+                sh 'docker-compose up --force-recreate --exit-code-from build-agent build-agent'
             }
             post {
                 failure {
@@ -19,8 +20,8 @@ pipeline {
 		stage('Test') {
 			steps {
                 echo 'Testing'
-                sh 'docker-compose build testsection'
-				sh 'docker-compose up -d testsection'
+                sh 'docker-compose build --no-cache'
+				sh 'docker-compose up --force-recreate --exit-code-from test-agent test-agent'
             }
             post {
                 failure {

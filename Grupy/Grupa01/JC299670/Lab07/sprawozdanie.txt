@@ -1,6 +1,5 @@
 Temat: Pipeline CI/CD - podstawy & testowanie.
 
-
 1.Stwórzyłam swoje "źródło prawdy" : umieściłam  dockerfile z poprzedniego ćwiczenia w odpowiednich kategoriach, dzieląc je ze względu na rodzaj technologi.
 
 2.1 Dokonałam fork na repozytorium czatu by można było dowolnie dodawać pliki na swojej kopii.
@@ -40,7 +39,34 @@ Temat: Pipeline CI/CD - podstawy & testowanie.
         docker:dind
     (...)
 
+    Uruchomiłam zadanie na stronie localhost:8080
+    Testy powiodły się 
+
 2.4. Wrzuciłam Jenkinsfile na repozytorium przedmiotu
 
 
+3. Rozszerzyłam plik jenkinsfile o nowy stage ("Build") zgodnie z poleceniami, które znajdywały się w linku:https://www.jenkins.io/doc/book/pipeline/jenkinsfile/:
+    pipeline {
+        agent any
+        stages {
+            stage('Build') {
+                steps {
+                    echo 'Building'
+                    sh 'docker-compose build --no-cache'
+                    sh 'docker-compose up --force-recreate --exit-code-from build-agent build-agent'
+                }
+                post {
+                    failure {
+                        echo 'ERROR IN BUILDING'
+                        sh 'false'
+                    }
+                    success {
+                        echo 'SUCCESS IN BUILDING'
+                    }
+                }
+            }
+        (...)
+
+Zepsułam kod by build programu nie wykonał się.
+Uruchomiłam zadanie: build nie wykonał się a testy przez to pominięte
 
