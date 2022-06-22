@@ -1,0 +1,5 @@
+FROM testapp:latest
+
+WORKDIR /java-junit-sample/
+
+RUN mvn test
