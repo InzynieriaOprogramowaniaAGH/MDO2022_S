@@ -1,0 +1,55 @@
+1. Uruchomienie (lokalnego) klastera Kubernetes (kubectl+Minikube) oraz pliku komunikator-deployment.yaml
+2. Na podstwaie pliku z Lab10 komunikator-deployment.yaml zostały wykonane dalsze kroki
+3. Strategia "Recreate" - komunikator-deployment-recreate.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: komunikator-deployment-recreate
+  labels:
+    app: komunikator
+spec:
+  strategy:
+    type: Recreate
+  replicas: 4
+  selector:
+    matchLabels:
+      app: komunikator
+  template:
+    metadata:
+      labels:
+        app: komunikator
+    spec:
+      containers:
+      - name: komunikator
+        image: drinaaf/berty:latest
+        ports:
+        - containerPort: 9999
+
+4. Strategia "RollingUpdate" - apiVersion: apps/v1
+
+kind: Deployment
+metadata:
+  name: komunikator-deployment-rollingupdate
+  labels:
+    app: komunikator
+spec:
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 3
+      maxSurge: 2
+  selector:
+    matchLabels:
+      app: komunikator
+  template:
+    metadata:
+      labels:
+        app: komunikator
+    spec:
+      containers:
+      - name: komunikator
+        image: drinaaf/berty:latest
+        ports:
+        - containerPort: 9999

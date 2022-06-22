@@ -7,7 +7,7 @@
 		minikube kubectl -- get po -A
 
 3. Włączenie dashboarda
-	minikube dashboard
+	minikube dashboard --url
 
 3.1. Co można zrobić korzystając z Minikube Dashboard
 	- uruchomienie klaster Kubernetes na maszynie lokalnej
@@ -22,3 +22,15 @@
 	kubectl port-forward pod/komunikator 8080:9999 
 
 5. Komunikator działa w klastrze
+
+Po zlokalizowaniu problemu z wyłączającym sie od razu docker image, zdecydowałam na zmianę komunikatora na Berty.
+Po napisaniu nowego Dockerfile, wykonaniu następujących operacji :
+	docker build -t berty .
+	docker run berty (tu przetestowanie czy się wyłącza od razu -> exit(0) lub exit(2))
+	docker tag berty drinaaf/berty:test
+	docker push drinaaf/berty:test (tu sprawdzenie czy poprawnie został opublikowany obraz)
+	docker push drinaaf/berty:latest
+wróciłam do pkt 4
+	kubectl run komunikator --image=drinaaf/berty --port=9999 --labels app=komunikator --restart=OnFailure
+	kubectl port-forward pod/komunikator 8080:9999 (4.1 poprawnie)
+udokumentowałam działający-running pod (5 poprawnie)
