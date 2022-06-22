@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: komunikator-deployment-canary
+  labels:
+    app: komunikator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: komunikator
+  template:
+    metadata:
+      labels:
+        app: komunikator
+        release: canary
+    spec:
+      containers:
+      - name: komunikator
+        image: mcmkos/deltachat-desktop:canary
+        ports:
+        - containerPort: 80
+      restartPolicy: Always
+      

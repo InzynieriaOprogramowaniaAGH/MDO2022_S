@@ -1,0 +1,48 @@
+
+1. Do wykonania tego ćwiczeniaużyłam uruchominego klasteru Kubernetes (kubectl+Minikube) tak jak na poprzednim ćwiczeniu.
+
+2. Uruchomiłam Minikube Dashboard poleceniem :
+    minikube dashboard
+
+3. Zapoznałam się z dokumentacją tworzenia manifestów dla obiektów "Deployment", która znajduje sie na stronie:
+     https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+
+4. Stworzyłam plik plik konfigurujący komunikator-deployment.yaml, zgodnie z opisem w dziale : ,,Creating a Deployment"
+    zgodnie z treścią zadanie zmieniłam poniższe pola na : 
+    -metadata.name: z nginx-deployment na komunikator-deployment
+    -metadata.labels.app oraz pola z nazwą name: z nginx na komunikator
+    -spec.containers.image: z nginx:1.14.2 na obraz używany na lab09 czyli secopstech/socket-io-chat:latest
+    -spec.replicas: z 3 na 4
+
+    Ostateczna treść:
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+        name: komunikator-deployment
+        labels:
+            app: komunikator
+        spec:
+        replicas: 3
+        selector:
+            matchLabels:
+            app: komunikator
+        template:
+            metadata:
+            labels:
+                app: komunikator
+            spec:
+            containers:
+            - name: komunikator
+                image: secopstech/socket-io-chat:latest
+                ports:
+                - containerPort: 80
+
+5.Zleciłam klastrowi zrealizowanie powyższego pliku używając polecenia:
+        kubectl apply -f komunikator-deployment.yaml 
+
+a następnie sprawdziłam status wdrażania nowej wersji poleceniem:
+    kubectl rollout status deployment/komunikator-deployment
+
+6. Wprowadziłam pojedynczo poniższe zmiany w pliku komunikator-deployment.yaml i zlecałam klastrowi aktualizację tak jak w pkt. 5.
+    1. zwiększyłam dwukrotnie ilość replik:
+        zmieniłam dane w spec.replicas: z 4 na 8

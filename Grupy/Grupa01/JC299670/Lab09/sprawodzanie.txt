@@ -1,0 +1,30 @@
+
+2. Zainstalowałam oprogramowanie Minikube ze storny  https://minikube.sigs.k8s.io/docs/start/ 
+
+- Po instalacji uruchomiłam klaster za pomocą komendy: 
+    minikube start
+- pobrałam kubectl za pomocą komendy: 
+    minikube kubectl -- get po -A
+
+3. Włączyłam i uruchomiłam Minikube Dashboard zgodnie z opiesem na stronie: https://minikube.sigs.k8s.io/docs/handbook/dashboard/. użyłam komendy: 
+    "minikube dashboard"
+
+    interfejs użytkownika wyświetlił się na loclhost port:51628
+
+3.1. Korzystając z Minikube Dashboard można
+    -zarządzać zasobami klastra
+    -uzyskać przegląd aplikacji działających w klastrze. Można też tworzyć lub modyfikować zasoby Kubernetes 
+    - wykrywać błędy o aplikacjach
+
+4. Wrzuciłam obraz build-agent z używanego wcześniej komunikatora na docker hub następnie uruchomiłam  kontener-komunikator  w Kubernetes, używając polecenia 
+        kubectl run komunikator --image=joasia662/build-agent --port=9999 --labels app=komunikator
+
+4.1 Sprawdziłam czy działa poprzez dokonanie przekierowania portów w celu umożliwienia dostępu z zewnątrz. Użyłam komendy
+    kubectl port-forward deploy/komunikator 9999:9999
+
+Niestety to mi się nie powiodło się i musiałam użyć innej aplikacji. Powodem tego prawdopodobnie było to, że czat: deltachat-desktop jest desktopowy.
+Dlatego użyłam innego dostępnego czatu:
+    minikube kubectl -- run newkomunikatorr --image=secopstech/socket-io-chat:latest --port=9999 --labels app=newkomunikator inna apka     
+
+i wykonałam przekierowanie portów :
+kubectl port-forward pods/newkomunikatorr 3111:3000 

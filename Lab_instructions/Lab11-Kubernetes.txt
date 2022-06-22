@@ -13,7 +13,7 @@ Sprawozdanie: Stwórz plik sprawozdanie.txt w odpowiednim folderze i zawrzyj w n
 2. Stwórz nowy plik komunikator-deployment-recreate.yaml na podstawie komunikator-deployment.yaml z poprzedniego ćwiczenia. 
 
 3. Wykorzystaj strategię wdrażania "Recreate" (.spec.strategy.type) . Uruchom deployment i udokumentuj jego działanie.
-
+3.1
 4. Wykorzystaj strategię wdrażania "RollingUpdate" (.spec.strategy.type), ustaw adekwatne dla ilości Pod'ów parametry "maxSurge" oraz "maxUnavailable". Uruchom deployment i udokumentuj jego działanie.
 
 5. Wykorzystaj strategię wdrażania "Canary deployment" (https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#canary-deployment). W tym celu nadaj właściwe etykiety (https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/). Uruchom deployment i udokumentuj jego działanie.

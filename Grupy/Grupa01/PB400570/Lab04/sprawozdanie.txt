@@ -1,0 +1,71 @@
+1. Stworzenie nowej galezi Grupa01-PB400570-Lab04
+
+2. Opublikowanie obrazu z poprzednich zajec na serwisie docker hub. 
+
+    - Logowanie do docker hub z poziomu konsoli:
+
+    docker login --username="nazwa uzytkownika"
+
+    - Opublikowanie obrazu na serwisie docker hub:
+
+    docker push myjenkins-blueocean:latest
+
+3. Wybranie komunikatora - https://github.com/deltachat/deltachat-desktop
+
+4. Stworzenie build agenta, ktory buduje komunikator.
+
+    - Zawartosc Dockerfile:
+    
+    FROM node:latest
+
+    RUN apt-get update
+    RUN apt-get install -y git
+
+    RUN git clone https://github.com/deltachat/deltachat-desktop.git
+
+    WORKDIR deltachat-desktop
+
+    RUN npm install
+
+    RUN npm run build
+
+    - Zbudowanie build agenta za pomoca:
+
+    sudo docker build. -t 'build-agent'
+
+5. Stworzenie test agenta
+
+    - Zawartosc Dockerfile:
+
+    FROM build-deltachat:latest
+
+    CMD npm run test
+
+    - Zbudowanie test agenta za pomoca:
+
+    sudo docker build . -t 'test-agent'
+
+6. Stworzenie docker compose.
+
+    - Tresc docker-compose.yml:
+
+    version: '3.9'
+    services:
+    deltachat-build:
+        build: 
+        context: .
+        dockerfile: ./build-agent/Dockerfile
+    deltachat-test:
+        build:
+        context: .
+        dockerfile: ./test-agent/Dockerfile
+        depends_on:
+        - deltachat-build
+
+    - Zbudowanie docker-compose za pomoca:
+
+    sudo docker-compose build
+
+    - Uruchomienie docker-compose za pomoca:
+
+    sudo docker-compose up

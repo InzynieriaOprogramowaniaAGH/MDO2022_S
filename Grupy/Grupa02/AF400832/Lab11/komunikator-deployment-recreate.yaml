@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: komunikator-deployment-recreate
+  labels:
+    app: komunikator
+spec:
+  strategy:
+    type: Recreate
+  replicas: 4
+  selector:
+    matchLabels:
+      app: komunikator
+  template:
+    metadata:
+      labels:
+        app: komunikator
+    spec:
+      containers:
+      - name: komunikator
+        image: drinaaf/berty:latest
+        ports:
+        - containerPort: 9999

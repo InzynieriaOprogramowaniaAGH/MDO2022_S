@@ -1,0 +1,72 @@
+Temat: Pipeline CI/CD - podstawy & testowanie.
+
+1.Stwórzyłam swoje "źródło prawdy" : umieściłam  dockerfile z poprzedniego ćwiczenia w odpowiednich kategoriach, dzieląc je ze względu na rodzaj technologi.
+
+2.1 Dokonałam fork na repozytorium czatu by można było dowolnie dodawać pliki na swojej kopii.
+2.2 Następnie stworzyłam plik o nazwie Jenkinsfile a w nim w sekcję "stages" nowy "stage('Test')". o treści:
+        pipeline {
+            agent any
+            stages {
+                stage('Test') {
+                    steps {
+                        sh 'docker-compose build'
+                        sh 'docker-compose up'
+                    }
+                    post {
+                        failure {
+                            echo 'ERROR IN TESTING'
+                            sh 'false'
+                        }
+                        success {
+                            echo 'SUCCESS IN TESTING'
+                        }
+                    }
+                }
+            }
+        }
+    i umieściłam go w repo z komunikatorem
+2.3. Wykonałam przykład wykonania tych testów z użyciem Jenkinsfile.
+    Uruchomiłam Jenkinsa za pomocą komendy:
+        
+        docker network create jenkins
+
+        docker run --name jenkins-docker --rm --detach ^
+        --privileged --network jenkins --network-alias docker ^
+        --env DOCKER_TLS_CERTDIR=/certs ^
+        --volume jenkins-docker-certs:/certs/client ^
+        --volume jenkins-data:/var/jenkins_home ^
+        --publish 2376:2376 ^
+        docker:dind
+    (...)
+
+    Uruchomiłam zadanie na stronie localhost:8080
+    Testy powiodły się 
+
+2.4. Wrzuciłam Jenkinsfile na repozytorium przedmiotu
+
+
+3. Rozszerzyłam plik jenkinsfile o nowy stage ("Build") zgodnie z poleceniami, które znajdywały się w linku:https://www.jenkins.io/doc/book/pipeline/jenkinsfile/:
+    pipeline {
+        agent any
+        stages {
+            stage('Build') {
+                steps {
+                    echo 'Building'
+                    sh 'docker-compose build --no-cache'
+                    sh 'docker-compose up --force-recreate --exit-code-from build-agent build-agent'
+                }
+                post {
+                    failure {
+                        echo 'ERROR IN BUILDING'
+                        sh 'false'
+                    }
+                    success {
+                        echo 'SUCCESS IN BUILDING'
+                    }
+                }
+            }
+        (...)
+
+Zepsułam kod by build programu nie wykonał się.
+Uruchomiłam zadanie: build nie wykonał się a testy przez to pominięte
+

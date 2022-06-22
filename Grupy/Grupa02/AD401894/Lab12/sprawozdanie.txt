@@ -12,4 +12,4 @@ Sprawozdanie LAB12 Adrian Dąbrowski 401894
 (Podpunkt 4)Zapoznano się z "Azure Cloud Shell"
 
 
-    Z powodu braku dostępnych środkuw na Azurze nie było możliwości wykonania części praktycnzej
+    Z powodu braku dostępnych środków na Azurze nie było możliwości wykonania części praktycznej

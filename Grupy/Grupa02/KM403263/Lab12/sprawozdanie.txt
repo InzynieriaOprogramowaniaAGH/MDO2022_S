@@ -1,0 +1,7 @@
+1. Stworzyłem konto na Azure
+2. Zgodnie z instrukcją pobrałem Azure CLI
+3. Stworzyłem grupę o nazwie "devops" poleceniem "az group create" (screen1)
+4. Stworzyłem kontener na chmurze z serwisu dockerhub przy pomocy polecenia (screen2)
+5. Poleceniem "az container show" wyświetliłem informacje o kontenerze. W parametrze query podałem "instanceView.state" który wyświetla status kontenera oraz "ipAddress.fqdn" wyświetlający nazwę domeny. (screen3)
+6. Polecenie "az container logs" wyświetla logi kontenera (screen4)
+7. Usunąłem grupę poleceniem "az group delete"

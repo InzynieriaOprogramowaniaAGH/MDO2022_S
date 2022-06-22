@@ -1,0 +1,12 @@
+#!/bin/bash
+pattern='KM403263:'
+msg="Zla nazwa commita. Commit musi rozpoczynac sie od KM403263:"
+
+if ! grep "$pattern" "$1"
+then
+	echo "$msg"
+	exit 1
+	
+fi
+
+echo "Poprawna nazwa commita"

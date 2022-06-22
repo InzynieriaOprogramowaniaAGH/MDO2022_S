@@ -1,0 +1,9 @@
+Uruchomienie kontenera w środowisku chmurowym
+
+2. Zalogowano się do Microsoft Azure korzystając z akademickiego konta email.
+
+3. Zapoznano się z cennikiem oraz przykładami zakupu poszczególnych pakietów.
+
+4. Uruchomiono Azure Cloud Shell.
+
+5. Niestety nie udało się wykonać kolejnych punktów ze względu na pojawiające się błędy. Szczególnie poważny wydaje się "Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?". Z tego co udało mi się usatlić na chwilę obecną nie da się tego naprawić.
