@@ -1,0 +1,48 @@
+Temat: Uruchamianie i bazowa konfiguracja kontenera. cz.2.
+
+
+Uwagi wstępne: 
+- korzystamy z tego samego repo co w zeszłym tygodniu
+- po wykonaniu każdego numerowanego polecenia, wykonaj zrzut ekranu z efektem twojej pracy - będzie to potrzebne później.
+- wszystkie skrypty które tworzysz zamieszczaj w odpowiednim swoim folderze w repozytorium
+- w czasie wykonanywania zadania pisz plik "sprawozdanie.txt", zawierający treść instrukcji którymi się posłużyłeś do wykonania zadania.
+- Zwróć uwagę by w komentarzu do commita zawrzeć czytelną informację w ramach którego ćwiczenia laboratoryjnego i którego zdania to robisz.
+- Na mastera wrzucamy zmiany tylko przez pull requesta! 
+
+1. Stwórz brancha osobistego na te zajęcia wg. schematu z poprzedniego tygodnia (np.: Grupa01-KM123456_Lab03). Pamiętaj stworzyć go od swojego brancha grupowego!
+
+1.1 Opublikuj obraz z porzednich zajęć w serwisie Docker HUB (https://hub.docker.com/)
+
+2. Napisz samodzielnie lub znajdź w internecie 1 dowolny komunikator (opensource messeging app). Zwróć uwagę na tech stack. Przykładowe:
+- https://github.com/wireapp/
+- https://github.com/RocketChat/Rocket.Chat
+- https://github.com/AlexTraher/Socket.io-Messenger
+- https://github.com/DrKLO/Telegram
+- https://github.com/telegramdesktop/
+- https://github.com/ramboxapp/community-edition
+- https://github.com/deltachat/deltachat-desktop
+- https://github.com/zulip/zulip
+- https://github.com/hexchat/hexchat
+- https://github.com/juliancwirko/s-chat-app
+- https://github.com/berty/berty
+- https://github.com/chatwoot/chatwoot
+- https://github.com/tinode/chat
+- https://github.com/mw866/p2p
+- https://github.com/signalapp/Signal-Desktop
+- https://github.com/adityadroid/Messio
+- https://github.com/diddlesnaps/jami
+- https://github.com/sindresorhus/caprine
+ 
+3. Build agent: Stwórz nowy obraz kontenera dockerowego o nazwie "build-agent" (nowy Dokerfile) i skonfiguruj go tak, aby był w stanie wykonać operację budowania "komunikatora" ze źródeł (kompilacja, linkowanie, zależności, etc.)
+
+4. Test agent: Stwórz nowy obraz kontenera dockerowego (nowy Dokerfile) o nazwie "test-agent" i skonfiguruj go tak, aby był w stanie wykonać operację testowanie "komunikatora" korzystając ze zbudowanego wcześniej programu w pkt 3.
+
+5. Stwórz plik docker-compose.yml (przykład i dokumentację znajdziesz na https://docs.docker.com/compose/). Dodaj go do swojego brancha. Korzystając z obrazów z pkt. 3) i 4) stwórz środowisko, które po uruchomieniu:
+- ściąga z repo najnowszą wersję wybranego "komunikatora"
+- buduje go z wykorzystaniem kontenera "build-agent"
+- kopiuje/przenosi/współdzieli komunikator między kontenerem "build-agent" oraz "test-agent"
+- testuje "czy komunikator działa?" na kontenerze "test-agent" (możesz użyć więcej niż 1 istancji obrazu 4) jeżeli trzeba.
+
+6. Wrzuć wszystkie pliki Dockerfile, docker-compose oraz sprawozdanie i screenshoty na repozytorium - zrób pull requesta ze swojego brancha do mastera.
+
+Uwaga: zgłoś zadanie na MS Teams!

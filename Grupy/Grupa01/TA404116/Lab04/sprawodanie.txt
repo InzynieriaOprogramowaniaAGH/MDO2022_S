@@ -1,0 +1,29 @@
+docker build -t dtomart/devops-lab4:1.0 .  
+    ^ - zbudowanie obrazu dockerowego o wybranej nazwie (repo z dockerhub) i tagu z dockerfile'a w obecnej lokalizacji
+
+docker login
+    ^ - logowanie do dockerhub
+
+docker push dtomart/devops-lab4:1.0
+    ^ - wypchniecie obrazu dockerowego do remote'a
+
+docker build -t build-agent .
+    ^ - stworzenie obrazu dockerowego o nazwie build-agent z pliku z aktualnej lokalizacji
+
+docker build -t build-test ./test-agent/
+    ^ - stworzenie obrazu dockerowego o nazwie build-agent z pliku z folderu test-agent
+
+docker run build-test
+    ^ - stworzenie i wlaczenie kontenera z obrazu build-test
+
+docker-compose --version
+    ^ - wyswietla wersje docker-compose
+
+docker-compose build
+    ^ - tworzymy obraz na podstawie pliku
+
+docker-compose up
+    ^ - zbuduj i uruchom obraz zdefiniowany w docker-compose
+
+docker run lab04_deltachat-test 
+    ^ - uzycie obrazu z docker-compose

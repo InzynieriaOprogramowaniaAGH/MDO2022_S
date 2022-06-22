@@ -1,0 +1,39 @@
+SPRAWOZDANIE
+
+POLECENIA:
+
+docker login -u LOGIN
+	Zalogowanie się na repozytorium dockera
+
+docker build -t TAG .
+	Buduje obraz na podstawie pliku Dockerfile
+
+docker push REPOZYTORIUM
+	Wysyła obraz na repozytorium
+
+DOCKERFILE:
+
+FROM OBRAZ
+	Informuje na podstawie jakiego obrazu rozpocząć budowę
+
+RUN KOMENDA
+	WYkonuje komendę
+
+WORKDIR ŚCIEŻKA
+	Działa jak cd w linux
+
+CMD ["KOMENDA"]
+	Wykonuje komende po starcie kontenera
+
+DOCKER-COMPOSE:
+
+version: "3.9"
+
+services:
+  b-agent:
+    build: ./build_agent
+  t-agent:
+    build: ./test_agent
+    depends_on:
+      - b_agent
+

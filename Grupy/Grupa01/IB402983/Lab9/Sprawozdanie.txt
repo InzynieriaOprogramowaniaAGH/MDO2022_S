@@ -1,0 +1,10 @@
+na początku został zainstalowany klaster kubernetisa.
+Następnie został on uruchomiony i ściągnięty został minikube:
+	minikube start
+	minikube kubectl -- get po -A
+Uruchomiony został dashoboard
+	minikube dashboard
+Wypisane zostały dodatki
+	minicube addons list
+Uruchamiamy kontener
+	kubectl run komunikator2 --image=izabubu/deploy --port=9999 --labels app=komunikator2\

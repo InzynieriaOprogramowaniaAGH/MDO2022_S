@@ -1,0 +1,3 @@
+1. Stworzyłem plik komunikator-deployment-recreate.yaml na podstawie komunikator-deployment.yaml stworzonego na poprzednich ćwiczeniach. Dodałem do niego strategię wdrażania "Recreate" (screen1, screen2)
+2. Stworzyłem plik komunikator-deployment-rollingUpdate.yaml ze strategią wdrażania "RollingUpdate" oraz uruchomiłem deployment. (screen3, screen4)
+3. Stworzyłem plik komunikator-deployment-canaryDeployment ze strategią wdrażania Cannary Deployment oraz uruchomiłem. (screen5, screen6)

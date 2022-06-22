@@ -1,0 +1,16 @@
+#!/bin/bash
+
+MSG="$(cat $1)"
+
+if [[ "$MSG" =~ ^MK306668.* ]];
+then 
+{
+   echo "Commit message correct: $MSG"
+   exit 0
+}
+else
+{
+   echo "Commit message incorrect: $MSG. Message schould start with: MK306668"
+   exit 1
+}
+fi

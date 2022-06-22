@@ -13,7 +13,7 @@ Uwagi wstępne:
 Fast-forward na branchach osobistych.
 1. Stwórz brancha osobistego na te zajęcia wg. schematu z poprzedniego tygodnia (np.: Grupa01-KM123456_Lab03). Pamiętaj stworzyć go od swojego brancha grupowego!
 
-2. Dodaj git hooka którego napisałes na poprzednich zajęciach do swojego folderu (np.: "MIFT2021/Grupy/Grupa1/KM123456/Lab02/hooks/pre-commit".
+2. Dodaj git hooka którego napisałes na poprzednich zajęciach do swojego folderu (np.: "<repo>/Grupy/Grupa1/KM123456/Lab02/hooks/pre-commit".
 
 3. Zainstaluj Docker'a (https://www.docker.com/) na swoim środowisku pracy.
 

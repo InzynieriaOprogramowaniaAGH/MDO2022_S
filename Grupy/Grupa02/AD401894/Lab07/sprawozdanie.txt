@@ -1,0 +1,54 @@
+Sprawozdanie LAB07 Adrian Dąbrowski 401894 
+
+(Podpunkt 1) (Źródło prawdy)
+
+    Zostało utworzone źródło prawdy lokalne oraz globalne. Lokalne odnosi się do plików z danego labolatorium, natomiast globalne gromadzi wszyskie jenkinsfile/dockerfile/hooki
+    
+    Pliki dodatkowo można znaleźć na repozytorium https://github.com/AdrianDabAGH/deltachat-desktop-fork
+ 
+
+(Podpunkt 2) Stage Test
+
+    Utworzono fork programu (link powyżej)
+
+    Utworzono pipeline (znajduje się w źródle prawdy)
+    
+    Skonfigurowano wtyczke do powiadomień mailowych
+    
+    Utworzono Stage Test który uruchamia testy (Wcześniej musi przejśc Build)
+    w razie sukcesu lub porażki użytkownik jest informowany za pomocą logów oraz wysyłanego powiadomienia mailowego
+    
+
+(Podpunkt 3)  Stage Build
+
+    Utworzono Stage Build (jest on odpalany przed testami)
+
+    W razie sukcesu lub porażki użytkownik jest informowany za pomocą logów oraz wysyłanego powiadomienia mailowego
+    
+    Upewniono się, że po zbudowaniu z sukcesem jest uruchamiany stage("Test"), ale po nieudanym budowaniu to się nie dzieje.
+
+    
+
+(Podpunkt 4) WeebHook
+        
+    Utworzono oraz udokumentowano działanie WebHooka, który jest odpowiedzialny za automatyczne uruchamianie pipelina w przypadku zmian wprowadzonych na branch (master).
+    
+    Wykorzystano program ngrok, aby w konfiguracji WebHooka wykorzystać publiczne IP.
+
+(Podpunkt 5) Stage Deploy
+            
+    Deploy jest wykonywany na dedykowany kontener dockerowy     
+
+    Obraz przy Deployu jest pushowany na repozytorium DockerHubowe   
+
+    Do deploya jest przekazywany artefakt stworzony w stage("Build") 
+        
+    W razie sukcesu lub porażki użytkownik jest informowany za pomocą logów oraz wysyłanego powiadomienia mailowego
+    
+(Podpunkt 6) 
+  
+    Pełne flow tworzenia pipelinu jest udokumentowane za pomocą screenshotów
+
+
+
+

@@ -1,0 +1,21 @@
+LAB 03 Artur Hamerski
+
+1. Utworzono nowego brancha krotko zyjacego    
+	git checkout -b Grupa02-AH306444_Lab03
+    
+
+2. Przeniesiono git hook'a 
+
+3. Zainstalowano Docker'a
+	sudo apt install docker-ce
+
+4. Zarejestrowano się w Docker Hub
+    
+
+5. Utworzono Dockerfile i umieszono na branchu
+	FROM ubuntu:latest
+	RUN apt-get -y update
+	RUN apt-get -y install git
+
+6. Zbudowano i uruchomiono kontener, a następnie pobrano repozytorium
+	docker run -it "nazwa kontenera"

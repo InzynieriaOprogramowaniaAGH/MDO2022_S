@@ -1,0 +1,35 @@
+Lab9 Marceli Celadyn
+
+2. instalacja minikube
+   Wykorzystane komendy:
+	   curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+	   sudo install minikube-linux-amd64 /usr/local/bin/minikube
+	   minikube start - startuje klaster
+	   sudo usermod -a -G docker marceli - dodanie user'a do docker group, po dodaniu user'a do docker group mozwliwa bylo urochiemienie komendy minikube start
+Zaktualizowanie wersji komenda:
+	minikube kubectl -- get pods -A
+
+3. Uruchomienie Minikube Dashboard:
+	minikube dashboard
+
+3.1 Funkcje Minikube dashboard:
+	- wdrażanie aplikacji kontenerowych w klastrze Kubernetes,
+     	- zarządzanie zasobami klastra
+	- uzyskanie przeglądu aplikacji działających w naszym klastrze
+	- tworzenie lub modyfikowanie poszczególnych zasobów Kubernetes (wdrożenia, zadania, 	zestawy demonów)
+4.	docker login --username="snfeek" - zalogowanie do dockera
+	docker tag build-agent:latest snfeek/build-agent:latest - otagowanie lokalnego obrazu
+	docker push snfeek/build-agent:latest - wyslanie obrazu do docker hub'a
+	sudo snap install kubectl --classic -instalowanie kubectl	
+	kubectl run komunikator --image=snfeek/lab05_image --port=9999 --labels app=komunikator
+	
+	Przekierowanie portow poleceniem:
+		kubectl port-forward komunikator 9998:9999
+5. kubectl get pods - wyswietlenie listy podow wraz ze statusem
+Wystapienie bledu CrashLoopBackOff w ktorym komunikator odapala sie -> crashuje i odpala na nowo
+Mozliwe przyczyny bledu:
+	-blad w konfiguracji aplikacji
+	-bug lub zlapany wyjatek
+	-proba uzycia na zajetym porcie
+	-read-only file system
+Udane wykonanie dla zmienionej aplikacji wireapp.

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+inicjaly="AC403771"
+
+if ! [[ $(cat $1) == $inicjaly* ]] ; then
+	echo "rozpocznij commit od podania inicjalow!"
+	exit 1
+fi
+echo "komentarz commita prawidlowy :)"

@@ -1,0 +1,14 @@
+1 - apt install git - instalacja klienta git
+
+2 - git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S - sklonowanie repozytorium przedmiotu
+
+3 - touch sprawozdanie.txt - utworzenie pliku sprawozdania
+
+4 - git checkout -g MK306668 - tworzy nowy branch i od razu się na niego przełącza (równie dobrze możnaby wykonać ten podpunkt poleceniami git branch MK306668 oraz git checkout MK306668)
+
+- dodano foldery poleceniem mkdir
+- git add sprawozdanie.txt - plik sprawozdania będzie śledzony przez gita
+- git commit - wykonano tak dwa commity
+
+5 - git push --set-upstream origin MK306668 - wykonuje pusha na remote'a tworząc pull requesta
+- dodano zrzut ekranu do repo za pomocą git add, zrobiono commita za pomocą git commit i dokonano uaktualnienia pull requesta wykonując po raz kolejny git push

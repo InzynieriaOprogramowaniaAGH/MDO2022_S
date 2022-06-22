@@ -1,0 +1,30 @@
+Sprawozdanie Lab07
+
+1.Utworzenie "źrodła prawdy". Umieszczenie wszystkich plików źródłowych (skrypty uruchamiające środowiska, Dockerfile, docker-compose.yaml, Jenkinsfile) w repozytorium.
+
+2.Zrobienie forka na oryginalnym repozytorium komunikatora.
+
+3.Stworzenie Jenkinsfile i umieszczenie go w repozytorium komunikatora.
+
+4.W Jenkinsfile stworzenie nowego Jenkins pipeline, a w nim w sekcji "stages" nowy "stage('Test')".
+
+5. Wewnątrz Jenkinsfile w sekcji "stage('Test')", wykonanie:
+- log z efektami testowania, powiadamianie o rezultatach
+- wykrycie i obsłużenie przypadków gdy testy się powiodły i nie powiodły
+
+6.Rozszerzenie Jenkinsfile o nowy stage ("Build"):
+- pobieranie najnowszej wersji kodów źródłowych z repozytorium 
+- budowanie programu
+- powiadomienie o sukcesie oraz porażce budowania 
+
+7. Zarejestrowanie w swoim repozytorium z komunikatorem webhook'a. Za każdym razem gdy na głównym branchu pojawia się commit, uruchamia pipeline opisywany w Jenkinsfile.
+
+8.Rozszerzenie Jenkinsfile o nowy stage("Deploy") 
+- deploy jest wykonywany na dedykowany kontener dockerowy
+- do deploya jest przekazywany artefakt stworzony w stage("Build") 
+- powiadomienie o sukcesie oraz porażce etapu wdrożenia
+
+9.Pipeline jest zdefiniowany w Jenkinsfile w repo
+- pipeline jest automatycznie wyzwalany
+- pipeline przechodzi wszystkie etapy (stage build-test-deploy)
+- pipeline obsługuje powiadamianie o rezultatach każdego z etapów

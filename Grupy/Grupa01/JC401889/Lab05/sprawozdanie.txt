@@ -1,0 +1,20 @@
+2.1 Network - stworzenie sieci o podanej nazwie (w moim przypadku "jenkins").
+
+2.2 Uruchomiono obraz docker:dind zgodnie z instrukcją. Stworzono woluminy i podłączono go do sieci stworzonej powyżej.
+
+2.3 Stworzono plik Dockerfile na wzór podanego w instrukcji Jenkinsa. Aby zadziałał należało zmienić wersję obrazu jenkinsa na latest.
+
+2.4 Następnie zbudowano własny obraz i uruchoniono konterner również za pomocą podanej w instrukcji komendy. 
+	Połączył się on z utworzonymi w punkcie 2.2 woluminami, siecią utworzoną w punkcie 2.1 oraz zaczął nadawać Jenkinsa na porcie 8080.
+	
+3.1 Wrzucono obraz na DockerHuba
+
+
+4.1 Po uruchomieniu kontenera zalogowano się do Jenkinsa przez przeglądarkę i zainstalowano zalecane wtyczki
+
+4.2 Utworzono nowy projekt i podano link do repozytorium przedmiotu oraz mojego brancha.
+
+4.3 Następnie podano instrukcje jak dostać się do plików z poprzedniego zadania i uruchomić je za pomocą docker-compose.
+
+4.4 Niestety z niewiadomego dla mnie powodu docker compose nie działa mi w jenkinsie.
+

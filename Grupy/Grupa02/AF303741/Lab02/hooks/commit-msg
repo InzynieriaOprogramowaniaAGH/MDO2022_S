@@ -1,0 +1,11 @@
+#!/bin/bash
+
+msg="$(cat $1)"
+
+if [[ "$msg" =~ ^AF303741.* ]]; then
+    exit 0
+fi
+
+echo "Commit must starts with AF303741"
+exit -1
+

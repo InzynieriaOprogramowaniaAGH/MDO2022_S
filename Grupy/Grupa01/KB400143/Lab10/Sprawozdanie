@@ -1,0 +1,29 @@
+1. W pierwszym kroku zajec uruchomiono klaster kubernetes za pomoca komendy:
+minikube start
+
+2. Nastepnie upewniono sie czy klaster dziala:
+minikube dashboard
+
+3. W kolejnym kroku zapoznano sie z dokumentacja tworzenia manifestow dla obiektow Deployment.
+
+4. Po tym stworzono plik komunikator-deployment.yaml zgodnie z instrukcja i dokumentacja.
+
+5. Nastepnie zlecono klastrowi zrealizowanie deploymentu:
+kubectl apply -f komunikator-deployment.yaml
+i sprawdzono status wdrazania nowej wersji:
+kubectl rollout status deployment/komunikator-deployment
+
+6. Nastepnie dokonywano pojednyczch zmian w pliku yaml i go aktualizowano. Kazdorazowo dokumentowano stan klastra. Zmiany jakich dokonywano:
+- dwukrotnie wieksza ilosc replik;
+- podanie nowszej wersji obrazu z aplikacja - pierwsze nalezalo wgrac takowa wersje na dockerhuba;
+- podanie blednej wersji obrazu z aplikacja;
+- przywrocenie poprzedniej wersji deploymnetu przy uzyciu komend: kubectl rollout history deployment/komunikator-deployment, kubectl rollout undo deployment/komunikator-deployment
+
+7. W ramach ostatniego kroku zajec napisano prosty skrypt w bashu(plik skrypt.sh), ktory:
+- przyjmowal jako argument nazwe obrazu;
+- tworzyl plik z deploymentem;
+- zleca jego wykonanie klastrowi Kubernetesowi;
+- jezeli w ciagu 60s klaster nie wykona poprawnie deploymentu, przywraca poprzednia wersje deploymentu. 
+Ponadto nalezalo stworzyc plik yaml'owy jako podstawe deploymentu wykorzystanego przez skrypt - skrypt-komunikator.yaml.
+
+Skrypt znajduje sie w plikach, jego poprawne dzialanie przedstawiaja rowniez zamieszczone zrzuty ekranu - przypadek powodzenia i niepowodzenia.

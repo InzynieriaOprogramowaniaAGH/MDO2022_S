@@ -41,3 +41,8 @@ if ! [[ $(cat $1) =~ $name ]] ;then
 	exit 1
 fi
 echo "Commit is correct!"
+
+5.W celu dodania zmian na githuba kolejno wykonano zadania:
+- zrobiono pusha ze swojej własnej gałęzi na remota: git push.
+- następnie zrobiono pull requesta ze swojej gałęzi na gałąz grupy, zmergowano i usunięto własną gałąz.
+- wykonano pull requesta z gałęzi grupy na mastera, po zaaprobowaniu zrobiono merga.

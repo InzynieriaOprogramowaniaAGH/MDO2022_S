@@ -1,0 +1,22 @@
+docker version
+    ^ - wyswietla informacje o zainstalowanej wersji dockera
+
+dockerfile:
+    FROM ubuntu:latest  < - obraz ubuntu
+    RUN apt-get -y update  < - aktualizacja systemu, opcja -y do akceptowania zatrzymujacych instalacje monitow
+    RUN apt install -y git < - doinstalowanie gita w kontenerze, opcja -y jak wyzej
+
+systemctl start docker
+    ^ - wlacz aplikacje dockera
+
+docker build -t simple-image .
+    ^ - zbuduj obraz kontenera na podstawie dockerfile, -t dodaje tag do obrazu
+
+docker image ls
+    ^ - wyswietl dostepne obrazy
+    
+docker ps -a
+    ^ - wyswietl wszystkie kontenery (-a <- ta opcja pokazuje takze nieaktywne)
+
+docker run -it simple-image bash
+    ^ - stworz kontener z interaktywna powloka bash

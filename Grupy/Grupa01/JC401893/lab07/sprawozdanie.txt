@@ -1,0 +1,12 @@
+1. Repozytorium wykorzystywane na potrzeby laboratorium
+> https://github.com/yivess/deltachat-desktop
+jest to fork 
+> https://github.com/deltachat/deltachat-desktop
+
+Na wcześniejszych zajęciach korzystałem z innej aplikacji, ale niestety skutecznie mnie zniechęciła do kontynuowania współpracy więc przeżuciłem się na ten chat.
+
+Stworzyłem konfigurację pipeline w jenkinsie i zapisałem wszystkie 3 state'y - po każdym wariancie Test>build>deploy
+
+Utworzenie i uruchomienie kojelnych stage: Test (zadziałało za 2 razem) > Biuld (od razu) > Deploy (były duże problemy z logowaniem do dockera więc wyszło dopiero około 20 próby )
+
+Jak można sprawdzić w Pipeline obsługuje on błędy oraz powodzenia na każdym etapie działania oraz zatrzymuje się po błędzie w konkretnym etapie co widać na jednym ze screenów.

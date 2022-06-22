@@ -1,0 +1,40 @@
+LAB02 Artur Hamerski
+
+1. Zmiana sposobu logowania do repozytorium z HTTPS na SSH.
+	ssh-keygen -t rsa -b 4096 -C "arturhamerski98@gmail.com"
+	eval "$(ssh-agent -s)" - Uruchomienie agenta
+	ssh-add ~./ssh/id_rsa - Zapisanie hasła do klucza dla agenta 
+	git remote -v - Sprawdzenia po jakim protokole lacze sie z githubem
+
+2. Nadanie "Tagu" na aktualnego commita poleceniem:
+  	git tag -a AH306444_Lab02 -m "Artur Hamerski, test1"
+
+3. Konfiguracja folderow i branchy
+	git mv - w odroznieniu od zwyklego mv po git mv git nie zglosi problemow
+   	git checkout -b Grupa02-AH306444_Lab02 - utworzenie brancha krotko zyjacego
+   	uzyskano strukture folderow "<repo>/Grupy/Grupa02/AH306444/Lab02
+   	uzyskano strukture branchy master>Grupa2>Grupa02-AH306444_Lab02
+
+4. Stworzenie git hooka ktory weryfikuje czy commit zawiera moje ID:
+   -utworzylem plik commit-msg w katalogu .git/hooks/,
+   -nadalem mu uprawnienie "allow executing file as program"
+   
+   kod githooka:
+   
+#!/bin/bash
+
+TEXT="AH306444"
+
+if ! [[ $(cat $1) =~ $TEXT ]] ;then
+   
+    echo "Nazwa commitu musi zawierać $TEXT"
+    exit 1
+fi
+    echo "Poprawnie wykonany commit"
+    exit 0
+
+5. Merge i usuniecie tymczasowego brancha
+	git merge Grupa02-AH306444_Lab02 - zmergowanie brancha krotko zyjacego z grupowym
+	git branch -d Grupa02-AH306444_Lab02 - usuniecie brancha krotko zyjacego
+ 	i na koniec git push --set-upstream origin Grupa2
+ 

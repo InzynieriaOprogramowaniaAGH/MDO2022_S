@@ -1,0 +1,9 @@
+docker build -t "nazwa_obrazu" - zbudowanie obrazu
+
+docker images - sprawdzenie posiadanych obrazów
+
+docker run -dit "id_obrazu" - uruchomienie kontenera o określonym id obrazu
+
+docker run -it "nazwa_obrazu" - uruchomienie kontenera z powłoką bash
+
+

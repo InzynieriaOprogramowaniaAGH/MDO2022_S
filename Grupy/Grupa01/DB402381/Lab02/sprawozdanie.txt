@@ -1,0 +1,20 @@
+git remote -v
+Wyświetla sposób połączenia z repozytorium
+
+ssh-keygen -t rsa -b 4096 -C "email" 
+Generuje klucz ssha na podany email
+
+start-ssh-agent
+Rozpoczyna nowego agenta SSH
+
+git tag -a DB402381 -m "Dawid Błachowicz, lab02, wszystko działa"
+Taguje ostatniego commita
+
+git push --follow-tags
+Wysyła zmiany na zdalny serwer git wraz z tagami
+
+git checkout -b Grupa01-JB404156_Lab02
+Przejście na brancha wychodzącego z gałęzi Grupa1
+
+git merge nazwa_brancha
+Scalenie gałęzi

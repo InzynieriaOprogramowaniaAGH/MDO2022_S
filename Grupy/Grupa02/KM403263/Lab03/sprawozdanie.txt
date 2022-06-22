@@ -1,0 +1,11 @@
+1. Stworzyłem nowego brancha według schematu z poprzedniego tygodnia (screen1)
+
+2. Dodałem git hooka napisanego na poprzednich zajęciach do filderu wewnątrz filderu lab03, a następnie dodałem go do gita poleceniem git add.
+
+3. Zainstalowałem dockera oraz stworzyłem plik Dockerfile bazującego na najnowszej wersji ubuntu z doinstalowanym gitem. (screen4)
+
+4. Zbudowałem obraz na podstawie Dockerfile poleceniem "docker build -t ubuntukamil .". Dzięki umieszczeniu pliku Dockerfile w bierzacym katalogu nie musiałem podawać ścieżki, a jedynie znak ".". (screen3)
+
+5. Uruchomiłem kontener na podstawie utworzonego obrazu poleceniem "docker run -it --name ubuntu ubuntukamil" (screen5)
+
+6. Sprawdziłem czy git zainstalował się w kontenerze poprawnie poprzez sprawdzenie jego wersji poleceniem "git --version" (screen6)

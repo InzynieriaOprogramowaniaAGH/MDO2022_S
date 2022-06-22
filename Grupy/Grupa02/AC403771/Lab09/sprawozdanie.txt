@@ -1,0 +1,18 @@
+1. kontener docker'owy (obraz) ze zbudowanym komunikatorem
+2. zainstalowałam Minikube
+	uruchomiłam klaster minikube start
+	pobrałam kubectl (minikube kubectl -- get po -A)
+3. uruchomiłam minikube dashboard
+3.1. Co możemy zrobić za pomocą mini kube
+	uruchomienie Kubernetes na komputerze lokalnym,
+	tworzenie jednowęzłowych klastrów wewnątrz maszyny wirtualnej,
+	Minikube to możliwość nauki i eksperymentowania
+4. uruchomienie kontenera w kubernets:
+	kubectl run komunikator --image=annaczesak/lab9 --port=9999 --labels app=komunikator --restart=OnFailure
+4.1. przekierowanie portów
+	kubectl port-forward pod/komunikator 8080:9999 
+5.  Succeeded: 1
+
+	
+	
+	

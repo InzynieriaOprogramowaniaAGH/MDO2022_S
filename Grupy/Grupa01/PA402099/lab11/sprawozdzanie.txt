@@ -1,0 +1,17 @@
+1. Utuchomienie klastra Kubernetes za pomocą minikube i 
+uruchomienei panelu zarządzania
+
+2. Skopiowanie pliku do wdrażania komunikatora aby wprowadzać w nim
+zmiany wymagane w intrukcji
+
+3. Wykorzystanie strategi Recreate we wdrażaniu komunikatora.
+W tym przypadku wszystkie obecnie żyjęce podsy są niszczone zanim zostaną 
+uruchomione nowe
+
+4. Wykorzystanie strategi Rolling update we wdrażaniu komunikatora.
+W tym przypadku tworozne są nowe podsy na raz w ustalonej ilości. Ilość tą określa 
+opcja maxsurge.
+
+5. Wykorzystanie strategi Canary we wdrażaniu kominikatora.
+Wtedy obok siebie działają równolegle dwie wersje serwisu dzięki czemu zmiana wersji
+na nowszą nie jest taj bardzo oczuwalna

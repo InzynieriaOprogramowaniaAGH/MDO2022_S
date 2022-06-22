@@ -1,0 +1,11 @@
+version: '3.9'
+services:
+    devops:
+        build:
+          context: './'
+          dockerfile: "Dockerfile"
+        working_dir: /app/
+        volumes:
+            - /home/suvres/Dokumenty/AGH/devops:/data
+        stdin_open: true
+        tty: true

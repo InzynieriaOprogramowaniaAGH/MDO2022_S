@@ -1,0 +1,28 @@
+Sprawozdanie Lab03
+
+1.Stworzenie brancha osobistego od brancha grupowego: git checkout -b Grupa02-WD400843_Lab03
+
+2.Dodanie git hooka do folderu MDO2022_S/Grupy/Grupa2/WD400843/Lab02/hooks/: cp commit-msg ../../Grupy/Grupa02/WD400843/lab02/hooks
+
+3.Zainstalowanie Docker'a.
+
+4. Zarejestrowanie konta w Docker Hub.
+
+5.Stworzenie Dockerfile, który będzie bazował na najnowszym ubuntu (ubuntu:latest)
+
+FROM ubuntu:latest
+
+RUN apt-get -y update
+RUN apt-get -y install git
+
+6. Uruchomienie kontenera, ściągniecie go na repozytorium oraz upewnienie się że jest tam  branch Grupa02-WD400843_Lab03
+
+docker build -t "lab03_devops"
+
+docker run -dit "4046e5a737bb"
+
+docker run -it lab03_devops
+
+git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S 
+
+git checkout Grupa02-WD400843_Lab03

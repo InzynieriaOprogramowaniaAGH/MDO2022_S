@@ -1,0 +1,35 @@
+Sprawozdanie 10
+
+1. Uruchomienie Minikube Dashboard poleceniem "minikube dashboard".
+
+2. Zapoznanie się z dokumentacją tworzenia manifestów dla obiektów "Deployment".
+
+3. Stworzenie pliku komunikator-deployment.yaml zgodnie z dokumentacją, ale zawierający:
+
+	- nazwa: komunikator-deployment
+	- app: komunikator
+	- obraz z komunikatorem tak jak na poprzednich zajęciach
+	- 4 repliki
+
+4. Zlecenie klastrowi zrealizowanie powyższego pliku używając polecenia:
+
+	kubectl apply -f komunikator-deployment.yaml 
+
+a następnie sprawdenie statusu wdrażania nowej wersji poleceniem:
+
+	kubectl rollout status deployment/komunikator-deployment
+
+5. Wprowadzenie pojedynczych zmian w pliku komunikator-deployment.yaml i zlecenie klastrowi aktualizację.
+
+5.1 zwiększenie ilości replik (dwukrotnie)
+
+5.2 podanie nowszej wersji obrazu z aplilkacją
+
+5.2 podanie błędnej wersji obrazu z aplikacją
+
+5.3 przywrócenie poprzedniej (6.2) wersji deploymentu, pomocne polecenia:
+
+	- kubectl rollout history deployment/komunikator-deployment
+
+	- kubectl rollout undo deployment/komunikator-deployment
+

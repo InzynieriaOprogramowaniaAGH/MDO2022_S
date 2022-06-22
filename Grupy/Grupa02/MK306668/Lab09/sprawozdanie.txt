@@ -1,0 +1,36 @@
+2. Zainstalowano minikube następującymi komendami:
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+
+Zainstalowano kubectl:
+curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
+
+
+
+3. Otworzono dashboard komendą: 
+minikube dashboard
+
+
+
+3.1. Minikube Dashboard to przeglądarkowy inetrfejs użytkownika dla Kubernetes'a. Jego podstawowymi funkcjonalnościami są:
+- Możliwość wdrażania kontenerów aplikacji na klastry kubernetes'owe.
+- Troubleshooting problemów związanych z konteneryzowanymi aplikacjami
+- Zarządzanie zasobami udostępnianymi w ramach klastra
+- Tworzenie i modyfikowanie kubernetes'owych zasobów
+
+
+
+4. Uruchomiono kontener komunikatora następującą komendą:
+kubectl run komunikator --image=mcmkos/deltachat-desktop --port=9999 --labels app=komunikator" --restart=OnFailure (ostatni argument został dodany aby zapobiec nieskończonej pętli zatrzymania kontenera)
+
+
+
+
+4.1. Próbowano przekierować port udostępniany przez kontener na 8080, ale ze względu na to że kontener po wykonaniu swojej pracy zakończył działanie wygenerowało to błąd:
+kubectl port-forward pod/komunikator 8080:9999
+
+
+
+5. Zaprezentowano screena pokazującego uruchomiony kontener

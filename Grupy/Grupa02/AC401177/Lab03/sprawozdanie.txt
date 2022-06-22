@@ -1,0 +1,25 @@
+Komendy git:
+
+git branch NAZWA
+	Tworzy nową gałąź
+git checkout NAZWA
+	Przchodzi na wybraną gałąź
+
+Docker:
+
+docker --version
+	Wypisuje informacje o zainstalowanej wersji dockera
+docker build . -t 'devops-ubuntu-lab03'
+	Buduje nowy obraz na podstawie pliku Dockerfile i nadaje mu nazwe devops-ubuntu-lab03
+docker run -it 'devops-ubuntu-lab03' bash
+	Uruchamia kontener na podstawie stworzonego obrazu w trybie interaktywnym
+
+Dockerfile:
+
+FROM ubuntu:lates
+	Informuje silnik dockera, że obraz ma być budowany na podstawie obrazu ubuntu
+RUN apt update
+	Aktulaizuje informacje o dostępnych pakietach
+RUN apt install -y git
+	Instaluje paczkę zwierającą git'a
+

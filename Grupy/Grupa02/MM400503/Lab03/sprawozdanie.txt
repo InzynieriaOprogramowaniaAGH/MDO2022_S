@@ -1,0 +1,7 @@
+1. Utworzyłem branch poleceniem "git checkout -b 'Grupa02-MM400503_Lab03' będąc na branchu grupowym.
+2. Dodałem git hooka z poprzednich zajęć do folderu z poprzednich zajęć i zrobiłem commita poleceniami "git add .", "git commit -m '...'".
+3. Na maszynie na której pracuję, docker był już zainstalowany. 
+4. Konto Docker Hub już posiadam.
+5. Stworzyłem plik Dockerfile.
+5.1 Upewniłem się, że w kontenerze będzie zainstalowany git. "RUN apt-get update; apt-get install git -y". Zbudowałem obraz poleceniem "docker build -t mnichmaciej/ubuntu ."
+6. Uruchomiłem kontener poleceniem "docker run -it --name ubuntu mnichmaciej/ubuntu".  Dodałem klucz SSH, pobrałem repozytorium poleceniem "git clone git@github.com:InzynieriaOprogramowaniaAGH/MDO2022_S.git" i sprawdziłem czy znajduje się tam mój branch poleceniem "git branch -r | grep 400503".

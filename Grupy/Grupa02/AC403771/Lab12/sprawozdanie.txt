@@ -1,0 +1,9 @@
+2. Założyłam konto na Microsoft Azure
+
+3. Zapoznałam się z cennikiem usług chmurowych dla Azure Conatiner Instances oraz prześledziłam przykład wyceny
+
+4. Przeczytałam przykładowy scenariusz użycia Azure Cloud Shell
+
+5. Zapoznałam się z instrukcją uruchamiania kontenerów w ACI
+
+

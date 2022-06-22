@@ -1,0 +1,7 @@
+#!/bin/sh
+
+MSG=`cat $1`
+if ! [[ $MSG == "PC402598" ]]; then
+    echo 'Commit message have to start with PC402598'
+    exit 1;
+fi

@@ -1,0 +1,7 @@
+#!/bin/bash
+name="KB400143"
+if ! [[ $(cat $1) =~ $name ]] ;then
+	echo "ERROR! Ran out KB400143"
+	exit 1
+fi
+echo "Commit is correct!"

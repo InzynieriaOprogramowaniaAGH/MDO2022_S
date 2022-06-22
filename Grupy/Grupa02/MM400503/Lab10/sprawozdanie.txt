@@ -1,0 +1,6 @@
+1-2. Uruchomienie kubectl+minikube poleceniami "minikube start" i "minikube dashboard". (Screenshot 1)
+4. Stworzyłem plik konfiguracyjny "komunikator-demployment.yaml".
+5. Zleciłem klastrowi zrealizowanie pliku konfiguracyjnego i sprawdziłem status wdrażania. 
+Użyłem poleceń "kubectl apply -f komunikator-deployment.yaml" i "kubectl rollout status deployment/komunikator-deployment". (Screenshoty 2-4)
+6. Wprowadziłem zmiany do pliku konfiguracyjnego i zleciłem wykonanie go poleceniami takimi samymi jak w poleceniu powyżej. (Screenshoty 5-9)
+7. Napisałem skrypt w pythonie, który realizuje deployment z podanego jako argument obrazu. (Screenshoty 10, 11)

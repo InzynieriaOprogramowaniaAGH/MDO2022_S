@@ -1,0 +1,21 @@
+1. Utworzenie osobistego brancha:
+- git checkout -b Grupa01-PA402099_Lab03
+
+3. Instalacja Dockera: Docker zainstalowany na Windows z wykorzystaniem WLS
+za pomocą instalatora graficznego
+
+5. Utworzenie Dockerfile:
+- FROM ubuntu:latest - użycie w obrazie istniejącego już obrazu. Polecenie to automatycznie
+pobiera obraz z Docker Hub. Latest mówi, że powinna zostać pobrana najnowsza wersja
+- RUN apt-get update - Poleceniem RUN możemy wykonać komendy w tym przypadku w
+powłoce Linuxa. Komenda ta zaktualizuje system i jego zależności. 
+- RUN apt install -y git  - Kolejna komenda dla powłoki Linuxa służąca do zainstalowania
+gita w systemie. opcja 
+
+6. Utworzenie obrazu i uruchomienie kontenera z obrazu:
+- docker build -t ubuntu-image . - uruchomienie polecenia dockera do stworzenia obrazu
+na podstawie Dockerfile. Opcja -t pozwala na nadanie nazwy obrazowu a kropka na końcu
+mówi, że plik Dockerfile znajduje się w obecnym folderze
+- docker run -it ubuntu-image - Uruchomienie kontenera z obrazu. opcja -it 
+uruchamia od razu powłoke Linuxa w kontenerze dzięki czemu możliwe jest wywoływanie
+poleceń takich jak sklonowanie repozutorium. 

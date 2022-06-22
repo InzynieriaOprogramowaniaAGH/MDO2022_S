@@ -1,0 +1,37 @@
+Temat: Uruchomienie kontenera w środowisku chmurowym
+
+Uwaga: Zapoznać się z teorią ma za zadanie każdy, ale praktyczne wykonanie tego ćwiczenia laboratoryjnego nie jest obligatoryjne - tylko dla chętnych, którzy mają środki w Azure Cloud jeszcze nie wykorzystane! 
+
+Uwagi: 
+- korzystamy z tego samego repo co poprzednio
+- wszystkie skrypty które tworzysz zamieszczaj w odpowiednim swoim folderze w repozytorium
+- Zwróć uwagę by w komentarzu do commita zawrzeć czytelną informację w ramach którego ćwiczenia laboratoryjnego i którego zdania to robisz.
+- Na mastera wrzucamy zmiany tylko przez pull requesta! 
+
+Sprawozdanie: Stwórz plik sprawozdanie.txt w odpowiednim folderze i zawrzyj w nim opis komend, którymi zrealizowałeś ćwiczenie laboratoryjne. Dokumentuj wykonanie kolejnych kroków screenshotami, które wrzcisz do repo. 
+
+
+1. Do wykonania tego ćwiczenia będzie nam potrzebny kontener docker'owy (obraz) ze zbudowanym komunikatorem (z wcześniej wykonywanych zajęć).
+
+2. Korzystając ze swojego konta studenckiego którego używasz na MS Teams zaloguj się i zarejestruj do Microsoft Azure: https://azure.microsoft.com/en-us/free/ używając darmowej opcji oferującej $200 dla nowych użytkowników.
+
+3. Uważnie zapoznaj się z cennikiem usług chmurowych dla Azure Conatiner Instances: https://azure.microsoft.com/en-us/pricing/details/container-instances/ oraz prześledź przykład wyceny usług zamieszczony na ww. stronie.
+
+4. Zapoznaj się z tym co to jest "Azure Cloud Shell" i jak można w niej korzystać z Bash'a. Przeczytaj, ale nie wykonuj (zaczniesz zużywać zasoby ze swojego konta!) przykładowy scenariusz użycia: https://docs.microsoft.com/en-us/azure/cloud-shell/quickstart
+
+5. Zapoznaj się z instrukcją uruchaminia kontenerów w ACI:
+https://docs.microsoft.com/en-us/azure/container-instances/container-instances-quickstart
+oraz instrukcją krok-po-kroku:
+https://docs.microsoft.com/en-us/azure/container-instances/container-instances-tutorial-prepare-app
+
+Zwróć uwagę na to że:
+5.1 Musisz stworzyć grupę zasobów.
+5.2 Kontener już masz (pkt 1)
+5.3 Musisz ręcznie zatrzymać i usunąć kontener aby za niego nie płacić (!)
+5.4 Nie musisz tworzyć Docker Registry w Azure! Twoje obrazy już są na dockerhub'ie!
+
+6. Uruchom obraz z pkt 1 w ACI.
+
+Gratulacje!
+
+Uwaga: zgłoś zadanie na MS Teams.

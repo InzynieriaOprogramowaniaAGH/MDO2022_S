@@ -1,0 +1,100 @@
+Sprawozdanie LAB05 Adrian Dąbrowski 401894 
+
+(Podpunkt 1) Zapoznanie się
+
+    Zapoznano  się z diagramem wdrożeniowym omawianym na zajęciach 
+    oraz z oprogramowaniem Jenkins: https://www.jenkins.io/.
+
+(Podpunkt 2) Stworzenie kontenera dockerowego z Jenkinsem
+
+    a) Utworzono branch Grupa02-AD401894_Lab05
+        
+        git checkout -b Grupa02-AD401894_Lab02  
+
+    b) Stworzono  siec dla kontenera z Jenkinsem  
+       
+         docker network create jenkins
+    
+    c) Uruchomilem obraz  docker:dind
+
+        docker run \                                                           
+          --name jenkins-docker \   
+          --rm \
+          --detach \
+          --privileged \     
+          --network jenkins \                  
+          --network-alias docker \              
+          --env DOCKER_TLS_CERTDIR=/certs \
+          --volume jenkins-docker-certs:/certs/client \
+          --volume jenkins-data:/var/jenkins_home \
+          --publish 2376:2376 \                           
+          docker:dind \                
+          --storage-driver overlay2
+
+     d) Utworzono Jenkins Dockerfile (zawiera docker-compose)
+
+        FROM jenkins/jenkins:2.332.1-jdk11
+        USER root
+        RUN apt-get update && apt-get install -y lsb-release
+        RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
+          https://download.docker.com/linux/debian/gpg
+        RUN echo "deb [arch=$(dpkg --print-architecture) \
+          signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \
+          https://download.docker.com/linux/debian \
+          $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
+        RUN apt-get update && apt-get install -y docker-ce-cli
+        RUN curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        RUN chmod +x /usr/local/bin/docker-compose
+        USER jenkins
+        RUN jenkins-plugin-cli --plugins "blueocean:1.25.3 docker-workflow:1.28"
+
+    e) Zbudowanie nowego obazu z wcześniej powstałego Dockerfile
+
+        docker build -t myjenkins-blueocean:2.332.1-1 .
+
+    f) Uruchomienie kontenera
+
+        docker run \                                                           
+          --name jenkins-blueocean \
+          --rm \
+          --detach \
+          --network jenkins \                  
+          --env DOCKER_HOST=tcp://docker:2376 \ 
+          --env DOCKER_CERT_PATH=/certs/client \
+          --env DOCKER_TLS_VERIFY=1 \      
+          --publish 8080:8080 \                        
+          --publish 50000:50000 \                  
+          --volume jenkins-data:/var/jenkins_home \       
+          --volume jenkins-docker-certs:/certs/client:ro \
+          myjenkins-blueocean:2.332.1-1 
+
+
+(Podpunkt 3) Wrzucenie utworzonego obrazu  Jenkinsa na DockerHub'a
+
+    docker login - zalogowanie do docker huba
+
+    docker tag myjenkins-blueocean:2.332.1-1 adriandabrowski/lab5-devops -tagowanie obrazu
+
+    docker push adriandabrowski/lab5-devops  -push na repo dockerowe
+
+(Podpunkt 4) . Z poziomu Jenkinsa uruchomionego w kontenerze (pkt 2) uruchomiono docker-compose stworzony w  Lab04.
+        
+        a) Wchodząc na localhost:8080 wymagane jest hasło któy znajduje się w logach kontenera
+
+        docker logs <container>
+
+        b) Założono konto oraz doinstalowano pluginy
+
+        c) Utworzono projekt, dodano repozytorium, ustawiono brancha oraz ustawiono Execute shell, Execute shell zwiera następujące polecenia (przejście do katalogu, budowa, uruchomienie)
+
+                cd Grupy/Grupa02/AD401894/Lab04
+                docker-compose build
+                docker-compose up
+
+        d) Sprawdzono logi i stwierdzono ze wszysko działa poprawnie
+
+
+
+
+
+

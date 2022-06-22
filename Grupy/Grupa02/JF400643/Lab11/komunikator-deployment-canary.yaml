@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: komunikator-deployment-canary
+  labels:
+    app: komunikator
+    tier: zad5
+    track: canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: komunikator
+      tier: zad5
+  template:
+    metadata:
+      labels:
+        app: komunikator
+        tier: zad5
+    spec:
+      containers:
+      - name: komunikator
+        image: namuennov/commm:latest
+        ports:
+        - containerPort: 80
+      #restartPolicy: OnFailure

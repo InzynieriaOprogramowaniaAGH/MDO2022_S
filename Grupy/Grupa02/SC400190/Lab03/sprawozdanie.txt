@@ -1,0 +1,37 @@
+Sprawozdanie Lab03
+
+zad.1 Stworzenie brancha osobistego od brancha grupowego
+
+git checkout -b Grupa02-SC400190_Lab03
+Utworzenie nowego brancha krótkożyjącego
+
+mkdir Lab03
+utworzenie nowego katalogu do lab03
+
+
+zad.2 Dodanie hooka napisanego na poprzednich zadaniach do osobnegho folderu
+
+zad.3 zainastlowanie Docker'a
+
+zad.4 Zarejestrowanie konta w Docker HUB
+
+zad.5 Stworzenie pliku Dockerfile
+
+FROM ubuntu:latest 
+RUN apt-get update
+RUN apt-get -y install git
+
+
+docker build -t "image" .
+Zbudowanie obrazu o nazwie "image" korzystając z pliku Dockerfile znajdującego się w ścieżce podanej jako argument
+
+zad.6 Uruchmoienie kontenera oraz pobranie na niego repozytorium
+
+docker run -dit 0e3d3ed33c85 
+uruchomienie kontenera z utworzonym obrazem (obrazem o id 0e3d3ed33c85)
+
+
+docker run -it image
+uruchomienie kontenera z interaktywna powloką bash
+
+

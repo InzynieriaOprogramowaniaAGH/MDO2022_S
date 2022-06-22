@@ -23,7 +23,6 @@
 
 5. Komunikator działa w klastrze
 
-
 Po zlokalizowaniu problemu z wyłączającym sie od razu docker image, zdecydowałam na zmianę komunikatora na Berty.
 Po napisaniu nowego Dockerfile, wykonaniu następujących operacji :
 	docker build -t berty .

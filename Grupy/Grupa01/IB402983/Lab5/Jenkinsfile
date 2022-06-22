@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+    
+    options {
+        parallelsAlwaysFailFast()  // https://stackoverflow.com/q/54698697/4480139
+    }
+    
+    stages {
+        stage('GIT') {
+            steps {
+                git 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git'
+            }
+        }
+        stage('DOCKER') {
+            steps {
+                dir('Grupy/Grupa01/BB401928/Lab04') {
+                    sh 'docker-compose up'
+                }
+            }
+        }
+    }
+   
+    post { 
+        always {
+          sh 'docker-compose down --remove-orphans'
+        }
+    }
+}

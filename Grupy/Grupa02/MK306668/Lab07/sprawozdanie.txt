@@ -1,0 +1,92 @@
+
+1. Stworzono single source of truth - w repozytorium nie będącym repozytorium aplikacji stworzono foldery zawierające wszystkie pliki powstałe podczas pracy z aplikacją.
+
+
+
+2. Utworzono nowy pipeline w Jenkinsie i dodano stage odpowiedzialny za testowanie:
+
+stage('Test') {
+            steps {
+            	 echo 'Testing has started'			//komunikat o rozpoczęciu testowania
+                sh 'docker-compose build test-agent'		//budowanie obrazu odpowiedzialnego za testowanie
+                sh 'docker-compose up -d test-agent'		//uruchomienie test-agenta
+            }
+            
+             post {
+            	 success {				//wypisanie komunikatu jeżeli wszystkie testy się powiodą
+            	 	echo 'Testing succeded!'
+            	 }
+            	 
+            	 failure {				//wypisanie komunikatu jeżeli nie wszystkie testy się powiodą
+            	 	echo 'Testing failed!'
+            	 }
+            }
+        }
+        
+
+
+3. Dodano do pipeline-u stage odpowiedzialny za budowanie obrazu aplikacji:
+
+stage('Build') {
+            steps {
+                echo 'Building has started'			//(komentarze analogiczne jak przy testowaniu)
+                sh 'docker-compose build build-agent'
+            }
+            
+            post {
+            	 success {
+            	 	echo 'Building succeded!'
+            	 }
+            	 
+            	 failure {
+            	 	echo 'Building failed!'
+            	 }
+            }
+        }
+        
+        
+        
+4. Ustawiono githubowy webhook jako trigger w ustawieniach pipeline-a. Następnie za pomocą programu ngrok udostępniono port 8080
+localhost-a poprzez przekierowanie na niego ze specjalnego adresu url. Dzięki temu na zastępczy adres możliwe było wysyłanie
+powiadomień o dostępnych zmianach w repozytorium.
+
+
+
+5. Dodano stage odpowiedzialny za wdrażanie:
+
+stage('Deploy') {
+            steps {
+                echo 'Deploying has started'
+                echo 'Loging into Docker Hub'				//logowanie do serwisu docker hub
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh 'docker tag build-agent:latest mcmkos/deltachat-desktop:latest'
+                sh 'docker push mcmkos/deltachat-desktop:latest'	//dostarczanie gotowego obrazu na dockerhub
+            }
+            
+             post {
+            	 success {
+            	 	echo 'Deploying succeded!'
+            	 }
+            	 
+            	 failure {
+            	 	echo 'Deploying failed!'
+            	 }
+            	 
+            	 always {						//niezależnie od wyniku wdrażania następuje wylogowanie z serwisu docker hub
+            	 	echo 'Loging out Docker Hub'
+            	 	sh 'docker logout'
+            	 }
+            }
+        }
+        
+Aby możliwe było logowanie się do docker hub podczas wykonywania pipeline-a należało utworzyć w tym serwisie nowy token dostępu,
+który wykorzystano aby dodać w ustawieniach Jenkinsa dane uwierzetniające do tego serwisu. Aby móc korzystać z tych danych w pipeline-ie
+wprowadzono zmienną środowiskową DOCKERHUB_CREDENTIALS:
+
+    environment {     
+    DOCKERHUB_CREDENTIALS = credentials('mcmkos-dockerhub')     
+} 
+
+
+
+6. W repozytorium załączono zrzuty ekranu dokumentujące zrealizowanie wszystkich wymaganych czynności.

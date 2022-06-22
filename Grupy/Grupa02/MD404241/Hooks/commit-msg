@@ -1,0 +1,8 @@
+#!/bin/bash
+
+ID="MD404241"
+
+if ! [[ $(cat $1) == $ID* ]] ;then
+    echo "Commit name should begin with MD404241"
+    exit 1
+fi

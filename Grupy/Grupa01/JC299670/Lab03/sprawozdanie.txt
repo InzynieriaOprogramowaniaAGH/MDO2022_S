@@ -1,0 +1,15 @@
+Temat:
+Integracja narzędzi walidacji i weryfikacja kodu z repozytorium. 
+Łączenie, dzielenie repozytoriów, sub-repozytoria.
+
+1. Stworzyłam brancha osobistego na te zajęcia wg. schematu poznanego w poprzednim tygodniu Grupa01-JC299670_Lab03. Stworzyłam go od swojego brancha grupowego.
+
+2. Dodałam git hooka którego napisałam na poprzednich zajęciach do swojego folderu
+
+3. Zainstalowałam Docker'a (https://www.docker.com/) na swoim środowisku pracy.
+
+4. Zarejestrowałam sobie konto w Docker HUB (https://hub.docker.com/).
+
+5. Stwórzyłam plik Dockerfile i dodałam go do swojego brncha. 
+
+6. Uruchomiłam kontener i ściągnęłam na niego nasze repozytorium.

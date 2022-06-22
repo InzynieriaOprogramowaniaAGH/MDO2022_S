@@ -1,0 +1,44 @@
+W ramach pracy na tych zajeciach stwrzono nowa branch.
+
+1. Napoczatku zajec skopiowana build-agenta ze wczesniejszych zajec. Po tym zbudowano obrazy i sprawdzono ich dzialanie.
+docker build . -t 'build-agent' - zbudowanie obrazu dla build-agenta
+
+2. Nastepnie pobrano i zainstalowano Minikube zgodnie z instruckja dla systemu linux. Uzyte komendy:
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+
+Po tym uruchomiono klastra:
+minikube start
+
+Natepnie pobrano kubectl:
+minikube kubectl -- get po -A
+
+3. Nastepnie korzystajac z Dashboarda wypisano liste (komenda minikube dashboard) zawierajaca opis co mozna robic korzystajac z Minikube Dashboarda:
+- wdrazac apliakcje kontenerowe w klastrze Kubernetes,
+- zarzadzac klastrem,
+- przegladac aplikacje w klastrze,
+- tworzyc i modyfilkowac  zasoby kubernetesa,
+- rozwiazywac problemy z konteneryzowanymi aplikacjami,
+- monitorowac aplikacje,
+- tworzyc wirtualne klastry.
+
+4. Nastepnie opublikowano obraz build-agenta na dockerhuba za pomoca komend:
+docker login --username="nazwaKonta" - zalogowanie do Docker HUB
+docker tag build-agent:latest bielak2000/build-agent:latest - utworzenie taga: oznaczenie lokalnego obrazu 
+docker push bielak2000/build-agent:latest - wrzucenie repa na remota z ostatnia wersja
+
+Po tym uruchomiono kontener-komunikator za pomoca komendy:
+kubectl run komunikator --image=bielak2000/build-agent --port=9999 --labels app=komunikator
+
+A nastepnie sprobowano przekierowac porty:
+kubectl port-forward deploy/komunikator 9999:9999
+
+Niestety to sie nie powiodlo, poniewaz deltaChat jest aplikacja okienkowa. Z tego tez wzgledu stworzono Dockerfile do budowania i uruchamiania aplikacji webowej wireapp, znajduje sie on w plikach.
+Nastepnie stworzono na jego bazie obraz i wrzucono na DockerHuba. Po czym uruchomiono poraz kolejny konetner-komunikator za pomoca komendy:
+minikube kubectl -- run newkomunikator --image=bielak2000/webapp:latest --port=8080 --labels app=newkomunikator
+
+A nastepnie przekierowano porty:
+kubectl port-forward pods/newkomunikator 7080:8080
+
+5. Na koniec udukomenotwano dzialanie komunikatora w klastrze Kubernetes - dzialanie na localhost:7080 (przekierowanie), pod w stanie running.
+Po tym wrzucono pliki na repozytorium githuba.

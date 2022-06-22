@@ -1,0 +1,28 @@
+Sprawozdanie Piotr Apriasz
+Lab1
+
+Zad 2. 
+Sklonowanie repozytorium za pomocą komendy git clone [adres zdalnego repozytorium]
+Polecenie clone kopiuje rezpoytorium zdalne tworząc jego kopie lokalnie
+na komputerze i ustawia automatycznie odpowiadające repozytorium lokalnemu
+repozytorium zdalne
+
+Zad3.
+Utworzenie pliku sprawozdanie za pomocą polecenia New-Item
+
+Zad4.
+Utworzenie nowego brancha i przełączenie się na niego za pomocą polecenia 
+git checkout -b [nazwa brancha]
+Polecenie checkout samo w sobie powoduje przełączenie do brancha podanego 
+jako argument. Dodanie opcji -b powoduje, że jednocześnie, zanim nastąpi przełączenia
+brancha, to jest tworzony nowy branch o podanej nazwie.
+Polecenie git add . dodaje wszystkie nowe pliki w obrębie działania danego repozytorium
+do gita dzięki czemu można wykonać z nimi commita.
+Polecenie git commit -m "" potwierdza wykonane zmiany i tworzy nowy punkt zapisu,
+który jest bezpośrednim dzieckiem poprzedniego takiego punktu. Dodatkowo jest wraz z
+wiadomością opisującą commita
+
+Zad5. 
+Polecenie git push --set-upstream origin [branch] pozwala na jednoczesne
+dodanie nowego brancha utworzonego lokalnie do repozytorium zdalnego i na
+wysłanie commitów na tego brancha w repozytorium zdalnym

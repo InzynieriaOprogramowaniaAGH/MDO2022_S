@@ -1,0 +1,20 @@
+1. Największym problemem w całym zadaniu jak zawsze był docker. Po próbie stworzenia nowej aplikacji wróciłem do komunikatora z poprzednich zajęć.
+
+Moje źródło prawdy zostało zawarte w folderach widocznych wyżej.
+
+2-3. Stworzenie sekcji z testowaniem i budowaniem okazało się dziecinnie proste. W zasdzie za pomocą 5 prostych komend i podstawowej znajomości
+komand linuxowego terminala dało się to zrobić w dość krótkim czasie. Największym problemem była nawigacja do odpowiedniego folderu.
+Z racji tego że nie dało się po prostu nawigować tam komendą terminala cd trzeba było użyć komendy dir będącej częścią jenkinsfile.
+
+4. Nie udało mi się wykonać 4 kroku.
+
+5. Piąty krok był równie prosty jak drugi i trzeci. Wymagał on użycia zmiennych środowiskowych ale ich obsługa nie jest zbyt trudna i z pomocą poradnika na stronie jenkinsa dość szybko się z tym uporałem.
+
+6.1 Pipeline został zdefiniowany.
+
+6.2 Pipeline nie jest automatycznie wyzwalany.
+
+6.3 Pipeline przechodzi wszystkie etapy.
+
+6.4 Pipeline obsługuje błędy w każdym etapie.
+

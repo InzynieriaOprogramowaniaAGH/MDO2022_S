@@ -1,0 +1,14 @@
+Zad 1:
+	Tworzenie brancha na zajęcia "Grupa1_IB402983_Lab3"
+Zad 3
+	Instalacja docker desktop
+	Inastalcja Ubuntu 20.04 z Microsoft Store
+	Aktualizacja Krenela przez plik exe ze stront microsoft
+Zad 4
+	Rejestrowanie na Docker HUB
+Zad 5 
+	Budowanei i uruchamianie kontenera
+		docker build . -t "lab_3-image"
+Zad 6 
+	Klonowanie ropozytorum na dockera poprzez git clone ...		
+		

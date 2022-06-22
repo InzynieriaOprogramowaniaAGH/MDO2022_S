@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: komunikator-deployment-canary
+  labels:
+    app: komunikator
+    release : "canary"
+    environment : "dev"
+spec:
+  replicas: 8
+  selector:
+    matchLabels:
+      app: komunikator
+  template:
+    metadata:
+      labels:
+        app: komunikator
+        track : "weekly"
+    spec:
+      containers:
+      - name: komunikator
+        image: secopstech/socket-io-chat:latest
+        ports:
+        - containerPort: 80

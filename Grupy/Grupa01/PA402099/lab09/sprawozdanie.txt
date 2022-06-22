@@ -1,0 +1,35 @@
+1. Obraz build-agent dla komunikatora deltachat istnieje w dockerze
+
+2. Nie posiadam minikube ani Kubernetes. Najpierw zainstalowałem minikube 
+wybierając odpowiedni instalator ze strony: https://minikube.sigs.k8s.io/docs/start/.
+Po zainstalowaniu wpisałem komendę  | minikube start |, która uruchomiła serwis minikube
+instalując wszytsko potrzebne zależności. 
+W celu sprawdzenia istnienia kubernetesa wykonałem  | komendę minikube kubectl -- get po -A |
+
+3. Minikube zawiera interfejs graficzny który ułatwia zarządzania aplikacjami w klastrach.
+Uruchomienie go odbywa się komendą | minikube dashboard | .
+W celu podsumomowania tego co można zrobić z użyciem interfejsu napisałem poniższą listę
+
+- Wdrażanie skonteneryzowanych aplikacji na klastry Kubernetesa
+- Rozwiązywanie błędów związanych ze skonteryzowanymi aplikacjami
+- Zarządzanie zasobami klastrów
+- Wgląd na podsumowanie działania aplikacji z klastrów
+- Tworzenie lub modyfikacja poszzcególnych zasobów Kubernetesa takich jak wdrażanie, joby czy DaemonSets
+- Kompleksowe zarządzanie aplikacjami działającymi w klastrach 
+
+4. Za pomocą Kubernetesa powziąłem próbę uruchomienia klastra z komunikatorem deltachat.
+Najpierw dodałem obraz build-agent na dockerhuba w celu łatwiejszego dostępu do obrazu. Komenda 
+kubernetesa użyta do wykonania tej czynności to:
+
+kubectl run deltachat --image=piotrekapriasz/build-agent:latest --port=9999 --labels app=deltachat
+
+Niestety mimo teoretycznie poprawnego utworzenia klastra nie mógł on wystartować
+najprawdopodobniej przez to, że deltachat  to aplikacja okienkowa, kóra jest problematyczna
+dla klasteryzacji.
+
+Spróbowałem jeszcze wykonać przekierowanie portów aplikacji poniższą komendą:
+
+kubectl port-forward pods/deltachat 7080:8080
+
+Przekierowanie powiodło sie jednak przez błąd przy uruchamianiu klastra aplikacja nie mogła wysartować
+

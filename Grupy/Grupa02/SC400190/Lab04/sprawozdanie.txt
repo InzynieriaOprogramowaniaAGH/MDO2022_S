@@ -1,0 +1,22 @@
+Sprawozdanie Lab04
+
+zad.1 Stworzenie brancha osobistego od brancha grupowego
+
+git checkout -b Grupa02-SC400190_Lab04
+Utworzenie nowego brancha krótkożyjącego
+
+docker builds -t modernsege/devops .
+Zbudowanie obrazu z tagiem modernsege/devops
+
+docker commit 0d58e4a5e9b1 modernsege/devops:imageTag
+skomitowanie zmian
+
+docker push modernsege/devops:imageTag
+wypchanie zmian na remote'a
+
+zad.3 stworzenie obrazu kontenera dockerowego o nazwie "build-agent": docker build -t "build-agent" ./build-agent
+zad.4 stworzenie obrazu kontenera dockerowego o nazwie "test-agent": docker build -t "test-agent" ./test-agent
+zad.5 stworzenie pliku docker-compose 
+
+docker-compose up
+uruchomiwnie kontenerów

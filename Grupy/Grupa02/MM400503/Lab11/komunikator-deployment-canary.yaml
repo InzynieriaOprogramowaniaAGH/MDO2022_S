@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: komunikator-canary
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: komunikator
+  template:
+    metadata:
+      labels:
+        app: komunikator
+        track: canary
+    spec:
+      containers:
+      - name: komunikator
+        image: mnichmaciej/cicd:0.79
+        ports:
+        - containerPort: 8080

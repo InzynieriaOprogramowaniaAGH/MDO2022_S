@@ -1,0 +1,30 @@
+# Sprawozdanie
+---
+
+1. git checkout Grupa01-BB401928_Lab03 Grupa1
+powoduje to przejście na nowego brancha wyprowadzonego z Grupa1
+
+2. ln -s [CEL] [NAZWA] ( poprzednie zajęcia ) 
+Dołączenie pliku do git hooks - jest to dowiązanie symboliczne
+
+3. https://docs.docker.com/engine/install/ubuntu/#install-from-a-package
+Instalacja dockera - wklejam tylko linka ponieważ mam już dockera na tym laptopie, zainstalowanego na potrzeby pracy
+
+4. rejestracja w hub.docker -> suvres (nazwa konta)
+
+5. vim Dockerfile
+Tworzenie dockerfile w edytorze vim
+
+6. skrypt do obsługi ssh
+Do zrzutów ekranowych dodano skrypt pozwalający na obsługę kluczy ssh dla obrazu w dockerze. Skrypt jest umieszczony w katalogu /app za pomocą volume. Do tego celu wykorzystano docker-compose aby przyspieszyć pracę. Kopiuje on klucz ssh do katalogu /root/.ssh aby był wykrywany przez agenta ssh, a następnie jest dodawany do niego. Docker-compose jest po to by uruchomic go dodatkowo, ale by specyficzny volume nie wpływał na dockerfile.
+
+7. git config
+pozwala skonfigurować odpowiednie wartości jak email i nazwa dla gita.
+
+8. git clone 
+Klonowanie repozytorium
+
+8. git branch -r | grep "BB" 
+zwraca listę repozytoriów na remote w tym przypadku zawierających litery BB
+ 
+

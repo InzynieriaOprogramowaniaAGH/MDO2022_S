@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  build-agent:
+    build:
+      context: .
+      dockerfile: ./build-agent/Dockerfile
+    image: build-agent
+  test-agent:
+    build: 
+      context: .
+      dockerfile: ./test-agent/Dockerfile
+    depends_on:
+      - build-agent

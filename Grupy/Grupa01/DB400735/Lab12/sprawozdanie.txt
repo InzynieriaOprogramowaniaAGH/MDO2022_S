@@ -1,0 +1,24 @@
+Dominik Budzowski
+
+1. Kożystałem z kontenera dockerowego z komunikatorem z poprzednich zajęć
+2. Zrejestrowalem i zalogowałem się do Microsoft Azure
+3. Zapoznałem się z cennikiem usług chmurowych dla Azure Container Instances przedstawionym pod adresem:
+   https://azure.microsoft.com/en-us/pricing/details/container-instances/ 
+4. Zapoznałem się z "Azure Cloud Shell"
+5.Pobrałem Azure Cli na Windowsa
+  5.1 Zalogowałem się poleceniem:
+	az login
+  5.2 Utworzyłem nową grupę zasobów poleceniem:
+	az group create --name myResourceGroup1 --location eastus
+  5.3 Utworzyłem kontener w chmurze poleceniem:
+	az container create --resource-group myResourceGroup1 --name webapp --image dodomax/build-agent2 --dns-name-label komunikator --ports 3000
+  5.4 Kontener nie działał pod adresem: http://komunikator.eastus.azurecontainer.io:3000/
+      mogło to być spowodowane źle dobranymi portami lub błędami komunikatora.
+      Sprawdziłem status kontenera w chmurze poleceniem:
+	az container show --resource-group myResourceGroup1 --name webapp --query "{FQDN:ipAddress.fqdn,ProvisioningState:provisioningState}" --out table
+      Status był Succeeded
+  5.5 Usunołem kontener z chmury poleceniem:
+	az container delete --resource-group myResourceGroup1 --name webapp
+  5.6 Usunołem grupę zasobów poleceniem:
+	az group delete --name myResourceGroup1
+	

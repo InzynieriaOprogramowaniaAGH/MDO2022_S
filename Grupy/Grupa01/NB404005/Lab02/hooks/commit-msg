@@ -1,0 +1,8 @@
+#!/bin/bash
+
+m="$1"
+if ! grep -qe "NB404005" "$m"; then
+
+	echo "commit jest bledny, nie zwiera NB404005"
+	exit 1 
+fi

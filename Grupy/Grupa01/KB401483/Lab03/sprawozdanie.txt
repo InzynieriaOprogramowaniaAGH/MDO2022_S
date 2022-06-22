@@ -1,0 +1,30 @@
+Sprawozdanie 03
+
+
+1. Stworzenie brancha osobistego od swojego brancha grupowego: git checkout -b Grupa01-KB401483_Lab03
+
+2. Dodanie git hooka do swojego folderu MDO2022_S/Grupy/Grupa2/WD400843/Lab02/hooks/: cp commit-msg ../../Grupy/Grupa01/KB401483/lab02/hooks
+
+3. Instalacja Docker'a na swoim środowisku pracy.
+
+4.  Zarejestrowanie konta w Docker HUB.
+
+5. Stworzenie pliku Dockerfile, który będzie bazował na najnowszym ubuntu (ubuntu:latest). 
+
+   FROM ubuntu:latest         //budowanie obrazu ubuntu
+   RUN apt-get -y update      //aktualizacja informacji o pakietach
+   RUN apt-get -y install git //instalacja git'a 
+
+5.1 Zbudowanie obrazu korzystając z pliku Dockerfile: docker build  -t "devops-lab03-image" .
+    Widok wszystkich obrazów najwyższego poziomu, ich repozytorium, tagi oraz rozmiar: docker images
+
+6. Uruchomienie kontenera, sklonowano repozytorium oraz upewniono się czy stworzony wcześniej branch istnieje.
+
+   
+   docker run -dit baefb3af763c   // uruchomienie kontenera z utworzonym obrazem 
+
+   winpty docker run -it devops-lab03-image //uruchomienie kontenera z powloką bash
+   
+   git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S 
+   
+   cd MDO2022_S/ 

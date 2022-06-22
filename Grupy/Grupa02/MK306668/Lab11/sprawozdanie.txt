@@ -1,0 +1,28 @@
+Laboratorium 11: Podstawy obsługi klastra Kubernetes - Deployment Strategies.
+
+1. Uruchomiono minikube i dashboard.
+
+2. Utworzono plik komunikator-deployment-recreate.yaml na podstawie komunikator-deployment.yaml z poprzedniego ćwiczenia.
+
+3. Wykorzystano strategię wdrażania recreate:
+
+  spec:
+    strategy:
+      type: Recreate
+      
+4. Wykorzystano strategię wdrażania RollingUpdate z parametrami:
+  - maksymalny limit nadmiarowych podów  = 2
+  - maksymalny limit niedostępnych podów = 2
+  
+  spec:
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxSurge: 2
+        maxUnavailable: 2
+        
+5. Wykorzystano strategię canary deployment:
+
+  - utworzono dwa deploymenty - jeden jako stabilna wersja oraz jeden jako wersja "kanarkowa". Różniły się one nazwą, etykietą i wersją obrazu aplikacji.
+  - utworzono load-balancera rozkładającego obciążenie na wszystkie pody z etykietą "komunikator" (a więc na obie wersje aplikacji)
+  - uruchomiono oba deploymenty oraz load balancera

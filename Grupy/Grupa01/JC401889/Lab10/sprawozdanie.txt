@@ -1,0 +1,6 @@
+1. Stworzono plik komunikator-deployment.yaml zgodnie z podlinkowanym poradnikiem. [komunikator deployment create3d]
+
+2. Po uruchomieniu dla 4 replik deployment wykonał się bez zarzutów. [rollout done]
+2.1. Przy podaniu mu 8 replik również nie było z tym problemu i deployment zaczal sie od 4 gotowych. [rollout 8]
+2.2. Po podaniu mu starej wersji obrazu która wyrzucała CrashLoop deployment zawieszał się i nie chciał przejść powyżej 0 [rollout fail]
+2.3. Na koniec podano mu nieistniejacy obraz i jak mozna sie bylo spodziewać dostaliśmy błąd. [nieistniejacy obraz]

@@ -1,0 +1,8 @@
+2. Stwirzyłem kontener z Jenkinsem posługując się poleceniami:
+- docker network create jenkins
+- docker build -f ./Dockerfile.jenkins -t myjenkins .
+- docker run --name jenkins --rm    -v /var/run/docker.sock:/var/run/docker.sock --volume jenkins-data:/var/jenkins_home  --volume jenkins-docker-certs:/certs/client:ro     --privileged    --user root     -p 50000:50000     -p 8080:8080 -d  myjenkins
+3. Wrzuciłem obraz na Dockerhub'a poleceniem: docker tag f681c0485446 mnichmaciej/jenkins; docker push mnichmaciej/jenkins
+4. Połączyłem się z Jenkinsem przez przeglądarkę, skonfigurowałem go i zmieniłem język na angielski posługując się wtyczką "Locale".
+  Stworzyłem pipeline, który uruchamia skrypt "jenkins.script.sh". Najpierw pobiera repozytorium a następnie buduje i uruchamia kontenery z mojego folderu za pomocą pliku docker-compose.
+  W plikach znajduje się output konsoli pipeline'a oraz pełny skrypt.

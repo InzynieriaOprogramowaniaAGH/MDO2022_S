@@ -1,0 +1,69 @@
+pipeline {
+    agent any
+
+
+    stages {
+        stage('pre_build') {
+            steps {
+                sh "docker build -f ../Dockerfile_base -t calc-base:latest ."
+                sh "mkdir -p source build"
+            }
+        }
+
+        stage('download_source') {
+            // when { expression { fileExists('source/calc.zip') } }
+            steps {
+                    dir('source') {
+                        script {
+                            if (! fileExists("CMakeLists.txt")) {
+                                // if sources have not been downloaded download it
+                                sh 'git clone https://github.com/ArturHamerski98/devops-calculator.git'
+                                sh 'mv ./devops-calculator/* . && rm -r ./devops-calculator/'
+
+                            } else {
+                                echo "skipping downloading sources"
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('build') {
+            steps {
+                sh '''docker build -f ../Dockerfile_build -t calc-builder:latest .'''
+                sh '''docker run \
+                -v "/var/jenkins_home/workspace/calc-pipeline/source:/home/src" \
+                -v "/var/jenkins_home/workspace/calc-pipeline/build:/home/build" \
+                -t calc-builder:latest'''
+            }
+        }
+        
+        stage('test') {
+            steps {
+                sh '''docker build -f ../Dockerfile_test -t calc-tester:latest .'''
+                sh '''docker run \
+                -v "/var/jenkins_home/workspace/calc-pipeline/build:/home/build" \
+                -t calc-tester:latest'''
+            }
+        }
+        
+        stage('deploy') {
+            steps {
+                sh '''docker build -f ../Dockerfile_deploy -t calc-deployer:latest .'''
+                sh '''docker run \
+                -v "/var/jenkins_home/workspace/calc-pipeline/build:/home/from" \
+                -v "/var/jenkins_home/export:/home/to" \
+                -t calc-deployer:latest'''
+            }
+        }
+        
+        // stage('cleanup') {
+        //     steps {
+        //         sh '''docker run \
+        //         -v /var/jenkins_home/workspace/calc/app:/home/app \
+        //         ubuntu:latest \
+        //         sh -c "rm /home/app/app.zip"'''
+        //     }
+        // }
+    }
+}
