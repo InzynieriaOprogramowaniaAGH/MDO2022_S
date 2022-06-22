@@ -1,0 +1,21 @@
+Lab 1 - Sprawozdanie
+
+W ramach cwiczen z przedmiotu Metodyki DevOps wykonalem Laboratorium 01, ktorego celem byla konfiguracja repozytorium git i przecwiczenie podstawowej obslugi tego srodowiska.
+Ponizej znajduje sie numerowana lista krokow, ktore wykonalem, dla kazdego z nich zawarty zostal rowniez zrzut ekranu z nazwa odpowiadajaca numerowi.
+
+
+1. Zainstalowalem gita dla Windowsa ze strony git-scm.com.
+
+2. Sklonowalem repozytorium z uzyciem polecenia: 
+git clone https://github.com/InzynieriaOprogramowaniaAGH?MDO2022_S
+
+3. Wykorzystujac komende "touch sprawozdanie.txt" utworzylem plik ze sprawozdaniem, w ktorym opisywane byly kolejne punkty. Za pomoca "nano sprawozdanie.txt" dokonalem jego edycji.
+
+4. Utworzylem nowego brancha nazwanego "MK299627" w repozytorium lokalnym komenda "git checkout -b MK299627". 
+Za pomoca "mkdir" utworzylem folder o identycznej nazwie, w ktorym z kolei powstal folder Lab01, do ktorego przenioslem za pomoca "mv" plik tekstowy ze sprawozdaniem.
+Nastepnie zajalem sie dodaniem do folderu zrzutow ekranu i przygotowaniem pierwszego commita. 
+Komenda "git add" pozwolila mi dodac plik sprawozdania oraz zrzuty ekranu do repozytorium gita. 
+Za pomoca "git status" sprawdzilem, czy wszystko jest w porzadku i czy znajduje sie na odpowiednim branchu, a nastepnie "git commit -m Lab01 pierwszy commit" pozwolil mi wykonac commita z opisem. 
+ 
+5. Za pomoca "git push --set-upstream origin MK299627" utworzylem nowa galez i wyslalem zmiany na remote'a. 
+Kolejnym krokiem bylo wykonanie pull requesta, uzupelnienie sprawozdania i zrzutow ekranu oraz zaaktualizowanie pull requesta.
