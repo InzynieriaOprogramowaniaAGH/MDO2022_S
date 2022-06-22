@@ -1,0 +1,43 @@
+1. W pierwszym kroku zajec uruchomiono klaster kubernetes za pomoca komendy:
+minikube start
+
+2. Nastepnie upewniono sie czy klaster dziala:
+minikube dashboard
+
+3. W kolejnym kroku zapoznano sie z dokumentacja tworzenia manifestow dla obiektow Deployment.
+
+4. Po tym stworzono plik komunikator-deployment.yaml zgodnie z instrukcja i dokumentacja.
+
+5. Nastepnie zlecono klastrowi zrealizowanie deploymentu:
+kubectl apply -f komunikator-deployment.yaml
+i sprawdzono status wdrazania nowej wersji:
+kubectl rollout status deployment/komunikator-deployment
+
+6. Nastepnie dokonywano pojednyczch zmian w pliku yaml i go aktualizowano. Kazdorazowo dokumentowano stan klastra. Zmiany jakich dokonywano:
+
+    6.1. 
+        w pliku yaml: replicas: 8
+
+    6.2. 
+        
+        docker pull secopstech/socket-io-chat:latest
+            ^ - pobranie nowego obrazu komunikatora
+        
+        docker tag secopstech/socket-io-chat nataviaa/lab10-komunikator:1.0
+            ^ - tagowanie obrazu
+
+        docker push  nataviaa/lab10-komunikator:1.0
+            ^ - spushowanie obrazu na dockerhub
+
+        oraz zmiana pliku yaml: 
+            image:  nataviaa/lab10-komunikator:1.0
+
+    6.3
+        Zmiana pliku yaml na nieistniejący obraz: 
+            image: nataviaa/lab10-komunikator:2.0
+
+    6.4 
+        kubectl rollout history deployment/komunikator-deployment
+            ^ - sprawdz historie deploymentow
+        kubectl rollout undo deployment/nginx-deployment
+            ^ - cofnij ostatni deployment
