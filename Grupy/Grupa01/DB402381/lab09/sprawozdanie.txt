@@ -1,0 +1,20 @@
+1. minikube start
+Uruchomienie minikube
+
+2. minikube kubectl -- get po -A
+instalacja kubectl
+
+3. minikube dashboard
+
+4. Możliwości Panelu
+- wdrażanie aplikacje kontenerowe w klastrze Kubernetes
+- rozwiązywanie problemów z kontenerami
+- zarządzanie zasobami
+- przegląd aplikacji
+- tworzenie / modyfikacja indywidualnych kubernetesów
+
+5.  minikube kubectl -- run komunikatornew --image=davblach/wireapp_app:latest --port=8080 --labels app=komunikatornew 
+Utworzenie obrazu  
+
+6. kubectl port-forward pods/komunikatornew 7080:8080
+uruchomienie serwisu dla przygotowanego przez deweloperów dockerfile
