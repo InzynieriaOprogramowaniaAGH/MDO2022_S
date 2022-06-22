@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: komunikator-deployment
+  labels:
+    app: komunikator
+spec:
+  replicas: 8
+  selector:
+    matchLabels:
+      app: komunikator
+  template:
+    metadata:
+      labels:
+        app: komunikator
+    spec:
+      containers:
+      - name: komunikator
+        image: nataviaa/lab10-komunikator:1.0 #nataviaa/lab10-komunikator:2.0 #nataviaa/lab10:1.0
+        ports:
+        - containerPort: 9999
