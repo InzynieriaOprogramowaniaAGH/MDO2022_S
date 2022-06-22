@@ -2,7 +2,7 @@ FROM node:latest
 
 RUN apt-get update
 RUN apt-get install -y git
-RUN git clone https://github.com/McMkos/deltachat-desktop
+RUN git clone https://github.com/deltachat/deltachat-desktop
 WORKDIR deltachat-desktop
 
 RUN npm install
