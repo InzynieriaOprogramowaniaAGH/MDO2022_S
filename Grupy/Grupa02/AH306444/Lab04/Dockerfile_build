@@ -1,0 +1,14 @@
+FROM node:16
+
+RUN apt update -y --allow-unauthenticated
+RUN apt install -y yarn git
+RUN npm install rimraf -g
+
+RUN git clone https://github.com/wireapp/wire-webapp.git
+
+WORKDIR wire-webapp
+
+RUN yarn 
+RUN yarn build:prod
+
+CMD yarn start

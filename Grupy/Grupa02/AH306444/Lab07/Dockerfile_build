@@ -1,0 +1,6 @@
+FROM calc-base:latest
+
+RUN mkdir /home/src && mkdir /home/build
+WORKDIR /home/build
+
+CMD cmake ../src && cmake --build .
