@@ -1,0 +1,35 @@
+1. Uruchomienie kubectl, minikube dashboard i upewnienie sie ze dziala
+    Obrazek:
+        zad2
+
+2. Utworzenie pliku konfiguracji komunikator-deployment.yaml
+    Obrazek:
+        zad4
+
+3. Uruchomienie komunikatora
+    Obrazek:
+        zad5_1, zad5_2
+    Komenda:
+        kubectl apply -f komunikator-deployment.yaml
+
+4. Sprawdzenie poprawnosci dzialania
+    Obrazek:
+        zad5_3
+    Komenda:
+        kubectl rollout status deployment/komunikator-deployment
+
+5. Aktualizacja komuniaktora z zwiekszona liczba replik, aktualizowana wersja obrazu, 
+    nieistniejaca wersja obrazu
+
+    Obrazek:
+        zad6_1, zad6_2, zad6_3
+
+6. Powrot do wersji z najnowsza wersja komunikatora
+    Obrazek:
+        zad6_4
+    Komenda:
+        kubectl -- rollout undo deployment/komunikator-deployment
+
+7. Stworzenie skryptu automatycznie uruchamiajacego obraz i restartujacego
+    Obrazek:
+        zad7_1, zad7_2
