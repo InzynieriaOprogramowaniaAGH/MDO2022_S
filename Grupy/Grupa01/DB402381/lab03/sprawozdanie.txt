@@ -1,4 +1,4 @@
-- git checkout -b Grupa01-PA402099_Lab03
+- git checkout -b Grupa01-DB402381_Lab03
 Utworzenie osobistego brancha
 
 
