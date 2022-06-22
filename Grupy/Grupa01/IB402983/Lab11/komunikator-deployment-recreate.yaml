@@ -1,11 +1,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: komunikator-deployment
+  name: komunikator-deployment2
   labels:
     app: komunikator2
 spec:
-  replicas: 20
+  replicas: 8
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: komunikator2
@@ -15,7 +17,7 @@ spec:
         app: komunikator2
     spec:
       containers:
-      - name: komunikator2
-        image: izabubu/deploy
+      - name: komunikator3
+        image: ibubula/deployment
         ports:
-        - containerPort: 80
+        - containerPort: 8080

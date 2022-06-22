@@ -1,0 +1,4 @@
+Podczas pracy nad Lab 11 minikube i Docker przestały działać poprawnie
+Docker przez pawie godzinę nie mógł zbudować żadnego obrazu, reset dockera uja i komputtera nie dały wiele.
+Po zbudowaniu dockera uruchomieniu minikube i dashboard nie udało się wprowadzić żanego z plików komunikator-depoloyment.yaml, tych co działały(Lab 10) bądź nowych
+W commicie dostępny zrzut z błędu. Minikube i docker były restatyowane jeszcze 2 razy. Niestaty nic to nie dało

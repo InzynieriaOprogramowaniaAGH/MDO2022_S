@@ -3,16 +3,18 @@ kind: Deployment
 metadata:
   name: komunikator-deployment
   labels:
-    app: komunikator2
+    app: komunikator3
 spec:
-  replicas: 12
+  replicas: 8
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
-      app: komunikator2
+      app: komunikator3
   template:
     metadata:
       labels:
-        app: komunikator2
+        app: komunikator3
     spec:
       containers:
       - name: nginx

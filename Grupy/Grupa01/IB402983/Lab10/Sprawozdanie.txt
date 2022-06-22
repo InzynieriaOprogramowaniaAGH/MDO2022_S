@@ -1,0 +1,5 @@
+1. Uruchamiamy kubernetisa
+2. Według insrukcji tworzymy plik komunikator-deployment.yaml
+3. Poprzez komenmdę: kubectl apply -f komunikator-deployment.yaml realizujemy dokument 
+4. Wprowadzamy zmiany do pliku i uaktualniamy wersje na kubernetisie 
+	6.2 -> najnowsza wersja była zawarta już przy pierwszym użyciu
