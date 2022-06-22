@@ -1,0 +1,50 @@
+1. Uruchomienie klastra Kubernetes (kubectl+Minikube) oraz komunikator-deployment.yaml tak jak omawiany na poprzednim ćwiczeniu.
+
+	- minikube start
+	- minikube dashboard
+
+2. Stworzenie pliku komunikator-deployment-recreate.yaml na podstawie komunikator-deployment.yaml z poprzedniego laboratorium. Wykorzystano strategię wdrażania "Recreate" :
+
+apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+    name: komunikator-deployment
+    labels:
+        app: komunikator
+    spec:
+    strategy:
+        type: Recreate
+    replicas: 8
+    selector:
+        matchLabels:
+        app: komunikator
+    template:
+        metadata:
+        labels:
+            app: komunikator
+        spec:
+        containers:
+            - name: komunikator
+            image: nataviaa/lab10-komunikator:1.0
+            ports:
+                - containerPort: 9999
+
+
+oraz uruchomiono deployment za pomocą polecenia:
+
+	- kubectl apply -f komunikator-deployment-recreate.yaml
+
+3. Zmodyfikowano strategię "Recreate" na "RollingUpdate", gdzie dodano do powyższego kodu następujące linijki po czym uruchomiono deployment:
+
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 3
+      maxSurge: 20%
+
+4. Zmodyfikowano strategię "RollingUpdate" na "Canary deployment" gdzie dodano do powyższego kodu następujące linijki po czym uruchomiono deployment:
+
+    metadata:
+    name: komunikator-deployment-canary
+    labels:
+        app: komunikator
+        version: "2.0"
