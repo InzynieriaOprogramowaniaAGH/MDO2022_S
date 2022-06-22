@@ -1,0 +1,10 @@
+
+#!/bin/bash
+
+MSG="$1"
+
+if ! grep -qE "DB402381" "$MSG";then
+    cat "$MSG"
+    echo "Your commit message must contain 'DB402381'"
+    exit 1
+fi

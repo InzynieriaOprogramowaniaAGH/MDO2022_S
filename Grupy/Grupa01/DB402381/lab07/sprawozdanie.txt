@@ -1,0 +1,14 @@
+1. Utworzonnie folderów do przechowywania dotychczas utworoznych plików służących do wykonania zadań.
+
+2. Przygotowanie Jenkinsfile ze stagem Test. 
+Aby pipeline działał poprawnie zforkowałem repozytorium wybranego czatu aby móc go modyfikować
+niezależnie od oryginału. Repo zostało sklonowane i w nim utworzyłem Jenkinsfile.
+
+3. Dodanie do Jenkinsfile stage build, który od podstaw buduje aplikacje.
+
+5. Dodanie do Jenkinsfile stage Deploy, który wysyła artefakty zbudowanej aplikacji 
+na kontener na dockerhub.
+
+OPIS JENKINSFILE: Jenkinsfile do powiadamiania o sukcesie czy błędach używa wysyłki maila na zadany
+adres, w którym informowany jest o statusie ukończonych zadań, który to build a dodatkowo 
+zawarte są logi.
