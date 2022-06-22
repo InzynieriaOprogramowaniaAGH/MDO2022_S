@@ -1,0 +1,9 @@
+FROM gcc:latest
+
+RUN apt update
+
+# Install cmake
+RUN apt -y install cmake
+
+# Install zip
+RUN apt -y install zip

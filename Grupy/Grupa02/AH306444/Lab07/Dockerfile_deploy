@@ -1,0 +1,3 @@
+FROM calc-base:latest
+
+CMD cp /home/from/Calculator /home/to

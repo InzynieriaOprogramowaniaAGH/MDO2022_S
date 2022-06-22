@@ -1,0 +1,5 @@
+FROM calc-base:latest
+
+WORKDIR /home/build
+
+CMD ./Test
