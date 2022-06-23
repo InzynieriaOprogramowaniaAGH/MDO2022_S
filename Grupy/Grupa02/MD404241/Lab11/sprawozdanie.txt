@@ -1,0 +1,50 @@
+1. Uruchomiono lokalny klaster kubernetesa i pobrano minikube za pomocą komend:
+
+- alias kubectl="minikube kubectl --" dla wygody pracy
+- minikube kubectl -- get po -A do pobrania minikube
+- minikube start do uruchomienia klastra
+- minikube dashboard do włączenia dashboard'a
+
+3. Dodano strategię wdrażania recreate(.spec.strategy.type):
+
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+    name: komunikator-deployment
+    labels:
+        app: komunikator
+    spec:
+    strategy:
+        type: Recreate
+    replicas: 8
+    selector:
+        matchLabels:
+        app: komunikator
+    template:
+        metadata:
+        labels:
+            app: komunikator
+        spec:
+        containers:
+            name: komunikator
+            image: secopstech/socket-io-chat:latest
+            ports:
+                - containerPort: 80
+
+kubectl apply -f komunikator-deployment-recreate.yaml do zlecenia klastrowi wykonania pliku.yaml
+
+
+4. Zamieniono strategię recreate na RollingUpdate ustawiając adekwatne wartości parametów maxSurge oraz max Unavailable:
+
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 3
+      maxSurge: 20%
+
+5. Wykorzystano Canary deployment i nadano poprawne etykiety:
+    
+    metadata:
+    name: komunikator-deployment-canary
+    labels:
+        app: komunikator
+        version: "2.0"

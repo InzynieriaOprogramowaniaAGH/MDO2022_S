@@ -1,0 +1,15 @@
+1. W pierwszym kroku uruchomiono klaster Kubernetesa - kubectl oraz Minikube, a takze skopiowano plik komunikator-deployment.yaml:
+minikube start
+minikube dashboard
+
+2. Nastepnie stworzono plik komunikator-deployment-recreate.yaml na podstawie komunikator-deployment.yaml wykorzystujac strategie wdrazania Recreate.
+
+3. Po tym uruchomiono deployment:
+kubectl apply -f komunikator-deployment-recreate.yaml
+Po wdrozeniu istniejace pody zostay zabite i uruchomione na nowo.
+
+4. Nastepnie przetestowano strategie wdrazania RollingUpdate. Parametry maxSurage oraz maxUnavailable zostaly ustatwione kolejno na 2 i 0.
+2 wskazuje na liczbe jedonczesnej podmiany, 0 ile ma zostac nie podmienionych.
+Poczatkowo stworzony zostal zestaw replik z nowa wersja aplikacji po czym liczba replik starej wersji byla zmniejszana na rzecz nowych.
+
+5. Na koniec uzyto strategi Canary deployment. Zapewnia to dzialanie dwoch serwisow obok siebie (nowy o nowej nazwie i nowa wersja), a uzytkownik je przepina.

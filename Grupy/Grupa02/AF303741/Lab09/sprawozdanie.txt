@@ -1,0 +1,49 @@
+1. Instalacja Minkube
+    Obrazki: 
+        Zad2_1_InstalacjaMinikube, Zad2_2_MinikubeStart
+
+    Komendy:
+        curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+        sudo install minikube-linux-amd64 /usr/local/bin/minikube
+        minikube start
+
+2. Instalacja kubectl
+    Obrazek:
+        Zad2_3_InstalacjaKubectl
+
+    Komenda:
+        minikube kubectl -- get po -A
+
+3. Otworzenie Minikube Dashboard
+    Obrazek:
+        Zad3_MinikubeDashboard
+
+    Komenda:
+        minikube dashboard
+
+
+4. Lista rzeczy, ktore mozna zrobic z Minikube Dashboard
+    - Tworzenie i uruchamianie skonteneryzowanych apliakcji
+    - Przegladanie obiektow Kubernate
+    - Przegladanie zurzycia zasobow danej apliakcji
+    - Udostepnianie serwisow
+    - Przechowywanie zasobow aplikacji i przegladanie ich
+    - Zarzadzanie konfiguracja uruchomionej applikacji
+    - Przegladanie log'ow aplikacji
+
+5. Uruchomienie kontynera aplikacji webowej
+    Obrazek: 
+        zad4_1, zad4_2
+    Komenda: 
+        kubectl run komunikator --image=aleksanderfilek/wireappweb:latest --port --labels app=komunikator
+
+6. Przekierowanie portu na dostep z zewnatrz
+    Obrazek:
+        zad4_3
+    Komenda:
+        kubectl port-forward pod/komunikator 7080:8080
+
+7. Uruchomienie aplikacji w przegldarce
+    Obrazek:
+        zad4_4
+    

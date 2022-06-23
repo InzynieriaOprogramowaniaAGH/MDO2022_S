@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: komunikator-deployment-stable
+  labels:
+    app: komunikator
+    tier: zad5
+    track: stable
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: komunikator
+      tier: zad5
+  template:
+    metadata:
+      labels:
+        app: komunikator
+        tier: zad5
+    spec:
+      containers:
+      - name: komunikator
+        image: namuennov/commm:2.137
+        ports:
+        - containerPort: 80
+      #restartPolicy: OnFailure

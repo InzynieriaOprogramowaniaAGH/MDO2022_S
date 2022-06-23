@@ -1,0 +1,13 @@
+FROM node:16-alpine as git-install
+RUN apk add --no-cache dumb-init git bash
+
+FROM git-install as repo  
+COPY . /application
+WORKDIR /application
+RUN yarn
+RUN mv .env.localhost .env
+RUN yarn build:prod
+
+EXPOSE 8080
+
+ENTRYPOINT ["yarn", "start:server:dev"]

@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: komunikator-deployment
+  name: komunikator-deployment
+spec:
+  containers:
+  - image: test
+    name: komunikator-deployment
+    ports:
+    - containerPort: 8080
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: komunikator-deployment
+  name: komunikator-deployment
+spec:
+  containers:
+  - image: test
+    name: komunikator-deployment
+    ports:
+    - containerPort: 8080
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}

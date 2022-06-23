@@ -1,0 +1,40 @@
+1. Do wykonania laboratoriow wykorzystano kontener dockerowy ze zbudowanym komunikatorem z poprzednich zajec bielak2000/webapp.
+
+2. Zalogowano i zarejestrowano sie do Microsoft Azure za pomoca konta studenckiego.
+
+3. Zapoznano sie sie z cennikiem uslug chmurowych Azure Container Instances.
+
+4. Zapoznano sie z Azure Cloud Shell i tym jak z niej korzystac.
+
+5. Zapoznano sie z instrukcjami uruchamiania kontenerow w ACI.
+
+Zainstalowano lokalnie Azure CLI za pomoca polecenia:
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash"
+
+Nastepnie zalogowano sie za pomoca polecenia:
+az login
+
+Utworzono nowa grupe zasobow za pomoca polecenia:
+az group create --name grupa1 --location eastus
+
+Utworzenie kontenera w chmurze za pomoca polecenia:
+az container create --resource-group grupa1 --name webapp --image bielak2000/webapp --dns-name-label komunikator --ports 3000
+
+Sprawdzono status kontenera za pomoca polecenia:
+az container show --resource-group grupa1 --name webapp --query "{FQDN:ipAddress.fqdn,ProvisioningState:provisioningState}" --out table
+
+Sprawdzono czy aplikacja dziala poprawnie i czy uruchamia sie pod adresem:
+http://komunikator.eastus.azurecontainer.io:3000/
+Niestety tutaj pojawily sie bledy i strona nie chciala sie wczytac, najprawdpodobniej przez problemy z chatem lub mapowaniem adresow.
+
+Sprawdzono logi za pomoca polecenia:
+"az container logs --resource-group grupa1 --name webapp
+
+Usunieto kontener z chmury za pomoca polecenia:
+az container delete --resource-group grupa1 --name webapp
+
+Sprawdzono czy konetener rzeczywiscie zostal usuniety za pomoca polecenia:
+az container list --resource-group grupa1 --output table
+
+I na koncu usunieto grupe zasobow:
+az group delete --name grupa1

@@ -1,0 +1,47 @@
+1.
+    docker images
+        ^ - sprawdź dostępne obrazy (interesuje nas build-agent z poprzednich zajęć - 1.png)
+
+2.
+    curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+    sudo install minikube-linux-amd64 /usr/local/bin/minikube
+        ^ - pobranie i zainstalowanie kubernetesa
+
+    minikube start
+        ^ uruchomienie klastra
+
+    minikube kubectl -- get po -A
+        ^ - pobranie minikube
+
+    alias kubectl="minikube kubectl --"
+        ^ - dodanie aliasu do korzystania z minikube
+
+3.
+    minikube dashboard
+        ^ - włączenie GUI do kubernetesa
+
+    3.1.
+        - wdrażanie aplikacji kontenerowych w klastrze Kubernetes
+        - zarządzanie klastrem i kontenerami ( tworzenie, usuwanie )
+        - przeglądanie i monitorowanie zasobów (informacje, logi)
+        - tworzyć wirtualne klastry
+
+4.
+    docker login --username=dtomart - zalogowanie do Docker HUB
+        ^ - zalogowanie do dockerhub
+    docker tag build-agent:latest dtomart/build-agent:latest
+        ^ - otagowanie obrazu
+    docker push dtomart/build-agent:latest
+        ^ - wrzucenie wersji obrazu na repo ( 4-dockerhub.png )
+
+    Po tym uruchomiono kontener-komunikator za pomoca komendy:
+    kubectl run komunikator --image=dtomart/build-agent --port=9999 --labels app=komunikator
+
+    4.1
+        minikube kubectl -- run newkomunikator --image=secopstech/socket-io-chat:latest --port=9999 --labels app=newkomunikator
+            ^ - Próba przekierowania portów jednak się nie powiodła, gdyż aplikacja, z której mam obraz build-agent jest aplikacją okienkową, a nie webową. Skorzystałem więc z obrazu innej aplikacji znalezionego w serwisie dockerhub:
+
+        kubectl port-forward pods/newkomunikator 3111:3000
+            ^ - a następnie przekierowałem porty ( 4_1-working_app.png )
+5. 
+    aplikacja działa pod adresem localhost:3111

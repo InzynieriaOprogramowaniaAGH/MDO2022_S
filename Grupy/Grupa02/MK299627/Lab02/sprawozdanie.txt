@@ -1,0 +1,45 @@
+1. Pierwszym krokiem bylo utworzenie klucza ssh, w celu uzyskania bezpieczniejszego sposobu logowania. Uzylem polecenia:
+	ssh-keygen -t rsa -b 4096 -C "marcin.krumpholz@gmail.com"
+co umozliwilo mi wygenerowanie klucza SSH. Nastepnie dodalem agenta SSH za pomoca:
+	ssh-add ~/.ssh/id_rsa
+Kolejnym krokiem bylo zarejestrowanie klucza publicznego po stronie serwera, czyli na stronie Github.
+Ostatnim krokiem tego podpunktu bylo poinformowanie Gita o zmianie sposobu logowania. Jak widac na zalaczonym zrzucie ekranu, etap ten przebiegl pomyslnie.
+
+2. Kolejnym punktem tego cwiczenia bylo dodanie Taga do swojego commita na lokalnym repozytorium. Zrobilem to za pomoca komendy:
+	git tag - a MK299627_Lab02 -m "Marcin Krumpholz lab02"
+Nastepnie dodalem go na remote'a za pomoca:
+	git push --follow-tags
+
+
+3. Za pomoca komendy:
+	mv MK299627 Grupy/Grupa02/ 
+przenioslem swoj folder tak, aby znajdowal sie pod pozadana sciezka.
+Nastepnie zajalem sie konfiguracja branchy. Uzylem kolejno:
+	git checkout master
+	git checkout Grupa02
+	git checkout -b Grupa02-MK299627_Lab02
+w celu przelaczenia sie na mastera, a nastepnie na branch grupowy, z ktorego utworzylem nowego brancha. 
+
+4. Nastepnym krokiem bylo napisanie git hooke'a weryfikujacego, czy moj commit message zaczyna sie od "MK299627". W tym celu edytowalem plik commit-msg.sample w katalogu .git/hooks, a nastepnie zapisalem go pod nazwa commit-msg. 
+Nadalem mu odpowiednie uprawnienia poleceniem:
+	chmod +x commit-msg 
+Ponizej kod git hooke'a:
+
+#!/bin/sh
+keyword="MK299627"
+msg=`cat $1`
+if ! [[ $msg == $keyword ]]; then
+        echo "Your commit message has to start with MK299627"
+        exit 1
+fi
+echo "Your commit message is correct."
+
+5. Ostatnim krokiem bylo bylo dolaczenie swoich zmian, za pomoca:
+	git checkout Grupa02
+przelaczylem sie na brancha grupowego, a nastepnie wykonalem merge z moim branchem komenda:
+	git merge Grupa02-MK299627_Lab02
+ktory nastepnie zostal usuniety:
+	git branch -D Grupa02-MK299627_Lab02
+Na zakonczenie wykonalem pulla, commita, po czym dodalem swoje zmiany:
+	git push --set-upstream origin Grupa02
+I wykonalem pull requesta.

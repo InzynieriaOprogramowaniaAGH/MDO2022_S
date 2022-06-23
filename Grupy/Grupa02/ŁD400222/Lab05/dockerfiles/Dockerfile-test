@@ -1,0 +1,5 @@
+FROM test3 as client
+COPY client.sh .
+RUN chmod +x client.sh
+
+ENTRYPOINT ./client.sh

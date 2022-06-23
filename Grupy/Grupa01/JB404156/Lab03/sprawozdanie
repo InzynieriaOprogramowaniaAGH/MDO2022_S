@@ -1,0 +1,14 @@
+Sprawozdanie Jarosław Bednarczyk
+
+cp commit-msg ~/Pulpit/devops/MD02022_S/Grupy...
+dodanie git hooka z poprzednich zajęć do nowego folderu
+
+sudo docker run -it docker-ubuntu sh
+uruchomienie kontenera na podstawie obrazu
+
+
+Plik Dockerfile:
+
+FROM ubuntu:latest 
+RUN apt-get update
+RUN apt-get install -y git

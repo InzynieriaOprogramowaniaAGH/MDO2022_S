@@ -1,0 +1,20 @@
+pipeline {
+  agent any
+  
+  stages {
+    stage('Build') {
+      steps {
+        dir("Grupy/Grupa02/ŁD400222/Lab04") {
+          sh 'docker-compose up msg_server'
+        }
+      }
+    }
+    stage('Test') {
+      steps {
+         dir("Grupy/Grupa02/ŁD400222/Lab04") {
+          sh 'docker-compose up test'
+        }
+      }
+     }    
+  }
+}

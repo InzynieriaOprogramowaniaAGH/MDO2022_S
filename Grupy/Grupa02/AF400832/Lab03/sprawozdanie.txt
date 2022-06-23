@@ -1,0 +1,12 @@
+1. Utworzenie nowego brancha
+	 git checkout -b Grupa02-AF400832_Lab03
+2. Dodanie git hooka:  
+	cp commit-msg ../../Grupy/Grupa02/AF400832/Lab02/hooks
+3. i 4. Zainstalowałam dockera i zarejestrowałam konto na docerhubie.
+5. Stworzenie pliku dockerfile nazuje na najnowszym ubuntu, doinstalowany git:
+	FROM ubuntu:latest
+	RUN apt-get -y update
+	RUN apt-get -y install git
+6. uruchomienie kontenera i ściagniecie na niego repo:
+	docker run -it lab3
+	git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S 	

@@ -1,0 +1,44 @@
+1. Uruchomienie (lokalny) klaster Kubernetes (kubectl+Minikube)
+	minikube start
+
+2. Uruchomienie Minikube Dashboard i upewnienie się że działa (1.png)
+	minikube dashboard
+
+3. Zapoznanie się z dokumentacją tworzenia manifestów dla obiektów "Deployment": https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+
+4. Stworzenie pliku komunikator-deployment.yaml zgodnie z powyższą dokumentacją
+
+	apiVersion: apps/v1
+	kind: Deployment
+	metadata:
+	  name: komunikator-deployment
+	  labels:
+	    app: komunikator
+	spec:
+	  replicas: 4
+	  selector:
+	    matchLabels:
+	      app: komunikator
+	  template:
+	    metadata:
+	      labels:
+	        app: komunikator
+	    spec:
+	      containers:
+	      - name: komunikator
+	        image: drinaaf/berty
+	        ports:
+	        - containerPort: 9999
+
+5. Zlecenie klastrowi zrealizowanie powyższego pliku używając polecenia:
+	kubectl apply -f komunikator-deployment.yaml 
+   sprawdzenie statusu wdrażania nowej wersji poleceniem:
+	kubectl rollout status deployment/komunikator-deployment
+
+6. Wprowadzenie pojedynczo poniższych zmian w pliku komunikator-deployment.yaml i zlecenie klastrowi aktualizacji tak jak w pkt. 5
+	6.1 Zwiększenie ilośći replik z 4 do 8
+	6.2 Podanie nowszej wersji obrazu z aplikacją
+	6.2 Podanie błędnej wersji obrazu z aplikacją
+	6.3 Przywórcenie poprzedniej działającej wersji obrazu
+		- kubectl rollout history deployment/komunikator-deployment
+		- kubectl rollout undo deployment/komunikator-deployment

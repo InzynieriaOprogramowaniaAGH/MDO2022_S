@@ -1,0 +1,5 @@
+docker login - zalogowanie do Docker Hub (potrzebne do pushowania)
+docker tag nazwaIstniejacegoObrazu nowaNazwaObrazu - zmiana nazwy Docker Image
+docker push nazwaUzytkownika/nazwaObrazu:nazwaTagu - wyslanie Docker Image do repozytorium na Docker Hub
+docker-compose build - zbudowanie docker compose'a (z pliku docker-compose z aktualnej lokalizacji)
+docker-compose up - uruchomienie docker compose'a (z pliku docker-compose z aktualnej lokalizacji)

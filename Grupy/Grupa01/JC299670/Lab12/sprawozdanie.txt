@@ -1,0 +1,24 @@
+1. Do wykonania tego ćwiczenia postanowiłam wykorzystać kontener docker'owy ze zbudowanym, na wcześniejszych zajęciach: socket-io
+
+2. Korzystając ze swojego konta studenckiego zarejestrowałam się i zalogowałam do Microsoft Azure: https://azure.microsoft.com/en-us/free/ używając darmowej opcji oferującej $200 dla nowych użytkowników.
+
+3. Uważnie zapoznałam się z cennikiem usług chmurowych dla Azure Conatiner Instances, który można znaleźć na stronie https://azure.microsoft.com/en-us/pricing/details/container-instances/ oraz prześledziłam przykład wyceny usług zamieszczony na ww. stronie.
+ 
+    Analizując ceny możnaby pierwotnie zakładać ze ceny te są dość niskie, gdyż są one wręcz ułamkami centów. Jednakże należy zwrócić uwagę, na to, że są to ceny za sekundy, a postawione usługi muszą chodzić zazwyczaj 24h/7.
+
+4.Zapoznanałam sie z Azure Cloud Shell i tym jak z niej korzystac.
+
+5.Zapoznałam się z instrukcją uruchaminia kontenerów w ACI oraz instrukcją krok-po-kroku
+    1. utworzyłam grupę za pomocą komendy:
+        az group create --location westus --name group1
+    2. Utworzyłam kontener w churze za pomocą polecenia:
+        az container create --resource-group group1 --name socket-io --image secopstech/socket-io-chat:latest --dns-name-label komunikator --ports 3000
+    3. Sprawdziłam status kontenera za pomoca polecenia:
+        az container show --resource-group group1 --name socket-io --query "{FQDN:ipAddress.fqdn,ProvisioningState:provisioningState}" --out table
+    4. Usunęłam kontener z chmurowych
+        az container delete --resource-group group1 --name socket-io 
+    5. Usunęłam rónież grupę
+        az group delete --name group1
+
+
+

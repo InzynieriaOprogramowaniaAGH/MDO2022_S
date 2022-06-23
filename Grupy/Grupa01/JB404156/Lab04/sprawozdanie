@@ -1,0 +1,52 @@
+Sprawozdanie Jarosław Bednarczyk 404156
+
+#### Podpunkt 1 #### Utworzenie nowego brancha z przełączeniem oraz opublikowanie obrazu z poprzednich zajęć na docker HUB
+
+	git checkout -b Grupa02-AD401894_Lab04
+	- utworzenie gałęzi
+
+	docker login
+	- logowanie do dockerhub
+
+	docker images
+	- listowanie obrazów
+
+	docker tag docker-ubuntu:latest
+	 
+
+	docker push jarekbednar123/lab04
+	- push na repozytorium dockerowe
+
+
+
+#### Podpunkt 2 #### Samodzielnie napisanie lub znalezienie w internecie 1 dowolnego komunikatora
+
+	- Wybrano deltachat jako komunikator
+
+
+#### Podpunkt 3 ####
+
+	Utworzenie pliku Dockerfile i utworzenie obrazu 
+
+	docker build -t build-agent .
+	- stworzenie obrazu dockerowego nazwanego build-agent z aktualnej lokalizacji
+
+
+#### Podpunkt 4 #### Utworzenie pliku Dockerfile i na jego podstawie utworzenie image
+ 
+	docker build -t test-agent .
+	- stworzenie obrazu dockerowego nazwanego test-agent z pliku z aktualnej lokalizacji
+
+
+#### Podpunkt 5 #### Stworzenie odpowiedniego pliku docker-compose.yml
+
+	docker-compose build
+	- tworzenie obrazu na podstawie pliku
+
+	docker-compose up
+	- zbudowanie i uruchomienie obrazu zdefiniowanego w docker-compose
+
+	
+#### Podpunkt 6 ####
+	
+	-wrzucenie plików na repozytorium

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: komunikator-deployment
+  labels:
+    app: komunikator
+spec:
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: komunikator
+  template:
+    metadata:
+      labels:
+        app: komunikator
+    spec:
+      containers:
+      - name: komunikator
+        image: modernsege/myjenkins-blueocean-lab11
+        ports:
+        - containerPort: 8080

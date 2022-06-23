@@ -1,0 +1,54 @@
+1. Utworzono nowego branch'a poleceniem git checkout -b Grupa02-MD404241_Lab05
+2. Stworzono siec dla kontenera z Jenkinsem komenda docker network create jenkins
+3. Uruchomilem obraz docker:dind komenda 
+ docker run \                                                           
+          --name jenkins-docker \   
+          --rm \
+          --detach \
+          --privileged \     
+          --network jenkins \                  
+          --network-alias docker \              
+          --env DOCKER_TLS_CERTDIR=/certs \
+          --volume jenkins-docker-certs:/certs/client \
+          --volume jenkins-data:/var/jenkins_home \
+          --publish 2376:2376 \                           
+          docker:dind \                
+          --storage-driver overlay2
+4. Stworzylem Jenkins Dockerfile z docker-compose komenda
+FROM jenkins/jenkins:2.332.1-jdk11
+        USER root
+        RUN apt-get update && apt-get install -y lsb-release
+        RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
+          https://download.docker.com/linux/debian/gpg
+        RUN echo "deb [arch=$(dpkg --print-architecture) \
+          signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \
+          https://download.docker.com/linux/debian \
+          $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
+        RUN apt-get update && apt-get install -y docker-ce-cli
+        RUN curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        RUN chmod +x /usr/local/bin/docker-compose
+        USER jenkins
+        RUN jenkins-plugin-cli --plugins "blueocean:1.25.3 docker-workflow:1.28"
+5. Zbudowałem nowy obraz z wczesniejszego Dockerfile komenda docker build -t myjenkins-blueocean:2.332.1-1 .
+6. Uruchomiłem kontener komenda 
+docker run \                                                           
+          --name jenkins-blueocean \
+          --rm \
+          --detach \
+          --network jenkins \                  
+          --env DOCKER_HOST=tcp://docker:2376 \ 
+          --env DOCKER_CERT_PATH=/certs/client \
+          --env DOCKER_TLS_VERIFY=1 \      
+          --publish 8080:8080 \                        
+          --publish 50000:50000 \                  
+          --volume jenkins-data:/var/jenkins_home \       
+          --volume jenkins-docker-certs:/certs/client:ro \
+          myjenkins-blueocean:2.332.1-1 
+7. Przenieslem obraz Jenkinsa na DockerHub poprzez zalogowanie sie docker login, otagowanie obrazu docker tag myjenkins-blueocean:2.332.1-1 marcindadura/lab5-devops i
+spushowanie na repozytorium dockerowe docker push marcindadura/lab5-devops
+8. Wszedlem na localhost:8080, zalogowalem sie haslem z docker logs, zalozylem konto i doinstalowalem pluginy.
+9. Utworzyłem projekt, dodałem repozytorium, ustawiłem brancha i execute shell zbudowanego z komend
+                cd Grupy/Grupa02/MD404241/Lab05
+                docker-compose build
+                docker-compose up
+

@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: komunikator-deployment-stable
+  labels:
+    app: komunikator
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: komunikator
+  template:
+    metadata:
+      labels:
+        app: komunikator
+        release: stable
+    spec:
+      containers:
+      - name: komunikator
+        image: mcmkos/deltachat-desktop:stable
+        ports:
+        - containerPort: 80
+      restartPolicy: Always
+      

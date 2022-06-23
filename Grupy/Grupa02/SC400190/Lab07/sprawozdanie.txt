@@ -1,0 +1,13 @@
+sprawozdanie lab07
+
+1. Umieszczenie Dockerfile,hooks oraz Jenkinsfile w odpowiednich katalogach o strukturze. "SC400190/<nazwatechnologii>/<pliki>".
+
+2. Fork repozytorium z komunikatorem. Przystąpienie do tworzenia Jenkinsfile (Stage Test), skonfigurowanie Jenkinsa tak, aby wysyłał powiadomienie z logami o powodzeniu lub niepowodzeniu testowania na maila.
+
+3. Dodanie stage'a Build do Jenkinsfile, ktory jest uruchamiany przed etapem testowania.
+
+4. Dodanie webhooka, uruchamiającego pipeline z wykorzystaniem narzedzia ngrok do tworzenia publicznego adresu IP.
+
+5. Dodanie stage'a Deploy do Jenkinsfile, do ktorego przekazywany jest artefakt stworzony w stage("Build"). Powiadamianie użytkownika o sukciesie lub porażce etapu wdrażania.
+
+6.Pipeline zdefiniowany w Jenkinsfile w repozytorium wire-webapp jest automatycznie wyzwalany, każdy jego etap kończy się sukcesem, użytkownik dostaje powiadomienie o sukcesie lub porażce na maila na każdym etapie

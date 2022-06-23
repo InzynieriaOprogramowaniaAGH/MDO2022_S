@@ -1,9 +1,0 @@
-git clone - klonuje istniejące repozytorium w nowym katalogu i lokalizacji
-
-git checkout -b nazwa_brancha - tworzy nowy branch i zmienia obecny branch na podany
-
-git add nazwa_pliku - dodaje plik/pliki do staging area, w których nastąpiła jakaś zmiana (jesli git add . - dodane zostaną wszystki pliki, w których nastapiła zmiana)
-
-git commit -m"message" - tworzy commit w repozytorium, czyli zapisuje zamiany z staging area w repozytorium jako pojedynczy commit. Flaga -m pozwala dodac wiadomość do tworzonego commita
-
-git push <repo name> <branch name> - dodaje aktutalne, lokalne repozytorium na podanego brancha do repozytorium podanego w argumencie

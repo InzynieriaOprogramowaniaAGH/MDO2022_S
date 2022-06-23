@@ -1,0 +1,17 @@
+Zad 1
+	Stworzenie brancha
+Zad 1.1
+	Logowanie do docekra z konsoli "docekr login -u bubulai"
+	Tworzenie tagu dal repozytorium stwirzonego w Docer HUB 
+		"docker tag lab_3-image bubulai/lab3_share"
+	Pushowanie na lab3_share " docker push bubulai/lab3_share"
+Zad 2
+	Komunikator : Berty
+Zad 3
+	Stworzono noiwy obraz : 'build-agent' i skonfigurowano tak aby by w stanie uruchomi komunikator
+	docker build . -t 'build-agent'
+Zad 4
+	Stworzono kobntener : 'test-agent' i skonfigurowano w celu testowania komunikatora
+	docker build . -t 'test-agent'
+Zad 5 
+	Stworzono plik docekr-compose.yml

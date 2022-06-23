@@ -1,0 +1,15 @@
+2. Upewnienie się, że Minikube Dashboard działa poleceniem - "minikube dashboard" 
+
+3. Zapoznałam się z dokumentacją tworzenia manifestów dla obiektów "Deployment": https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+
+4. zgodnie z dokumentacją stworzyłam plik komunikator-deployment.yaml
+
+5.1 zleciłam klastrowi zrealizowanie pliku poleceniem kubectl apply -f komunikator-deployment.yaml 
+
+5.2 sprawdziłam status wdrażania nowej wersji poleceniem - kubectl rollout status deployment/komunikator-deployment
+
+6.1 zwiększyłam ilość replik
+
+6.2 podałam błędną wersję obrazu
+
+6.3 przywróciłam poprzednią wersję kubectl rollout undo deployment/komunikator-deployment

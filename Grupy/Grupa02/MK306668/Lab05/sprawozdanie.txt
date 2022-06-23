@@ -1,0 +1,76 @@
+2) 
+
+Tworzymy sieć dla Jenkinsa:
+
+docker network create jenkins
+
+
+
+Pobieramy i uruchamiamy docker:dind aby móc używać poleceń dockera w Jenkinsie:
+
+docker run \
+  --name jenkins-docker \
+  --rm \
+  --detach \
+  --privileged \
+  --network jenkins \
+  --network-alias docker \
+  --env DOCKER_TLS_CERTDIR=/certs \
+  --volume jenkins-docker-certs:/certs/client \
+  --volume jenkins-data:/var/jenkins_home \
+  --publish 2376:2376 \
+  docker:dind \
+  --storage-driver overlay2
+
+
+
+Tworzymy Dockerfile dla obrazu Jenkinsa:
+
+FROM jenkins/jenkins:2.332.1-jdk11
+USER root
+RUN apt-get update && apt-get install -y lsb-release
+RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
+  https://download.docker.com/linux/debian/gpg
+RUN echo "deb [arch=$(dpkg --print-architecture) \
+  signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \
+  https://download.docker.com/linux/debian \
+  $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
+RUN apt-get update && apt-get install -y docker-ce-cli
+RUN curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+RUN chmod +x /usr/local/bin/docker-compose
+USER jenkins
+RUN jenkins-plugin-cli --plugins "blueocean:1.25.3 docker-workflow:1.28"
+
+
+
+Budujemy kontener:
+
+docker build -t myjenkins:v0.2 .
+
+
+
+Uruchamiamy kontener:
+
+docker run \
+  --name myjenkins \
+  --rm \
+  --detach \
+  --network jenkins \
+  --env DOCKER_HOST=tcp://docker:2376 \
+  --env DOCKER_CERT_PATH=/certs/client \
+  --env DOCKER_TLS_VERIFY=1 \
+  --publish 8080:8080 \
+  --publish 50000:50000 \
+  --volume jenkins-data:/var/jenkins_home \
+  --volume jenkins-docker-certs:/certs/client:ro \
+  myjenkins:v0.2
+
+3) Wrzucamy obraz Jenkinsa na Docker hub:
+
+docker push mcmkos/jenkins-image:v0.2
+
+
+
+4) Uruchomiono docker-compose z poziomu Jenkinsa:
+
+cd Grupy/Grupa02/MK306668/Lab04 ; docker-compose build ; docker-compose up

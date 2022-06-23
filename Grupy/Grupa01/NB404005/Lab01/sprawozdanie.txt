@@ -1,0 +1,17 @@
+git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S 
+    - skopiowanie zdalnego repozytorium pod podanym adresem 
+
+git checkout -b NB404005
+    - przeniesienie się na nowego brancha o nazwie NB404005 
+        
+git add -A 
+    - dodanie wszystkich zmodyfikowanych plikow w repo do commita
+
+commit -m "lab1"
+    - dodaj commit z wiadomoscia o tresci "lab1"
+
+git push origin NB404005
+    - wyslanie zmian do zdalnego repozytorium origin na galaz NB404005
+
+git push --set-upstream origin NB404005
+    - wyslanie do zdalnego repozytorium galezi NB404005 wraz z commitami

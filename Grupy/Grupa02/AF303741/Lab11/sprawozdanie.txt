@@ -1,0 +1,27 @@
+1. Utworznie pliku komunikator-deploymenet-recreate.yaml na bazie pliku z poprzedniego laboratorium komunikator-deploymenet.yaml. Ustawiono w nim typ strategi na Recreate.
+    Obrazek:
+        zad2
+
+2. Uruchomiono kontyner z nowego pliku konfiguracji
+    Obrazki:
+        zad3_1, zad3_2
+
+3. Utworzenie pliku konfiguracji z strategia RollingUpdate "komunikator-deploymenet-rollingUpdate". Ustawienie paremetrow maxSurge na 2 i maxUnavailable na 0
+    Obrazki:
+        zad4_1, zad4_2, zad4_3
+
+4. Utworzenie dwoch wersji pliku komunikator-deploymenet-canary-v1 oraz komunikator-deploymenet-canary-v2. Wdrozono strategie Canary deploymenet.
+    Obrazki: 
+        zad5_1, zad5_2, zad5_3, zad5_4, zad5_5, zad5_6, zad5_7
+
+    Komendy:
+        1. kubectl apply -f komunikator-deploymenet-canary-v1.yaml 
+            Utworzenie 10 replik aplikacji w wersji 1.0
+        2. kubectl apply -f komuniaktor-deploymenet-canary-v2.yaml
+            Utworzenie 1 repliki aplikacji w wersji 2.0
+        3. kubectl scale --replicas=9 deploy komuniaktor-deploymenet-canary.v1
+            Zmniejszenie liczby aplikacji v1 do 9, po to by zawsze bylo maksymalnie 10 instancji apliakcji.
+        4. kubectl scale --replicas=10 deploy komuniaktor-deploymenet-canary-v2
+            Zwiekszenie liczby replik apliakcji v2 do 10
+        5. kubectl delete deploy komuniaktor-deploymenet-canary-v1
+            Usuniecie aplikacji v1, ktore nie sa juz potrzebne

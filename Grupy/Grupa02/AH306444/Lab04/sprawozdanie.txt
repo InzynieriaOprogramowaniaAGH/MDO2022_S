@@ -1,0 +1,18 @@
+LAB 04 Artur Hamerski
+
+1. Utworzono nowego brancha krotko zyjacego    
+git checkout -b Grupa02-AH306444_Lab04
+    
+2.Opublikowano obraz z poprzednich zaj w serwisie Docker HUB
+docker push arturhamerski98/ah-remote:latest
+
+3. Pobrano aplikacje komunikatora
+
+4. Stworzono i skonfigurowano obraz kontenera
+sudo docker build-f ./Dockerfile_build -t build-agent
+
+5. Konfiguracja test-agenta i testowanie komunikatora
+docker run test-agent
+
+6.Utworzono plik docker-compose.yml, ktrory sciagal, budowal oraz testowal komunikator
+docker-compose up

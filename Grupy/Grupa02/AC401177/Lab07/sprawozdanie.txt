@@ -1,0 +1,86 @@
+Podczas laboratorium wykonano:
+- Stworzono forka repozytorium z komunikatorem wire-app
+- W nowym repozytorium umieszczono pliki Dockerfile oraz docker-compose.yml
+- Napisano Jenkinsfile zawierający pipeline ze stage'ami:
+	- Build - wykonujący polecenie docker-compose do budowy aplikacji
+	- Test - Testujący działanie aplikacji po jej zbudowaniu
+	- Deploy - Wysyłający zbudowany obraz dockera na dockerhub w przypadku poprawnego wykonania wszystkich testów
+- Umieszczono plik Jenkinsfile w repozytorium
+- Skonfiugrowano Jenkinsowego Job'a tak aby pobierał repozytorium z githuba i wykonywał Jenkinsfile w nim zawarty
+- Dodano obsługę wzbudzania pipeline przez webhook
+- Uruchomiono narzędzie ngrok pozwalające na dostę pod wybrany port komputera z zewnętrznej sieci za pomocą specjalnego adresu
+- Skonfiugrowano webhook na githubie tak aby uruchamiał pipelnie po każdym push
+
+Opis poleceń wykorzystanych w Jeninsfile:
+	- environment - pozwala na ustawienie wartości zmiennych środowiskowych (w tym przypadku login i hasło do dockerhub)
+	- stage('nazwa') {} - definiuje pojednyńczy stage
+	- steps {} - kroki wykonywane w stage
+	- post{ failure{} success{} } - pozwala wykonać wybrane polecenia w zależności od tego czy kolejne kroki stage'a sie powiodły
+	- echo 'tekst' - wypisuje napis na ekran
+	- sh 'polecenie' - wykonuje polecenie podane jako argument
+
+Jenkinsfile:
+
+pipeline{
+        agent any
+
+        environment {
+                DOCKER_LOGIN = credentials('DOCKER_LOGIN')
+                DOCKER_PASSWORD = credentials('DOCKER_PASSWORD')
+        }
+
+        stages{
+                stage('Build'){
+                        steps {
+                                echo 'Building...'
+                                sh '''
+                                docker-compose build b-agent
+                                '''
+                        }
+                        post {
+                                failure {
+                                        echo 'Building failed!'
+                                }
+                                success {
+                                        echo 'Building successed!'
+                                }
+                        }
+                }
+
+                stage('Test'){
+                        steps {
+                                echo 'Testing...'
+                                sh '''
+                                docker-compose build t-agent
+                                docker-compose up -d t-agent
+                                '''
+                        }
+                        post {
+                                failure {
+                                        echo 'Testing failed!'
+                                }
+                                success {
+                                        echo 'Testing successed!'
+                                }
+                        }
+                }
+
+                stage('Deploy') {
+                        steps {
+                                echo 'Deploying...'
+                                sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_LOGIN --password-stdin'
+                                sh 'docker tag build-agent:latest arczan/jenkins-wireapp'
+                                sh 'docker push arczan/jenkins-wireapp'
+                        }
+                        post {
+                                failure {
+                                        echo 'Deploying failed!'
+                                }
+                                success {
+                                        echo 'Deploying successed!'
+                                }
+                        }
+                }
+        }
+}
+

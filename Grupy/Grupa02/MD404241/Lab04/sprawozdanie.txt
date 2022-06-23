@@ -1,0 +1,7 @@
+1.Stworzono brancha na zajecia wychodzacego od brancha grupowego za pomoca komendy git chekout -b"nazwa brancha"
+1.1 opublikowano obraz na Docker Hub poprzez komendy docker login do zalogowania i docker push do spushowania
+2. Wybrano delta chat do wykonania zadania
+3. Stworzono obraz dockerowy build-agent za pomoca komendy docker build -t build-agent . Dockerfile znajdowal sie w tym samym miejscu
+4. Stworzono obraz dockerowy build-test za pomoca komendy docker build -t build-test . Dockerfile znajdowal sie w tym samym miejscu
+5. Zainstalowano docker-compose i stworzono plik docker-compose.yml do utworzenia srodowiska ktore buduje, uruchamia  i testuje poprawnosc dzialania komunikatora 
+6. Wrzucono wyszstkie pliki ze screenshotami na repozytorium i zrobiono pull request do mastera

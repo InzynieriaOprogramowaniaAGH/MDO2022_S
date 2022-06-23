@@ -1,6 +1,0 @@
-ssh-keygen -t rsa -b 4096 -C "nazwaMaila" - generowanie nowego klucza SSH
-eval "$(ssh-agent -s)" - uruchomienie w tle agenta SSH
-ssh-add lokalizacjaKlucza - dodanie klucza SSH do agenta SSH
-git remote -v - sprawdzenie remote'a
-git remote set-url origin git@github.com:InzynieriaOprogramowaniaAGH/MDO2022_S.git - zmiana polaczenia na SSH
-git tag -a tekstAdnotacji -m "tekstWiadomosci"

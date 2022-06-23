@@ -1,0 +1,83 @@
+2. Utworzenie kontenera dockerowego za pomocą oficjalnej instrukcji ze striny jenkins.
+Na początku należało utworzyć sieć na której działać będą wymagane systemy, a w tym
+Jenkins.
+Aby możliwe było użytkowanie Dockera w powłoce Jenkinsa należało utworzyć dodatkowy obraz
+tak zwanego dockera w dockerze:
+
+	docker run --name jenkins-docker --rm --detach \
+  	--privileged --network jenkins --network-alias docker \
+  	--env DOCKER_TLS_CERTDIR=/certs \
+  	--volume jenkins-docker-certs:/certs/client \
+  	--volume jenkins-data:/var/jenkins_home \
+  	--publish 2376:2376 \
+  	docker:dind --storage-driver overlay2
+
+W kolejnym kroku utworzyłem Dockerfile, który bezpośrednio utworzy obraz używalnej 
+instancji Jenkinsa. Aby możliwe było używanie docker-compose w Jenkinsie należało dodać
+dodatkowe polecenie, które instalowały powyższe narzędzie dla tej instancji Jenkinsa:
+
+	FROM jenkins/jenkins:2.332.1-jdk11
+	USER root
+	RUN apt-get update && apt-get install -y lsb-release
+	RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
+  	https://download.docker.com/linux/debian/gpg
+	RUN echo "deb [arch=$(dpkg --print-architecture) \
+  	signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \
+  	https://download.docker.com/linux/debian \
+  	$(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
+	RUN apt-get update && apt-get install -y docker-ce-cli
+	RUN curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+	RUN chmod +x /usr/local/bin/docker-compose
+	USER jenkins
+	RUN jenkins-plugin-cli --plugins "blueocean:1.25.3 docker-workflow:1.28"
+
+Z tak utworzonego Dockerfile można utworzyć obraz Jenkinsa standardową komendą:
+
+- docker build -t myjenkins-blueocean:2.332.2-1 .
+
+Kolejnym krokiem było uruchomienia kontenera Jenkinsa na podstawie wyżej utworzonego obrazu i opublikowanie 
+go na odpowiednich portach:
+
+	
+	docker run --name jenkins-blueocean --rm --detach \
+  	--network jenkins --env DOCKER_HOST=tcp://docker:2376 \
+  	--env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 \
+  	--publish 8080:8080 --publish 50000:50000 \
+  	--volume jenkins-data:/var/jenkins_home \
+  	--volume jenkins-docker-certs:/certs/client:ro \
+  	myjenkins-blueocean:2.332.2-1
+
+Ustawianie są też tutaj odpowiednie zmienne środowiskowe, aby połączone ze sobą komponenty mogły poprawnie
+działać. 
+
+Po utworzeniu kontenera przeszedłem na stronę localhost:8080 gdzie znajduje się instancja Jenkinsa.
+Uruchomiona została instalacja do której należało wykorzystać utworzone hasło administratora za
+pomocą poniższej komendy:
+
+- sudo docker exec ${CONTAINER_ID or CONTAINER_NAME} cat /var/jenkins_home/secrets/initialAdminPassword
+
+Po instalacju i skonfigurowaniu urzytkownika można było przystąpić do realizacji zadania na platformie.
+
+3. Opublikowanie Obrazu Jenkinsa na DockerHub:
+
+- docker push piotrakapriasz/jenkins-blueocean
+
+4. Zadanie do wykonania na Jenkinsie było uruchomienia tworzonego na poprzednich laboratoriach
+docker-compose, który budował i testował wybrany komunikator. Aby to zrobić, utworzyłem nowey projekt
+na Jenkins i dodałem dostęp do naszego repozytorium na github za pomocą linku.
+Aby odpowiednio zbudować projekt dodałem wykonanie kodu powłoki w ustwieniach budowania. 
+W kodzie tym na początku poleceniem cd przeszedłem do odpowiedniego katalogu gdzie znajdował sie mój 
+docker-compose a w kolejnych dwóch linijkach użyłem poleceń do zbudowaia i uruchomienia docker-compose:
+
+ 	cd Grupy/Grupa01/PA402099/lab04
+	docker-compose build
+	docker-compsoe up
+
+Polecenie docker-compose zostało wykonane poprawnie i budowanie zostało rozpoczęte.
+Niestety mimo istnienia obrazów deltachat-build i deltachat-test nie powiodło się ono
+w sposób jaki widac na screenie logi2
+
+Ostatnim krokiem było dodanie zmian na github
+
+
+ 

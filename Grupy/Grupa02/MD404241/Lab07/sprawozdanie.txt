@@ -1,0 +1,13 @@
+Stworzono "żródło prawdy" poprzez stworzenie odopowiednich katalogów i przeniesienie do nich odpowiednich plików
+
+Zforkowano repozytorium z komunikatorem 
+
+Konfiguracja powiadomien email w Jenkinsie.
+
+Utworzono pipeline podzielony na 3 etapy:
+a)Build.
+b)Test
+c)Deploy
+Wszystkie stage wysyłają maile z informacją o statusie etapu
+
+Utworzono weebhook na podstawie ngrok uruchamiający się po wykryciu zmian na repozytorium

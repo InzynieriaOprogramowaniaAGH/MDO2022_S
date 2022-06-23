@@ -1,0 +1,638 @@
+Started by user admin
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/LAB05
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] sh
++ git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S/ /var/jenkins_home/workspace/LAB05/app
+Cloning into '/var/jenkins_home/workspace/LAB05/app'...
+[Pipeline] dir
+Running in /var/jenkins_home/workspace/LAB05/app/Grupy/Grupa02/MM400503/Lab04
+[Pipeline] {
+[Pipeline] sh
++ ls -al
+total 344
+drwxr-xr-x 2 root root   4096 Apr  2 08:49 .
+drwxr-xr-x 7 root root   4096 Apr  2 08:49 ..
+-rw-r--r-- 1 root root  86429 Apr  2 08:49 1.png
+-rw-r--r-- 1 root root  23130 Apr  2 08:49 2.png
+-rw-r--r-- 1 root root  12221 Apr  2 08:49 3.png
+-rw-r--r-- 1 root root 129266 Apr  2 08:49 4.png
+-rw-r--r-- 1 root root  45059 Apr  2 08:49 5.png
+-rw-r--r-- 1 root root  19891 Apr  2 08:49 6.png
+-rw-r--r-- 1 root root    230 Apr  2 08:49 Dockerfile.build
+-rw-r--r-- 1 root root     58 Apr  2 08:49 Dockerfile.test
+-rw-r--r-- 1 root root    224 Apr  2 08:49 docker-compose.yml
+-rw-r--r-- 1 root root    640 Apr  2 08:49 sprawozdanie.txt
++ docker-compose build
+Building build-agent
+#1 [internal] load build definition from Dockerfile.build
+#1 sha256:d4fa88baffad929ebf9b21788054f88e1e0daa3e2ce0f3c150eca3846a5a9621
+#1 transferring dockerfile: 275B done
+#1 DONE 0.1s
+
+#2 [internal] load .dockerignore
+#2 sha256:45ce380001a5c7fac6f49d2a5c4bc3cd316dedec10ec4aa7bb81c545fd80357a
+#2 transferring context: 2B done
+#2 DONE 0.1s
+
+#3 [internal] load metadata for docker.io/library/node:16-alpine
+#3 sha256:93febbdbcf5a756e6e084d46d56976a0630ae35cc38d744d3fb69ab9a7ce9b20
+#3 DONE 2.2s
+
+#4 [git-install 1/2] FROM docker.io/library/node:16-alpine@sha256:32f64135e74ec4dc5d63cc36318444f1d801cd23c44253124f7eccb52c4b89c5
+#4 sha256:121393d3e7138c66e9b8a82eb7853cd27bbec1023e9e2ac1e3290bb875b7f56a
+#4 resolve docker.io/library/node:16-alpine@sha256:32f64135e74ec4dc5d63cc36318444f1d801cd23c44253124f7eccb52c4b89c5 0.0s done
+#4 sha256:42abdeebbd2fa21c08cb02fbae888cacbad852dbbb1bc1f98f490a6a5c679c67 0B / 451B 0.2s
+#4 sha256:32f64135e74ec4dc5d63cc36318444f1d801cd23c44253124f7eccb52c4b89c5 1.43kB / 1.43kB done
+#4 sha256:5e20a4e2e52daa1743006c224f2971b1218201e284d17c6eff4a696c9020f1a2 1.16kB / 1.16kB done
+#4 sha256:5521a6fdce5cf1d57e20b234db7b54f98df2a94bed1c4895858d54f9e19ed947 6.58kB / 6.58kB done
+#4 sha256:3a478c8a5077ad871a72d54b8f60a7b766617406a6ff6cdf9f79d6615e12b4a2 0B / 35.40MB 0.2s
+#4 sha256:f804dfd7d81b4e8784bc6d921f658bd4cd184070cff25942b8bd2ffaf5dd2ede 0B / 2.34MB 0.2s
+#4 sha256:3a478c8a5077ad871a72d54b8f60a7b766617406a6ff6cdf9f79d6615e12b4a2 2.10MB / 35.40MB 0.4s
+#4 sha256:3a478c8a5077ad871a72d54b8f60a7b766617406a6ff6cdf9f79d6615e12b4a2 4.19MB / 35.40MB 0.6s
+#4 sha256:42abdeebbd2fa21c08cb02fbae888cacbad852dbbb1bc1f98f490a6a5c679c67 451B / 451B 0.6s done
+#4 sha256:3a478c8a5077ad871a72d54b8f60a7b766617406a6ff6cdf9f79d6615e12b4a2 6.29MB / 35.40MB 0.9s
+#4 sha256:f804dfd7d81b4e8784bc6d921f658bd4cd184070cff25942b8bd2ffaf5dd2ede 2.10MB / 2.34MB 0.9s
+#4 sha256:3a478c8a5077ad871a72d54b8f60a7b766617406a6ff6cdf9f79d6615e12b4a2 8.39MB / 35.40MB 1.0s
+#4 sha256:f804dfd7d81b4e8784bc6d921f658bd4cd184070cff25942b8bd2ffaf5dd2ede 2.34MB / 2.34MB 0.9s done
+#4 sha256:3a478c8a5077ad871a72d54b8f60a7b766617406a6ff6cdf9f79d6615e12b4a2 10.49MB / 35.40MB 1.2s
+#4 sha256:3a478c8a5077ad871a72d54b8f60a7b766617406a6ff6cdf9f79d6615e12b4a2 12.58MB / 35.40MB 1.3s
+#4 sha256:3a478c8a5077ad871a72d54b8f60a7b766617406a6ff6cdf9f79d6615e12b4a2 14.68MB / 35.40MB 1.5s
+#4 sha256:3a478c8a5077ad871a72d54b8f60a7b766617406a6ff6cdf9f79d6615e12b4a2 17.83MB / 35.40MB 1.7s
+#4 sha256:3a478c8a5077ad871a72d54b8f60a7b766617406a6ff6cdf9f79d6615e12b4a2 20.97MB / 35.40MB 1.9s
+#4 sha256:3a478c8a5077ad871a72d54b8f60a7b766617406a6ff6cdf9f79d6615e12b4a2 24.12MB / 35.40MB 2.1s
+#4 sha256:3a478c8a5077ad871a72d54b8f60a7b766617406a6ff6cdf9f79d6615e12b4a2 26.21MB / 35.40MB 2.3s
+#4 sha256:3a478c8a5077ad871a72d54b8f60a7b766617406a6ff6cdf9f79d6615e12b4a2 30.41MB / 35.40MB 2.6s
+#4 sha256:3a478c8a5077ad871a72d54b8f60a7b766617406a6ff6cdf9f79d6615e12b4a2 32.51MB / 35.40MB 2.8s
+#4 sha256:3a478c8a5077ad871a72d54b8f60a7b766617406a6ff6cdf9f79d6615e12b4a2 34.60MB / 35.40MB 2.9s
+#4 sha256:3a478c8a5077ad871a72d54b8f60a7b766617406a6ff6cdf9f79d6615e12b4a2 35.40MB / 35.40MB 3.1s done
+#4 extracting sha256:3a478c8a5077ad871a72d54b8f60a7b766617406a6ff6cdf9f79d6615e12b4a2
+#4 extracting sha256:3a478c8a5077ad871a72d54b8f60a7b766617406a6ff6cdf9f79d6615e12b4a2 1.8s done
+#4 extracting sha256:f804dfd7d81b4e8784bc6d921f658bd4cd184070cff25942b8bd2ffaf5dd2ede
+#4 extracting sha256:f804dfd7d81b4e8784bc6d921f658bd4cd184070cff25942b8bd2ffaf5dd2ede 0.2s done
+#4 extracting sha256:42abdeebbd2fa21c08cb02fbae888cacbad852dbbb1bc1f98f490a6a5c679c67 done
+#4 DONE 5.5s
+
+#5 [git-install 2/2] RUN apk add --no-cache dumb-init git bash
+#5 sha256:575703cab3ec98c7656f09e48574272c930f9f9aaf601a7e4b51b42f8b1e8496
+#5 0.455 fetch https://dl-cdn.alpinelinux.org/alpine/v3.15/main/x86_64/APKINDEX.tar.gz
+#5 1.196 fetch https://dl-cdn.alpinelinux.org/alpine/v3.15/community/x86_64/APKINDEX.tar.gz
+#5 1.473 (1/12) Installing ncurses-terminfo-base (6.3_p20211120-r0)
+#5 1.507 (2/12) Installing ncurses-libs (6.3_p20211120-r0)
+#5 1.556 (3/12) Installing readline (8.1.1-r0)
+#5 1.599 (4/12) Installing bash (5.1.16-r0)
+#5 1.663 Executing bash-5.1.16-r0.post-install
+#5 1.666 (5/12) Installing dumb-init (1.2.5-r1)
+#5 1.706 (6/12) Installing ca-certificates (20211220-r0)
+#5 1.757 (7/12) Installing brotli-libs (1.0.9-r5)
+#5 1.806 (8/12) Installing nghttp2-libs (1.46.0-r0)
+#5 1.844 (9/12) Installing libcurl (7.80.0-r0)
+#5 1.889 (10/12) Installing expat (2.4.7-r0)
+#5 1.924 (11/12) Installing pcre2 (10.39-r0)
+#5 1.978 (12/12) Installing git (2.34.1-r0)
+#5 2.374 Executing busybox-1.34.1-r4.trigger
+#5 2.393 Executing ca-certificates-20211220-r0.trigger
+#5 2.436 OK: 23 MiB in 28 packages
+#5 DONE 6.5s
+
+#6 [repo 1/5] RUN git clone https://github.com/wireapp/wire-webapp app
+#6 sha256:9a5c80927ce9c544d74953a481d819e4b04f8d23de48a85f8df2191f9e2bdf30
+#6 0.457 Cloning into 'app'...
+#6 DONE 17.6s
+
+#7 [repo 2/5] WORKDIR /app
+#7 sha256:e52f7e0ca8b1389aca97b990f79bd531b1a83c1c7f615045c68d577a8f600254
+#7 DONE 0.2s
+
+#8 [repo 3/5] RUN yarn
+#8 sha256:c5812185ba09576707d4aab1216269f22bf4b28d7d82a8bc78cd05c9c32423f4
+#8 0.695 yarn install v1.22.18
+#8 0.884 [1/5] Validating package.json...
+#8 0.893 [2/5] Resolving packages...
+#8 1.820 [3/5] Fetching packages...
+#8 1.832 warning Pattern ["dexie@latest"] is trying to unpack in the same destination "/usr/local/share/.cache/yarn/v6/npm-dexie-3.0.3-ede63849dfe5f07e13e99bb72a040e8ac1d29dab-integrity/node_modules/dexie" as pattern ["dexie@3.0.3"]. This could result in non-deterministic behavior, skipping.
+#8 67.06 [4/5] Linking dependencies...
+#8 67.07 warning " > @wireapp/react-ui-kit@7.55.1" has incorrect peer dependency "react@^17.0.1".
+#8 67.07 warning " > @wireapp/react-ui-kit@7.55.1" has incorrect peer dependency "react-dom@^17.0.1".
+#8 67.07 warning " > @wireapp/store-engine-dexie@1.6.9" has unmet peer dependency "@wireapp/store-engine@4.x.x".
+#8 67.07 warning " > @wireapp/store-engine-sqleet@1.7.14" has unmet peer dependency "@wireapp/store-engine@4.x.x".
+#8 67.07 warning " > dexie-batch@0.4.3" has unmet peer dependency "dexie@>1.3.6".
+#8 67.09 warning "fake-indexeddb > realistic-structured-clone > typeson@5.18.2" has unmet peer dependency "core-js-bundle@^3.6.4".
+#8 67.09 warning "fake-indexeddb > realistic-structured-clone > typeson@5.18.2" has unmet peer dependency "regenerator-runtime@^0.13.3".
+#8 67.09 warning "fake-indexeddb > realistic-structured-clone > typeson-registry > base64-arraybuffer-es6@0.6.0" has unmet peer dependency "core-js-bundle@^3.6.5".
+#8 67.09 warning "i18next-scanner > acorn-dynamic-import@4.0.0" has incorrect peer dependency "acorn@^6.0.0".
+#8 67.09 warning " > postcss-cssnext@3.1.1" has unmet peer dependency "caniuse-lite@^1.0.30000697".
+#8 103.2 warning "wrtc@0.4.7" is missing a bundled dependency "node-pre-gyp". This should be reported to the package maintainer.
+#8 103.3 [5/5] Building fresh packages...
+#8 107.6 $ yarn configure && cd server && yarn && cd ../electron && yarn
+#8 107.8 yarn run v1.22.18
+#8 107.9 $ copy-config
+#8 108.2 Selecting configuration "staging" (reason: default)
+#8 108.2 Repo URL https://github.com/wireapp/wire-web-config-default#v0.29.6
+#8 108.2 ℹ️  [@wireapp/copy-config/cli] Found configuration file "/app/.copyconfigrc.js".
+#8 108.2 ℹ️  [@wireapp/copy-config/CopyConfig] Cleaning up "/app/config" ...
+#8 108.2 ℹ️  [@wireapp/copy-config/CopyConfig] Cloning "https://github.com/wireapp/wire-web-config-default" (branch "v0.29.6") ...
+#8 109.4 ℹ️  [@wireapp/copy-config/CopyConfig] Resolving "/app/config/wire-webapp/content/**"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/call_drop.mp3" -> "/app/resource/audio/call_drop.mp3"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/camera.mp3" -> "/app/resource/audio/camera.mp3"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/first_message.mp3" -> "/app/resource/audio/first_message.mp3"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/hotping_from_me.mp3" -> "/app/resource/audio/hotping_from_me.mp3"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/hotping_from_them.mp3" -> "/app/resource/audio/hotping_from_them.mp3"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/new_message.mp3" -> "/app/resource/audio/new_message.mp3"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/nw_interruption.mp3" -> "/app/resource/audio/nw_interruption.mp3"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/ping_from_me.mp3" -> "/app/resource/audio/ping_from_me.mp3"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/ping_from_them.mp3" -> "/app/resource/audio/ping_from_them.mp3"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/pull_voice.mp3" -> "/app/resource/audio/pull_voice.mp3"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/push_voice.mp3" -> "/app/resource/audio/push_voice.mp3"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/ready_to_talk.mp3" -> "/app/resource/audio/ready_to_talk.mp3"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/ringing_from_me.mp3" -> "/app/resource/audio/ringing_from_me.mp3"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/ringing_from_them_incall.mp3" -> "/app/resource/audio/ringing_from_them_incall.mp3"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/ringing_from_them.mp3" -> "/app/resource/audio/ringing_from_them.mp3"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/talk_later.mp3" -> "/app/resource/audio/talk_later.mp3"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/talk.mp3" -> "/app/resource/audio/talk.mp3"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/font/redacted-script-regular.woff2" -> "/app/resource/font/redacted-script-regular.woff2"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/font/Wire.ttf" -> "/app/resource/font/Wire.ttf"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/favicon-badge.ico" -> "/app/resource/image/favicon-badge.ico"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/favicon.ico" -> "/app/resource/image/favicon.ico"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/about-icon.svg" -> "/app/resource/image/icon/about-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/add-participants-icon.svg" -> "/app/resource/image/icon/add-participants-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/animated-check-icon.svg" -> "/app/resource/image/icon/animated-check-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/archive-icon.svg" -> "/app/resource/image/icon/archive-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/arrow-down-long-icon.svg" -> "/app/resource/image/icon/arrow-down-long-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/arrow-left-icon.svg" -> "/app/resource/image/icon/arrow-left-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/arrow-next-icon.svg" -> "/app/resource/image/icon/arrow-next-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/attachment-icon.svg" -> "/app/resource/image/icon/attachment-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/audio-icon.svg" -> "/app/resource/image/icon/audio-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/av-icon.svg" -> "/app/resource/image/icon/av-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/availability-available-icon.svg" -> "/app/resource/image/icon/availability-available-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/availability-away-icon.svg" -> "/app/resource/image/icon/availability-away-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/availability-busy-icon.svg" -> "/app/resource/image/icon/availability-busy-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/block-icon.svg" -> "/app/resource/image/icon/block-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/camera-icon.svg" -> "/app/resource/image/icon/camera-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/camera-off-icon.svg" -> "/app/resource/image/icon/camera-off-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/check-icon.svg" -> "/app/resource/image/icon/check-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/chevron-icon.svg" -> "/app/resource/image/icon/chevron-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/close-icon.svg" -> "/app/resource/image/icon/close-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/conversations-folder-icon.svg" -> "/app/resource/image/icon/conversations-folder-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/conversations-recent-icon.svg" -> "/app/resource/image/icon/conversations-recent-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/copy-icon.svg" -> "/app/resource/image/icon/copy-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/delete-icon.svg" -> "/app/resource/image/icon/delete-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/desktop-icon.svg" -> "/app/resource/image/icon/desktop-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/devices-icon.svg" -> "/app/resource/image/icon/devices-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/disclose-icon.svg" -> "/app/resource/image/icon/disclose-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/edit-icon.svg" -> "/app/resource/image/icon/edit-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/ellipsis-icon.svg" -> "/app/resource/image/icon/ellipsis-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/eraser-icon.svg" -> "/app/resource/image/icon/eraser-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/external-icon.svg" -> "/app/resource/image/icon/external-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/federation-icon.svg" -> "/app/resource/image/icon/federation-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/file-icon.svg" -> "/app/resource/image/icon/file-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/fullscreen-icon.svg" -> "/app/resource/image/icon/fullscreen-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/gif-icon.svg" -> "/app/resource/image/icon/gif-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/group-admin-icon.svg" -> "/app/resource/image/icon/group-admin-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/group-icon.svg" -> "/app/resource/image/icon/group-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/guest-icon.svg" -> "/app/resource/image/icon/guest-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/hangup-icon.svg" -> "/app/resource/image/icon/hangup-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/image-icon.svg" -> "/app/resource/image/icon/image-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/info-icon.svg" -> "/app/resource/image/icon/info-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/leave-icon.svg" -> "/app/resource/image/icon/leave-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/like-icon.svg" -> "/app/resource/image/icon/like-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/link-icon.svg" -> "/app/resource/image/icon/link-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/loading-icon.svg" -> "/app/resource/image/icon/loading-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/location-icon.svg" -> "/app/resource/image/icon/location-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/logo-full-icon.svg" -> "/app/resource/image/icon/logo-full-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/logo-icon.svg" -> "/app/resource/image/icon/logo-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/markdown-icon.svg" -> "/app/resource/image/icon/markdown-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/mention-icon.svg" -> "/app/resource/image/icon/mention-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/message-icon.svg" -> "/app/resource/image/icon/message-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/message-unread-icon.svg" -> "/app/resource/image/icon/message-unread-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/mic-off-icon.svg" -> "/app/resource/image/icon/mic-off-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/mic-on-icon.svg" -> "/app/resource/image/icon/mic-on-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/minus-icon.svg" -> "/app/resource/image/icon/minus-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/mute-icon.svg" -> "/app/resource/image/icon/mute-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/not-verified-icon.svg" -> "/app/resource/image/icon/not-verified-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/notification-icon.svg" -> "/app/resource/image/icon/notification-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/options-icon.svg" -> "/app/resource/image/icon/options-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/partner-icon.svg" -> "/app/resource/image/icon/partner-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/pending-icon.svg" -> "/app/resource/image/icon/pending-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/people-icon.svg" -> "/app/resource/image/icon/people-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/pickup-icon.svg" -> "/app/resource/image/icon/pickup-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/ping-icon.svg" -> "/app/resource/image/icon/ping-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/plus-icon.svg" -> "/app/resource/image/icon/plus-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/profile-icon.svg" -> "/app/resource/image/icon/profile-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/read-icon.svg" -> "/app/resource/image/icon/read-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/reply-icon.svg" -> "/app/resource/image/icon/reply-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/screenshare-icon.svg" -> "/app/resource/image/icon/screenshare-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/screenshare-off-icon.svg" -> "/app/resource/image/icon/screenshare-off-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/send-icon.svg" -> "/app/resource/image/icon/send-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/service-icon.svg" -> "/app/resource/image/icon/service-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/settings-icon.svg" -> "/app/resource/image/icon/settings-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/speaker-icon.svg" -> "/app/resource/image/icon/speaker-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/timer-icon.svg" -> "/app/resource/image/icon/timer-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/undo-icon.svg" -> "/app/resource/image/icon/undo-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/verified-icon.svg" -> "/app/resource/image/icon/verified-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/watermark-icon.svg" -> "/app/resource/image/icon/watermark-icon.svg"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/logo/notification.png" -> "/app/resource/image/logo/notification.png"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/logo/wire-logo-120.png" -> "/app/resource/image/logo/wire-logo-120.png"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/meta/wire-icon-128.png" -> "/app/resource/image/meta/wire-icon-128.png"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/meta/wire-icon-256.png" -> "/app/resource/image/meta/wire-icon-256.png"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/meta/wire-icon-64.png" -> "/app/resource/image/meta/wire-icon-64.png"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/.env.defaults" -> "/app/.env.defaults"
+#8 109.6 ℹ️  [@wireapp/copy-config/CopyConfig] Cleaning up "/app/config" ...
+#8 109.6 ℹ️  [@wireapp/copy-config/cli] Copied 104 files.
+#8 109.6 Done in 1.86s.
+#8 109.8 yarn install v1.22.18
+#8 110.0 [1/4] Resolving packages...
+#8 110.4 [2/4] Fetching packages...
+#8 121.9 [3/4] Linking dependencies...
+#8 127.4 [4/4] Building fresh packages...
+#8 127.5 Done in 17.64s.
+#8 127.7 yarn install v1.22.18
+#8 127.8 [1/4] Resolving packages...
+#8 128.1 [2/4] Fetching packages...
+#8 136.1 [3/4] Linking dependencies...
+#8 140.5 [4/4] Building fresh packages...
+#8 153.1 $ copy-config
+#8 153.4 ℹ️  [@wireapp/copy-config/cli] Found configuration file "/app/electron/.copyconfigrc.js".
+#8 153.4 ℹ️  [@wireapp/copy-config/CopyConfig] Cleaning up "/app/electron/config" ...
+#8 153.4 ℹ️  [@wireapp/copy-config/CopyConfig] Cloning "https://github.com/wireapp/wire-web-config-default" (branch "v0.29.6") ...
+#8 155.1 ℹ️  [@wireapp/copy-config/CopyConfig] Resolving "/app/electron/config/wire-desktop/content/image/**"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/logo/256x256.png" -> "/app/electron/img/logo/256x256.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/logo/32x32.png" -> "/app/electron/img/logo/32x32.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/logo/512x512.png" -> "/app/electron/img/logo/512x512.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/logo/logo.ico" -> "/app/electron/img/logo/logo.ico"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray-with-badge/tray.badge.256.png" -> "/app/electron/img/tray-icon/tray-with-badge/tray.badge.256.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray-with-badge/tray.badge.gnome.png" -> "/app/electron/img/tray-icon/tray-with-badge/tray.badge.gnome.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray-with-badge/tray.badge.png" -> "/app/electron/img/tray-icon/tray-with-badge/tray.badge.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray-with-badge/tray.badge@1.25x.png" -> "/app/electron/img/tray-icon/tray-with-badge/tray.badge@1.25x.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray-with-badge/tray.badge@1.33x.png" -> "/app/electron/img/tray-icon/tray-with-badge/tray.badge@1.33x.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray-with-badge/tray.badge@1.4x.png" -> "/app/electron/img/tray-icon/tray-with-badge/tray.badge@1.4x.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray-with-badge/tray.badge@1.5x.png" -> "/app/electron/img/tray-icon/tray-with-badge/tray.badge@1.5x.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray-with-badge/tray.badge@1.8x.png" -> "/app/electron/img/tray-icon/tray-with-badge/tray.badge@1.8x.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray-with-badge/tray.badge@2.5x.png" -> "/app/electron/img/tray-icon/tray-with-badge/tray.badge@2.5x.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray-with-badge/tray.badge@2x.png" -> "/app/electron/img/tray-icon/tray-with-badge/tray.badge@2x.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray-with-badge/tray.badge@3x.png" -> "/app/electron/img/tray-icon/tray-with-badge/tray.badge@3x.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray-with-badge/tray.badge@4x.png" -> "/app/electron/img/tray-icon/tray-with-badge/tray.badge@4x.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray-with-badge/tray.badge@5x.png" -> "/app/electron/img/tray-icon/tray-with-badge/tray.badge@5x.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray/tray.256.png" -> "/app/electron/img/tray-icon/tray/tray.256.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray/tray.gnome.png" -> "/app/electron/img/tray-icon/tray/tray.gnome.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray/tray.png" -> "/app/electron/img/tray-icon/tray/tray.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray/tray@1.25x.png" -> "/app/electron/img/tray-icon/tray/tray@1.25x.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray/tray@1.33x.png" -> "/app/electron/img/tray-icon/tray/tray@1.33x.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray/tray@1.4x.png" -> "/app/electron/img/tray-icon/tray/tray@1.4x.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray/tray@1.5x.png" -> "/app/electron/img/tray-icon/tray/tray@1.5x.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray/tray@1.8x.png" -> "/app/electron/img/tray-icon/tray/tray@1.8x.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray/tray@2.5x.png" -> "/app/electron/img/tray-icon/tray/tray@2.5x.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray/tray@2x.png" -> "/app/electron/img/tray-icon/tray/tray@2x.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray/tray@3x.png" -> "/app/electron/img/tray-icon/tray/tray@3x.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray/tray@4x.png" -> "/app/electron/img/tray-icon/tray/tray@4x.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray/tray@5x.png" -> "/app/electron/img/tray-icon/tray/tray@5x.png"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Resolving "/app/electron/config/wire-desktop/content/macos/**"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/macos/entitlements/parent-mas.plist" -> "/app/electron/resources/macos/entitlements/parent-mas.plist"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/macos/entitlements/parent-notarization.plist" -> "/app/electron/resources/macos/entitlements/parent-notarization.plist"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/macos/Info.plist.json" -> "/app/electron/resources/macos/Info.plist.json"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/macos/logo.icns" -> "/app/electron/resources/macos/logo.icns"
+#8 155.2 ℹ️  [@wireapp/copy-config/CopyConfig] Cleaning up "/app/electron/config" ...
+#8 155.3 ℹ️  [@wireapp/copy-config/cli] Copied 34 files.
+#8 155.3 Done in 27.64s.
+#8 155.3 Done in 154.66s.
+#8 DONE 157.5s
+
+#9 [repo 4/5] RUN mv .env.localhost .env
+#9 sha256:a70bb465b70474141ef03f200e661be237c8d79ce0e8918e7cc99d1ad40160aa
+#9 DONE 0.7s
+#10 [repo 5/5] RUN yarn build:prod
+#10 sha256:5234b96156304ef2d727fcc9c0b856c0f9d35c432395de19f9c8943c5357c8cd
+#10 0.739 yarn run v1.22.18
+#10 0.834 $ yarn build:server && grunt build_prod
+#10 1.149 $ cd server && yarn build
+#10 1.456 $ yarn clean && tsc -P tsconfig.json && yarn copy-assets && yarn create-commit-sha
+#10 1.761 $ rimraf ./dist/
+#10 17.61 $ node ./bin/copy_server_assets.js
+#10 18.01 $ node ./bin/create_commit_sha_file.js
+#10 19.38 
+#10 19.38   Replace Autoprefixer browsers option to Browserslist config.
+#10 19.38   Use browserslist key in package.json or .browserslistrc file.
+#10 19.38 
+#10 19.38   Using browsers option can cause errors. Browserslist config 
+#10 19.38   can be used for Babel, Autoprefixer, postcss-normalize and other tools.
+#10 19.38 
+#10 19.38   If you really need to use option, rename it to overrideBrowserslist.
+#10 19.38 
+#10 19.38   Learn more at:
+#10 19.38   https://github.com/browserslist/browserslist#readme
+#10 19.38   https://twitter.com/browserslist
+#10 19.38 
+#10 19.38 
+#10 19.40 Running "clean:dist" (clean) task
+#10 19.40 >> 0 paths cleaned.
+#10 19.41 
+#10 19.41 Running "clean:dist_src" (clean) task
+#10 19.41 >> 0 paths cleaned.
+#10 19.41 
+#10 19.41 Running "clean:dist_s3" (clean) task
+#10 19.42 >> 0 paths cleaned.
+#10 19.42 
+#10 19.42 Running "set_version" task
+#10 19.42 >> Version target set to undefined
+#10 19.42 >> Version set to 2022.04.02.08.52
+#10 19.42 
+#10 19.42 Running "gitinfo" task
+#10 19.63 
+#10 19.63 Running "shell:less" (shell) task
+#10 19.94 $ node ./bin/less.js
+#10 21.26 
+#10 21.26 Running "postcss:dist" (postcss) task
+#10 23.57 >> 2 processed stylesheets created.
+#10 23.57 
+#10 23.57 Running "copy:dist_serviceworker" (copy) task
+#10 23.61 Copied 7 files
+#10 23.61 
+#10 23.61 Running "copy:dist_resource" (copy) task
+#10 23.67 Created 3 directories, copied 103 files
+#10 23.67 
+#10 23.67 Running "copy:dist_certificate" (copy) task
+#10 23.68 Copied 4 files
+#10 23.68 
+#10 23.68 Running "includereplace:prod_index" (includereplace) task
+#10 23.70 Processed 1 file
+#10 23.70 
+#10 23.70 Running "includereplace:prod_auth" (includereplace) task
+#10 23.71 Processed 1 file
+#10 23.71 
+#10 23.71 Running "shell:dist_bundle" (shell) task
+#10 24.12 [1/5] Validating package.json...
+#10 24.13 [2/5] Resolving packages...
+#10 25.13 success Already up-to-date.
+#10 25.14 $ yarn configure && cd server && yarn && cd ../electron && yarn
+#10 25.45 $ copy-config
+#10 25.71 Selecting configuration "https://github.com/wireapp/wire-web-config-wire" (reason: forced config URL)
+#10 25.71 Repo URL https://github.com/wireapp/wire-web-config-wire
+#10 25.71 ℹ️  [@wireapp/copy-config/cli] Found configuration file "/app/.copyconfigrc.js".
+#10 25.73 ℹ️  [@wireapp/copy-config/CopyConfig] Cleaning up "/app/config" ...
+#10 25.73 ℹ️  [@wireapp/copy-config/CopyConfig] Cloning "https://github.com/wireapp/wire-web-config-wire" (branch "master") ...
+#10 26.77 ℹ️  [@wireapp/copy-config/CopyConfig] Resolving "/app/config/wire-webapp/content/**"
+#10 27.02 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/call_drop.mp3" -> "/app/resource/audio/call_drop.mp3"
+#10 27.02 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/camera.mp3" -> "/app/resource/audio/camera.mp3"
+#10 27.02 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/first_message.mp3" -> "/app/resource/audio/first_message.mp3"
+#10 27.02 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/hotping_from_me.mp3" -> "/app/resource/audio/hotping_from_me.mp3"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/hotping_from_them.mp3" -> "/app/resource/audio/hotping_from_them.mp3"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/new_message.mp3" -> "/app/resource/audio/new_message.mp3"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/nw_interruption.mp3" -> "/app/resource/audio/nw_interruption.mp3"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/ping_from_me.mp3" -> "/app/resource/audio/ping_from_me.mp3"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/ping_from_them.mp3" -> "/app/resource/audio/ping_from_them.mp3"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/pull_voice.mp3" -> "/app/resource/audio/pull_voice.mp3"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/push_voice.mp3" -> "/app/resource/audio/push_voice.mp3"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/ready_to_talk.mp3" -> "/app/resource/audio/ready_to_talk.mp3"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/ringing_from_me.mp3" -> "/app/resource/audio/ringing_from_me.mp3"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/ringing_from_them_incall.mp3" -> "/app/resource/audio/ringing_from_them_incall.mp3"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/ringing_from_them.mp3" -> "/app/resource/audio/ringing_from_them.mp3"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/talk_later.mp3" -> "/app/resource/audio/talk_later.mp3"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/audio/talk.mp3" -> "/app/resource/audio/talk.mp3"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/font/redacted-script-regular.woff2" -> "/app/resource/font/redacted-script-regular.woff2"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/font/Wire.ttf" -> "/app/resource/font/Wire.ttf"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/favicon-badge.ico" -> "/app/resource/image/favicon-badge.ico"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/favicon.ico" -> "/app/resource/image/favicon.ico"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/about-icon.svg" -> "/app/resource/image/icon/about-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/add-participants-icon.svg" -> "/app/resource/image/icon/add-participants-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/animated-check-icon.svg" -> "/app/resource/image/icon/animated-check-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/archive-icon.svg" -> "/app/resource/image/icon/archive-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/arrow-down-long-icon.svg" -> "/app/resource/image/icon/arrow-down-long-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/arrow-left-icon.svg" -> "/app/resource/image/icon/arrow-left-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/arrow-next-icon.svg" -> "/app/resource/image/icon/arrow-next-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/attachment-icon.svg" -> "/app/resource/image/icon/attachment-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/audio-icon.svg" -> "/app/resource/image/icon/audio-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/av-icon.svg" -> "/app/resource/image/icon/av-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/availability-available-icon.svg" -> "/app/resource/image/icon/availability-available-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/availability-away-icon.svg" -> "/app/resource/image/icon/availability-away-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/availability-busy-icon.svg" -> "/app/resource/image/icon/availability-busy-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/block-icon.svg" -> "/app/resource/image/icon/block-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/camera-icon.svg" -> "/app/resource/image/icon/camera-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/camera-off-icon.svg" -> "/app/resource/image/icon/camera-off-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/check-icon.svg" -> "/app/resource/image/icon/check-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/chevron-icon.svg" -> "/app/resource/image/icon/chevron-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/close-icon.svg" -> "/app/resource/image/icon/close-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/conversations-folder-icon.svg" -> "/app/resource/image/icon/conversations-folder-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/conversations-recent-icon.svg" -> "/app/resource/image/icon/conversations-recent-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/copy-icon.svg" -> "/app/resource/image/icon/copy-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/delete-icon.svg" -> "/app/resource/image/icon/delete-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/desktop-icon.svg" -> "/app/resource/image/icon/desktop-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/devices-icon.svg" -> "/app/resource/image/icon/devices-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/disclose-icon.svg" -> "/app/resource/image/icon/disclose-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/edit-icon.svg" -> "/app/resource/image/icon/edit-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/ellipsis-icon.svg" -> "/app/resource/image/icon/ellipsis-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/eraser-icon.svg" -> "/app/resource/image/icon/eraser-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/external-icon.svg" -> "/app/resource/image/icon/external-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/federation-icon.svg" -> "/app/resource/image/icon/federation-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/file-icon.svg" -> "/app/resource/image/icon/file-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/fullscreen-icon.svg" -> "/app/resource/image/icon/fullscreen-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/gif-icon.svg" -> "/app/resource/image/icon/gif-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/group-admin-icon.svg" -> "/app/resource/image/icon/group-admin-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/group-icon.svg" -> "/app/resource/image/icon/group-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/guest-icon.svg" -> "/app/resource/image/icon/guest-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/hangup-icon.svg" -> "/app/resource/image/icon/hangup-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/image-icon.svg" -> "/app/resource/image/icon/image-icon.svg"
+#10 27.03 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/info-icon.svg" -> "/app/resource/image/icon/info-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/leave-icon.svg" -> "/app/resource/image/icon/leave-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/like-icon.svg" -> "/app/resource/image/icon/like-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/link-icon.svg" -> "/app/resource/image/icon/link-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/loading-icon.svg" -> "/app/resource/image/icon/loading-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/location-icon.svg" -> "/app/resource/image/icon/location-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/logo-full-icon.svg" -> "/app/resource/image/icon/logo-full-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/logo-icon.svg" -> "/app/resource/image/icon/logo-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/markdown-icon.svg" -> "/app/resource/image/icon/markdown-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/mention-icon.svg" -> "/app/resource/image/icon/mention-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/message-icon.svg" -> "/app/resource/image/icon/message-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/message-unread-icon.svg" -> "/app/resource/image/icon/message-unread-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/mic-off-icon.svg" -> "/app/resource/image/icon/mic-off-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/mic-on-icon.svg" -> "/app/resource/image/icon/mic-on-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/minus-icon.svg" -> "/app/resource/image/icon/minus-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/mute-icon.svg" -> "/app/resource/image/icon/mute-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/not-verified-icon.svg" -> "/app/resource/image/icon/not-verified-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/notification-icon.svg" -> "/app/resource/image/icon/notification-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/options-icon.svg" -> "/app/resource/image/icon/options-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/partner-icon.svg" -> "/app/resource/image/icon/partner-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/pending-icon.svg" -> "/app/resource/image/icon/pending-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/people-icon.svg" -> "/app/resource/image/icon/people-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/pickup-icon.svg" -> "/app/resource/image/icon/pickup-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/ping-icon.svg" -> "/app/resource/image/icon/ping-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/plus-icon.svg" -> "/app/resource/image/icon/plus-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/profile-icon.svg" -> "/app/resource/image/icon/profile-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/read-icon.svg" -> "/app/resource/image/icon/read-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/reply-icon.svg" -> "/app/resource/image/icon/reply-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/screenshare-icon.svg" -> "/app/resource/image/icon/screenshare-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/screenshare-off-icon.svg" -> "/app/resource/image/icon/screenshare-off-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/send-icon.svg" -> "/app/resource/image/icon/send-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/service-icon.svg" -> "/app/resource/image/icon/service-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/settings-icon.svg" -> "/app/resource/image/icon/settings-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/speaker-icon.svg" -> "/app/resource/image/icon/speaker-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/timer-icon.svg" -> "/app/resource/image/icon/timer-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/undo-icon.svg" -> "/app/resource/image/icon/undo-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/verified-icon.svg" -> "/app/resource/image/icon/verified-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/icon/watermark-icon.svg" -> "/app/resource/image/icon/watermark-icon.svg"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/logo/notification.png" -> "/app/resource/image/logo/notification.png"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/logo/wire-logo-120.png" -> "/app/resource/image/logo/wire-logo-120.png"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/meta/wire-icon-128.png" -> "/app/resource/image/meta/wire-icon-128.png"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/meta/wire-icon-256.png" -> "/app/resource/image/meta/wire-icon-256.png"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/content/image/meta/wire-icon-64.png" -> "/app/resource/image/meta/wire-icon-64.png"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/config/wire-webapp/.env.defaults" -> "/app/.env.defaults"
+#10 27.04 ℹ️  [@wireapp/copy-config/CopyConfig] Cleaning up "/app/config" ...
+#10 27.09 ℹ️  [@wireapp/copy-config/cli] Copied 104 files.
+#10 27.45 [1/4] Resolving packages...
+#10 27.90 success Already up-to-date.
+#10 28.25 [1/4] Resolving packages...
+#10 28.53 success Already up-to-date.
+#10 28.54 $ copy-config
+#10 28.78 ℹ️  [@wireapp/copy-config/cli] Found configuration file "/app/electron/.copyconfigrc.js".
+#10 28.80 ℹ️  [@wireapp/copy-config/CopyConfig] Cleaning up "/app/electron/config" ...
+#10 28.80 ℹ️  [@wireapp/copy-config/CopyConfig] Cloning "https://github.com/wireapp/wire-web-config-default" (branch "v0.29.6") ...
+#10 29.80 ℹ️  [@wireapp/copy-config/CopyConfig] Resolving "/app/electron/config/wire-desktop/content/image/**"
+#10 29.91 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/logo/256x256.png" -> "/app/electron/img/logo/256x256.png"
+#10 29.91 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/logo/32x32.png" -> "/app/electron/img/logo/32x32.png"
+#10 29.91 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/logo/512x512.png" -> "/app/electron/img/logo/512x512.png"
+#10 29.91 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/logo/logo.ico" -> "/app/electron/img/logo/logo.ico"
+#10 29.91 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray-with-badge/tray.badge.256.png" -> "/app/electron/img/tray-icon/tray-with-badge/tray.badge.256.png"
+#10 29.91 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray-with-badge/tray.badge.gnome.png" -> "/app/electron/img/tray-icon/tray-with-badge/tray.badge.gnome.png"
+#10 29.91 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray-with-badge/tray.badge.png" -> "/app/electron/img/tray-icon/tray-with-badge/tray.badge.png"
+#10 29.92 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray-with-badge/tray.badge@1.25x.png" -> "/app/electron/img/tray-icon/tray-with-badge/tray.badge@1.25x.png"
+#10 29.92 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray-with-badge/tray.badge@1.33x.png" -> "/app/electron/img/tray-icon/tray-with-badge/tray.badge@1.33x.png"
+#10 29.92 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray-with-badge/tray.badge@1.4x.png" -> "/app/electron/img/tray-icon/tray-with-badge/tray.badge@1.4x.png"
+#10 29.92 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray-with-badge/tray.badge@1.5x.png" -> "/app/electron/img/tray-icon/tray-with-badge/tray.badge@1.5x.png"
+#10 29.92 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray-with-badge/tray.badge@1.8x.png" -> "/app/electron/img/tray-icon/tray-with-badge/tray.badge@1.8x.png"
+#10 29.92 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray-with-badge/tray.badge@2.5x.png" -> "/app/electron/img/tray-icon/tray-with-badge/tray.badge@2.5x.png"
+#10 29.92 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray-with-badge/tray.badge@2x.png" -> "/app/electron/img/tray-icon/tray-with-badge/tray.badge@2x.png"
+#10 29.92 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray-with-badge/tray.badge@3x.png" -> "/app/electron/img/tray-icon/tray-with-badge/tray.badge@3x.png"
+#10 29.92 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray-with-badge/tray.badge@4x.png" -> "/app/electron/img/tray-icon/tray-with-badge/tray.badge@4x.png"
+#10 29.92 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray-with-badge/tray.badge@5x.png" -> "/app/electron/img/tray-icon/tray-with-badge/tray.badge@5x.png"
+#10 29.92 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray/tray.256.png" -> "/app/electron/img/tray-icon/tray/tray.256.png"
+#10 29.92 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray/tray.gnome.png" -> "/app/electron/img/tray-icon/tray/tray.gnome.png"
+#10 29.92 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray/tray.png" -> "/app/electron/img/tray-icon/tray/tray.png"
+#10 29.92 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray/tray@1.25x.png" -> "/app/electron/img/tray-icon/tray/tray@1.25x.png"
+#10 29.92 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray/tray@1.33x.png" -> "/app/electron/img/tray-icon/tray/tray@1.33x.png"
+#10 29.92 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray/tray@1.4x.png" -> "/app/electron/img/tray-icon/tray/tray@1.4x.png"
+#10 29.92 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray/tray@1.5x.png" -> "/app/electron/img/tray-icon/tray/tray@1.5x.png"
+#10 29.92 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray/tray@1.8x.png" -> "/app/electron/img/tray-icon/tray/tray@1.8x.png"
+#10 29.92 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray/tray@2.5x.png" -> "/app/electron/img/tray-icon/tray/tray@2.5x.png"
+#10 29.92 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray/tray@2x.png" -> "/app/electron/img/tray-icon/tray/tray@2x.png"
+#10 29.92 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray/tray@3x.png" -> "/app/electron/img/tray-icon/tray/tray@3x.png"
+#10 29.92 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray/tray@4x.png" -> "/app/electron/img/tray-icon/tray/tray@4x.png"
+#10 29.92 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/image/tray-icon/tray/tray@5x.png" -> "/app/electron/img/tray-icon/tray/tray@5x.png"
+#10 29.92 ℹ️  [@wireapp/copy-config/CopyConfig] Resolving "/app/electron/config/wire-desktop/content/macos/**"
+#10 29.93 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/macos/entitlements/parent-mas.plist" -> "/app/electron/resources/macos/entitlements/parent-mas.plist"
+#10 29.93 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/macos/entitlements/parent-notarization.plist" -> "/app/electron/resources/macos/entitlements/parent-notarization.plist"
+#10 29.93 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/macos/Info.plist.json" -> "/app/electron/resources/macos/Info.plist.json"
+#10 29.93 ℹ️  [@wireapp/copy-config/CopyConfig] Copying "/app/electron/config/wire-desktop/content/macos/logo.icns" -> "/app/electron/resources/macos/logo.icns"
+#10 29.93 ℹ️  [@wireapp/copy-config/CopyConfig] Cleaning up "/app/electron/config" ...
+#10 29.97 ℹ️  [@wireapp/copy-config/cli] Copied 34 files.
+#10 30.33 $ webpack --config webpack.config.js
+#10 128.0 assets by status 12.9 MiB [big]
+#10 128.0   asset min/app.js 6.77 MiB [emitted] [minimized] [big] (name: app) 2 related assets
+#10 128.0   asset min/auth.js 3.88 MiB [emitted] [minimized] [big] (name: auth) 2 related assets
+#10 128.0   asset min/vendor.js 2.27 MiB [emitted] [minimized] [big] (name: vendor) (id hint: vendor) 2 related assets
+#10 128.0 asset min/dexie.js 188 KiB [emitted] (name: dexie) (id hint: dexie) 1 related asset
+#10 128.0 asset sw.js 38.8 KiB [emitted] [minimized] 1 related asset
+#10 128.0 asset min/414.js 11.3 KiB [emitted] [minimized] 1 related asset
+#10 128.0 asset min/runtime.js 2.76 KiB [emitted] [minimized] (name: runtime) 1 related asset
+#10 128.0 Entrypoint app [big] 9.23 MiB (17 MiB) = min/runtime.js 2.76 KiB min/dexie.js 188 KiB min/vendor.js 2.27 MiB min/app.js 6.77 MiB 4 auxiliary assets
+#10 128.0 Entrypoint auth [big] 6.33 MiB (8.78 MiB) = min/runtime.js 2.76 KiB min/dexie.js 188 KiB min/vendor.js 2.27 MiB min/auth.js 3.88 MiB 4 auxiliary assets
+#10 128.0 orphan modules 5.33 MiB [orphan] 1563 modules
+#10 128.0 runtime modules 7.2 KiB 12 modules
+#10 128.0 cacheable modules 17.2 MiB
+#10 128.0   modules by path ./node_modules/ 9.65 MiB 1347 modules
+#10 128.0   modules by path ./src/ 7.55 MiB
+#10 128.0     javascript modules 4.26 MiB 117 modules
+#10 128.0     modules by path ./src/i18n/ 3.29 MiB 45 modules
+#10 128.0   modules by path ./resource/image/icon/ 41.1 KiB
+#10 128.0     ./resource/image/icon/about-icon.svg 505 bytes [built] [code generated]
+#10 128.0     + 76 modules
+#10 128.0   + 8 modules
+#10 128.0 ./src/i18n/ sync ^\.\/.*\.json$ 925 bytes [built] [code generated]
+#10 128.0 external "{}" 42 bytes [built] [code generated]
+#10 128.0 ./resource/image/icon/ sync .+\.svg$ 1.95 KiB [built] [code generated]
+#10 128.0 ./resource/image/icon/ sync ^\.\/.*$ 3.45 KiB [built] [code generated]
+#10 128.0 
+#10 128.0 LOG from InjectManifest
+#10 128.0 <i> The service worker at sw.js will precache
+#10 128.0 <i>         9 URLs, totaling 13.8 MB.
+#10 128.0 
+#10 128.0 WARNING in asset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
+#10 128.0 This can impact web performance.
+#10 128.0 Assets: 
+#10 128.0   min/app.js (6.77 MiB)
+#10 128.0   min/auth.js (3.88 MiB)
+#10 128.0   min/vendor.js (2.27 MiB)
+#10 128.0 
+#10 128.0 WARNING in entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit (244 KiB). This can impact web performance.
+#10 128.0 Entrypoints:
+#10 128.0   app (9.23 MiB)
+#10 128.0       min/runtime.js
+#10 128.0       min/dexie.js
+#10 128.0       min/vendor.js
+#10 128.0       min/app.js
+#10 128.0   auth (6.33 MiB)
+#10 128.0       min/runtime.js
+#10 128.0       min/dexie.js
+#10 128.0       min/vendor.js
+#10 128.0       min/auth.js
+#10 128.0 
+#10 128.0 webpack 5.70.0 compiled with 2 warnings in 86695 ms
+#10 128.1 
+#10 128.1 Running "compress:server" (compress) task
+#10 128.2 >> Compressed 198 files.
+#10 129.6 
+#10 129.6 Done.
+#10 129.6 Done in 128.85s.
+#10 DONE 136.4s
+
+#11 exporting to image
+#11 sha256:e8c613e07b0b7ff33893b694f7759a10d42e180f2b4dc349fb57dc6b71dcab00
+#11 exporting layers
+#11 exporting layers 28.2s done
+#11 writing image sha256:373cf70dc535e98b0968303755ad14d33720c3e71bdb3614b2036323b33a4c09 done
+#11 naming to docker.io/library/build-agent done
+#11 DONE 28.3s
+Building test-agent
+#1 [internal] load build definition from Dockerfile.test
+#1 sha256:fced423585dd85ca3c8203092547d3192ac64aa32498287dcc1d28274ef9a755
+#1 transferring dockerfile: 100B done
+#1 DONE 0.0s
+
+#2 [internal] load .dockerignore
+#2 sha256:1ceaeecab8957d0a3073a1d6f97e0aaeb36a58b788fc81dc50706eb687d82587
+#2 transferring context: 2B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/build-agent:latest
+#3 sha256:a9cf4b4d86bcd7ff12bf1736ac80b62612eb27e98b666153f20ccfc22ae432c8
+#3 DONE 0.0s
+
+#4 [1/2] FROM docker.io/library/build-agent
+#4 sha256:2019c981ea314957450f77a4890b07eddfab51b71d73ccf6ec0d0a169800eb59
+#4 DONE 0.4s
+
+#5 [2/2] WORKDIR /app
+#5 sha256:044c582f41a4af14cf2bf279a55c7c01b664b5ff6b5d5f4ff5fc3e7e18a7ab23
+#5 DONE 0.3s
+
+#6 exporting to image
+#6 sha256:e8c613e07b0b7ff33893b694f7759a10d42e180f2b4dc349fb57dc6b71dcab00
+#6 exporting layers 0.0s done
+#6 writing image sha256:996553f7b81dbeaeb4a35a96b31c8f3da8f34bbab260215af5d955a6d8a330b2 done
+#6 naming to docker.io/library/lab04_test-agent done
+#6 DONE 0.1s
+[Pipeline] sh
++ docker-compose up -d
+Recreating lab04_build-agent_1 ... 
+Recreating lab04_build-agent_1 ... done
+Recreating lab04_test-agent_1  ... 
+Recreating lab04_test-agent_1  ... done
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

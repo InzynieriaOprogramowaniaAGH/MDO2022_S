@@ -1,0 +1,18 @@
+Po zarejestrowaniu konta zalogowałem się na azure za pomocą polecenia:
+az login
+    (Korzystałem uprzednio z azure CLI, więc instalacja nie była wymagana)
+
+az group create --name devops --location eastus
+    ^ - Stworzenie grupy zasobów "devops"
+
+az container create --resource-group devops --name webapp --image dtomart/devops-lab10-komunikator:1.0 --dns-name-label komunikator --ports 3000
+    ^ - stworzenie kontenera o nazwie webapp w stworzonej wcześniej grupie zasobów na podstawie obrazu z dockerhub
+
+az container show --resource-group devops --name webapp --query "{FQDN:ipAddress.fqdn,ProvisioningState:provisioningState}" --out table
+    ^ - sprawdzenie statusu deploymentu
+
+az container delete --resource-group devops --name webapp
+    ^ - usunięcie kontenera webapp
+
+az group delete --name devops
+    ^ - usunięcie grupy zasobów "devops"

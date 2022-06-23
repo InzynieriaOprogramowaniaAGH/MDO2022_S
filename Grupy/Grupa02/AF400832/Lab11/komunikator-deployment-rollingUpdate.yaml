@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: komunikator-deployment-rollingupdate
+  labels:
+    app: komunikator
+spec:
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 3
+      maxSurge: 2
+  selector:
+    matchLabels:
+      app: komunikator
+  template:
+    metadata:
+      labels:
+        app: komunikator
+    spec:
+      containers:
+      - name: komunikator
+        image: drinaaf/berty:latest
+        ports:
+        - containerPort: 9999

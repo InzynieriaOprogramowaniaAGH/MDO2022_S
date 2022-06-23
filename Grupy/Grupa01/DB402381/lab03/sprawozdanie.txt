@@ -1,8 +1,5 @@
 - git checkout -b Grupa01-DB402381_Lab03
-Utworzenie osobistego brancha
 
-Utworzenie Dockerfile:
-- FROM ubuntu:latest - użycie w obrazie istniejącego już obrazu ubuntu w najnowszej wersji
 - RUN apt-get update - aktualizacja systemu i jego zależności
 - RUN apt install -y git - zainstalowanie gita w systemie
 
