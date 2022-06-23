@@ -1,0 +1,26 @@
+1. minikube start
+Uruchomienie klastra Kubernete
+
+2. minikube kubectl -- get pods -A
+Zaktualizowanie kubectl
+
+3. minikube dashboard
+Uruchomienie Minikube Dashboard
+
+4.Stworzenie pliku komunikator-deploymeny.yaml zgodnie z dokumentacją.
+
+5. kubectl apply -f komunikator-deploymeny.yaml
+Zlecenie klastrowi zrealizowanie deploymentu
+
+6. kubectl rollout status deployment/komunikator-deployment
+Sprawdzenie status wdrażania nowej wersji
+
+7.Dokonanie pojedyńczych zmian w pliku yaml:
+  -zwiększenie dwukrotnie ilosc replik
+  -podanie nowszej wersji obrazu
+   z powodu błędów zmniejszenmie ilość replik wersji wcześniejszej
+  -podanie błędną wersję aplikacji
+  -przywrócenie poprzedniej wersji deploymentu korzystając z polecenia:
+	kubectl rollout undo deployment/komunikator-deployment
+  -sprawdzenie historię deploymentu poleceniem:
+	kubectl rollout history deployment/komunikator-deployment
