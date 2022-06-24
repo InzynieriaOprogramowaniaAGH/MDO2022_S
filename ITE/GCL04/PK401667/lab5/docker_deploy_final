@@ -1,0 +1,3 @@
+FROM openjdk:11
+
+CMD jar tfv ../build/guess.jar
