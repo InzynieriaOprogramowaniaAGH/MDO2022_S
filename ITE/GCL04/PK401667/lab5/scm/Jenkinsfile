@@ -12,7 +12,7 @@ pipeline {
               sh "docker system prune --all -f"
               sh 'docker volume  create --name repo_vol'
               sh 'docker volume  create --name build_vol'
-              sh "docker build -t clone . -f ./ITE/GCL04/DG304299/Lab05/docker_clone"
+              sh "docker build -t clone . -f ./ITE/GCL04/PK401667/Lab05/docker_clone"
               sh "docker run -v repo_vol:/Guess-Word-Game clone"           
             }
         }
