@@ -5,22 +5,17 @@ pipeline {
     agent any
     
     stages {
-        stage('build') {
-            steps {
-		//sh 'docker kill tempContainer || true'
-		sleep 1
-                sh 'docker build . -f ITE/GCL04/PK401667/lab5/BuildDocker -t birssi:latest'
-		sh 'docker run --name tempContainer -dit --rm birssi:latest'
-		sh 'rm -r fe-text || true'
-		sh 'rm -r irssi || true'
-		sh 'docker container exec tempContainer ls'
-		sh 'docker container exec tempContainer ls ..'
-		sh 'docker container exec tempContainer ls build/src/fe-text'
-		sh 'docker cp tempContainer:irssi/build/src/fe-text .'
-		sh 'docker cp tempContainer:irssi .'
-		sh 'docker kill tempContainer'
-		sh 'ls irssi/build/src/fe-text'
+             stage('Clone') 
+        {
+            steps 
+            {
+              sh "docker system prune --all -f"
+              sh 'docker volume  create --name repo_vol'
+              sh 'docker volume  create --name build_vol'
+              sh "docker build -t clone . -f ./ITE/GCL04/DG304299/Lab05/docker_clone"
+              sh "docker run -v repo_vol:/Guess-Word-Game clone"           
             }
-        }	
+        }
+	
 }
 }
