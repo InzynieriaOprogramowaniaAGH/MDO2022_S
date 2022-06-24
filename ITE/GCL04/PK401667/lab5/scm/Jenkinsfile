@@ -20,7 +20,7 @@ pipeline {
         {
             steps 
             {
-               sh 'docker build -t build . -f ./ITE/GCL04/DG304299/Lab05/docker_build'
+               sh 'docker build -t build . -f ./ITE/GCL04/PK401667/lab5/docker_build'
                sh 'docker run --name build_container -v repo_vol:/Guess-Word-Game -v build_vol:/build build'
             }
         }
