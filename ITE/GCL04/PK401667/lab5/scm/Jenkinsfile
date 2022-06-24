@@ -24,5 +24,66 @@ pipeline {
                sh 'docker run --name build_container -v repo_vol:/Guess-Word-Game -v build_vol:/build build'
             }
         }
+    stage('Test') 
+        {
+            steps 
+            {
+               sh 'docker build -t test . -f ./ITE/GCL04/PK401667/lab5/docker_test'
+               sh 'docker run --name test_container -v repo_vol:/Guess-Word-Game test'
+            }
+        }
+
+          stage('Deploy') 
+        {
+            steps 
+            {
+
+               sh 'docker build -t deploy_1 . -f ./ITE/GCL04/PK401667/lab5/docker_deploy'
+              
+                    script
+                    {
+                            try 
+                            {
+                                sh 'docker run --name deploy_container -v build_vol:/build deploy_1'
+                            } 
+                            catch (Exception e) 
+                            {
+                                echo 'Exception occurred: ' + "Graphic enviroment is needed to run this app"
+                            }
+
+                    }
+
+                
+
+                sh 'docker build -t deploy_final . -f ./ITE/GCL04/PK401667/lab5/docker_deploy_final'
+                sh 'docker run --name deploy_container_final -v build_vol:/build deploy_final'
+
+                sh "rm -rf artifact && mkdir artifact"
+                sh 'docker cp deploy_container:./build/guess.jar artifact' 
+
+                sh 'docker ps -a'
+            }
+        }
+
+        stage("Publish") 
+        {
+           
+            steps
+            {
+               script {
+                    if(params.PROMOTE)
+                     {
+                         
+                         sh "mv ./artifact/guess.jar ./artifact/guess_${VERSION}.jar"
+                         archiveArtifacts artifacts: "artifact/guess_${VERSION}.jar"
+
+                         sh "ls -a ./artifact"
+                    }
+                    else {
+                        echo "Success, but not promoting to new version! (check button)"
+                    }
+                }
+            }
+        }
 }
 }
