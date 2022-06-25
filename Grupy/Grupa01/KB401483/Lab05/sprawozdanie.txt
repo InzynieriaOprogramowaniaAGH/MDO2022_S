@@ -1,0 +1,72 @@
+Sprawozdanie 05
+
+
+
+1. Stworzenie brancha osobistego od swojego brancha grupowego: git checkout -b Grupa01-KB401483_Lab05
+
+
+2. Zapoznanie się z oprogramowaniem Jenkins: https://www.jenkins.io/.
+
+
+3. Stworzenie kontenera dockerowego z Jenkinsem.
+
+
+   docker network create jenkins // stworzenie sieci dla kontenera
+
+
+   docker run --name jenkins-docker --rm --detach ^          //uruchomienie obrazu docker:dind
+    --privileged --network jenkins --network-alias docker ^
+    --env DOCKER_TLS_CERTDIR=/certs ^
+    --volume jenkins-docker-certs:/certs/client ^
+    --volume jenkins-data:/var/jenkins_home ^
+    --publish 2376:2376 ^
+    docker:dind
+
+
+   FROM jenkins/jenkins:2.332.1-jdk11       //utworzenie Dockerfile z podaną zawartością
+   USER root
+   RUN apt-get update && apt-get install -y lsb-release
+   RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
+     https://download.docker.com/linux/debian/gpg
+   RUN echo "deb [arch=$(dpkg --print-architecture) \
+     signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \
+     https://download.docker.com/linux/debian \
+      $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
+   RUN apt-get update && apt-get install -y docker-ce-cli
+   RUN curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+   RUN chmod +x /usr/local/bin/docker-compose
+   USER jenkins
+   RUN jenkins-plugin-cli --plugins "blueocean:1.25.3 docker-workflow:1.28"  
+
+
+   docker build -t myjenkins-blueocean:2.332.1-1 .     //budowanie obrazu 
+
+
+   docker run --name jenkins-blueocean --rm --detach ^        // uruchomienie obrazu jenkinsa jako kontenera w Dokerze
+    --network jenkins --env DOCKER_HOST=tcp://docker:2376 ^
+    --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 ^
+    --volume jenkins-data:/var/jenkins_home ^
+    --volume jenkins-docker-certs:/certs/client:ro ^
+    --publish 8080:8080 --publish 50000:50000 myjenkins-blueocean:2.332.1-1
+
+
+4. Wrzucenie swojego obrazu Jenkinsa na DockerHub'a.
+
+
+   docker tag 4208e80619c9 klabalicka/jenkins:latest    //tagowanie obrazu
+
+   docker push klabalicka/jenkins:latest   //wrzucenie obrazu na repo
+
+
+5. Z poziomu Jenkinsa uruchomionego w kontenerze uruchomiono docker-compose stworzony w ramach Lab04. Dodano repozytorium, brancha oraz zbudowano projekt(poniższymi komendami):
+
+        cd Grupy/Grupa01/KB401483/Lab04
+	docker-compose build
+	docker-compose up
+
+
+6. Sprawdzenie czy uruchomienie zakończyło się sukcesem. 
+
+  
+
+

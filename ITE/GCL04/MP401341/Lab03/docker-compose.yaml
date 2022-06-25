@@ -1,0 +1,11 @@
+version: "3.3"
+services:
+  build:
+    build:
+      context: build/
+    image: build_lz4
+  test:
+    build:
+      context: test/
+      args:
+        image: build_lz4

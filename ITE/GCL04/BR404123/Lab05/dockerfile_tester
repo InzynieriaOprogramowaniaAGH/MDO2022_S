@@ -1,0 +1,3 @@
+FROM lab05_builder
+CMD cd input_v
+CMD mvn test

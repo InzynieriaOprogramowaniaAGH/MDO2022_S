@@ -1,0 +1,39 @@
+Temat:
+Integracja narzędzi walidacji i weryfikacja kodu z repozytorium. 
+Łączenie, dzielenie repozytoriów, sub-repozytoria.
+
+1:
+git brach - upewniamy się że jesteśmy na branchu Grupa2
+git checkout -b Grupa02-MK306668_Lab03 - tworzymy nowego brancha i od razu się na niego przełączamy
+
+2:
+W folderze Lab03 tworzymy podfolder hooks i przekopiowujemy do niego hooka napisanego na ostatnich zajęciach
+
+3:
+sudo apt install docker - instalujemy dockera
+
+4:
+Zakładamy konto na dockerhubie
+
+Przez pomyłkę wykonałem po tym punkcie pull requesta z brancha krótkożyjącego, przepraszam ;_;
+
+5:
+systemctl start docker - uruchamiamy dockera
+systemctl enable docker - pozwalamy dockerowi uruchamiać się przy włączeniu systemu
+
+Tworzymy folder image gdzie piszemy Dockerfile:
+
+FROM ubuntu:latest - pobieramy najnowszą wersję kontenera ubuntu
+
+RUN apt-get update - aktualizujemy listę pakietów dostępną na maszynie wirtualnej
+
+RUN apt-get install -y git - instalujemy gita na maszynie wirtualnej
+
+git add Dockerfile - dodajemy dockerfile do gita
+docker build -t "ubuntu" - budujemy obraz
+docker images - sprawdzamy czy obraz zbudował się poprawnie
+
+6:
+docker run -it ubuntu - uruchamia maszynę w trybie interaktywnym
+
+

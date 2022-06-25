@@ -1,0 +1,7 @@
+1. Dodałem wygenerowany klucz ssh do konta na GitHubie oraz zmieniłem sposób logowania z http na połączenie ssh.
+2. Dodałem nowy tag i go spushowałem. Polecenia: 'git tag -a MM400503_Lab02 -m "Maciej Mnich, tworzenie taga"' oraz 'git push --follow-tags'.
+3.1 Utworzyłem strukturę folderów poleceniem 'mkdir' i przeniosłem folder MM400503 poleceniem 'git mv MM400503 Grupy/Grupa02/MM400503'.
+3.2 Przeniosłem się na brancha 'Grupa02' i utworzyłem nowego poleceniem 'git checkout -b "Grupa02-MM400503_Lab02"'.
+4.1 Utworzyłem GitHooka o nazwie 'prepare-commit-msg'. Jego treść znajduje się na screenshotcie nr 5, a działanie - 6.
+5.0 Dodałem swoje zmiany z brancha z poprzednich zajęć do brancha 'Grupa02-MM400503_Lab02' poleceniem 'git merge MM400503'.
+5.1 Następnie poleceniem 'git checkout' przeniosę się na branch grupowy i zaktualizuje go poleceniem 'git pull'. Poleceniem 'git merge Grupa02-MM400503_Lab02' zrobię merga do brancha grupowego i poleceniem 'git branch -d Grupa02-MM400503_Lab02' zamknę branch osobisty. 

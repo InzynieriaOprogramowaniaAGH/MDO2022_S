@@ -1,0 +1,50 @@
+SPRAWOZDANIE JENKINS + DOCKER
+
+1. Utworzenie sieci na której będą działać systemy
+
+	docker network create jenkins
+
+2. Utworzenie dodatkowego obrazu Dockera w celu umożliwienia wykonywania komend Dockera w Jenkins
+
+	docker run --name jenkins-docker --rm --detach \
+  	--privileged --network jenkins --network-alias docker \
+  	--env DOCKER_TLS_CERTDIR=/certs \
+  	--volume jenkins-docker-certs:/certs/client \
+  	--volume jenkins-data:/var/jenkins_home \
+  	--publish 2376:2376 \
+  	docker:dind --storage-driver overlay2
+
+3. Utworzenie Dockerfile w celu instalacji Jenkins
+
+	FROM jenkins/jenkins:2.332.1-jdk11
+	USER root
+	RUN apt-get update && apt-get install -y lsb-release
+	RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
+  	https://download.docker.com/linux/debian/gpg
+	RUN echo "deb [arch=$(dpkg --print-architecture) \
+  	signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \
+  	https://download.docker.com/linux/debian \
+  	$(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
+	RUN apt-get update && apt-get install -y docker-ce-cli
+	RUN curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+	RUN chmod +x /usr/local/bin/docker-compose
+	USER jenkins
+	RUN jenkins-plugin-cli --plugins "blueocean:1.25.3 docker-workflow:1.28"
+
+4. Zbudowanie obrazu Jenkins
+
+	docker build -t myjenkins-blueocean:2.332.2-1 .
+
+5. Odpalenie obrazu Jenkins na portach 8080 i 50000 maszyny hosta
+
+	docker run --name jenkins-blueocean --rm --detach \
+  	--network jenkins --env DOCKER_HOST=tcp://docker:2376 \
+  	--env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 \
+  	--publish 8080:8080 --publish 50000:50000 \
+  	--volume jenkins-data:/var/jenkins_home \
+  	--volume jenkins-docker-certs:/certs/client:ro \
+  	myjenkins-blueocean:2.332.2-1
+
+6. Opublikowanie Jenkinsa na DockerHub
+	
+	docker push myjenkins-blueocean:2.332.2-1

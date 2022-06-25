@@ -1,0 +1,26 @@
+Sprawozdanie 09
+
+1. kontener docker'owy (obraz) ze zbudowanym komunikatorem (z wcześniej wykonywanych zajęć).
+
+2. Pobranie i instalacja Minikube oraz Kubectl
+
+	- uruchomienie klastra: minikube start
+	- pobranie kubectl: minikube kubectl -- get po -A
+
+3. Włączenie i uruchomienie Minikube Dashboard poleceniem: minikube dashboard
+
+4. Minikube Dashboard:
+
+	- przegladac aplikacje w klastrze
+	- monitorowac aplikacje
+	- wdrazac apliakcje kontenerowe 
+	- tworzyc i modyfilkowac  zasoby
+	- tworzyc wirtualne klastry
+
+5. Uruchomienie kontener-komunikator w Kubernetes:
+
+	kubectl run komunikator --image=klabalicka/la09 --port=9999 --labels app=komunikator
+
+6. Przekierowanie portów w celu umożliwienia dostępu z zewnątrz:
+
+	kubectl port-forward pod/komunikator 8080:9999 

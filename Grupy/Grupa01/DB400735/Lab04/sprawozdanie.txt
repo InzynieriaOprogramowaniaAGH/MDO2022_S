@@ -1,0 +1,68 @@
+Dominik Budzowski
+
+Sprawozdanie LAB04
+
+1. Stworzenie wlasnego brancha z brancha grupowego poleceniem:
+	git checkout -b Grupa01-DB400735_Lab04
+	
+1.1 Opublikowalem obraz z poprzednich zajec w serwisie Docker HUB, w tym celu:
+  Zalogowalem sie do Docker HUB poleceniem:
+  	docker login --username=dodomax
+  Utworzylem nowego taga z moim obrazem poleceniem:
+  	docker tag lab03_image:latest dodomax/lab03_image:latest
+  Przeslalem obraz do serwisu poleceniem:
+  	docker tag lab03_image:latest dodomax/lab03_image:latest
+2. kozystalem z komunikatora deltachat znajdujacego sie pod adresem:
+   https://github.com/deltachat/deltachat-desktop.git
+3. Utworzylem nowy obraz dockerowy 'build-agent' poleceniem:
+	docker build . -t 'build-agent'
+   Zawartosc pliku dockerfile:
+   
+   	FROM node:latest
+	RUN apt-get update
+	RUN apt install -y git
+	RUN git clone https://github.com/deltachat/deltachat-desktop.git
+	WORKDIR deltachat-desktop
+	RUN npm install
+	RUN npm run build
+4. Utworzylem nowy obraz dockerowy 'test-agent' poleceniem:
+	docker build . -t 'test-agent'
+   Zawartosc pliku dockerfile:
+
+	FROM build-agent:latest
+	WORKDIR deltachat-desktop
+	CMD ["npm", "test"]
+
+5. Stworzylem odpowiednie srodowisko uruchomieniowe dzieki pliku docker-compose.yml poleceniem:
+	docker-compose build
+   Uruchomilem utworzone srodowisko poleceniem:
+   	docker-compose up
+   Zawartosc pliku docker-compose.yml:
+
+	version: "3.3"
+	services:
+	    buildsection:
+	        image: build-agent:latest
+	        build:
+	            context: .
+	            dockerfile: ./Build-agent/dockerfile
+	    testsection:
+	        image: test-agent:latest
+	        build:
+	            context: .
+	            dockerfile: ./Test-agent/dockerfile
+	        depends_on:
+	            - buildsection
+	            
+6. Uzupelnilem pliki oraz dodalem pliki w katalogu do commita poleceniem:
+	git add .
+   Utworzylem commita poleceniem:
+   	git commit -m "DB400735 Lab04 pkt5"
+   Wykonalem push'a poleceniem:
+	git push --set-upstream origin Grupa01-DB400735_Lab04
+   wykonalem pull requesta
+   
+   na zdjeciu '6' jest wszystko up-to-date poniewaz musialem powtorzyc polecenia
+
+	            
+	            

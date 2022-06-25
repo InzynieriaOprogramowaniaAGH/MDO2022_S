@@ -1,0 +1,29 @@
+docker network create jenkins - tworzymy sieć w dockerze dla jenkinsa
+
+docker run --name jenkins-docker --rm --detach ^
+  --privileged --network jenkins --network-alias docker ^
+  --env DOCKER_TLS_CERTDIR=/certs ^
+  --volume jenkins-docker-certs:/certs/client ^
+  --volume jenkins-data:/var/jenkins_home ^
+  --publish 2376:2376 ^
+  docker:dind
+
+^ użycie polecenia ze strony https://www.jenkins.io/doc/book/installing/docker/
+
+docker build -t myjenkins-blueocean:2.332.1-1 . - budujemy jenkinsa z dockerfile przez nas utworzonego 
+
+docker run --name jenkins-blueocean --rm --detach ^
+  --network jenkins --env DOCKER_HOST=tcp://docker:2376 ^
+  --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 ^
+  --volume jenkins-data:/var/jenkins_home ^
+  --volume jenkins-docker-certs:/certs/client:ro ^
+  --publish 8080:8080 --publish 50000:50000 myjenkins-blueocean:2.332.1-1
+
+postawienie serwisu internetowego dla jenkinsa
+
+docker tag myjenkins-blueocean:2.332.1-1 yivess/jenkins:latest - dodanie tagu do builda jenkinsa
+
+
+docker push yivess/jenkins:latest - push obrazu na serwer
+
+niestety za nic nie udało mi się zbudować docker-compose na jenkinsie :(

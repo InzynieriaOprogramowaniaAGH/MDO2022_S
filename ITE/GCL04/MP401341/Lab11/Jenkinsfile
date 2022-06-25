@@ -1,0 +1,83 @@
+pipeline {
+	agent any
+    parameters {
+        string(name: 'BRANCH', defaultValue: 'dev', description: '')
+        string(name: 'VERSION', defaultValue: '1.0.0', description: '')
+        booleanParam(name: 'RUN_TESTS', defaultValue: true, description: '')
+        booleanParam(name: 'PROMOTE', defaultValue: false, description: '')
+        booleanParam(name: 'CLOUD_DEPLOY', defaultValue: false, description: '')
+        }
+  	stages {
+        stage("Clone"){
+            steps {
+              sh 'docker container prune -f'
+              sh 'docker volume prune -f'
+              sh 'docker volume  create --name repo_vol'
+              sh 'docker volume  create --name build_vol'
+              sh "docker build -t lz4clone . -f ITE/GCL04/MP401341/Lab05/DockerfileClone"
+              sh "docker run -e BRANCH=${BRANCH} -v repo_vol:/lz4 lz4clone"
+                }
+              }
+        stage("Build") {
+            steps {
+                sh 'docker build -t build . -f ITE/GCL04/MP401341/Lab05/DockerfileBuild'
+                sh 'docker run --name build_container -v repo_vol:/lz4 -v build_vol:/build -v ${PWD}:/public build'
+            }
+        }
+        stage("Test") {
+           when {
+                  environment name: 'RUN_TESTS', value: "true"
+            }
+            steps {
+                sh 'docker build -t test . -f ITE/GCL04/MP401341/Lab05/DockerfileTest --build-arg image=build'
+                sh 'docker run --name test_container -v repo_vol:/lz4 test'
+            }
+        }
+        stage("Deploy") {
+            steps {
+                sh 'docker build -t deployment . -f ITE/GCL04/MP401341/Lab05/DockerfileDeploy'
+                sh 'docker run  -v build_vol:/build  deployment'
+            }
+        }
+        stage("Cloud Deploy") {
+           when {
+                  environment name: 'CLOUD_DEPLOY', value: "true"
+            }
+            steps {
+                sh 'docker build -t cloud_deployment ITE/GCL04/MP401341/Lab11 -f ITE/GCL04/MP401341/Lab11/DockerfileCloudDeploy'
+                sh "docker save -o lz4_${VERSION}.tar cloud_deployment"
+                archiveArtifacts "lz4_${VERSION}.tar"
+            }
+        }
+        stage("Publish") {
+           when {
+                  environment name: 'PROMOTE', value: "true"
+            }
+            steps {
+                sh "mv lz4.tar.gz lz4_${VERSION}.tar.gz"
+                archiveArtifacts "lz4_${VERSION}.tar.gz"
+            }
+        }
+  	}
+     post {
+      always {
+        catchError {
+          sh 'docker container logs build_container > build_logs.txt'
+            } 
+        catchError {
+          sh 'docker stop $(docker ps -q) || true'
+            } 
+        catchError {
+          script{
+            if (env.RUN_TESTS == true){
+                sh 'docker container logs test_container > test_logs.txt'
+            }
+            }
+          } 
+        archiveArtifacts '*_logs.txt'
+        sh 'rm -rf *_logs.txt'
+      }
+      }
+      
+}
+

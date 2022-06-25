@@ -1,0 +1,11 @@
+FROM ubuntu:latest
+
+RUN apt-get update
+RUN apt-get install -y git meson gcc libssl-dev libutf8proc-dev libtinfo-dev 
+RUN DEBIAN_FRONTEND='noninteractive' apt-get install -y libglib2.0-dev
+
+RUN git clone https://github.com/irssi/irssi
+
+WORKDIR irssi
+RUN meson setup build
+RUN ninja -C /irssi/build

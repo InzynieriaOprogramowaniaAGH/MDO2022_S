@@ -1,0 +1,10 @@
+#!/bin/bash
+
+MSG="$(cat $1)"
+
+if [[ "$MSG" =~ ^AC401177 ]];then
+	exit 0
+fi
+echo "Commit message must starts with AC401177!"
+exit -1
+

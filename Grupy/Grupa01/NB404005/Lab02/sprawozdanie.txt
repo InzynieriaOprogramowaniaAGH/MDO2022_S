@@ -1,0 +1,29 @@
+1. ssh-keygen -t rsa -b 4096 -C "email"
+    -wygenerowanie klucza SSH
+
+1.3 eval "$(ssh-agent -s)" -Uruchomienie agenta  
+    ssh-add ~./ssh/id_rsa -Zapisanie hasła do klucza dla agenta 
+    
+Dzięki temu nie musimy za każdym razem podawać hasła do klucza SSH
+
+1.5 git remote -v 
+    git remote set-url origin [nowy adres] - zmiana sposobu łączenia się z repozytorium zdalnym
+
+2. git tag -a [nazwa] -m "wiadomość" - Dodawanie taga
+
+2.1 git push --follow-tags - Wysyłanie zmian na repozytorium zdalne uwzględniając tagów
+
+3.2 git checkout -b [nazwa] - Utworzenie nowego brancha odpowiadającego danemu zadaniu i przejście na niego
+
+4. Utworzenie githooka do sprawdzania czy w treści commita uzyte zostały NB404005
+
+#!/bin/bash
+
+m="$1"
+if ! grep -qe "NB404005" "$m"; then
+
+	echo "commit jest bledny, nie zwiera NB404005"
+	exit 1 
+fi
+
+

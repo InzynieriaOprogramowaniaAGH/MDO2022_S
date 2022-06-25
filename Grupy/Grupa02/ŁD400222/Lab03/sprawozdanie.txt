@@ -1,0 +1,42 @@
+1 git checkout -b Grupa02-LD400222_Lab03
+Utworzenie brancha osobistego Grupa02-LD400222_Lab03 i przełączenie się na niego 
+
+2 skopiowanie git hooka sprawdzającego czy commit zaczyna się od ŁD400222
+
+#!/bin/sh
+
+COMMIT=`cat $1`
+REGEX="^ŁD400222"
+echo $COMMIT
+if ! [[ $COMMIT =~ $REGEX ]]; then
+    echo '# Commit message should start with ŁD400222'
+    exit 1;
+fi
+
+5 stworzenie pliku Dockerfile i zapisanie w nim instrukcji:
+
+FROM ubuntu:latest
+RUN apt-get -y update
+RUN apt-get -y install git
+
+
+* FROM ubuntu:latest
+użycie  i w przypadku braku takiego obrazu na komputerze zainstalowanie najnowszego obrazu ubuntu
+ 
+* RUN apt-get -y update
+uruchomienie komendy update'ującej liste pakietów apt
+
+* RUN apt-get -y install git
+uruchomienie komendy pobierającej gita
+
+6 docker image build --tag git-image .
+Zbudowanie obrazu dockera na podstawie pliku Dockerfile znajdującego się w obecnym katalogu
+
+
+docker run -dit 97aaf
+uruchomienie w tle kontenera zawiarającego zbudowany wcześniej obraz dockera
+
+
+docker exec 410 git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git
+zklonowanie repozytorium gita do kontenera
+

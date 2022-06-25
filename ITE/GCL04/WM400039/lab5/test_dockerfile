@@ -1,0 +1,7 @@
+FROM app_build:latest
+
+WORKDIR /wire-webapp
+
+RUN yarn test:server
+
+

@@ -1,0 +1,9 @@
+spec.strategy.type - ustalenie strategii wdrazania (Recreate albo RollingUpdate)
+do zrzutu ekranu z zadania 3: jak widac, wszystkie repliki ze stara wersja zostaly naraz wylaczone, a Kubernetes zajal sie uruchamianiem replik z nowa wersja
+
+spec.strategy.rollingUpdate.maxSurge - ustalenie parametru maxSurge (liczbowo lub procentowo)
+spec.strategy.rollingUpdate.maxUnavailable - ustalenie parametru maxUnavailable (liczbowo lub procentowo)
+do zrzutu ekranu z zadania 4: jak widac, zostaly uruchomione 3 repliki z nowa wersja, a jednoczesnie zostaly 3 repliki ze stara wersja (zgadza sie to z parametrem maxSurge=2, poniewaz docelowo chcielismy 4 repliki, a 3+3=6=4+2 ; zgadza sie to takze z parametrem maxUnavailable=1, poniewaz 4-1=3) ; nastepnie, gdy juz dzialaja repliki z nowa wersja, po kolei wylaczane sa repliki ze stara wersja
+
+metadata.labels - etykiety
+spec.selector - [w Service] ustalenie etykiet, ktore musi miec np. Deployment, zeby zostal uruchomiony przez Service

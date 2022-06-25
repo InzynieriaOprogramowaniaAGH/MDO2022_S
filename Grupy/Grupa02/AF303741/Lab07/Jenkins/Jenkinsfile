@@ -1,0 +1,95 @@
+pipeline {
+    agent any
+    environment {
+        DOCKERHUB_CREDENTIALS= credentials('Jenkins')
+    }
+    stages {
+        stage('Build') {
+            steps {
+                git 'https://github.com/aleksanderfilek/wire-desktop-devops.git'
+                dir('Docker') {
+                    sh 'docker-compose build build_agent'
+                    sh 'docker-compose logs > buildArtifact.txt'
+                }
+            }
+            post {
+                success {
+                    echo '------------Successful build------------'
+                    emailext attachLog: true,
+                    body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
+                    recipientProviders: [developers(), requestor()],
+                    subject: "Successful Jenkins Build",
+                    to: 'filekaleksander@gmail.com'
+                }
+                failure {
+                    echo '------------Failed build------------'
+                    emailext attachLog: true,
+                    body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
+                    recipientProviders: [developers(), requestor()],
+                    subject: "Failed Jenkins Build",
+                    to: 'filekaleksander@gmail.com'
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                dir('Docker') {
+                    sh 'docker-compose build test_agent'
+                }
+            }
+            post {
+                success {
+                    echo '------------Successful test------------'
+                    emailext attachLog: true,
+                    body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
+                    recipientProviders: [developers(), requestor()],
+                    subject: "Successful Jenkins Test Stage",
+                    to: 'filekaleksander@gmail.com'
+                }
+            
+                failure {
+                    echo '------------Failed test------------'
+                    emailext attachLog: true,
+                    body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
+                    recipientProviders: [developers(), requestor()],
+                    subject: "Failed  Jenkins Test Stage",
+                    to: 'filekaleksander@gmail.com'
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                dir('Docker') {
+                    archiveArtifacts(artifacts: '**/*.txt', followSymlinks: false)
+                    sh 'docker-compose  up -d build_agent'
+                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                    sh 'docker tag build_agent:lts aleksanderfilek/wire-desktop'
+                    sh 'docker push aleksanderfilek/wire-desktop'
+                }
+            }
+            post {
+                   always{
+                       sh 'docker logout'
+                   }
+        
+                    success {
+                    echo '------------Successful deploy------------'
+                    emailext attachLog: true,
+                    body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
+                    recipientProviders: [developers(), requestor()],
+                    subject: "Success Jenkins Deploy",
+                    to: 'filekaleksander@gmail.com'
+                }
+            
+                failure {
+                    echo '------------Failed deploy------------'
+                    emailext attachLog: true,
+                    body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
+                    recipientProviders: [developers(), requestor()],
+                    subject: "Failed Jenkins Deploy",
+                    to: 'filekaleksander@gmail.com'
+                }
+            }
+        }
+    }
+}

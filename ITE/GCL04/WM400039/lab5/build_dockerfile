@@ -1,0 +1,7 @@
+FROM node:16.14.2-alpine
+RUN apk add git
+RUN git clone https://github.com/wireapp/wire-webapp
+WORKDIR /wire-webapp/
+RUN yarn
+RUN mv .env.localhost .env
+RUN yarn build:prod

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+ID="AD401894"
+
+if ! [[ $(cat $1) == $ID* ]] ;then
+    echo "Nazwa commitu musi zawierać $ID"
+    exit 1
+fi

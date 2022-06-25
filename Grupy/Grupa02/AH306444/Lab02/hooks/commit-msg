@@ -1,0 +1,11 @@
+#!/bin/bash
+
+TEXT="AH306444"
+
+if ! [[ $(cat $1) =~ $TEXT ]] ;then
+   
+    echo "Nazwa commitu musi zawierać $TEXT"
+    exit 1
+fi
+    echo "Poprawnie wykonany commit"
+    exit 0

@@ -1,0 +1,47 @@
+1. Na pocztku zajec stworzono nowa galaz przeznaczona do pracy na tych laboratoriach: Grupa01-KB400143_Lab03.
+
+2.Po tym opublikowano obraz z poprzednich zajec w serwisie Docker HUB. W tym celu uzyto nastepujacych komend:
+docker login --username="nazwaKonta" - zalogowanie do Docker HUB
+docker tag kb400143_lab03:latest bielak2000/kb400143_lab03:latest - utworzenie taga: oznaczenie lokalnego obrazu 
+docker push bielak2000/kb400143_lab03:latest - wrzucenie repa na remota z ostatnia wersja
+
+3.W kolejnym kroku wybrany zostal komunikator: https://github.com/deltachat/deltachat-desktop
+
+4.Po tym utworzono nowy obraz dockerowy 'build-agent' za pomoca zbudowano instrukcja: docker build . -t 'build-agent'. Ponizej znajduje sie jego zawartosc:
+FROM node:latest                                                    //image z ktorego bierze gotowe juz rzeczy
+RUN apt-get update                                                  //pobranie najnowyszch aktualizacji
+RUN apt-get install -y git                                          //instalacja gita
+RUN git clone https://github.com/deltachat/deltachat-desktop.git    //sklonowanie repo
+WORKDIR deltachat-desktop                                           //przejscie
+RUN npm install                                                     //kompilacja komunikatora
+RUN npm run build                                                   //budowanie projektu
+
+
+5.Nastepnie utworzony zostal obraz dockerowy 'test-agent' za pomoca insturkcji: docker build . -t 'test-agent'. Ponizej znajduje sie jego zawartosc:
+FROM build-agent:latest         //image z ktorego bierze gotowe juz rzeczy
+WORKDIR deltachat-desktop       //przejscie
+CMD ["npm", "test"]             //odpalenie testow
+
+6.Po tym stworzocono docker-compose.yml, ktory sciaga z repo najnowsza wersje komunikatora i go buduje za pomoca build-agenta, a takze testuje jego dzialanie - jego zawartosc:
+version: "3.8"
+services:
+    buildsection:
+        #container_name: build-agent
+        image: build-agent:latest
+        build:
+            context: .
+            dockerfile: ./build-agent/Dockerfile
+    testsection:
+        #container_name: test-agent
+        image: test-agent:latest
+        build:
+            context: .
+            dockerfile: ./test-agent/Dockerfile
+        depends_on:
+            - buildsection
+    
+7.Na koniec go zbudowano i uruchomiono za pomoca ponizszych komend:
+- docker-compose build
+- docker-compose up
+
+8.Na koniec wrzucone zostaly zmiany na gita.

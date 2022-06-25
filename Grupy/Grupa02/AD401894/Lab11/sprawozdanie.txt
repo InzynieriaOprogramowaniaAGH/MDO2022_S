@@ -1,0 +1,24 @@
+Sprawozdanie LAB11 Adrian Dąbrowski 401894 
+
+(Podpunkt 1) Uruchomienie
+
+         minikube start
+         minikube dashboard
+
+(Podpunkt 3) Strorzono komunikator-deployment-recreate.yaml na podstawie komunikator-deployment.yaml  (strategia Recreate).
+
+    Uruchomiono poleceniem : kubectl apply -f komunikator-deployment-recreate.yaml   
+    
+(Podpunkt 4) Nastepnie stworzono  strategie wdrazania RollingUpdate. Parametry maxSurage=1 oraz maxUnavailabl=1 
+
+    Uruchomiono poleceniem : kubectl apply -f komunikator-deployment-rollingUpdate.yaml
+      
+    Poczatkowo stworzony zostal zestaw replik z nowa wersja aplikacji następmnie  liczba replik starej wersji byla zmniejszana na rzecz nowych.
+
+
+(Podpunkt 5) Nastepnie stworzono  strategie Canary deployment.
+
+
+     Uruchomiono poleceniem : kubectl apply -f komunikator-deployment-canary.yaml 
+
+     Zapewnia to dzialanie dwoch serwisow obok siebie  a uzytkownik je przepina.

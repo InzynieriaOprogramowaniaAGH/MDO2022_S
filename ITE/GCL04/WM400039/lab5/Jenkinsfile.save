@@ -1,0 +1,28 @@
+pipeline {
+	agent any
+	environment {
+	npm_creds = credentials('npm-creds')
+} 
+	stages {
+		stage('Build_and_publish') {
+			steps {
+				dir('ITE/GCL04/WM400039/lab5')
+					{
+						sh 'docker build -f ./build_dockerfile -t app_build:latest .'
+						sh 'docker run app_build'
+					}
+				} 
+			}
+		stage('Test') {
+			steps {
+			        dir('ITE/GCL04/WM400039/lab5')
+					{
+						sh 'docker run '
+						sh 'docker run test_build'
+					}
+				}
+			}
+		}
+}
+
+

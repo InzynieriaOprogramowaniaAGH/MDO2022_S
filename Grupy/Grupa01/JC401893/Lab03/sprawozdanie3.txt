@@ -1,0 +1,19 @@
+Stworzenie nowego brancha na lab
+git checkout -b Grupa01-JC401893_Lab3
+
+Instalacja dockera
+
+Utworzenie pliku dockerfile o następującej strukturze:
+
+FROM ubuntu:latest
+RUN apt-get update
+RUN apt-get -y install git (-y automatycznie potwierdza instalację)
+RUN git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git
+
+Zbudowanie dockera na podstawie obrazu:
+docker build -t docker-lab3 .
+
+uruchomienie dockera:
+docker run -it "dockerlab3" bash
+
+repozytorium zostało automatycznie sklonowane dzięki 4 linijce w dockerfile

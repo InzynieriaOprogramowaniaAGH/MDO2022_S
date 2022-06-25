@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                sh 'docker build -t irssi_budowanie . -f ITE/GCL04/KK403281/Lab05/Docker-BLDR'
+		sh 'docker run --name Kontenerek -dit --rm irssi_budowanie'
+		sh 'rm irssi || true'
+		sh 'docker cp Kontenerek:irssi/build/src/fe-text/irssi .'
+		sh 'docker kill Kontenerek'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'docker build -t irssi_tescik . -f ITE/GCL04/KK403281/Lab05/Docker-Tescik'
+		sh 'docker run irssi_tescik'
+            }
+        }
+	stage('deploy'){
+	    steps {
+		sh "docker kill deployKontener || true"
+		sleep 2
+		sh 'docker run --rm --name deployKontener -dit ubuntu'
+		sh 'docker cp irssi deployKontener:.'
+		sh 'docker container exec deployKontener sh -c "apt-get update"'
+		sh 'docker container exec deployKontener sh -c "DEBIAN_FRONTEND="noninteractive" apt-get install -y libglib2.0"'
+		sh "docker container exec deployKontener sh -c 'apt-get install -y libutf8proc-dev'"
+		sh "docker container exec deployKontener sh -c './irssi --version'"
+		sh "docker container kill deployKontener"
+	    }
+	}
+	stage('publish'){
+	    when{
+		expression{
+			return params.promote==true;
+		}
+	    }
+	    steps {
+		sh 'rm -r IrssiFiles || true'
+		sh 'mkdir IrssiFiles'
+		sh 'echo "Zainstaluj przed uruchomieniem: libglib2.0  libutf8proc-dev" > ReadmePls'
+		sh 'cp irssi IrssiFiles'
+		sh 'cp ReadmePls IrssiFiles'
+		sh "tar -zcf irsi${params.version}.tar.gz IrssiFiles"
+		archiveArtifacts artifacts: "irsi${params.version}.tar.gz"
+	    }
+	}
+    }
+}

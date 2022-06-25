@@ -1,0 +1,34 @@
+
+1. Znalazłam swój klucz SSH. 
+1.5 Poimformowałam Git'a o zmianie sposobu logowania.
+1.5.1 użyłam komendy "git remote -v" powinien wyświetlić połącznie po https.
+1.5.2.następnie użyłam "git remote set-url origin git@github.com:InzynieriaOprogramowaniaAGH/MDO2022_S.git", który zmienia połącznie na SSH.
+1.5.3 porównałam jak wyglada teraz połączenie ponownie używając "git remote -v". Wyswietliło się połącznie po ssh (protokół git@).
+
+2. Nadałam "Tag" na aktualnego commita o nazwie: "twoje inicjały + nr indexu + nr zadania" 
+czyli JC299670_Lab01 oraz wiadomość "Joanna Cepuch,299670, Lab01, wszystko ok"
+2.1 Wrzuciłam tą zmianę na swojego brancha na origin, a następnie remote/origin używając np.: git push --follow-tags
+
+3. Uporządkowałam branch'y i foldery: pogrupowanie w grupy laboratoryjne.
+
+3.1 Zmieniłam konfigurację folderów,tak by wyglądała następująco :
+"<repo>/Grupy/Grupa01/299670/Lab02".
+Przeniosłam w repozytorium swój folder (np.:KM123456), tak ,że jest dostępny pod nową ścieżką i nie był dostępny pod starą ścieżką.
+Mimo że w projekcie mam również folery moich kolegów z grupy, nie przeniosłam ich, gdyż wiem że w tym momencie oni na nich pracują i nie chce wywoływać konfliktów bądź zdublowań plików. 
+Znając treść zadania wiem, że wszyscy poprawnie uporządkują strukture projektu. 
+
+3.2 By stworzyć odpowiednią konfigurację branchy, która będzie wyglądała tak:
+* master (już istnieje; branch długożyjący;)
+* Grupa01 (już istnieje; branch długożyjący; jest to branch grupowy; do tego brancha będzię push'ował zmiany z mojego brancha)
+* Grupa01-JC299670_Lab02 to jest branch krótko żyjący; będę go usuwać kiedy wykonam swoje ćwiczenie i zrobisz merga do brancha grupowego;
+
+musiałam utworzyć nowegy krótko żyjący branch, o którym jest mowa w ostatnim podpunkcie.
+
+4.Następnie napisałam Git hook'a -czyli skrypt weryfikujący, czy mój każdy commit message zaczyna się od "JC299670". 
+ Umieściłam go we właściwym miejscu, tak by uruchamiał się za każdym razem kiedy robię commita oraz sprawdziłam jego działanie.
+
+5. Dołączyłam swoje zmiany 
+5.1 Zrobiłam merga ze swojego brancha osobistego do brancha grupowego.I nastęnie zamknęłam branch osobisty.
+5.2 Stwórzyłam nowego "Pull request" ze swojego brancha grupowego do mastera
+
+

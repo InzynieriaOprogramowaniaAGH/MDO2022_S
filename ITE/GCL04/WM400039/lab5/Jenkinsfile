@@ -1,0 +1,36 @@
+pipeline {
+	agent any
+	environment {
+	npm_creds = credentials('npm-creds')
+} 
+	stages {
+		stage('Build') {
+			steps {
+				dir('/lab5')
+					{	
+						sh 'docker build -f ./build_dockerfile -t app_build:latest .'
+						sh 'docker run app_build'
+					}
+				} 
+			}
+		stage('Test') {
+			steps {
+			        dir('/lab5')
+					{ 
+						sh 'docker build -f ./test_dockerfile -t app_test:latest .'
+						sh 'docker run app_test'
+					}
+				}
+			}
+		stage('Publish') {
+			steps{
+				dir('/lab5')
+					{
+						sh 'npm publish'
+					}
+					}
+				}
+		}
+}
+
+

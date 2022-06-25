@@ -1,0 +1,2 @@
+FROM devopsprojekt
+CMD npm run test

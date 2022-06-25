@@ -1,0 +1,64 @@
+pipeline {
+	agent any
+
+	stages {
+
+        stage('Build') {
+			steps {
+                
+               dir ('Grupy/Grupa01/IB402983/Docker/Berty'){
+				    sh 'docker-compose up build_agent'
+                }
+            }
+            post {
+                failure {
+                    echo 'ERROR IN BUILDING'
+                }
+                success {
+                    echo 'SUCCESS IN BUILDING'
+                }
+            }
+        }
+
+		stage('Test') {
+			steps {
+
+                sh 'ls'
+
+                dir ('Grupy/Grupa01/IB402983/Docker/Berty'){
+				    sh 'docker-compose up test_agent'
+                }
+            }
+            post {
+                failure {
+                    echo 'ERROR IN TESTING'
+                }
+                success {
+                    echo 'SUCCESS IN TESTING'
+                }
+            }
+        }
+
+        stage('Deploy') {
+
+			steps {
+
+                
+			  mail bcc: '', body: "${env.BUILD_URL}", from: 'ibubula@student.agh.edu.pl', subject: "ERROR ${env.BUILD_TAG}: BUILD", to: 'iza.bubula2012@gmail.com'
+                
+            }
+            post {
+                failure {
+                    echo 'ERROR IN DEPLOYING'
+
+           
+                }
+                success {
+                    echo 'SUCCESS IN DEPLOYING'
+                }
+            }
+        }
+
+    
+    }
+}

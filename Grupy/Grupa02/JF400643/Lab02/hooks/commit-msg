@@ -1,0 +1,6 @@
+#!/bin/sh
+
+test -n "$(grep '^JF400643' ${1})" || {
+echo >&2 "Nazwa commita nie zaczyna sie od JF400643!"
+exit -1
+}

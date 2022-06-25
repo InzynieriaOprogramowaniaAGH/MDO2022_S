@@ -1,0 +1,33 @@
+1. Zbudowanie obrazu komunikatora, wykorzystanego na poprzednich zajęciach poleceniem
+	docker build . -t build-agent
+
+2. Zainstalowałem Minikube
+   Uruchomiłem klaster poleceniem: 
+	minikube start
+   zaktualizowanie wersji kubectl poleceniem:
+	minikube kubectl -- get pods -A
+3. Uruchomiłem Minikube Dashboard poleceniem:
+	minikube dashboard
+   Dzięki Minikube Dashboard można:
+	- wdrażać aplikacje kontenerowe w klastrze Kubernetes,
+	- rozwiąż problemy ze swoją skonteneryzowaną aplikacją,
+     	- zarządzać zasobami klastra
+	- uzyskać przegląd aplikacji działających w naszym klastrze
+	- tworzenie lub modyfikowanie poszczególnych zasobów Kubernetes (takich jak wdrożenia, zadania, zestawy demonów itp.)
+4.Opublikowanie obrazu build-agenta na Dockerhub:
+	- zalogowanie się do Dockerhub poleceniem:
+		docker login --username="dodomax"
+	- otagowanie lokalnego obrazu poleceniem:
+		docker tag build-agent:latest dodomax/build-agent:latest
+	- wrzucenie na remota poleceniem:
+		docker push dodomax/build-agent:latest
+	Uruchomienie kontenera komunikatora poleceniem:
+		kubectl run komunikator --image=dodomax/build-agent --port=9999 --labels app=komunikator
+	Przekierowanie portow poleceniem:
+		kubectl port-forward deploy/komunikator 9998:9999
+	Operacja się nie powiodła, ponieważ komunikator deltachat jest aplikacją okienkową.
+	W celu realizacji ćwiczenia skorzystano z aplikacji wireapp.
+	zbudowanie obrazu aplikacji build-agent2, wrzócenie jej na dockerhuba.	
+5 W celu zrealizowania ćwiczenia, powtórzyłem ponownie wszystkie kroki dla aplikaci wireapp znajdującą się pod adresem:
+	https://github.com/wireapp/wire-desktop.git
+  zamieniłem port aplikacji na 8080 a uruchamialem z portu 7080.

@@ -1,0 +1,4 @@
+FROM node:14-alpine3.15
+WORKDIR ./
+RUN apk add git
+RUN apk add python2

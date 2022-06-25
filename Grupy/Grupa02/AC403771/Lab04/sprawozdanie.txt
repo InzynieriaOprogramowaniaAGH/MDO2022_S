@@ -1,0 +1,8 @@
+1. stworzenie nowego brancha git checkout -b Grupa02-AC403771_Lab04
+1.1 Zrobienie taga: 	$ docker tag lab3:latest annaczesak/ac403771
+Zrobienie pusha: 	$ docker push annaczesak/ac403771
+2. wybralam komunikator tinode
+3. Build agent: Stwórz nowy obraz kontenera dockerowego: docker build -t build-agent:latest -f . Dockerfile
+4. Test agent: Stwórz nowy obraz kontenera dockerowego: docker build -t test-agent:latest -f . Dockerfile2
+5. Stwórz plik docker-compose.yml: touch docker-compose.yml 
+

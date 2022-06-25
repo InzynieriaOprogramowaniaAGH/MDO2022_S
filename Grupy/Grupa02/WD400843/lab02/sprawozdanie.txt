@@ -1,0 +1,42 @@
+Sprawozdanie Lab02
+
+1. Generowanie klucza ssh: ssh-keygen -t rsa -b 4096 -C "mail"
+
+   Dodanie działającego agenta SSH do obsługi klucza SSH:
+   eval 'ssh-agent-s'
+   ssh-add ~/.ssh/id_rsa
+
+   Zarejestrowanie klucza po stronie servera: 
+   skopiowanie klucza: clip < ~/.ssh/id_rsa.pub
+   
+   Poinformowanie gita o zmianie sposobu logowania: 
+   zmiana połączenia na SSH: git remote set-url origin git@github.com:InzynieriaOprogramowaniaAGH/MDO2022_S.git
+   wyświetlenie połączenia: git remote -v
+
+2.Nadanie tag'a na ostatni aktualny commit: git tag -a WD400843_Lab02 -m "Wioletta Drag, Lab 02 wszystko działa, 10/10 proszę"
+  Wypchnięcie tag-u na repozytorium: git push --follow-tags 
+
+3.Uporządkowanie branch'y i folderów, pogrupowanie w grupy laboroatoryjne:
+  utworzenie w folderze głównym folderów Grupy/Grupa02 za pomoca polecenia mkdir, 
+  przeniesienie swojego folderu WD400843 do folderu Grupa02,
+  utworzenie nowego, krótkożyjącego brancha: git checkout -b Grupa02-WD400843_Lab02,
+  sprawdzenie poprawności zrealizowanych kroków: git status
+
+4.Dodanie Git hook'a - commit-msg
+
+#!/bin/bash
+
+commit="WD400843"
+wrong="Incorrect commit!"
+
+if ! grep -iqE "$commit" "$1" ; then
+	echo "$wrong"
+	exit 1
+fi
+echo "Correct commit comment"
+
+5.Zmergowano swojego brancha osobistego z branchem grupowym:
+   przełączono się na brancha grupowego: git checkout Grupa2
+   scalono swojego brancha z branchem grupowym: git merge Grupa02-WD400843_Lab02
+
+   usunięcie swojego brancha osobistego: git branch -d Grupa02-WD400843_Lab02

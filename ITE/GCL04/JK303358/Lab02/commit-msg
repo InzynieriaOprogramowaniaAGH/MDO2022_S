@@ -1,0 +1,15 @@
+#!/bin/bash
+
+title=$(echo `head $1` | awk '{print $1;}')
+message=$(echo `head $1` | awk '{print $2;}')
+
+if ! [ $title == "JK303358" ]; then 	
+	echo "Wrong title."							
+	exit 1;								
+fi
+
+if ! [[ $message =~ .*"2".* ]]; then 	
+	echo "Message doesnt contain lab number."							
+	exit 1;								
+fi
+echo "Commit message OK!"

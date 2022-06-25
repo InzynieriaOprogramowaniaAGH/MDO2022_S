@@ -1,0 +1,29 @@
+1. Utworzenie klucza ssh
+	ssh-keygen -t rsa -b 4096 -C "mail@domena.com"
+2. Dodanie agenta SSHa do obsługi klucza
+	eval "$(ssh-agent -s)"
+	ssh-add ~/.ssh/i_rsa
+3. Zmiana sposobu logowania
+	git remote set-url origin git@github.com:InzynieriaOprogramowaniaAGH/MDO2022_S.git
+4. nadanie taga do commita
+	git tag -a AF400832_Lab01 -m "Aleksandra Furyk, Lab 01 wszystko działa, 10/10 proszę"
+5. wrzucenie zmiany na repo
+	git push --follow-tags
+6.przeniesienie folderu do /Grupy/Grupa02
+	git mv AF400832/ Grupy/Grupa02
+7. stworzenie nowego brancha
+	git checkout -b Grupa02-AF400832_Lab02
+8. stworzenie hooka w /.git
+	touch commit-msg
+	start commit-msg
+
+
+#!/bin/bash
+
+MSG="$(cat $1)"
+
+if [[ "$MSG" =~ ^AF400832]];then
+	exit 0
+fi
+echo "Commit message must starts with AF400832"
+exit -1

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+MSG="$1"
+
+if ! grep -qE "PA402099" "$MSG";then
+    cat "$MSG"
+    echo "Your commit message must contain 'PA402099'"
+    exit 1
+fi

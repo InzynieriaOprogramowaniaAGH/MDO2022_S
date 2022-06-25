@@ -1,0 +1,111 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Git Connection'){
+            steps{
+                git branch: 'MK402993', 
+                credentialsId: '9addb5b1-7519-4625-9612-f36a9108ff03', 
+                url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git'
+            }
+        }
+        stage('Environment'){
+            steps{
+                dir("ITE/GCL04/MK402993/Lab05"){
+                    sh "docker build -f EnvDocker -t envimage ."
+                }
+                sh "mkdir -p publish"
+                sh "mkdir -p tests"
+            }
+            post{
+                failure{
+                    sh "rm -rf publish"
+                    sh "rm -rf tests"
+                }
+            }        }
+        stage('Download repo'){
+            agent{
+                docker{
+                    image 'openjdk:8'
+                    args '-v input:/input --user root'
+                    reuseNode true
+                }
+            }
+            steps{
+                sh "rm -rf /input/*"
+                sh "cd /input && git clone https://github.com/ThomasJaspers/java-junit-sample.git"
+            }
+        }
+        stage('Build') {
+            agent{
+                    dockerfile{
+                        filename "BuildDocker"
+                        dir "ITE/GCL04/MK402993/Lab05"
+                        additionalBuildArgs "-t testapp"
+                        args '-v input:/input -v output:/output --user root'
+                        reuseNode true
+                    }
+                }
+            steps {
+                sh "cd /input/java-junit-sample && mvn clean package -DskipTests"
+                sh "cp -r /input/java-junit-sample /output"
+            }
+        }
+        stage('Test') {
+            agent{
+                dockerfile{
+                    filename "TestDocker"
+                        dir "ITE/GCL04/MK402993/Lab05"
+                        additionalBuildArgs "-t testimage"
+                        args '-v output:/output --user root -v deploy:/deploy'
+                        reuseNode true
+                }
+            }
+            steps {
+                sh "cd /output/java-junit-sample && mvn surefire:test"
+                sh 'cp -r /output/java-junit-sample/target/*.jar /deploy'
+                sh "cp /output/java-junit-sample/target/surefire-reports/*.xml ./tests"
+            }
+            post{
+                always{
+                        junit testResults: "tests/*.xml"
+                }
+            }
+        }
+        stage("Deploy"){
+            agent{
+                docker{
+                    image 'openjdk:8'
+                    args '-v deploy:/deploy --user root --detach'
+                    reuseNode true
+                    
+                }
+            }
+            steps{
+                sh "cd /deploy && nohup java -jar *.jar &"
+                sh "cp /deploy/*.jar ./publish"
+                
+            }
+            post{
+                failure{
+                    sh "rm -rf publish"
+                }
+            }
+        }
+        stage("Artifact"){
+            steps{
+                archiveArtifacts artifacts:"publish/*.jar", 
+                                 fingerprint: true 
+                sh 'cat publish/*.jar | sha512sum > publish/checksum.txt'
+                archiveArtifacts artifacts:"publish/checksum.txt",
+                                 fingerprint: true
+            }
+            post{
+                always{
+                    sh "rm -rf publish"
+                }
+            }
+            
+        }
+    }
+}

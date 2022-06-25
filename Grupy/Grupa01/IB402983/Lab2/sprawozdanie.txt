@@ -1,0 +1,16 @@
+git checkout Ib402983
+	checkout - zmiana brancha
+ssh-keygen -t rsa -b 4096 -C "iza.bubula2012@gmail.com"
+	generowanie klucza ssh
+start-ssh-agent.cmd
+	odpalanie agenta, dodawanie klucza ssh
+git remote -v
+	wyswietlanie linku do repo
+git remote set-url origin git@github.com:InzynieriaOprogramowaniaAGH/MDO2022_S.git
+	zmiana origina
+git push --follow-tags
+	pushowanie tagów, włączanie
+git tag -a IB402983_Lab2 -m "Bubula Izabela, Lab02"
+	tworzenie tagów
+git checout -b Grupa01-IB402983-Lab2
+	tworzenie nowego brnacha na potrzeby Laboratorium

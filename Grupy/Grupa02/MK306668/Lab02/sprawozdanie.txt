@@ -1,0 +1,76 @@
+Temat:
+Klucze SSH i połączenie SSH. Łączenie i usuwanie zmian w kodzie. Manipulowanie organizacją repozytorium GIT.
+
+1.1: 
+ls ~/.ssh - listujemy istniejące klucze
+
+1.3:
+eval "$(ssh-agent -s)" - uruchamiamy agenta ssh w tle
+
+1.2:
+ssh-add ~/.ssh/id_ed25519 - dodajemy klucz i podajemy passphrase
+
+1.4:
+cat ~/.ssh/id_ed25519.pub - wypisujemy na ekran klucz publiczny i kopiujemy go
+Rejestrujemy klucz publiczny po stronie serwera:
+- Klikamy w ikonę naszego profilu
+- Wybieramy zakładkę ustawienia 
+- Klikamy w zakładkę SSH and GPD keys
+- Klikamy w przycisk New SSH key 
+- Podajmey nazwę klucza i wklejamy go w udpowiednie miejsce
+- Klikamy w przycisk Add SSH key
+
+1.5:
+git remote -v - sprawdzamy jakim protokołem git łączy się z githubem - widzimy że https
+git remote set-url origin git@github.com:InzynieriaOprogramowaniaAGH/MDO2022_S.git - zmieniamy połączenie na ssh
+git remote -v - widzimy że protokół został poprawnie zmieniony
+
+2:
+git tag -a MK306668_Lab02 -m "[treść taga]" - nadajemy taga na aktualnego commita
+git commit - dodajemy commita. W moim przypadku zapomniałem o wykonaniu tego polecenia
+git push --follow-tags - dodajemy pull request 
+
+3.1:
+Zmieniamy konfigurację folderów - poleceniem mkdir -p Grupy/Grupa02/MK306668 tworzymy odpowiednią
+strukturę folderów, a następnie przenosimy do najgłębszego folderu wszystkie dotychczasowe pliki.
+
+3.2:
+git checkout Grupa2 - przełączamy się na brancha grupowego
+git branch Grupa02-MK306668_Lab02 - tworzymy nowy branch krótkożyjący
+git checkout Grupa02-MK306668_Lab02 - przełączamy się na tego brancha
+
+4.1:
+Napisano git hook'a, nazwano go commit-msg i umieszczono w folderze ./git/hooks.
+Treść hook'a:
+
+#!/bin/bash					//używamy powłoki bash
+
+MSG="$(cat $1)"				//wyciągamy treść wiadomości z lokalizacji pliku podanej jako argument
+
+if [[ "$MSG" =~ ^MK306668.* ]];		//sprawdzamy czy wiadomość zaczyna się od MK306668 
+then 
+{
+   echo "Commit message correct: $MSG"
+   exit 0
+}
+else
+{
+   echo "Commit message incorrect: $MSG. Message schould start with: MK306668"
+   exit 1
+}
+fi
+
+Wymagane było ustawienie możliwości wykoania tego skryptu - chmod 777 commit-msg
+
+5:
+Wykonujemy commita.
+
+5.1:
+git checkout Grupa2 - przełączamy się na grupę do której chcemy zmergować naszego brancha
+git merge Grupa02-MK306668_Lab02 - mergujemy brancha krótkożyjącego z branchem grupowym
+
+5.2:
+git branch -d Grupa02-MK306668_Lab02 - zamykamy brancha krótkożyjącego
+
+5.3:
+git push --set-upstream origin Grupa2 - tworzymy nowego pull requesta

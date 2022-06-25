@@ -1,0 +1,6 @@
+git clone [link] - klonuje repozytoriumn
+git checkout -b JC401893 - tworzy nowy branch o nazwie podanej przez nas oraz przełącza nas na niego
+git add . - dodaje aktualny folder jako element następnego commita
+git status - sprawdza status aktualnie przygotowanego za pomocą add commita
+git commit -m "Missing screens" - tworzy nowy commit (punkt zapisu) i dodaje notatkę za pomocą flagi -m
+git push --set-upstream origin JC401893 - pushuje na nowy branch o podanej nazwie, flaga powoduje utworzenie go

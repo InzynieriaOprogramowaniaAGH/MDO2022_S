@@ -1,0 +1,20 @@
+
+FROM ubuntu:latest
+
+RUN DEBIAN_FRONTEND=noninteractive
+ENV TZ=Europe/Warsaw
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+RUN apt update
+RUN apt install -y tzdata git cmake build-essential
+
+RUN git clone https://github.com/dmonopoly/gtest-cmake-example
+WORKDIR gtest-cmake-example
+RUN mkdir build
+WORKDIR build
+RUN cmake ..
+RUN make
+RUN cd ..
+RUN cmake -Dtest=ON ..
+RUN make
+RUN ./project1

@@ -1,0 +1,9 @@
+1. Pierwszym zadaniem było połączenie się do repozytorium przy użyciu klucza SSH zamiast połączenia HTTPS. (screen1)
+
+2. Kolejnym poleceniem było stworzenie taga dla poprzedmiego ćwiczenia poprzez komendę "git tag -a KM403263_Lab01" (screen2)
+
+3. Następnie zmieniłem konfiguracje folderów na takie, które będą uwzględniać grupy laboratoryjne (screen3)
+
+4. Kolejnym zadaniem było utworzenie hooka, czyli skryptu weryfikującego czy commit został nazwany poprawnie (screen4.1). Następnie przeprowadziłem test poprawności tak napisanego skryptu. (screen4)
+
+5. Ostatnim zadaniem było wrzucenie zadania z brancha osobistego na brancha grupy laboratoryjnej i stworzenie pull requesta. 

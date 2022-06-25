@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: socket-io-deployment-canary
+  labels:
+    app: socket-io
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: socket-io
+  template:
+    metadata:
+      labels:
+        app: socket-io
+        version : 1.0.1
+        type: canary
+    spec:
+      containers:
+      - name: socket-io
+        image: piotrekapriasz/lab10-socket-io:1.0
+        ports:
+        - containerPort: 80

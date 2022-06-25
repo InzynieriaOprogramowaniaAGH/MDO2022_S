@@ -1,0 +1,16 @@
+Lab 1
+
+git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git
+Pobiera repozytorium z serwera na komputer
+
+git checkout -b nazwa_brancha
+Tworzy nowy branch i zmienia obecny na podany
+
+git add nazwa_pliku
+Dodaje pliki do staging area, w których nastąpiła jakaś zmiana
+
+git commit -m "message"
+Tworzy commit w repozytorium, czyli zapisuje zmiany z staging area w repozytorium jak pojedynczy commit
+
+git push <repo name>
+Dodaje aktualne, lokalne repozytorium na podanego brancha 

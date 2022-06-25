@@ -1,0 +1,58 @@
+1. Napoczatku zajec zapoznano sie z diagramem wdrozeniowym omawianym na zajeciach oraz oprogramowaniem Jenkins. Pondato stworzono osobisty branch na te zajecia.
+
+2.Nastepnie stwrzono kontener dockerowy z Jenkinsem posluguja sie instrukcja: https://www.jenkins.io/doc/book/installing/docker/. Ponizej znajduje sie zawartosc tego kontenera
+oraz wszystkie uzyte komendy:
+- docker network create jenkins - utworzenie sieci pomostowej
+- docker run \
+  --name jenkins-docker \
+  --rm \
+  --detach \
+  --privileged \
+  --network jenkins \
+  --network-alias docker \
+  --env DOCKER_TLS_CERTDIR=/certs \
+  --volume jenkins-docker-certs:/certs/client \
+  --volume jenkins-data:/var/jenkins_home \
+  --publish 2376:2376 \
+  docker:dind \
+  --storage-driver overlay2                         - pobranie i uruchumoenie docker:dinda
+- Dockerfile:
+            FROM jenkins/jenkins:2.332.1-jdk11
+            USER root
+            RUN apt-get update && apt-get install -y lsb-release
+            RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
+            https://download.docker.com/linux/debian/gpg
+            RUN echo "deb [arch=$(dpkg --print-architecture) \
+            signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \
+            https://download.docker.com/linux/debian \
+            $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
+            RUN apt-get update && apt-get install -y docker-ce-cli
+            RUN curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            RUN chmod +x /usr/local/bin/docker-compose
+            USER jenkins
+            RUN jenkins-plugin-cli --plugins "blueocean:1.25.3 docker-workflow:1.28"
+- docker build -t myjenkins-blueocean:2.332.1-1 . - zbudowanie obrazu
+- docker run \
+  --name jenkins-blueocean \
+  --rm \
+  --detach \
+  --network jenkins \
+  --env DOCKER_HOST=tcp://docker:2376 \
+  --env DOCKER_CERT_PATH=/certs/client \
+  --env DOCKER_TLS_VERIFY=1 \
+  --publish 8080:8080 \
+  --publish 50000:50000 \
+  --volume jenkins-data:/var/jenkins_home \
+  --volume jenkins-docker-certs:/certs/client:ro \
+  myjenkins-blueocean:2.332.1-1                     - uruchomienie kontenera
+  
+3. Po tym wrzucono obraz Jenkinsa na Dockerhuba za pomoca komend opisanych na poprzednim laboratorium.
+
+4. Po tym zalogowano sie na localhost:8080 podajac haslo. Haslo mozna bylo uzyskac poprzez komende:
+- docker logs nazwaKontenera
+
+5. Nastepnie dodano link do repozytorium oraz odpowiednia galaz - Grupa1.
+
+6. Po tym dostano sie do odpowiedniego pliku i uruchomiono docker-composa.
+
+7. Na koniec zajec dodano zmiany na remota, zmergowano z galezia grupy i zrobiono pull-requesta na mastera.

@@ -1,0 +1,16 @@
+1. W pierwszej czesci zajec stworzone zostaly odpowiednie katalog Docker. Napoczatku wrzucono do niego docker-compose, Dockerfile dla build-agenta oraz dla test-agenta, a nastepnie w odpowiedni sposob je zmodyfikowano.
+
+2. Nastepnie sklonowana repozytorium chatu za pomoca komendy git fork. Po tym stworzono JenkinsFile'a, ktorego wrzucono do pobranego repozytorium, a takze do repozytorium z 1 punktu do folderu Jenkins_Zadanie2. 
+Ponadto skopiowano docker-compose, Dockerfile dla build-agenta oraz dla test-agenta z repozytorium z 1 punktu w odpowiednie miejsce do nowosklonowanego repozytorium.
+Z racji tego, ze na poprzednich laboratoriach przygotowano Pipeline'a, ktory mowil ze uzytkownik bedzie otrzymywal rezultaty w logach takze tez w taki sposob stworzono JenkinsFile'a.
+Nalezalo rowniez pamietac aby uruchomic Jenkinsa tak jak na jednych z poprzednich laboratoriow. Dockerfile do jego utworzenia rowniez wstawiono do repozytorium z 1 punktu.
+
+3. W kolejnej czesci zajec rozszerzono Jenkinsfile'a o nowy stage Build, ktory uruchamia buildsection z docker-compose'a. Z racji tego zmieniono rowniez stage'a zwiazanego z testowaniem. 
+
+4. W celu zastosowania Webhooka pobrano ngrok, aby uzyc publiczne IP i go uruchomiono na porcie 8080 za pomoca komendy: ngrok http 8080. Nastpenie na repozytorium z chatem dodano webhooka z ustawieniami takimi jak na zrzucie ekranu.
+Nalezalo rowniez zmodyfikowac ustawienia jenkinsa: zaznaczyc GitHub hooka w trigerach.
+
+5. W ostatniej czesci zajec poraz kolejny rozszerzono Jenkinsfile o nowy stage Deploy wraz z przekazywanym artefaktem stworzonym w stage'u Build ktorego tworzenie rowniez zostalo dodane w tymze stage'u.
+Ponadto w tym stage'u dodano instrukcje do wrzucenia obrazu na Dockerhub'a(wdrozenie). W tym celu nalezalo dodac rowniez na jenkinsie credentials do nowostworzonego repozytorium i nowowygenerowany token.
+
+6. Na koniec wrzucono na zdalne rezpozytorium z pierwszego punktu sprawozdanie oraz zrzuty ekranu.

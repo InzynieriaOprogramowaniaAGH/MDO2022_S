@@ -1,0 +1,20 @@
+Sprawozdanie
+====
+
+
+1. minikube start; minikube dashboard
+uruchomienie minikube oraz dashboard
+
+2. Napisanie komunikator_deployment.yaml
+
+3. minikube kubectl -- apply -f komunikator_Deployment.yaml
+Utworzenie wersji deploymentowej z konfiga
+
+4. minikube kubectl -- rollout status deployment/komunikator-deployment
+sprawdzenie statusu wdrożenia
+
+5. minikube kubectl -- rollout history deployment/komunikator-deployment
+pokazuje historie 
+
+6. minikube kubectl -- rollout undo deployment/komunikator-deployment
+przywraca ostatnią wersję

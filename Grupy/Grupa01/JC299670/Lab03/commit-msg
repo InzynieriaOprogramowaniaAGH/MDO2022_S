@@ -1,0 +1,10 @@
+#!/bin/sh
+
+pattern='JC299670*'
+msg="Your commit must starts with JC299670"
+
+if ! grep -iqE "$pattern" "$1"; then
+	echo "$msg"
+	exit 1;
+fi
+echo "Message Ok"
