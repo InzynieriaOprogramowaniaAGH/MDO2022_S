@@ -63,7 +63,19 @@ Usługę uruchamia się poleceniem `transmission-daemon` i działa na porcie 909
 ![](Pictures/7.png?raw=true)
 
 
-- Wykaż działającą aplikację wewnątrz kontenera
+- Urucomienie aplikacji w kontenerze
+
+Uruchomiono kontener ubuntu w trybie interaktywnym `sudo docker run -it ubuntu`
+Do buildu potrzebnych jest kilka dodatakowych narzędzi, które należy zainstalować
+
+
+apt-get install cmake
+apt-get install g++
+export CXX=g++
+apt-get install libcurl4-openssl-dev
+apt-get install libssh-dev
+apt-get install python3
+
 
 - P
 
