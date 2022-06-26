@@ -22,7 +22,7 @@ pipeline {
             steps {
                 echo 'DEPLOY'
                 dir('INO/termin2/DK306669') {
-                    sh 'docker run --volume /var/jenkins_home/workspace/PipeLine/INO/termin2/DK306669:/finalBuild builder mv -n build /finalBuild'
+                    sh 'docker run --volume /var/jenkins_home/workspace/PipeLine/INO/termin2/DK306669:/build builder mv -n build /build'
                     sh 'docker build . -f deploy.dockerfile -t deployer'
                 }
                 sh 'docker run --volume /var/jenkins_home/workspace/PipeLine/INO/termin2/DK306669/build:/build -d -p 3000:80 deploy'
