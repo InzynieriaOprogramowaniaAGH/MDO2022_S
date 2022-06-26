@@ -36,7 +36,7 @@ pipeline {
                 dir('INO/termin2/DK306669') {
                     sh 'docker build . -f publish.dockerfile -t publisher'
                 }
-                sh "docker run --volume /var/jenkins_home/workspace/PipeLine/INO/termin2/DK306669:/Archive publisher mv nodejs_archive_versionX.tar.xz /Archive"
+
                 archiveArtifacts artifacts: "nodejs_archive_versionX.tar.xz"
             }
         }   
