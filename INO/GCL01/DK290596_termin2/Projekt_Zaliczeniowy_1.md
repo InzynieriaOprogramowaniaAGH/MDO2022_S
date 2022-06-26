@@ -64,8 +64,11 @@ W obecnej sytuacji najelszym wyborem będzie użycie kontenera opartego o pobran
 
 Uruchomienie dokonuje przy pomocy polecenia 
 **sudo docker run --name nodered -it node /bib/bash**
+
 --name pozawala nadać nazwę kontenerowi
+
 -it pozwala używać kontener w trybie interaktywnym
+
 /bin/bash żeby "być w konsoli" i móc wydawać polecenia
 
 Po wykonaniu powyższego polecenia widzimy, że jesteśmy wewnątrz kontenera i możemy zacząć działać.
@@ -79,6 +82,28 @@ Po wykonaniu wszystkich kroków uruchamiamy aplikację w kontenerze. Widać jej 
 ![npm_start2](https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S/blob/DK290596_termin2/INO/GCL01/DK290596_termin2/npm_start2.png)
 
 
-- Gdy program pracuje, przedstaw sposó, w jaki można się z nim komunikować przez port. Przedstaw formę graficzną i z wykorzystaniem wiersza poleceń. 
+- Gdy program pracuje, przedstaw sposób, w jaki można się z nim komunikować przez port. Przedstaw formę graficzną i z wykorzystaniem wiersza poleceń. Skuteczność komunikacji musi być jednoznaczna.
+
+Komunikacja w sposób graficzny:
+
+Aby uruchomić aplikację przechodzimy do folderu z pobrany repozytoriu i wykonujemy polecenie **npm start**, które uruchamiana naszą uprzednio zbudowaną aplikację. Widać to na załączonym ponizej zrzucie. Po uruchomienie w konsoli mamy podany także adres local hosta jaki musimy użyć w przeglądarce.
+
+![app_start]()
+
+Po użyciu tego adresu uzyskujemy okno graficzne aplikacji.
+
+![app_start_web]()
+
+Komunikacja z wykorzystaniem wiersza poleceń:
+
+![app_start_console]()
+
+
+- Sforkuj repozytorium aplikacji tak, żeby połączyć je z przygotowanymi elementami DevOps
+
+Na poniższym zrzucie widać sforkowane repozytorium Node-red które teraz jest jednym z moich repozytoriów.
+
+![fork_repo]()
+
 
 
