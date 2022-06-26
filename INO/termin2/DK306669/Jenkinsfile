@@ -24,7 +24,7 @@ pipeline {
                 dir('./INO/termin2/DK306669') {
                     sh 'docker build . -f build.dockerfile -t deploy'
                 }
-                sh 'docker run --rm --name deploy --mount type=volume,src="exit_volume",dst=/nodejs.org deploy_image bash =c "cd /nodejs.org && npm run"'
+                sh 'docker run --rm --name deploy --mount type=volume,src="exit_volume",dst=/nodejs.org node bash =c "cd /nodejs.org && npm run"'
             }
         }    
           stage('Publish') {
