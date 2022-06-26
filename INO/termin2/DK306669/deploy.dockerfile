@@ -1,3 +1,4 @@
 FROM nginx:stable-alpine
-
-ADD /var/jenkins_home/workspace/PipeLine/INO/termin2/DK306669/build /usr/share/nginx/html
+FROM build1:latest
+WORKDIR /nodejs.org/
+COPY /build/ /usr/share/nginx/html
