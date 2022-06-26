@@ -5,10 +5,8 @@ pipeline {
             steps {
                 echo 'BUILD'
                 git branch: 'DK306669_termin2', url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git'
-                dir('./INO/termin2/DK306669') {
+                dir('INO/termin2/DK306669') {
                     sh 'docker build . -f build.dockerfile -t builder'
-                    sh 'docker volumne create exit_volume'
-                    sh 'docker run --mount type=volume,src="entry_volume",dst=/nodejs.org --mount type=volume,src="exit_volume",dst=/build bash -c "cd /nodejs.org && npm i -g; cd ..; cp -r build"'
                 }
             }
         }
