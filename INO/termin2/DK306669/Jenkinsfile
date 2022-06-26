@@ -6,7 +6,7 @@ pipeline {
                 echo 'BUILD'
                 git branch: 'DK306669_termin2', url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git'
                 dir('INO/termin2/DK306669') {
-                    sh 'docker build . -f build.dockerfile -t build'
+                    sh 'docker build . -f build.dockerfile -t builder'
                 }
             }
         }
@@ -21,8 +21,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'DEPLOY'
-                sh 'docker run --volume /var/jenkins_home/workspace/PipeLine/INO/termin2/DK306669:/build build mv -n build /build'
-                sh 'ls /var/jenkins_home/workspace/PipeLine/INO/termin2/DK306669'
+                sh 'docker run --volume /var/jenkins_home/workspace/PipeLine/INO/termin2/DK306669:/finalBuild builder mv -n build /finalBuild'
                 dir('INO/termin2/DK306669') {
                     sh 'docker build . -f deploy.dockerfile -t deployer'
                 }
