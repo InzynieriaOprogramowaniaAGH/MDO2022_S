@@ -1,3 +1,4 @@
-FROM nginx:stable-alpine
-
-COPY ./build/* /usr/share/nginx/html
+FROM build1:latest
+FROM build1:latest
+WORKDIR /nodejs.org/
+COPY /build/ /usr/share/nginx/html
