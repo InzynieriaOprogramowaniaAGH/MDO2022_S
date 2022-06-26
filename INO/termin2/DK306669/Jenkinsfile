@@ -21,10 +21,12 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'DEPLOY'
-                dir('./INO/termin2/DK306669') {
-                    sh 'docker build . -f build.dockerfile -t deploy'
+                sh 'docker run --volume /var/jenkins_home/workspace/PipeLine/INO/termin2/DK306669:/finalBuild builder mv -n build /finalBuild'
+                dir('INO/termin2/DK306669') {
+                    sh 'docker build . -f deploy.dockerfile -t deployer'
                 }
-                sh 'docker run --rm --name deploy --mount type=volume,src="exit_volume",dst=/nodejs.org node bash -c "npm run"'
+                sh 'docker run --volume /var/jenkins_home/workspace/PipeLine/INO/termin2/DK306669/build:/build -d -p 3000:80 deploy'
+                sh 'docker stop $(docker ps -a -q)'
             }
         }    
           stage('Publish') {
