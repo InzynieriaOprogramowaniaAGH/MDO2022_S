@@ -52,16 +52,66 @@ Do buildu potrzebne są:
 
 maven:
 
+`apt update`
+`apt install maven`
 
-apt-get install cmake
-apt-get install g++
-export CXX=g++
-apt-get install libcurl4-openssl-dev
-apt-get install libssh-dev
-apt-get install python3
+![](Pictures/7.png?raw=true)
+
+java:
+
+`apt install openjdk-17-jdk`
+
+![](Pictures/8.png?raw=true)
+
+git (sklonowanie repozytorium):
+
+`apt install git`
+`git clone https://github.com/sirjk/bastimShop.git`
+
+![](Pictures/9.png?raw=true)
+
+![](Pictures/10.png?raw=true)
+
+mysql-server oraz jego skonfigurowanie:
+`apt install mysql-server`
+`service mysql start`
+`ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';`
+`FLUSH PRIVILEGES;`
+
+`mysql -u root -p`
+`create database bastimdb;`
+
+![](Pictures/11.png?raw=true)
+
+![](Pictures/12.png?raw=true)
+
+![](Pictures/13.png?raw=true)
+
+powtórzenie kroków budowania i testowania:
+
+`mvn clean package`
+
+`mvn test`
+
+![](Pictures/14.png?raw=true)
+
+![](Pictures/15.png?raw=true)
+
+![](Pictures/16.png?raw=true)
 
 
-- P
+uruchomienie programu w tle:
+
+`java -jar shopBastim-0.0.1-SNAPSHOT.jar &`
+
+![](Pictures/17.png?raw=true)
+
+sprawdzenie poprawności działania:
+
+`curl -i localhost:8080/api/v1/categories`
+
+![](Pictures/18.png?raw=true)
+
 
 ## Wstęp
 Przed przystąpieniem do tworzenia Pipeline'a należy uruchomić kontener Jenkinsa i DIND (docker in docker). W tym celu warto zapoznać się z poniższą instrukcją:
