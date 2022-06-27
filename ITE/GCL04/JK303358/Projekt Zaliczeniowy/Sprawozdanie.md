@@ -113,6 +113,23 @@ sprawdzenie poprawności działania:
 ![](Pictures/18.png?raw=true)
 
 
+Uruchomiono kontener Jenkinsa oraz DIND zgodnie z poniższą instrukcją:
+
+https://www.jenkins.io/doc/book/installing/docker/
+
+![](Pictures/19.png?raw=true)
+
+![](Pictures/20.png?raw=true)
+
+Aby upewnić się, że kontenery działają można je wylistować poleceniem `docker ps`
+
+![](Pictures/21.png?raw=true)
+
+Aby zapewnić dostęp do Jenkinsa z zewnątrz maszyny wirtualnej hostującej Dockera dodano przekierowanie portu, na którym działa Jenkins:
+
+![](Pictures/22.png?raw=true)
+
+
 ## Wstęp
 Przed przystąpieniem do tworzenia Pipeline'a należy uruchomić kontener Jenkinsa i DIND (docker in docker). W tym celu warto zapoznać się z poniższą instrukcją:
 
