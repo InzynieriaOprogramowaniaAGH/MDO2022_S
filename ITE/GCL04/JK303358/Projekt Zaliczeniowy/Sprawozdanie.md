@@ -48,7 +48,9 @@ Połączono się z serwerem (z konkretnym endpointem) poleceniem `curl -i localh
 - Urucomienie aplikacji w kontenerze
 
 Uruchomiono kontener ubuntu w trybie interaktywnym `sudo docker run -it ubuntu`
-Do buildu potrzebnych jest kilka dodatakowych narzędzi, które należy zainstalować
+Do buildu potrzebne są:
+
+maven:
 
 
 apt-get install cmake
