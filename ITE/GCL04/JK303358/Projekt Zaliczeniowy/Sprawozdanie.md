@@ -15,53 +15,35 @@ Wykorzystany program:
 
 https://github.com/transmission/transmission
 
+Pipeline skupia się na wdrażaniu części back-endowej.
+
 Oprogramowanie posiada licencję GNU GPL, która jest licencją typu Open Source.
 
 ---
 
 - Wykaż uruchomiony build i testy poza kontenerem
 
-Zgodnie z instrukcją z repozytorium oprogramowania wykonano komendy budujące oraz uruchomiono testy:
+Wykonano komendy budujące oraz uruchomiono testy:
 
-`git clone https://github.com/transmission/transmission Transmission`
-
-`cd Transmission`
-
-`git submodule update --init --recursive`
+`mvn clean package`
 
 ![](Pictures/1.png?raw=true)
 
-`mkdir build`
-
-`cd build`
-
-(`sudo apt install cmake`)
-
-`cmake - DCMAKE_BUILD_TYPE=RelWithDebInfo ..`
-
 ![](Pictures/2.png?raw=true)
+
+`mvn test`
 
 ![](Pictures/3.png?raw=true)
 
-`make`
-
 ![](Pictures/4.png?raw=true)
 
-`sudo make install`
+Uruchomiono program `java -jar shopBastim-0.0.1-SNAPSHOT.jar`
 
 ![](Pictures/5.png?raw=true)
 
-`ctest`
+Połączono się z serwerem (z konkretnym endpointem) poleceniem `curl -i localhost:8080/api/v1/categories`, curl domyślnie wysyła zapytanie GET (flaga -i odpowiada za wyświetlenie nagłówka odpowiedzi, w którym znajduje się między innymi status odpowiedzi - 200 oznacza powodzenie).
 
 ![](Pictures/6.png?raw=true)
-
-
-Usługę uruchamia się poleceniem `transmission-daemon` i działa na porcie 9091:
-
-![](Pictures/8.png?raw=true)
-
-![](Pictures/7.png?raw=true)
-
 
 - Urucomienie aplikacji w kontenerze
 
