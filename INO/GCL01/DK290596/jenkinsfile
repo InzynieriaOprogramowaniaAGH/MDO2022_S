@@ -1,0 +1,61 @@
+pipeline {
+
+	agent any
+
+	parameters {
+	string(name: 'VERSION', defaultValue: '1.0.0')
+	string(name: 'NAME', defaultValue: 'RELEASE')
+	booleanParam(name: "PUBLISH", defaultValue: false)
+	}
+	
+	stages {
+		stage("BUILD") {
+			steps {
+				echo "build stage"
+				sh 'docker build . -f build.dockerfile -t nrbuild'
+				sh 'docker volume create nrVolOut'
+				sh 'docker run --mount type=volume,src="nrVolOut",dst=/nodered nrbuild:latest bash -c "cd .. && cp -r /node-red_fork /nodered"'
+			}
+		}
+		
+		stage("TEST") {
+			steps {
+				echo "test stage"
+				sh 'docker build . -f test.dockerfile -t nrtest'
+			}
+		}
+		stage("DEPLOY") {
+			steps {
+				echo "deploy stage"
+				sh 'docker rm -f nrdeploy || true'
+				sh 'docker run --name nrdeploy --mount type=volume,src="nrVolOut",dst=/nodered node bash -c "cd nodered && cd node-red_fork && npm run"'
+				sh 'exit $(docker inspect nrdeploy --format="{{.State.ExitCode}}")'
+			}
+		}	
+	stage("PUBLISH") {
+		steps {
+			script {
+				if(params.PUBLISH) {
+				sh "mkdir nodered"
+				sh 'docker rm -f nrpublish || true'
+				sh 'docker run --name nrpublish nrbuild:latest'
+				sh"docker cp nrpublish:/node-red_fork ./nodered"
+				sh"tar -zcvf nr_${params.NAME}_${params.VERSION}.tar.xz nodered/node-red_fork"
+				sh "rm -r nodered"
+				archiveArtifacts artifacts: "nr_${params.NAME}_${params.VERSION}.tar.xz"
+					}
+				}
+			}
+		}
+	}
+		
+	post {
+		success {
+			echo "PIPELINE SUCCEED"
+			}
+		failure {
+			echo "PIPELINE FAILURE"
+			}
+		}
+}
+	
