@@ -41,60 +41,60 @@ IN THE SOFTWARE.
 
 Sklonowałem sforkowane repo, a następnie dokonałem instalacji niezbednych pakietow:
 
-![screen1](1.JPG)
-![screen2](2.JPG)
-![screen3](3.JPG)
+![screen1](1.jpg)
+![screen2](2.jpg)
+![screen3](3.jpg)
 
 Jak widać aplikacja prawidłowo się zbudowała:
 
-![screen4](4.JPG)
-![screen5](5.JPG)
+![screen4](4.jpg)
+![screen5](5.jpg)
 
 ### Testy
 
 Wybrana przeze mnie aplikacja posiada gotowe do uzycia testy. Jak widac, proces testowania nie napotkal zadnych problemow:
 
-![screen6](6.JPG)
-![screen7](7.JPG)
+![screen6](6.jpg)
+![screen7](7.jpg)
 
-### Konteneryzacja
+### Konteneryzacja wraz z wdrozeniem
 
 Dla spokoju ducha, projekt przeprowadzilem na swiezej instalacji systemu ubuntu. Wszelkie kroki z instalacji niezbednych pakietow (np. docker), pomijam. Z repozytorium dostepnych dockerowych narzedzi, pobieram node'a i klonuje repozytorium.
 
-![screen8](8.JPG)
-![screen9](9.JPG)
+![screen8](8.jpg)
+![screen9](9.jpg)
 
 Nastepnym krokiem jest instalacja narzędzi, build, a także przeprowadzenie testow:
 
-![screen10](10.JPG)
-![screen11](11.JPG)
-![screen12](12.JPG)
-![screen13](13.JPG)
+![screen10](10.jpg)
+![screen11](11.jpg)
+![screen12](12.jpg)
+![screen13](13.jpg)
 
 Kolejnym waznym krokiem we wdrozeniu aplikacji, jest utworzenie dockerfiles, na podstawie ktorych dokonywana bedzie budowa, testy, deploy i publish.
 
-![screen16](16.JPG)
-![screen17](17.JPG)
-![screen14](14.JPG)
-![screen15](15.JPG)
+![screen16](16.jpg)
+![screen17](17.jpg)
+![screen14](14.jpg)
+![screen15](15.jpg)
 
-![screen18](18.JPG)
-![screen19](19.JPG)
+![screen18](18.jpg)
+![screen19](19.jpg)
 
 Do prawidlowej operacji nad kontekstem aplikacji, szczegolnie przy kroku wdrozenia (deploy na nginxie - z uwagi na aplikacje webowa), utworzone zostaly nastepujace woluminy:
 
-![screen20](20.JPG)
+![screen20](20.jpg)
 
 Ostateczne pliki dockerowe i Jenkinsowe wygladaja nastepujaco:
 
-![screen23](23.JPG)
-![screen24](24.JPG)
-![screen25](25.JPG)
-![screen26](26.JPG)
+![screen23](23.jpg)
+![screen24](24.jpg)
+![screen25](25.jpg)
+![screen26](26.jpg)
 
 Po wielu probach, w koncu udalo mi sie pozytywnie przejsc caly pipeline wdrozeniowy. Mialem sporo problemow z odpowiednim zastosowaniem woluminu, szczegolnie podczas kroku deployu, ale finalnie po 5635734347 probie, udalo mi sie. :) Mialem tez sporo problemow z prawidlowa konfiguracja pakietow npm, a mianowicie problematyczna okazala sie kompatybilnosc z aplikacja i srodowiskiem pracy.
 
-![screen21](21.JPG)
+![screen21](21.jpg)
 
 Uwazam ze program nie powinien w zarchiwzowanej wersji produkcyjnej, zawierac logow z builda, gdyz koncowemu klientowi, nie jest to do niczego potrzebne. Powinien on dostac ostateczna wersje produktu, w pelni dzialajaca o odpowiednim numerze wersji.
 
@@ -130,8 +130,8 @@ sudo systemctl status jenkins
 ```
 
 ### Diagram aktywnosci i wdrozenia
-![diag1](diag1.JPG)
-![diag2](diag2.JPG)
+![diag1](diag1.jpg)
+![diag2](diag2.jpg)
 
 ### Logi
 ```
