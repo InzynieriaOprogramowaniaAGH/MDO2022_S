@@ -4,7 +4,7 @@ Wykonał Grzegorz Surdziel, nr albumu 404349
 
 ## Wybór repozytorium
 
-Poszukując odpowiedniego projektu spełniającego wymagania komunikacji przez TCP, oraz na otwartej licencji natrafiłem na (meta-repozytorium)[https://github.com/public-apis/public-apis] (gromadzące otwarte, publiczne API), gdzie odnalazłem (meowfacts)[https://github.com/wh-iterabb-it/meowfacts].
+Poszukując odpowiedniego projektu spełniającego wymagania komunikacji przez TCP, oraz na otwartej licencji natrafiłem na [meta-repozytorium](https://github.com/public-apis/public-apis) (gromadzące otwarte, publiczne API), gdzie odnalazłem [meowfacts](https://github.com/wh-iterabb-it/meowfacts).
 Projekt na licencji MIT (według jego pliku LICENSE) spełnia założenia sprawozdania.
 Aplikacja dostarcza serwer odpowiadający na zapytania GET przez HTTP na (domyślnym) porcie 5000. Odpowiedź jest w surowym formacie JSON i zawiera zawsze krótki tekst.
 
@@ -40,6 +40,7 @@ Wykonuję również zapytanie przez *curl*
 
 W celu zbudowania kontenera stworzyłem **Dockerfile** opatrzony komentarzami do każdej linii. Plik znajduje się w repozytorium, tutaj wklejam również całość
 
+```
   # syntax=docker/dockerfile:1
 
   # use a predefined docker image with npm and node.js installed
@@ -58,6 +59,7 @@ W celu zbudowania kontenera stworzyłem **Dockerfile** opatrzony komentarzami do
   EXPOSE 5000
   # run the server
   CMD [ "node", "server.js" ]
+```
 
 Powyższy plik pozwoli na zachowanie kroków tworzenia obrazu i zautomatyzowanie odtworzenia tej pracy
 Wykorzystanie stworzonego Dockerfile wymaga wydania polecenia **docker build**. Dobrą praktyką jest odpowiednie otagowanie obrazu. Tutaj nazywam ją wersją **first**
