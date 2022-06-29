@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+    stages{
+        stage('Build') {
+            steps {
+                echo 'BUILD'
+                git branch: 'DK306669_termin2', url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S.git'
+                dir('INO/termin2/DK306669') {
+                    sh 'docker build . -f build.dockerfile -t builder'
+                }
+            }
+        }
+        stage('Tests') {
+            steps {
+                echo 'TESTS'
+                dir('INO/termin2/DK306669') {
+                    sh 'docker build . -f test.dockerfile -t tester'
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'DEPLOY'
+                sh 'docker run --volume /var/jenkins_home/workspace/PipeLine/INO/termin2/DK306669:/build builder mv -n build /build'
+                dir('INO/termin2/DK306669') {
+                    
+                    sh 'docker build . -f deploy.dockerfile -t deployer'
+                }
+                sh 'docker run --volume /var/jenkins_home/workspace/PipeLine/INO/termin2/DK306669/build:/build -d -p 3000:80 deploy'
+                sh 'docker stop $(docker ps -a -q)'
+            }
+        }    
+          stage('Publish') {
+            steps {
+                echo 'PUBLISH'
+                dir('INO/termin2/DK306669') {
+                    sh 'docker build . -f publish.dockerfile -t publisher'
+                }
+                sh "docker run --volume /var/jenkins_home/workspace/PipeLine/INO/termin2/DK306669:/Archive publisher mv archive.tar.xz /Archive"
+            }
+        }   
+    }
+}

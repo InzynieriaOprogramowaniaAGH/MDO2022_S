@@ -1,0 +1,25 @@
+sudo npm cache clean -f
+sudo npm install -g n
+sudo n stable
+sudo rm -rf /usr/local/lib/node_modules
+sudo rm -rf ~/.npm
+sudo apt-get curl
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/dawid/.profile
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+sudo apt-get install build-essential
+brew uninstall --force node
+brew install node
+
+npm install eslint-plugin-n@latest --save-dev
+
+sudo docker pull node
+Inside docker:
+sudo docker run --interactive --tty node sh
+git clone.....
+npm install
+npm start
+npm run build
+
+sudo systemctl start jenkins
+sudo systemctl status jenkins
