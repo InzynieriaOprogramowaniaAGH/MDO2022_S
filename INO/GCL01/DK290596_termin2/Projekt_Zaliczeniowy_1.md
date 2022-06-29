@@ -90,6 +90,8 @@ Komunikacja w sposób graficzny:
 
 Aby uruchomić aplikację przechodzimy do folderu z pobrany repozytoriu i wykonujemy polecenie **npm start**, które uruchamiana naszą uprzednio zbudowaną aplikację. Widać to na załączonym ponizej zrzucie. Po uruchomienie w konsoli mamy podany także adres local hosta jaki musimy użyć w przeglądarce.
 
+![app_start111](https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S/blob/DK290596_termin2/INO/GCL01/DK290596_termin2/nr1.PNG)
+
 ![app_start](https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S/blob/DK290596_termin2/INO/GCL01/DK290596_termin2/app_start.png)
 
 Po użyciu tego adresu uzyskujemy okno graficzne aplikacji.
@@ -160,7 +162,7 @@ Pierwsze polecenie nam definiuje na jakim obrazie ma zostać oparty nasz nowy ut
 
 Ponizej mamy zrzut przedstawiający definicję etapu build z jenkinsfile'a.
 
-![build_jenkinsfile]()
+![build_jenkinsfile](https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S/blob/DK290596_termin2/INO/GCL01/DK290596_termin2/build_jenkinsfile.PNG)
 
 Pierwsza linijka to podanie komunikatu o tym co bedzie teraz następować. Kolejno utworzenie nowego obrazu w oparciu o definicję podaną w dockerfilu. Pomyślne utworzenie swiadczy o bezproblemowym przejściu builda (zawartego w definicji pliku dockerfile). Będzie on w tym przypadku nosił nazwę nrbuild. Kolejno tworzony jest wolumin na który jest "pakowany" katalog ze zbudowaną już aplikacją. Przyda nam się to w części Deploy.
 
@@ -170,13 +172,13 @@ W ramch kroku **TEST** używamy naszego powstałego w kroku build obrazu jako ob
 
 Widzimy, iż za obraz bazowy pobierany jest poprzednio utworzony nrbuild. Ustawiany jest katalog roboczy oraz uruchamiane testy. Krok test w jenkinsfile'u wygląda następująco.
 
-![test_jenkinsfile]()
+![test_jenkinsfile](https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S/blob/DK290596_termin2/INO/GCL01/DK290596_termin2/test_jenkinsfile.PNG)
 
 Tak jak uprzednio mamy krótki komunikat, a następnie tworzony jest obraz nrtest w oparciu o definicje z dockerfile'a.
 
 Przechodząc do kroku **Deploy** który ma na celu sprawdzenie czy nasza zbudowana aplikacja, przeniesiona w inne "miejsce" (w życiu codziennym w dokładne środowisko w jakim ma pracować) nie wykazuje problemów, uruchamia się i działa. Niestety w tym kroku napotkałem problem, z którym mimo wielu prób nie udało mi się uporać. Po uruchomieniu aplikacji nmp start w logach ukazywała mi się postać "wierszowa" uruchomienej aplikacji co świadczy o jej działaniu, jednak by jenkins mógł przejśc dalej z wykonywaniem pipeline'a konieczne jest zakończnie pracy aplikacji przy użyciu polecenia CTRL+C co nie udało mi się przekazać w skrypcie i mój pipeline działał "w nieskończoność". W celu choć minimallego sprawdzenia poprawności działania zostało użyte polecenie npm run a następnie sprawdzenie stanu kontenera i czy zwraca on wartość 0 świadczącą iż wszystko jest w porządku. Poniżej znajduje się fragment odpowiadający za krok Deploy.
 
-![deploy_jenkinsfile]()
+![deploy_jenkinsfile](https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S/blob/DK290596_termin2/INO/GCL01/DK290596_termin2/deploy_jenkinsfile.PNG)
 
 Jak uprzednio widzimy mamy linie odpowiadającą za krótką informacje, następnie usuwany jest kontener o zadanej nazwie jeśli istniej z racji, że gdy przy jednym pipelinie zostanie utworzony o danej nazwie co mam miejsce w kolejnej linii to przy kolejnym uruchomieniu pipelinu zostanie zwrócony błąd o niemożliwości utworzenia nowego o zadanej nazwie bo już taki istnieje. Widzimy, że przy okazji tworzenia jest montowany volumin zawierający katalog z już zbudowaną działającą aplikacją i dokonywane jest jej sprawdzenie. Kolejno sprawdzany jest Exit.Code w celu sprawdzenia czy wszystko jest w porządku. Najlepiej by było to zrobić jak wspamniano wcześniej uruchamijąc aplikację i pokazać jej działanie "wierszowe" jednak to blokowało pipeline i nie udało się tego pokonać na ten moment.
 
@@ -185,7 +187,7 @@ Odpowiadając na pytanie czy program powinien zostać zapakowany do jakiegoś pr
 
 Ostani krok publish zakłada już przygotowanie formy do dystrybucji naszej aplikacji. W tym przypadku padł wybór na spakowanie folderu ze zbudowaną aplikacją i publikowanie w formacie TAR.XZ. Krok w jenkinsfile'u odpowiadający za to jest przedstawiony poniżej.
 
-![deploy_jenkinsfile]()
+![publish_jenkinsfile](https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S/blob/DK290596_termin2/INO/GCL01/DK290596_termin2/publish_jenkinsfile.PNG)
 
 Fragment w tym przypadku jest nieco dłuższy ale jego działanie przbiega następująco. Mamy instrukcje warunkową która odpowiada za to czy zbudowana aplikacja z danego wywołania pipelinu ma być publikowana (przy uruchamianiu pipeline'u mamy checkbox'a do wyboru czy publikacja ma nastąpić czy nie).
 Kolejno tworzony jest nowy katalog (w naszym jenkinsowym workspacie). Kolejno usuwany jest kontener o nazwie nrpublish jesli istnieje by zapobiec sytuacji że nasz pipieline napotka problem w kolejnym kroku przy tworzeniu z racji że już taki istnieje. Tworzony jest kontener oparty o obraz powstały w naszym buildzie (czyli zawierający zbudowaną, sprawną i przetestowaną aplikacje w kroku test). Kolejno kopiowany jest z niego katalog ze sprawną aplikacją do naszego workspaceu jenkinsowego. Kolejno katalog ten zostaje spakowany, folder usunięty a nasz "tar" opublikowany w sekcji artifacts co umożlwia nam pobranie go z poziomu jenkinsa i po rozpakowaniu otrzymujemy sprawną działającą aplikację. 
@@ -193,7 +195,7 @@ Kolejno tworzony jest nowy katalog (w naszym jenkinsowym workspacie). Kolejno us
 
 Nasz jnkinsfile zawiera jeszcze dwie sekcje. Jedna poprzedzająca cały ciąg Build-Test-Deploy-Publish następującej postaci.
 
-![parameters_jenkinsfile]()
+![parameters_jenkinsfile](https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S/blob/DK290596_termin2/INO/GCL01/DK290596_termin2/parameters_jenkinsfile.PNG)
 
 Odpowiedzialna jest ona za wersjonowanie naszej otrzymywanej aplikacji po publishu. Po uruchomieniu pipelinu pojawia nam się okno gdzie podajemy wersję oraz nazwę i w przypadku zaznaczenia opcji publish otrzymywany artefakt jest oznaczany podanymi przez nas danymi. Wygląda to następująco.
 
