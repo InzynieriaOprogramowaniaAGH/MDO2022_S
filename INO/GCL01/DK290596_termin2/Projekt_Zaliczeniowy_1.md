@@ -166,7 +166,7 @@ Pierwsza linijka to podanie komunikatu o tym co bedzie teraz następować. Kolej
 
 W ramch kroku **TEST** używamy naszego powstałego w kroku build obrazu jako obraz bazowy dla testów. Mamy już tam zainstalowaną aplikację więc jedyne co będziemy musieli zrobić to uruchomić testy. W celu utworzenia obrazu z testami mamy przygotowany odpowiedni plik dockerfile z przepisem na to. Wygląda on następująco.
 
-![test_dockerfile]()
+![test_dockerfile](https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S/blob/DK290596_termin2/INO/GCL01/DK290596_termin2/test_dockerfile.png)
 
 Widzimy, iż za obraz bazowy pobierany jest poprzednio utworzony nrbuild. Ustawiany jest katalog roboczy oraz uruchamiane testy. Krok test w jenkinsfile'u wygląda następująco.
 
