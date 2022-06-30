@@ -1,0 +1,4 @@
+FROM node:latest
+
+RUN git clone https://github.com/expressjs/express.git
+RUN cd express && npm i

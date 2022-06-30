@@ -1,0 +1,9 @@
+1. Stworzono brancha za pomocą komendy git checkout -b "Grupa02-MD404241_Lab03"
+2. Przeniesiono git hooka za pomoca komendy mv z podaniem poprawnej sceizki
+3. Zainstalowano dockera za pomoca pacmana (manjaro distro) i wlaczono go komenda systemctl start
+4. Zalozono konto na Docker Hub
+5. Stworzono Dockerfile i umieszczono w nim odpowiedni kontent dla najnowszego ubuntu
+6. Stworzono grupe dockera
+7. Stworzono docker build komenda docker build . -t devops
+8. Uruchomiono kontener komenda docker run -it devops bash
+9. Sklonowoano repozytorium na dockera i sprawdzono czy jest moj branch komendami git clone git checkout

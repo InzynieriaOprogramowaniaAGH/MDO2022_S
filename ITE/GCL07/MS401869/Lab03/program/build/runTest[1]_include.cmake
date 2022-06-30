@@ -1,0 +1,5 @@
+if(EXISTS "/usr/src/build/runTest[1]_tests.cmake")
+  include("/usr/src/build/runTest[1]_tests.cmake")
+else()
+  add_test(runTest_NOT_BUILT runTest_NOT_BUILT)
+endif()

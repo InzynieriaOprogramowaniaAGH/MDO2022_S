@@ -1,0 +1,17 @@
+-git clone na repozytorium https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S
+Polecenie clone tworzy lokalną kopię repozytorium podanego w argumencie.
+
+-git checkout -b ŁD400222
+tworzy w lokalnym repozytorium nowy branch o nazwie ŁD400222 i przełącza się na niego
+
+-git add .
+dodaje podane  w argumencie pliki (. oznacza wszystkie) do “staging area”, pliki te można potem zakomitować i wysłać na serwer
+
+-git commit -m “tekst”
+tworzy nowy lokalny commit, parametr m pozwala na dodanie komentarz do commita, komentarz ten będzie widoczny m.in.; gdy użyjemy polecenia git log.
+
+-git log
+pozwala na zobaczenie wszystkich do tej pory utworzonych commitów 
+
+-git push origin ŁD400222
+wypycha nasze lokalne repozytorium na serwer, gdy nie ma konfliktu nasze repozytorium będzie od teraz widoczne na repozytorium na github’ie.

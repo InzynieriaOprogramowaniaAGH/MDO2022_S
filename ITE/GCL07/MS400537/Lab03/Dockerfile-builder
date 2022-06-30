@@ -1,0 +1,21 @@
+FROM ubuntu
+RUN apt-get update && apt-get install -y --force-yes git curl
+RUN curl -sL https://deb.nodesource.com/setup_17.x | bash - 
+RUN apt-get install -y nodejs
+
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN apt-get install yarn -y
+RUN npm install -g n
+RUN n stable
+RUN git clone https://github.com/vuejs/pinia.git
+WORKDIR pinia
+#komendy w liniach 14, 15, 16, 17, 18, 19 to workaround na dziwny blad w yarnie. z jakiegos 
+#powodu nalezy po instalacji wykonac te kroki, aby yarn zaczal dzialac.
+RUN apt remove cmdtest -y
+RUN apt remove yarn -y
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update
+RUN apt-get install yarn -y
+RUN yarn install
+RUN yarn build

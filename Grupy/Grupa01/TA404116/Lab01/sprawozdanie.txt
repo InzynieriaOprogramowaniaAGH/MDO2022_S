@@ -1,0 +1,20 @@
+git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S .
+    ^ - skopiowanie zdalnego repozytorium pod podanym adresem do aktualnej lokalizacji w terminalu (.)
+
+git checkout -b TA404116
+    ^ - przeniesienie się na nowego brancha o podanej nazwie 
+        (ewentualnie mozna rozbic na 2 instrukcje:
+        -"git branch TA404116" dla stworzenia brancha o nazwie TA404116
+        -"git checkout TA404116" zeby przeniesc sie na brancha o nazwie TA404116)
+
+git add -A
+    ^ - dodanie wszystkich zmodyfikowanych plików w repo do commita
+
+commit -m "TA404116 - lab1"
+    ^ - dodaj commit z wiadomoscia o podanej tresci "TA404116 - lab1"
+
+git push origin TA404116
+    ^ - opublikowanie zmian, commitow do zdalnego repozytorium oznaczonego origin na wskazana galaz TA404116
+
+git push --set-upstream origin TA404116
+    ^ - wyslanie do zdalnego repozytorium nowej galezi TA404116 wraz z commitami

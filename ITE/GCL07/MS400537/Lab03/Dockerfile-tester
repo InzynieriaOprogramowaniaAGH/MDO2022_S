@@ -1,0 +1,3 @@
+FROM builder
+WORKDIR pinia
+RUN yarn test

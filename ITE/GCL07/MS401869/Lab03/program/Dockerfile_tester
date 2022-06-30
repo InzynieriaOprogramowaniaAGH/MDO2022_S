@@ -1,0 +1,6 @@
+FROM app_builder:latest
+
+CMD ./runTest
+
+
+

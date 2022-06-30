@@ -1,0 +1,24 @@
+Marcin Dadura
+Lab02
+#################
+
+1. Utworzono klucz SSH
+a) komenda git remote set-url zmieniono polaczeni na SSH 
+2. Ustawiono taga commita za pomoca komendy git tag -a
+3. Wrzucono zmiane za pomoca komendy git push --follow-tags
+4. Za pomoca mkdir i git checkout -b utworzono nowow strukture branchy i folderow
+5. Utworzono GitHooka za pomoca komendy touch ./git/hooks/commit-msg i nadano uprawnienia do wykonywania chmod +x
+6. Wykonano pull request do brancha Grupa2
+tresc hooka
+```
+#!/bin/bash
+
+ID="MD404241"
+
+if ! [[ $(cat $1) == $ID* ]] ;then
+    echo "Commit name should begin with MD404241"
+    exit 1
+fi
+
+```
+

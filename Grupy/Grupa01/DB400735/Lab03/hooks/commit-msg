@@ -1,0 +1,8 @@
+#!/bin/bash
+name='DB400735*'
+msg="Incorrect commit message!!"
+if ! grep -iqE "$name" "$1"; then
+	echo "$msg"
+	exit 1
+fi
+echo "Correct commit message."

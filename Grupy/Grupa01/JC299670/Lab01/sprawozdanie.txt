@@ -1,0 +1,18 @@
+1. Nie instalowałam klienta Gita, gdyż już go posiadałam (GitBaAsh oraz Visual Studio Code)
+
+2. Uruchomiłam terminal i wykonanałam operację: "git clone" repozytorium https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S
+
+3. Otwarłam i zapoznałam się z dokumentem na pierwsze ćwiczenia laboratoryjne.
+- Stwórzyłam plik "sprawozdanie.txt używając komendy: "type nul > sprawozdanie.txt"
+
+
+4. Stwórzyłam nowy branch w repozytorium lokalnym o nazwie JC299670 użwyając komendy :"git branch"
+- Nastęnie przełączyłam się na własnie stworzonego brancha używając komendy "git checkout"
+- Na tym branchu stwórzyłam folder o nazwie "JC299670" używając komendy "md"/
+- W powyższym folderze stwórzyłam folder "Lab01" ponownie używając komendy "md"/
+- Umieściłam stowrzony wcześniej plik sprawozdanie.txt w stworzonym folderze.
+- Dodałam ten plik do repozytorium git'a uzywając komendy "git add" i wykonałam commita.
+- Wykonałam zrzuty ekranu z tego punktu, zapisałam oraz dodaj do repo i zrobiłam kolejnego commita.
+
+5.Wykonałam pull request swojego brancha do głównego brancha Zrobiłam push'a na remota.
+

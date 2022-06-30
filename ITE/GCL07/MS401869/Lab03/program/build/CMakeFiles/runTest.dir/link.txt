@@ -1,0 +1,1 @@
+/usr/local/bin/g++ CMakeFiles/runTest.dir/hello_test.cc.o -o runTest  lib/libgtest_main.a /usr/src/project/include/alg.h /usr/src/project/src/alg.c lib/libgtest.a -lpthread 

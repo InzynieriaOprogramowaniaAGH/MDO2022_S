@@ -1,0 +1,1 @@
+/usr/local/bin/c++ -O3 -DNDEBUG -rdynamic CMakeFiles/opengl.dir/OpenGL.cpp.o -o opengl  -Wl,-rpath,/home/build/lib: ../../lib/libsfml-graphics.so.2.5.1 ../../lib/libsfml-window.so.2.5.1 ../../lib/libsfml-system.so.2.5.1 -lGL -lGLU 

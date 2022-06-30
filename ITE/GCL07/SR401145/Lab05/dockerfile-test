@@ -1,0 +1,4 @@
+FROM build:latest
+WORKDIR /chibicc
+RUN apt-get -y install file
+RUN make test

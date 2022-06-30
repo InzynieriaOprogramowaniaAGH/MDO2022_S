@@ -1,0 +1,10 @@
+#!/bin/bash
+
+MSG=$1
+TEXT="BB401928"
+
+if ! [[ $(cat $1) =~ $TEXT ]] ;then
+    cat "$MSG"
+    echo "Nazwa commitu musi zawierać $TEXT"
+    exit 1
+fi

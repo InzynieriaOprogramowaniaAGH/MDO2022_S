@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: star-wars-deployment
+spec:
+  selector:
+    matchLabels:
+      app: star-wars
+  replicas: 5
+  template:
+    metadata:
+      labels:
+        app: star-wars
+    spec:
+      containers:
+        - name: star-wars
+          image: starwars-node
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: Never

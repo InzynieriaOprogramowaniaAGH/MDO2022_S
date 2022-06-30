@@ -1,0 +1,3 @@
+FROM lab3express:latest
+
+RUN cd express && npm test

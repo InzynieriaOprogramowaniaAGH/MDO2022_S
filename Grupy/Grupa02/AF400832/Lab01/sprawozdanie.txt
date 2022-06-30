@@ -1,0 +1,20 @@
+1. sklonowanie repozytorium z serwera na komputer lokalny 
+	git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S
+	
+	
+2. utworzenie lokalnego branch'a o nazwie AF400832
+	git checkout -b AF400832
+
+3. utworzenie folderu AF400832/Lab01 i pliku sprawozdanie.txt w folderze Lab01
+	mkdir AF400832/Lab01
+	cd AF400832/Lab01
+	touch sprawozdanie.txt
+
+4. sprawdzenie statusu modyfikowanych/utworzonych/usuniętych plików 
+	git status
+	
+5. dodanie modyfikowanych plików do śledzenia
+	git add .
+	
+6. utworzenie commita z śledzonych plików
+	git commit -m "[AF400832] Init commit"	

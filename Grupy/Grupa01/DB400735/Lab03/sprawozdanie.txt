@@ -1,0 +1,30 @@
+Dominik Budzowski
+
+Sprawozdanie LAB03
+
+1. Bedac na branchu grupowym aby stworzyc swojego brancha uzylem polecenia:
+   	git checkout -b Grupa01-DB400735_Lab03
+2. Dodalem git hooka z poprzednich zajec do odpowiedniego katalogu
+3. Instalacja Docker'a
+   Odinstalowalem starsze versie Dockera, gdyby byly zainstalowane poleceniem:
+   	sudo apt-get remove docker docker-engine docker.io containerd runc
+   Zaktualizowanie pakietow poleceniem:
+   	sudo apt-get update
+   Zainstalowanie potrzebnych pakietow poleceniem:
+   	sudo apt-get install docker-ce docker-ce-cli containerd.io
+   Sprawdzenie czy Docker Engine uruchamiajac obraz hello-world poleceniem:
+   	sudo docker run hello-world
+4. Zarejestrowalem konto na Docker HUB.
+5. Stworzylem Dockerfile ktorego tresc to:
+	FROM ubuntu:latest
+
+	RUN apt-get update
+	RUN apt install -y git
+   Zbudowalem obraz poleceniem:
+   	sudo docker build . -t "lab03_image"
+6. Uruchomilem kontener w trybie interaktywnym poleceniem:
+	sudo docker run -it 'lab03_image' bash
+   Pobralem repozytorium poleceniem:
+   	git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2022_S
+   Sprawdzilem czy moge sie przelaczyc na moja branch poleceniem:
+   	git checkout Grupa01-DB400735_Lab03

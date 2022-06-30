@@ -1,0 +1,10 @@
+ssh-keygen -t rsa -b 4096 -C "email": generowanie klucza SSH dla podanego maila
+
+ssh-add <ścieżka> dodanie klucza do agenta ssh
+
+git remote -v: pokazuje sposób połączenia z gitem
+git remote set-url origin git@github.com:InzynieriaOprogramowaniaAGH/MDO2022_S.git: zmienia sposób łączenia na ssh
+
+git tag -a nazwa -m "komentarz": tworzenie taga, tworzenie taga, -a pozwala dodać nazwę, -m komentarz
+
+git push --follow-tags - pushuje repo uwzględniając tagi
