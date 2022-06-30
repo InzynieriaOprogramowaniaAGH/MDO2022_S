@@ -1,0 +1,3 @@
+FROM devbuilder:latest
+RUN mkdir /deploy
+RUN cp /artifacts/typescript-starter-1.0.0.tgz /deploy/

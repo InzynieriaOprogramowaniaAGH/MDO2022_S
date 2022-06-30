@@ -1,0 +1,266 @@
+Started by user admin
+Obtained Jenkinsfile from git https://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@github.com/Kamuul/devops.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/devops
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/devops/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://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@github.com/Kamuul/devops.git # timeout=10
+Fetching upstream changes from https://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@github.com/Kamuul/devops.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.30.2'
+ > git fetch --tags --force --progress -- https://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@github.com/Kamuul/devops.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 98ed0166fad95883affb43eb40eb3b7ee10bd35d (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 98ed0166fad95883affb43eb40eb3b7ee10bd35d # timeout=10
+Commit message: "bullshitu ciag dalszy v4"
+ > git rev-list --no-walk 98ed0166fad95883affb43eb40eb3b7ee10bd35d # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Prebuild)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ mkdir -p io_dir
+[Pipeline] }
+[Pipeline] // script
+Post stage
+[Pipeline] sh
++ echo Prebuild successful
+Prebuild successful
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ echo Build
+Build
++ docker build -f dockerbuild -t devbuilder . --no-cache
+Sending build context to Docker daemon    574kB
+
+Step 1/8 : FROM node
+ ---> 372b746c33bc
+Step 2/8 : RUN git clone https://github.com/stemmlerjs/simple-typescript-starter.git
+ ---> Running in 1d20c23b99cf
+[91mCloning into 'simple-typescript-starter'...
+[0mRemoving intermediate container 1d20c23b99cf
+ ---> 04089f5cc668
+Step 3/8 : WORKDIR /simple-typescript-starter/
+ ---> Running in 4bea1aa30489
+Removing intermediate container 4bea1aa30489
+ ---> 5f5526429101
+Step 4/8 : RUN npm install && npm run build
+ ---> Running in 3b225c672259
+[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mold lockfile[0m[91m 
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mold lockfile[0m[91m The package-lock.json file was created with an old version of npm,
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mold lockfile[0m[91m so supplemental metadata must be fetched from the registry.
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mold lockfile[0m[91m 
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mold lockfile[0m[91m This is a one-time fix-up, please be patient...
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mold lockfile[0m[91m 
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m urix@0.1.0: Please see https://github.com/lydell/urix#deprecated
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m source-map-url@0.4.0: See https://github.com/lydell/source-map-url#deprecated
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m request-promise-native@1.0.9: request-promise-native has been deprecated because it extends the now deprecated request package, see https://github.com/request/request/issues/3142
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m resolve-url@0.2.1: https://github.com/lydell/resolve-url#deprecated
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m sane@4.1.0: some dependency vulnerabilities fixed, support for node < 10 dropped, and newer ECMAScript syntax/features added
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m source-map-resolve@0.5.2: See https://github.com/lydell/source-map-resolve#deprecated
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m ini@1.3.5: Please update to ini >=1.3.6 to avoid a prototype pollution issue
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m har-validator@5.1.5: this library is no longer supported
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m request@2.88.2: request has been deprecated, see https://github.com/request/request/issues/3142
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m mkdirp@0.5.1: Legacy versions of mkdirp are no longer supported. Please update to mkdirp 1.x. (Note that the API surface has changed to use Promises in 1.x.)
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m debug@3.2.6: Debug versions >=3.2.0 <3.2.7 || >=4 <4.3.1 have a low-severity ReDos regression when used in a Node.js environment. It is recommended you upgrade to 3.2.7 or 4.3.1. (https://github.com/visionmedia/debug/issues/797)
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m chokidar@2.1.8: Chokidar 2 does not receive security updates since 2019. Upgrade to chokidar 3 with 15x fewer dependencies
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m debug@4.2.0: Debug versions >=3.2.0 <3.2.7 || >=4 <4.3.1 have a low-severity ReDos regression when used in a Node.js environment. It is recommended you upgrade to 3.2.7 or 4.3.1. (https://github.com/visionmedia/debug/issues/797)
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m debug@4.2.0: Debug versions >=3.2.0 <3.2.7 || >=4 <4.3.1 have a low-severity ReDos regression when used in a Node.js environment. It is recommended you upgrade to 3.2.7 or 4.3.1. (https://github.com/visionmedia/debug/issues/797)
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m debug@4.1.1: Debug versions >=3.2.0 <3.2.7 || >=4 <4.3.1 have a low-severity ReDos regression when used in a Node.js environment. It is recommended you upgrade to 3.2.7 or 4.3.1. (https://github.com/visionmedia/debug/issues/797)
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m debug@4.1.1: Debug versions >=3.2.0 <3.2.7 || >=4 <4.3.1 have a low-severity ReDos regression when used in a Node.js environment. It is recommended you upgrade to 3.2.7 or 4.3.1. (https://github.com/visionmedia/debug/issues/797)
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m debug@4.2.0: Debug versions >=3.2.0 <3.2.7 || >=4 <4.3.1 have a low-severity ReDos regression when used in a Node.js environment. It is recommended you upgrade to 3.2.7 or 4.3.1. (https://github.com/visionmedia/debug/issues/797)
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mdeprecated[0m[91m debug@4.2.0: Debug versions >=3.2.0 <3.2.7 || >=4 <4.3.1 have a low-severity ReDos regression when used in a Node.js environment. It is recommended you upgrade to 3.2.7 or 4.3.1. (https://github.com/visionmedia/debug/issues/797)
+[0m
+added 959 packages, and audited 960 packages in 2m
+
+30 packages are looking for funding
+  run `npm fund` for details
+
+24 vulnerabilities (7 moderate, 14 high, 3 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+[91mnpm notice 
+npm notice New patch version of npm available! 8.12.1 -> 8.12.2
+npm notice Changelog: <https://github.com/npm/cli/releases/tag/v8.12.2>
+npm notice Run `npm install -g npm@8.12.2` to update!
+npm notice 
+[0m
+> typescript-starter@1.0.0 build
+> rimraf ./build && tsc
+
+Removing intermediate container 3b225c672259
+ ---> 418f32e689ee
+Step 5/8 : RUN npm pack
+ ---> Running in 1915da099354
+[91mnpm[0m[91m [0m[91mnotice[0m[91m 
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m package: typescript-starter@1.0.0
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m [0m[91m=== Tarball Contents ===[0m[91m 
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m 173B  .eslintignore      
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m 385B  .eslintrc          
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m 87B   .prettierrc        
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m 507B  .vscode/launch.json
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m 304B  .vscode/tasks.json 
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m 1.3kB README.md          
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m 43B   build/index.js     
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m 252B  jest.config.js     
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m 94B   nodemon.json       
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m 1.8kB package.json       
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m 93B   src/index.spec.ts  
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m 29B   src/index.ts       
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m 534B  tsconfig.json      
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m [0m[91m=== Tarball Details ===[0m[91m 
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m name:          typescript-starter                      
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m version:       1.0.0                                   
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m filename:      typescript-starter-1.0.0.tgz            
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m package size:  2.6 kB                                  
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m unpacked size: 5.5 kB                                  
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m shasum:        4eddd07b224f070bbbd2a80336aa6dce46921cc5
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m integrity:     sha512-hXv9yTjq5oE2r[...]GCZolkPQQzmZQ==
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m total files:   13                                      
+[0m[91mnpm[0m[91m [0m[91mnotice[0m[91m 
+[0mtypescript-starter-1.0.0.tgz
+Removing intermediate container 1915da099354
+ ---> 398d811ba531
+Step 6/8 : RUN mkdir /artifacts
+ ---> Running in c23e2a7e4aa5
+Removing intermediate container c23e2a7e4aa5
+ ---> 27c682098a75
+Step 7/8 : RUN cp typescript-starter-1.0.0.tgz /artifacts
+ ---> Running in 1b4fa4baf274
+Removing intermediate container 1b4fa4baf274
+ ---> 240922ab8ae4
+Step 8/8 : CMD cp typescript-starter-1.0.0.tgz /docker_vol
+ ---> Running in 9a07c3a260bc
+Removing intermediate container 9a07c3a260bc
+ ---> da85e936d0fd
+Successfully built da85e936d0fd
+Successfully tagged devbuilder:latest
++ pwd
++ docker run -v /var/jenkins_home/workspace/devops/io_dir:/docker_vol devbuilder
+[Pipeline] }
+[Pipeline] // script
+Post stage
+[Pipeline] sh
++ echo Build successful
+Build successful
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ echo Test
+Test
++ docker build . -f dockertest -t devtester
+Sending build context to Docker daemon  577.5kB
+
+Step 1/3 : FROM devbuilder:latest
+ ---> da85e936d0fd
+Step 2/3 : WORKDIR /simple-typescript-starter/
+ ---> Running in 60bdf30a840d
+Removing intermediate container 60bdf30a840d
+ ---> 9e8e0b58f294
+Step 3/3 : RUN npm run test
+ ---> Running in 14d2624c894c
+
+> typescript-starter@1.0.0 test
+> jest
+
+[91mPASS src/index.spec.ts (8.697 s)
+[0m[91m  test
+[0m[91m    ✓ add (9 ms)
+[0m[91m
+[0m[91mTest Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        8.811 s
+Ran all test suites.
+[0mRemoving intermediate container 14d2624c894c
+ ---> 45bc252b61da
+Successfully built 45bc252b61da
+Successfully tagged devtester:latest
++ docker run devtester
+[Pipeline] }
+[Pipeline] // script
+Post stage
+[Pipeline] sh
++ echo Tests successful
+Tests successful
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ echo Deploy
+Deploy
++ docker build . -f dockerdeploy -t devdeploy
+Sending build context to Docker daemon  577.5kB
+
+Step 1/3 : FROM devbuilder:latest
+ ---> da85e936d0fd
+Step 2/3 : RUN mkdir /deploy
+ ---> Running in cd9adce5d144
+Removing intermediate container cd9adce5d144
+ ---> 1cf6f56c4a5c
+Step 3/3 : RUN cp /artifacts/typescript-starter-1.0.0.tgz /deploy/
+ ---> Running in aebb180e812d
+Removing intermediate container aebb180e812d
+ ---> bcafe7c367c4
+Successfully built bcafe7c367c4
+Successfully tagged devdeploy:latest
++ pwd
++ docker run -d -v /var/jenkins_home/workspace/devops/io_dir:/docker_vol devdeploy
+38a77672eea42e01f948ecac9bd5f6a8d14a56a499f45b8408ed7a71f01dd3ea
+[Pipeline] }
+[Pipeline] // script
+Post stage
+[Pipeline] sh
++ echo Deploy successful
+Deploy successful
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Publish)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] archiveArtifacts
+Archiving artifacts
+Recording fingerprints
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

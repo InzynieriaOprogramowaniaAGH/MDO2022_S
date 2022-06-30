@@ -1,0 +1,3 @@
+FROM devbuilder:latest
+WORKDIR /simple-typescript-starter/
+RUN npm run test
