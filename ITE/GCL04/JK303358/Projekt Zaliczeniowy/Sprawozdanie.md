@@ -164,11 +164,11 @@ Etap clone odpowiada za usunięcie wszystkich istniejących woluminów, utworzen
 
 Jenkinsfile:
 
-![Jenkinsfile stage clone](Pictures/9.png?raw=true)
+
 
 Dockerfile (docker-clone):
 
-![docker-clone](Pictures/10.png?raw=true)
+
 
 ---
 
@@ -177,11 +177,11 @@ W tym etapie najpierw tworzony jest obraz z zainstalowanym Maven oraz Javą. Nas
 
 Jenkinsfile:
 
-![Jenkinsfile stage clone](Pictures/12.png?raw=true)
+
 
 Dockerfile (docker-clone):
 
-![docker-clone](Pictures/11.png?raw=true)
+
 
 ---
 
@@ -190,11 +190,11 @@ Etap uruchamia testy w kontenerze stworzonym na podstawie obrazu tego z etapu Bu
 
 Jenkinsfile:
 
-![Jenkinsfile stage clone](Pictures/13.png?raw=true)
+
 
 Dockerfile (docker-clone):
 
-![docker-clone](Pictures/14.png?raw=true)
+
 
 ---
 
@@ -203,11 +203,11 @@ Po przejściu testów działanie programu sprawdzane jest jeszcze w innym środo
 
 Jenkinsfile:
 
-![Jenkinsfile stage clone](Pictures/16.png?raw=true)
+
 
 Dockerfile (docker-clone):
 
-![docker-clone](Pictures/15.png?raw=true)
+
 
 ---
 
@@ -217,20 +217,20 @@ Dotarcie do tego kroku informuje nas o tym, że aplikacja jest gotowa do opublik
 
 Jenkinsfile:
 
-![Jenkinsfile stage clone](Pictures/17_1.png?raw=true)
+
 
 Przed użyciem parametrów należy je wcześniej zdefiniować - zostało to zrobione przed sekcją `stages`:
 
-![Jenkinsfile parameters](Pictures/18.png?raw=true)
+
 
 Gdy poprawnie zostały zdefiniowane parametry, w panelu Jenkinsa pojawia się opcja `Uruchom z parametrami` umożliwiająca nadanie im wartości. Teraz wystarczy kliknąć `Buduj`:
 
-![Jenkins parameters](Pictures/19.png?raw=true)
+
 
 W zakładce `Console output` możemy na żywo śledzić wszystkie wykonywane kroki:
 
-![Jenkins parameters](Pictures/20.png?raw=true)
+
 
 Po poprawnym przejściu Pipeline'a (z zaznaczonym parametrem promote) na stronie pojawia nam się zarchiwizowany artefakt do pobrania:
 
-![Jenkins parameters](Pictures/21.png?raw=true)
+
