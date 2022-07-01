@@ -13,7 +13,7 @@ Przygotowanie pipeline'a z użyciem Jenkinsa. Pipeline realizuje cztery procesy:
 
 Wykorzystany program:
 
-https://github.com/transmission/transmission
+https://github.com/sirjk/bastimShop
 
 Pipeline skupia się na wdrażaniu części back-endowej.
 
